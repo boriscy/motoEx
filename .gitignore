@@ -1,0 +1,8 @@
+*.kpf
+*.swp
+*.swo
+*.log
+*.sqlite3
+*~
+public/fotos
+nbproject
