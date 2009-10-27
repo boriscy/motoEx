@@ -1,46 +1,20 @@
-<html xmlns="http://www.w3.org/1999/xhtml" >
+<!DOCTYPE html>
+<html>
 <head>
-    <title>jquery edit grid</title>
-    <link rel="Stylesheet" type="text/css" href="styles.css" />
-    <script type="text/javascript" src="../jquery.js"></script>
-    <script type="text/javascript" src="tabla.js"></script>
-    <style>
-        table{
-            border-collapse: collapse;
-        }
-        th{
-            border: 1px solid #CFCFCF;
-            text-align: center;
-            background: #0D0D0D;
-            color: #FFF;
-        }
-        td{
-            padding: 4px;
-            border: 1px solid #CFCFCF;
-        }
-        td.sel{
-            background: #E1EAF6;
-        }
-        td.bold{
-            font-weight: bold;
-        }
-        td.curr_cel{
-            border: 1px solid;
-        }
-        td.hidden_cel{
-            visibility: hidden;
-            border: 0px none;
-            padding: 0px;
-            height: 30px;
-        }
-    </style>
+	<title>QUnit Test Suite</title>
+	<link rel="stylesheet" href="../qunit/qunit.css" type="text/css" media="screen">
+	<script type="text/javascript" src="../../jquery.js"></script>
+	<script type="text/javascript" src="../tabla.js"></script>
+	<script type="text/javascript" src="../qunit/qunit.js"></script>
 </head>
 <body>
-    <table id='toolbar'>
-        <tr><td><span id='bold'>Bold</span></td><td><span id='merge'>Merge</span></td>
-        </tr>
-    </table>
-    <table id='demoTable'>
+	<h1 id="qunit-header">Test de JavaScript MotoEx</h1>
+	<h2 id="qunit-banner"></h2>
+	<div id="qunit-testrunner-toolbar"></div>
+	<h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+
+        <table id='demoTable'>
         <tr><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th></tr>
         <tr><td class='sel curr_cel'>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>
         <tr><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td></tr>
@@ -93,16 +67,9 @@
         <tr><td>337</td><td>338</td><td>339</td><td>340</td><td>341</td><td>342</td><td>343</td></tr>
         <tr><td>344</td><td>345</td><td>346</td><td>347</td><td>348</td><td>349</td><td>350</td></tr>
     </table>
-    <script>
-        $(document).ready(function(){
-            var ini = new Date().getTime();
-            var table = $('#demoTable').tablesheet();
-            var fin = new Date().getTime();
-            //console.log("Adentro: %i", fin - ini);
-            console.log("Prototype : %i", fin - ini);
-
-            $('#bold').live('click',function(){ table.bold(); });
-            $('#merge').live('click',function(){ table.merge(); });
-        });
-    </script>
 </body>
+
+</html>
+<script type="text/javascript">
+    
+</script>
