@@ -4,6 +4,7 @@
 *.log
 *.sqlite3
 *~
-public/fotos
+public/fotos !pub.txt
+archivos/*
 nbproject
 !pub.txt

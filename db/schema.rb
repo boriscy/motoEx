@@ -9,7 +9,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090916192851) do
+ActiveRecord::Schema.define(:version => 20091028201135) do
+
+  create_table "archivos", :force => true do |t|
+    t.string   "nombre"
+    t.text     "descripcion"
+    t.integer  "usuario_id"
+    t.string   "archivo_html"
+    t.string   "archivo_excel"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "archivo_html_file_name"
+    t.integer  "archivo_html_file_size"
+    t.string   "archivo_excel_file_name"
+    t.integer  "archivo_excel_file_size"
+  end
 
   create_table "usuarios", :force => true do |t|
     t.string   "nombre",            :limit => 50

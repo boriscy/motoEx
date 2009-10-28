@@ -2,11 +2,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Usuario do
 
-  it {should belong_to(:rol) }
-  it {should have_and_belong_to_many(:archivos) }
-
   it {should validate_presence_of(:nombre) }
-  it {should have_and_belong_to_many(:grupos) }
+  it {should have_many(:archivos) }
 
   describe "Valido" do
     

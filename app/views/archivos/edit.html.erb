@@ -1,0 +1,32 @@
+<h1>Editing archivo</h1>
+
+<% form_for(@archivo) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.label :descripcion %><br />
+    <%= f.text_area :descripcion %>
+  </p>
+  <p>
+    <%= f.label :usuario %><br />
+    <%= f.text_field :usuario %>
+  </p>
+  <p>
+    <%= f.label :archivo_html %><br />
+    <%= f.text_field :archivo_html %>
+  </p>
+  <p>
+    <%= f.label :archivo_excel %><br />
+    <%= f.text_field :archivo_excel %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @archivo %> |
+<%= link_to 'Back', archivos_path %>

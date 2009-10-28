@@ -4,9 +4,7 @@ class Usuario < ActiveRecord::Base
   before_save :squish_params
 
   # Relaciones
-  belongs_to :rol
-  has_and_belongs_to_many :grupos
-  has_and_belongs_to_many :archivos
+  has_many :archivos
 
 
   # Se utiliza authlogic como metodo de autenticacion
