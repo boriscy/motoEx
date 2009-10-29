@@ -1,12 +1,12 @@
 <%= error_messages_for :usuario_session %>
 <% form_for @usuario_session do |f| %>
-  <p>
-    <%= f.label :login, "Usuario:" %>
+  <div>
+    <%= f.label :login, "Usuario:" %><br/>
     <%= f.text_field :login %>
-  </p>
-  <p>
-    <%= f.label :password, "Contraseña:" %>
+  </div>
+  <div>
+    <%= f.label :password, "Contraseña:" %><br/>
     <%= f.password_field :password %>
-  </p>
-  <p><%= f.submit "Ingresar" %></p>
+  </div>
+  <div><%= f.submit "Ingresar", :class => 'ui-state-active' %></div>
 <% end %>

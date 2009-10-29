@@ -4,8 +4,6 @@ class CreateArchivos < ActiveRecord::Migration
       t.string :nombre
       t.text :descripcion
       t.references :usuario
-      t.string :archivo_html
-      t.string :archivo_excel
 
       t.timestamps
     end

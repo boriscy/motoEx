@@ -2,11 +2,11 @@
 
 <table>
   <tr>
-    <th>Nombre</th>
-    <th>Descripcion</th>
-    <th>Usuario</th>
-    <th>Archivo html</th>
-    <th>Archivo excel</th>
+    <th class="ui-state-active">Nombre</th>
+    <th class="ui-state-active">Descripcion</th>
+    <th class="ui-state-active">Usuario</th>
+    <th class="ui-state-active">Archivo excel</th>
+    <th class="ui-state-active"></th> 
   </tr>
 
 <% @archivos.each do |archivo| %>
@@ -15,13 +15,15 @@
     <td><%=h archivo.descripcion %></td>
     <td><%=h archivo.usuario %></td>
     <td><%=h archivo.archivo_excel_file_name %></td>
-    <td><%= link_to 'Show', archivo %></td>
-    <td><%= link_to 'Edit', edit_archivo_path(archivo) %></td>
-    <td><%= link_to 'Destroy', archivo, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td>
+      <%= link_to 'Ver', archivo %>
+      <%= link_to 'Editar', edit_archivo_path(archivo) %>
+      <%= link_to 'Borrar', archivo, :class => 'delete' %>
+    </td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New archivo', new_archivo_path %>
+<%= link_to 'Nuevo archivo', new_archivo_path %>

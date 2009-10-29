@@ -15,12 +15,8 @@ ActiveRecord::Schema.define(:version => 20091028201135) do
     t.string   "nombre"
     t.text     "descripcion"
     t.integer  "usuario_id"
-    t.string   "archivo_html"
-    t.string   "archivo_excel"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "archivo_html_file_name"
-    t.integer  "archivo_html_file_size"
     t.string   "archivo_excel_file_name"
     t.integer  "archivo_excel_file_size"
   end
