@@ -44,7 +44,7 @@ class ArchivosController < ApplicationController
 
     respond_to do |format|
       if @archivo.save
-        flash[:notice] = 'Archivo was successfully created.'
+        flash[:notice] = 'El Archivo fue creado.'
         format.html { redirect_to(@archivo) }
         format.xml  { render :xml => @archivo, :status => :created, :location => @archivo }
       else

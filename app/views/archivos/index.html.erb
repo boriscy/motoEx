@@ -12,7 +12,7 @@
 <% @archivos.each do |archivo| %>
   <tr>
     <td><%=h archivo.nombre %></td>
-    <td><%=h archivo.descripcion %></td>
+    <td><%=h archivo.descripcion.size > 70 ? archivo.descripcion[0, 70] + '...' : archivo.descripcion %></td>
     <td><%=h archivo.usuario %></td>
     <td><%=h archivo.archivo_excel_file_name %></td>
     <td>

@@ -1,4 +1,4 @@
-Caracteristica: loguearse y subir archivo
+Caracteristica: loguearse y subir archivo para parsear
   Para que un usuario pueda
   Ingresar y definir su tabla debe
   estar autenticado
@@ -8,5 +8,5 @@ Caracteristica: loguearse y subir archivo
     Cuando ingreso mi login y password
     Entonces deberia estar logueado
     Y deberia ir a archivos/new
-    Entonces debo seleccionar un archivo excel y subirlo
-
+    Entonces debo ver el archivo
+    Y deberia haberse creado un html de la primera hoja

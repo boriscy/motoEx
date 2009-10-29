@@ -8,12 +8,30 @@
   <title><%= h(yield(:title) || "")  %> - <%= APP_NAME %></title>
   <%= stylesheet_link_tag "style",  "../javascripts/jquery-ui/css/custom-theme/jquery-ui-1.7.2.custom.css", :cache => "styles" %>
 
+  <%= javascript_include_tag "jquery-1.3.2.min.js", "jquery-ui-1.7.2.custom.min.js", "jquery-ui/js/ui.datepicker-es.js", :cache => "scripts" %>
+
   <script type="text/javascript" language="javascript" charset="utf-8">
     //<![CDATA[
     var token = '<%= form_authenticity_token() %>';
+    $(document).ready(function() {
+      $('a.delete').live("click", function() {
+        var item = $(this).parents("li,tr").addClass("markedForDelete");
+        if(confirm("Esta seguro de borrar?")){
+          $.ajax({ 
+            url: $(this).attr("href"),
+            authenticity_token: token,
+            type: "DELETE",
+            success: function() { item.remove(); },
+            error: function() { alert("Error al borrar"); }
+          });
+          }else{
+            item.removeClass("markedForDelete");
+          }
+        return false;
+      });
+    });
     //]]>
   </script>
-  <%= javascript_include_tag "jquery-1.3.2.min.js", "jquery-ui-1.7.2.custom.min.js", "jquery-ui/js/ui.datepicker-es.js", :cache => "scripts" %>
 
 </head>
 <body>
