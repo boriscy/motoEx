@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091028201135) do
+ActiveRecord::Schema.define(:version => 20091030145122) do
 
   create_table "archivos", :force => true do |t|
     t.string   "nombre"
@@ -19,6 +19,12 @@ ActiveRecord::Schema.define(:version => 20091028201135) do
     t.datetime "updated_at"
     t.string   "archivo_excel_file_name"
     t.integer  "archivo_excel_file_size"
+  end
+
+  create_table "hojas", :force => true do |t|
+    t.integer "archivo_id"
+    t.string  "nombre"
+    t.integer "numero"
   end
 
   create_table "usuarios", :force => true do |t|

@@ -1,9 +1,9 @@
 class Archivo < ActiveRecord::Base
 
   before_create :adicionar_usuario
-  after_save :crear_hoja_html
 
   belongs_to :usuario
+  has_many :hojas
   
   validates_associated :usuario
   validates_presence_of :nombre
@@ -25,15 +25,5 @@ protected
     self.usuario = UsuarioSession.find.record
   end
 
-  # 
-  def crear_hoja_html(hoja=0)
-    path = File.join(RAILS_ROOT, "lib", "exel_to_html.php")
-    sysmtem "php #{path} '#{self.archivo_excel.path}' #{hoja}"
-  end
-
-  # Funcion que transforma un archivo excel a HTML
-  def excel_to_html
-
-  end
 
 end

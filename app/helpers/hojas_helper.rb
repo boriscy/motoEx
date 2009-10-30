@@ -1,0 +1,2 @@
+module HojasHelper
+end

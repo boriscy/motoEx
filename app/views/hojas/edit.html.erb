@@ -1,0 +1,24 @@
+<h1>Editing hoja</h1>
+
+<% form_for(@hoja) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :archivo %><br />
+    <%= f.text_field :archivo %>
+  </p>
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.label :numero %><br />
+    <%= f.text_field :numero %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @hoja %> |
+<%= link_to 'Back', hojas_path %>

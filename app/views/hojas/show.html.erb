@@ -1,0 +1,18 @@
+<p>
+  <b>Archivo:</b>
+  <%=h @hoja.archivo %>
+</p>
+
+<p>
+  <b>Nombre:</b>
+  <%=h @hoja.nombre %>
+</p>
+
+<p>
+  <b>Numero:</b>
+  <%=h @hoja.numero %>
+</p>
+
+
+<%= link_to 'Edit', edit_hoja_path(@hoja) %> |
+<%= link_to 'Back', hojas_path %>

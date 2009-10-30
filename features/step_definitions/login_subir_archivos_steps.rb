@@ -24,22 +24,29 @@ end
 
 Y /^deberia ir a (.*)$/ do |uri|
   visit(uri)
-  stubs_archivo()
   fill_in "Nombre", :with => "Primer Excel"
   fill_in "Descripción", :with => "Contenido de prueba primer Excel"
-  attach_file "archivo[archivo_excel]", "#{RAILS_ROOT}/ejemplos/VentasPrecio2000-2008.xls" #"/home/boris/www/php-excel-reader/example.xls"
+  attach_file "archivo[archivo_excel]", "#{RAILS_ROOT}/ejemplos/VentasPrecio2000-2008.xls", 'application/vnd.ms-excel'#"/home/boris/www/php-excel-reader/example.xls"
   click_button "Salvar"
 end
 
 Entonces /^debo ver el archivo$/ do
   response.should render_template("archivos/show")
+  @archivo = Archivo.last
+  File.exists?(File.expand_path(@archivo.archivo_excel.path)).should == true
 end
 
-Y /^deberia haberse creado un html de la primera hoja$/ do
-  pending
-end
 
 #########
 def stubs_archivo()
-  Archivo.any_instance.stubs(:valid?).returns(true)
+#  module PaperClip::ClassMethods
+#    def validates_attachment_content_type; end
+#  end
+  # Archivo.any_instance.stubs(:valid?).returns(true)
+#  [:class_eval, :instance_eval].each do |m|
+#    Archivo.send(m){ def validates_attachment_content_type(name, options={}); end}
+#    Archivo.send(m){ def validates_attachment_presence(name, options={}); end}
+#  end
+  #Archivo.any_instance.stubs(:validates_attachment_content_type).returns(true)
+  #Archivo.stubs(:validates_attachment_content_type).returns(true)
 end
