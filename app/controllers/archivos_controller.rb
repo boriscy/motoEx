@@ -13,7 +13,7 @@ class ArchivosController < ApplicationController
   # GET /archivos/1
   # GET /archivos/1.xml
   def show
-    @archivo = Archivo.find(params[:id])
+    @archivo = Archivo.find(params[:id], :include => :hojas)
 
     respond_to do |format|
       format.html # show.html.erb

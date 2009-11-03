@@ -12,9 +12,10 @@
 ActiveRecord::Schema.define(:version => 20091030145122) do
 
   create_table "archivos", :force => true do |t|
+    t.integer  "usuario_id"
     t.string   "nombre"
     t.text     "descripcion"
-    t.integer  "usuario_id"
+    t.text     "lista_hojas"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "archivo_excel_file_name"

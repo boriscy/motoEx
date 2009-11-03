@@ -1,9 +1,10 @@
 class CreateArchivos < ActiveRecord::Migration
   def self.up
     create_table :archivos do |t|
+      t.references :usuario
       t.string :nombre
       t.text :descripcion
-      t.references :usuario
+      t.text :lista_hojas
 
       t.timestamps
     end
