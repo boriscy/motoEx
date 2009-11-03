@@ -36,17 +36,3 @@ Entonces /^debo ver el archivo$/ do
   File.exists?(File.expand_path(@archivo.archivo_excel.path)).should == true
 end
 
-
-#########
-def stubs_archivo()
-#  module PaperClip::ClassMethods
-#    def validates_attachment_content_type; end
-#  end
-  # Archivo.any_instance.stubs(:valid?).returns(true)
-#  [:class_eval, :instance_eval].each do |m|
-#    Archivo.send(m){ def validates_attachment_content_type(name, options={}); end}
-#    Archivo.send(m){ def validates_attachment_presence(name, options={}); end}
-#  end
-  #Archivo.any_instance.stubs(:validates_attachment_content_type).returns(true)
-  #Archivo.stubs(:validates_attachment_content_type).returns(true)
-end
