@@ -4,11 +4,12 @@ describe Hoja do
   before(:each) do
     @valid_attributes = {
       :archivo_id => 1,
-      :nombre => "value for nombre",
-      :numero => 1
+      :numero => 0
     }
-    @path = mock("path", :path => "ejemplos/VentasPrecio2000-2008.xls")
-    @archivo_mock = mock_model(Archivo, :archivo_excel_file_name => "VentasPrecio2000-2008.xls", :archivo_excel => @path)
+    @archivo = "ejemplos/example.xls"
+
+    @path = mock("path", :path => @archivo)
+    @archivo_mock = mock_model(Archivo, :archivo_excel_file_name => File.basename(@archivo), :archivo_excel => @path)
     Hoja.any_instance.stubs(:archivo).returns(@archivo_mock)
   end
 
@@ -23,13 +24,14 @@ describe Hoja do
 
   it "debe asignar nombre" do
     @hoja = Hoja.create(@valid_attributes)
-    @hoja.nombre.should == "2000"
+    @hoja.nombre.should == "Sheet1"
   end
 
   it "debe generar un archivo HTML" do
-    @valid_attributes[:numero_hoja] = 3
+    @valid_attributes[:numero_hoja] = 2
     @hoja = Hoja.create(@valid_attributes)
     File.exists?(@hoja.ruta)
+    @hoja.nombre.should == "Tres"
   end
 
   it "debe generar un archivo HTML y hoja 0" do
@@ -39,6 +41,15 @@ describe Hoja do
   end
 
   it "debe asignar correctamente los ids al HTML" do
-
+    @hoja = Hoja.create(@valid_attributes)
+    html = File.open(@hoja.ruta){|f| Hpricot f}
+    html.search("tr:eq(0) td:eq(0)").attr("id").should == "0_0"
+    html.search("tr:eq(22) td:eq(0)").attr("id").should == "22_0"
+    html.search("tr:eq(22) td:eq(1)").attr("id").should == "22_3"
+    html.search("tr:eq(23) td:eq(0)").attr("id").should == "23_0"
+    html.search("tr:eq(26) td:eq(0)").attr("id").should == "26_0"
+    html.search("tr:eq(24) td:eq(0)").attr("id").should == "24_1"
+    html.search("tr:eq(25) td:eq(0)").attr("id").should == "25_3"
   end
+
 end

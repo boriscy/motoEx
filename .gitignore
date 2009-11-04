@@ -8,3 +8,4 @@ public/fotos !pub.txt
 archivos/*
 nbproject
 !pub.txt
+.~lock*
