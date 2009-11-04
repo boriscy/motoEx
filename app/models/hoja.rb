@@ -34,19 +34,24 @@ class Hoja < ActiveRecord::Base
 
   # Ejecuta procesos sobre la hoja creada de HTML
   def asignar_ids_html
-    require 'hpricot'
+    require 'nokogiri'
 
     @areas = {}
-    html = File.open(self.ruta){|f| Hpricot(f)}
+    html = Nokogiri::HTML(File.open(self.ruta))# {|f| Hpricot(f)}
     rows = html.search("tr").size - 1
-    cols = html.search("tr:first th").size - 1
+    cols = html.search("tr:first th").size - 2
     
-    rows.times do |i|
+    (1..rows).each do |i|
       row = html.search("tr:eq(#{i}) td")
       col = 0
-      cols.times do |j|
+      (1..cols).each do |j|
         unless @areas["#{i}-#{j}"]
+          begin
           row[col].set_attribute("id", "#{i}_#{j}")
+          rescue
+            debugger
+            s=0
+          end
           crear_merged(row[col], i, j)
           col += 1
         end
@@ -54,7 +59,7 @@ class Hoja < ActiveRecord::Base
     end
 
     f = File.new(self.ruta, "w+")
-    f.write(html.html)
+    f.write(html.to_xhtml)
     f.close
 
   end
@@ -69,8 +74,8 @@ private
   def crear_merged(cell, fila, col)
     @areas ||= {}
     rowspan, colspan = 1, 1
-    rowspan = cell.attributes["rowspan"].to_i if cell.attributes["rowspan"] and cell.attributes["rowspan"].to_i > 1
-    colspan = cell.attributes["colspan"].to_i if cell.attributes["colspan"] and cell.attributes["colspan"].to_i > 1
+    rowspan = cell.attributes["rowspan"].value.to_i if cell.attributes["rowspan"] and cell.attributes["rowspan"].value.to_i > 1
+    colspan = cell.attributes["colspan"].value.to_i if cell.attributes["colspan"] and cell.attributes["colspan"].value.to_i > 1
 
     if colspan > 1 or rowspan > 1
       rowspan.times do |i|

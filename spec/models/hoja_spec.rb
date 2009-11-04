@@ -42,14 +42,14 @@ describe Hoja do
 
   it "debe asignar correctamente los ids al HTML" do
     @hoja = Hoja.create(@valid_attributes)
-    html = File.open(@hoja.ruta){|f| Hpricot f}
-    html.search("tr:eq(0) td:eq(0)").attr("id").should == "0_0"
-    html.search("tr:eq(22) td:eq(0)").attr("id").should == "22_0"
-    html.search("tr:eq(22) td:eq(1)").attr("id").should == "22_3"
-    html.search("tr:eq(23) td:eq(0)").attr("id").should == "23_0"
-    html.search("tr:eq(26) td:eq(0)").attr("id").should == "26_0"
-    html.search("tr:eq(24) td:eq(0)").attr("id").should == "24_1"
-    html.search("tr:eq(25) td:eq(0)").attr("id").should == "25_3"
+    html = Nokogiri::HTML(File.open(@hoja.ruta)) # {|f| Hpricot f}
+    html.search("tr:eq(1) td:eq(1)").attr("id").value.should == "1_1"
+    html.search("tr:eq(23) td:eq(1)").attr("id").value.should == "23_1"
+    html.search("tr:eq(23) td:eq(2)").attr("id").value.should == "23_4"
+    html.search("tr:eq(24) td:eq(1)").attr("id").value.should == "24_1"
+    html.search("tr:eq(27) td:eq(1)").attr("id").value.should == "27_1"
+    html.search("tr:eq(25) td:eq(1)").attr("id").value.should == "25_2"
+    html.search("tr:eq(25) td:eq(2)").attr("id").value.should == "25_4"
   end
 
 end
