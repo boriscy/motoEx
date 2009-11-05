@@ -8,6 +8,6 @@ public/fotos !pub.txt
 archivos/*
 nbproject
 !pub.txt
-.~lock*
 ejemplos/*.html 
 !ejemplos/example.html
+.~lock*
