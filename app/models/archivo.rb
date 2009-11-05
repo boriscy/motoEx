@@ -9,7 +9,7 @@ class Archivo < ActiveRecord::Base
   validates_presence_of :nombre
   validates_format_of :archivo_excel_file_name, :with => /\A^.+\.xls$\Z/i, :message => 'Solo se permite archivos excel ".xls"'
 
-  attr_accessible :archivo_excel, :nombre, :descripcion
+  attr_accessible :archivo_excel, :nombre, :descripcion, :prelectura
   serialize :lista_hojas
 
   has_attached_file :archivo_excel, :path => "archivos/:id/:basename.xls"

@@ -64,4 +64,10 @@ describe Archivo do
     a.lista_hojas[2].should == "Estereotipo"
   end
 
+  it "debe poder asignar prelectura" do
+    @archivo_params[:prelectura] = 1
+    create_archivo()
+    @archivo.valid?.should == true
+  end
+
 end
