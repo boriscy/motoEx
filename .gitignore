@@ -7,7 +7,7 @@
 public/fotos
 archivos/*
 nbproject
-ejemplos/*.html 
+ejemplos/*.html
 !ejemplos/example.html
 !pub.txt
 .~lock*
