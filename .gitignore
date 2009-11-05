@@ -4,10 +4,10 @@
 *.log
 *.sqlite3
 *~
-public/fotos !pub.txt
+public/fotos
 archivos/*
 nbproject
-!pub.txt
 ejemplos/*.html 
 !ejemplos/example.html
+!pub.txt
 .~lock*
