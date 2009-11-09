@@ -7,11 +7,17 @@ class Hoja < ActiveRecord::Base
 
   attr_accessor :numero_hoja
 
+  # Retorna la ruta en el que esta almacenado el archivo html
+  #   Hoja.first.ruta # => /home/mydir/myrailsapp/files/1/1.html
   def ruta
     File.join(RAILS_ROOT, File.dirname(self.archivo.archivo_excel.path), "#{self.numero}.html")
   end
 
-  # Creación de la Hoja HTML usando PHP
+  # Creación de la Hoja html desde un archivo excel usando PHP
+  # para luego ser utilizado en la edición, el número de hoja es obtenido
+  # del campo *:hoja* del modelo
+  # @param String uno
+  # @param Integer dos
   def crear_hoja_html()
     path = File.join(RAILS_ROOT, "lib", "php", "excel_to_html.php")
     #num = self.numero_hoja if self.numero_hoja
@@ -26,6 +32,7 @@ class Hoja < ActiveRecord::Base
       f.write(html)
       f.close()
       self.nombre = hojas[self.numero]
+      self.archivo.update_attribute(:lista_hojas, hojas) if self.archivo.lista_hojas.nil?
     rescue
       raise "No se pudo guardar el archivo HTML, posible error en #{path}"
     end
@@ -51,7 +58,6 @@ class Hoja < ActiveRecord::Base
         begin
           row[col].set_attribute("id", "#{fila}_#{columna}")
         rescue
-          debugger
           s=0
         end
           # Realizar la prelectura del documento en caso de que este seleccionado

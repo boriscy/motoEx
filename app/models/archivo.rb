@@ -1,6 +1,7 @@
 class Archivo < ActiveRecord::Base
 
   before_create :adicionar_usuario
+  before_save :crear_fecha_modificacion
 
   belongs_to :usuario
   has_many :hojas
@@ -21,14 +22,31 @@ class Archivo < ActiveRecord::Base
 
   validates_attachment_presence :archivo_excel, :message => "Debe ingresar un archivo excel"
 
-  # Recibe un Array y Crea la lista de hojas
-  def asignar_lista_hojas(args)
-      self.lista_hojas = args if args.class == Array 
+  # Metodod para poder buscar una hoja determinada, en caso de que no haya la hoja
+  # crea la hoja que se busca en caso de que no exista
+  def hoja(num=0)
+    h = self.hojas.find_by_numero(num)
+    self.hojas << (h = Hoja.new(:numero => num)) unless h
+    h
   end
 
 protected
+  # Asigna el id del usuario que esta logueado
   def adicionar_usuario
     self.usuario = UsuarioSession.find.record
+  end
+
+  # Crear una fecha de modificación del archivo solo para campos que tienen relevancia
+  # cuando se crean las hojas HTML del archivo excel
+  def crear_fecha_modificacion
+    if self.id
+      old_model = self.class.find(self.id)
+      unless old_model.prelectura == self.prelectura and old_model.archivo_excel_updated_at == self.archivo_excel_updated_at
+        self.fecha_modificacion = Time.zone.now
+      end
+    else
+      self.fecha_modificacion = Time.zone.now
+    end
   end
 
 end

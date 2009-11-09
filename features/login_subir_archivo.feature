@@ -8,4 +8,4 @@ Caracteristica: loguearse y subir archivo para parsear
     Cuando ingreso mi login y password
     Entonces deberia estar logueado
     Y deberia ir a archivos/new
-    Entonces debo ver el archivo
+    Entonces debo ver el archivo con datos validos

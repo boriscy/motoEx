@@ -54,20 +54,38 @@ describe Archivo do
     @archivo.usuario.id.should == 1
   end
 
-  it "debe serializar lista_hojas" do
-    create_archivo()
-    @archivo.asignar_lista_hojas( ["Primera", "Alma", "Estereotipo"] )
-    @archivo.save
-
-    a = Archivo.last
-    a.lista_hojas[0].should == "Primera"
-    a.lista_hojas[2].should == "Estereotipo"
-  end
-
   it "debe poder asignar prelectura" do
     @archivo_params[:prelectura] = 1
     create_archivo()
     @archivo.valid?.should == true
+  end
+
+
+  it "debe guardar fecha_modificacion solo con campos (:prelectura)" do
+    @archivo = create_archivo()
+    fec = @archivo.fecha_modificacion
+    @archivo.update_attribute(:prelectura, true)
+    @archivo.fecha_modificacion.should_not == fec
+  end
+
+  it "debe guardar fecha_modificacion solo con campos (:archivo)" do 
+    @archivo = create_archivo()
+    fec = @archivo.fecha_modificacion
+    archivo = File.join(RAILS_ROOT, 'ejemplos/VentasPrecio2000-2008.xls')
+    up = ActionController::UploadedStringIO.new
+    up.original_path = archivo
+    up.content_type = 'application/vnd.ms-excel'
+    @archivo.archivo_excel = up
+    @archivo.save
+
+    @archivo.fecha_modificacion.should_not == fec
+  end
+
+  it "No debe cambiar la fecha para campos que no son (:prelectura o archivo)" do
+    @archivo = create_archivo()
+    fec = @archivo.fecha_modificacion
+    @archivo.update_attribute(:nombre, "Prueba de cambio")
+    @archivo.fecha_modificacion.to_s.should == fec.to_s
   end
 
 end

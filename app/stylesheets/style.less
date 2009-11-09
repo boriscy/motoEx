@@ -1,11 +1,13 @@
 @background: #FFF; 
 @background2: #EFEFEF;
+@background3: #F9F9F9;
 @border_color: #666666;
 @color: #000;
 @color2: #0A0A0A;
 @color3: #9F9F9F;
 @a_color: #236B8F; 
 @a_hover: #0000FF;
+@red: #FF0000;
 @buscar_color: #595959; /**/
 @tr_background: #C2E0EF; /*Background TR*/
 @tr_selected: #61B5DF;
@@ -92,7 +94,7 @@ form p{
 
 input, select, textarea{
   padding: 2px 3px;
-  background: @background2;
+  background: @background3;
   border: 1px solid @border_color;
   color: @color;
 }
@@ -121,10 +123,6 @@ legend{
 label{
   vertical-align: top;
   font-weight: bold; 
-/*  float:left;
-  width: 7em;
-  text-align: right;
-  margin-right: 1em;*/
   color: @color2;
 }
 .input{
@@ -188,3 +186,39 @@ ul{margin:4px; padding:4px;}
 .red{ color: #FF0000; }
 .b{ font-weight: bold;}
 .markedForDelete{ background-color: #FF7777; }
+
+/*********************************/
+/*Estilos Formtastic*/
+
+.formtastic{
+    ol {
+        padding: 10px 15px;
+        list-style: none;
+    }
+    abbr{ 
+        color: #6AB825; 
+        margin: 0px 2px;
+    }
+    .inline-errors{
+        color: @red;
+        margin: 0px 0px 3px;
+    }
+    .inline-hints{ 
+        color: #5F5F5F;
+        font-size: .9em;
+        font-style: italic;
+        margin: 1px;
+    }
+    li{
+        margin: 10px 4px;
+    }
+    label{ float: left }
+    fieldset{ border: 1px solid #7f7f7f;}
+    fieldset.buttons{
+        padding: 0px;
+        border: none;
+        ol{padding: 5px; margin: 0px; }
+        li{padding: 0px; margin: 0px; }
+    }
+}
+

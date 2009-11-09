@@ -1,4 +1,7 @@
 class ArchivosController < ApplicationController
+
+  before_filter :revisar_permiso
+
   # GET /archivos
   # GET /archivos.xml
   def index
@@ -14,6 +17,7 @@ class ArchivosController < ApplicationController
   # GET /archivos/1.xml
   def show
     @archivo = Archivo.find(params[:id], :include => :hojas)
+    @archivo.hojas << Hoja.new if @archivo.hojas.size <= 0
 
     respond_to do |format|
       format.html # show.html.erb

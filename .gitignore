@@ -11,3 +11,4 @@ ejemplos/*.html
 !ejemplos/example.html
 !pub.txt
 .~lock*
+doc/app/*

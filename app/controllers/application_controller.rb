@@ -27,7 +27,7 @@ protected
 
   # Fución que permite verificar el permiso de un usuario
   def revisar_permiso
-    redirect_to "/" unless current_user
+    redirect_to "/login" unless current_user
   end
 
 end

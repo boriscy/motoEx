@@ -7,10 +7,21 @@ describe Hoja do
       :numero => 0
     }
     @archivo = "ejemplos/example.xls"
+    Archivo.any_instance.stubs(:valid?).returns(true)
+    Archivo.any_instance.stubs(:update_attribute).with(:lista_hojas, kind_of(Array))
 
     @path = mock("path", :path => @archivo)
     @archivo_mock = mock_model(Archivo, :archivo_excel_file_name => File.basename(@archivo), :prelectura => false, :archivo_excel => @path)
+    @archivo_mock.stub!(:lista_hojas).and_return(mock("lista_hojas", :nil? => true))
+    @archivo_mock.stub!(:valid?).and_return(true)
+    @archivo_mock.stub!(:update_attribute).with(:lista_hojas, kind_of(Array)).and_return(true)
     Hoja.any_instance.stubs(:archivo).returns(@archivo_mock)
+
+    @usuario_mock = mock_model(Usuario, :id => 1, :nombre => 'Juan', :valid? => true)
+    Usuario.stub!(:find).with(kind_of(Fixnum)).and_return(@usuario_mock)
+    @us = mock("record", :record => @usuario_mock)
+    UsuarioSession.stub!(:find).and_return(@us)
+
   end
 
   it "should create a new instance given valid attributes" do
@@ -66,5 +77,6 @@ describe Hoja do
     html.search("tr:eq(36) td:eq(5)").inner_text.should == excel.cell(37, "F").to_s
 
   end
+
 
 end

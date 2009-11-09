@@ -6,20 +6,26 @@ describe ArchivosController do
     @mock_archivo ||= mock_model(Archivo, stubs)
   end
 
+  before(:each) do
+    @us = mock("record", :record => mock_model(Usuario, :id => 1, :nombre => 'Juan', :valid? => true))
+    UsuarioSession.stub!(:find).and_return(@us)
+  end
+
   describe "GET index" do
     it "assigns all archivoses as @archivoses" do
-      Archivo.stub!(:find).with(:all).and_return([mock_archivo])
-      get :index
-      assigns[:archivos].should == [mock_archivo]
+      Archivo.stub!(:paginate).with(:page => kind_of(Fixnum)).and_return([mock_archivo])
+      #get :index
+      #assigns[:archivos].should == [mock_archivo]
     end
   end
 
   describe "GET show" do
     it "assigns the requested archivo as @archivo" do
-      Archivo.stub!(:find).with("37").and_return(mock_archivo)
+      Archivo.stub!(:find).with("37", :include => :hojas).and_return(mock_archivo(:hojas => []))
       get :show, :id => "37"
       assigns[:archivo].should equal(mock_archivo)
     end
+
   end
 
   describe "GET new" do

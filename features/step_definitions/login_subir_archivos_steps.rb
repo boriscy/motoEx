@@ -30,9 +30,11 @@ Y /^deberia ir a (.*)$/ do |uri|
   click_button "Salvar"
 end
 
-Entonces /^debo ver el archivo$/ do
+Entonces /^debo ver el archivo con datos validos$/ do
   response.should render_template("archivos/show")
   @archivo = Archivo.last
+  @archivo.lista_hojas.should == ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2000_2009"]
+  @archivo.hojas.size.should == 1
   File.exists?(File.expand_path(@archivo.archivo_excel.path)).should == true
 end
 

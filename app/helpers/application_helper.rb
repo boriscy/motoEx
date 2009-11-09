@@ -18,27 +18,27 @@ module ApplicationHelper
 
 end
 
-ActionView::Helpers::FormBuilder.class_eval do
-  def error_messages(options = {})
-    unless @object.errors.empty?
-      text = "<h2>#{I18n.t 'activerecord.errors.template.body'}</h2>"
-      text << "<p class=\"red b\">#{I18n.t 'activerecord.errors.template.text'}</p>"
-      @template.content_tag(:div, text, :class => "errorExplanation", :id => "errorExplanation")
-    end
-  end
-end
-
-# Cambia la forma de presentar los errores
-ActionView::Base.field_error_proc = Proc.new do |html_tag, instance| 
-  unless html_tag =~ /^<label/ 
-    if instance.error_message.kind_of?(Array)
-      text = %(#{html_tag}<span class="validation-error"> #{instance.error_message.join(',')}</span>)
-    else  
-      text = %(#{html_tag}<span class="validation-error"> #{instance.error_message}</span>) 
-    end
-    %(<div class="fieldWithErrors">#{text}</div>)
-  else
-    html_tag
-  end
-end 
-
+#ActionView::Helpers::FormBuilder.class_eval do
+#  def error_messages(options = {})
+#    unless @object.errors.empty?
+#      text = "<h2>#{I18n.t 'activerecord.errors.template.body'}</h2>"
+#      text << "<p class=\"red b\">#{I18n.t 'activerecord.errors.template.text'}</p>"
+#      @template.content_tag(:div, text, :class => "errorExplanation", :id => "errorExplanation")
+#    end
+#  end
+#end
+#
+## Cambia la forma de presentar los errores
+#ActionView::Base.field_error_proc = Proc.new do |html_tag, instance| 
+#  unless html_tag =~ /^<label/ 
+#    if instance.error_message.kind_of?(Array)
+#      text = %(#{html_tag}<span class="validation-error"> #{instance.error_message.join(',')}</span>)
+#    else  
+#      text = %(#{html_tag}<span class="validation-error"> #{instance.error_message}</span>) 
+#    end
+#    %(<div class="fieldWithErrors">#{text}</div>)
+#  else
+#    html_tag
+#  end
+#end 
+#
