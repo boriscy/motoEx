@@ -10,7 +10,7 @@ class Archivo < ActiveRecord::Base
   validates_presence_of :nombre
   validates_format_of :archivo_excel_file_name, :with => /\A^.+\.xls$\Z/i, :message => 'Solo se permite archivos excel ".xls"'
 
-  attr_accessible :archivo_excel, :nombre, :descripcion, :prelectura
+  attr_accessible :archivo_excel, :nombre, :descripcion, :prelectura, :archivo_excel_updated_at
   serialize :lista_hojas
 
   has_attached_file :archivo_excel, :path => "archivos/:id/:basename.xls"
@@ -41,7 +41,8 @@ protected
   def crear_fecha_modificacion
     if self.id
       old_model = self.class.find(self.id)
-      unless old_model.prelectura == self.prelectura and old_model.archivo_excel_updated_at == self.archivo_excel_updated_at
+      test = false
+      if File.atime(old_model.archivo_excel.path) != File.atime(self.archivo_excel.path) or old_model.prelectura != self.prelectura
         self.fecha_modificacion = Time.zone.now
       end
     else
