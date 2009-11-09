@@ -2,6 +2,7 @@ class Archivo < ActiveRecord::Base
 
   before_create :adicionar_usuario
   before_save :crear_fecha_modificacion
+  after_create :adicionar_fecha_archivo
 
   belongs_to :usuario
   has_many :hojas
@@ -30,6 +31,11 @@ class Archivo < ActiveRecord::Base
     h
   end
 
+  # Metodo que permite actualizar la fecha del archivo
+  def actualizar_fecha_archivo()
+    self.fecha_archivo = File.atime(self.archivo_excel.path) if self.id
+  end
+
 protected
   # Asigna el id del usuario que esta logueado
   def adicionar_usuario
@@ -42,12 +48,17 @@ protected
     if self.id
       old_model = self.class.find(self.id)
       test = false
-      if File.atime(old_model.archivo_excel.path) != File.atime(self.archivo_excel.path) or old_model.prelectura != self.prelectura
+      unless old_model.prelectura == self.prelectura
         self.fecha_modificacion = Time.zone.now
       end
     else
       self.fecha_modificacion = Time.zone.now
     end
+  end
+
+  # Adiciona la fecha del archivo solo cuando lo salvo
+  def adicionar_fecha_archivo
+    self.fecha_archivo = File.atime(self.archivo_excel.path)
   end
 
 end

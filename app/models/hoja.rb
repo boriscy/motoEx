@@ -13,17 +13,17 @@ class Hoja < ActiveRecord::Base
     File.join(RAILS_ROOT, File.dirname(self.archivo.archivo_excel.path), "#{self.numero}.html")
   end
 
-  # Creación de la Hoja html desde un archivo excel usando PHP
+  # Creación de la hoja html desde un archivo excel usando PHP
   # para luego ser utilizado en la edición, el número de hoja es obtenido
-  # del campo *:hoja* del modelo
-  # @param String uno
-  # @param Integer dos
+  # del campo *:hoja* del modelo *Hoja*
   def crear_hoja_html()
     path = File.join(RAILS_ROOT, "lib", "php", "excel_to_html.php")
     #num = self.numero_hoja if self.numero_hoja
     self.numero ||= 0
 
     begin
+      # actualizacion de la fecha de archivo
+      self.archivo.actualizar_fecha_archivo
       texto = `php #{path} '#{File.expand_path(self.archivo.archivo_excel.path)}' #{self.numero} '#{PATRON_SEPARACION}'`
       hojas, html = texto.split(PATRON_SEPARACION)
       hojas = ActiveSupport::JSON.decode(hojas)
@@ -33,6 +33,7 @@ class Hoja < ActiveRecord::Base
       f.close()
       self.nombre = hojas[self.numero]
       self.archivo.update_attribute(:lista_hojas, hojas) if self.archivo.lista_hojas.nil?
+      self.archivo.save
     rescue
       raise "No se pudo guardar el archivo HTML, posible error en #{path}"
     end
