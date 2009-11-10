@@ -27,6 +27,7 @@ Rails::Initializer.run do |config|
   config.gem "roo"
   config.gem "hpricot"
   config.gem "formtastic"
+  # config.gem "nokogiri"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

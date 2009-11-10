@@ -26,12 +26,18 @@ class Hoja < ActiveRecord::Base
       hojas, html = texto.split(PATRON_SEPARACION)
       hojas = ActiveSupport::JSON.decode(hojas)
       archivo = File.dirname(self.archivo.archivo_excel.path) + "/#{self.numero}.html"
+
       f = File.new(File.join(RAILS_ROOT, archivo) ,"w+")
       f.write(html)
       f.close()
       self.nombre = hojas[self.numero]
-      self.archivo.lista_hojas = hojas if self.archivo.lista_hojas.nil?
-      self.archivo.save
+      # Actualización de la lista de hojas de archivo en caso de que la fecha de modificacion sea diferente
+      unless self.archivo.fecha_modificacion == self.fecha_archivo
+        unless self.archivo.lista_hojas == hojas
+          return false unless self.archivo.update_attribute(:lista_hojas, hojas)
+        end
+      end
+      self.fecha_archivo = self.archivo.fecha_modificacion
     rescue
       raise "No se pudo guardar el archivo HTML, posible error en #{path}"
     end
@@ -54,11 +60,7 @@ class Hoja < ActiveRecord::Base
       cols.times do |j|
         columna = j + 1
         unless @areas["#{fila}-#{columna}"]
-        begin
           row[col].set_attribute("id", "#{fila}_#{columna}")
-        rescue
-          s=0
-        end
           # Realizar la prelectura del documento en caso de que este seleccionado
           prelectura(row[col], fila, columna) if self.archivo.prelectura
           crear_merged(row[col], fila, columna)
@@ -71,6 +73,11 @@ class Hoja < ActiveRecord::Base
     f.write(html.html)
     f.close
 
+  end
+
+  # Presenta el html de la hoja
+  def html
+    File.open(self.ruta).inject(""){|text, v| text << v }
   end
   
 private
@@ -106,5 +113,25 @@ private
     excel = Excel.new(File.expand_path(self.archivo.archivo_excel.path))
     excel.default_sheet = self.numero + 1
     excel
+  end
+
+###############################################################
+  # Metodos de la instancia Hoja
+  class << self
+    # Realiza la busqueda de una hoja de lo contrario la crea
+    # y de ser necesario actualiza el HTML de la hoja
+    # @param Fixnum archivo_id # Archivo
+    # @param Fixnum numero # Número de hoja
+    def buscar_o_crear(archivo_id, numero=0)
+      hoja = self.find_by_archivo_id_and_numero(archivo_id, numero)
+      if hoja.nil?
+        hoja = Hoja.create(:numero => numero, :archivo_id => archivo_id)
+      elsif hoja and hoja.fecha_archivo != hoja.archivo.fecha_modificacion
+        hoja.fecha_archivo = hoja.archivo.fecha_modificacion
+        hoja.crear_hoja_html()
+        hoja.save
+      end
+      hoja
+    end
   end
 end

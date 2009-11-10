@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :hojas
 
+
+  map.hoja '/hoja', :controller => :hojas, :action => :hoja, :conditions => {:method => :post}
   map.resources :archivos
 
   # The priority is based upon order of creation: first created -> highest priority.

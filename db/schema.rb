@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091109164356) do
+ActiveRecord::Schema.define(:version => 20091110144310) do
 
   create_table "archivos", :force => true do |t|
     t.integer  "usuario_id"
@@ -27,9 +27,10 @@ ActiveRecord::Schema.define(:version => 20091109164356) do
   end
 
   create_table "hojas", :force => true do |t|
-    t.integer "archivo_id"
-    t.string  "nombre"
-    t.integer "numero"
+    t.integer  "archivo_id"
+    t.string   "nombre"
+    t.integer  "numero"
+    t.datetime "fecha_archivo"
   end
 
   create_table "usuarios", :force => true do |t|

@@ -1,21 +1,27 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Hoja do
+
+  def mock_archivo
+    @archivo = "ejemplos/example.xls"
+    Archivo.any_instance.stubs(:valid?).returns(true)
+    Archivo.any_instance.stubs(:update_attribute).with(:lista_hojas, kind_of(Array))
+    @path = mock("path", :path => @archivo)
+    @archivo_mock = mock_model(Archivo, :id => 1, :archivo_excel_file_name => File.basename(@archivo), :prelectura => false, :archivo_excel => @path)
+    @archivo_mock.stub!(:lista_hojas).and_return(mock("lista_hojas", :nil? => true))
+    @archivo_mock.stub!(:valid?).and_return(true)
+    @archivo_mock.stub!(:update_attribute).with(:lista_hojas, kind_of(Array)).and_return(true)
+    @archivo_mock.stub!(:lista_hojas).and_return(nil)
+    @archivo_mock.stub!(:fecha_modificacion).and_return(Time.now)
+    @archivo_mock.stub!(:save).and_return(true)
+  end
+
   before(:each) do
     @valid_attributes = {
       :archivo_id => 1,
       :numero => 0
     }
-    @archivo = "ejemplos/example.xls"
-    Archivo.any_instance.stubs(:valid?).returns(true)
-    Archivo.any_instance.stubs(:update_attribute).with(:lista_hojas, kind_of(Array))
-
-    @path = mock("path", :path => @archivo)
-    @archivo_mock = mock_model(Archivo, :archivo_excel_file_name => File.basename(@archivo), :prelectura => false, :archivo_excel => @path)
-    @archivo_mock.stub!(:lista_hojas).and_return(mock("lista_hojas", :nil? => true))
-    @archivo_mock.stub!(:valid?).and_return(true)
-    @archivo_mock.stub!(:lista_hojas=)
-    @archivo_mock.stub!(:save).and_return(true)
+    mock_archivo()
     Hoja.any_instance.stubs(:archivo).returns(@archivo_mock)
 
     @usuario_mock = mock_model(Usuario, :id => 1, :nombre => 'Juan', :valid? => true)
@@ -79,5 +85,35 @@ describe Hoja do
 
   end
 
+  describe "Metodos que dependen de Archivo" do
+
+
+    it "debe crear si no hay hoja en el archivo y asignar la fecha modificacion" do
+      now = Time.zone.now + 10
+      @archivo_mock.stubs(:fecha_modificacion).returns(now)
+      Hoja.any_instance.stubs(:archivo).returns(@archivo_mock)
+      @hoja = Hoja.buscar_o_crear(1, 0)
+      @hoja.fecha_archivo.to_s.should == now.to_s
+    end
+
+    it "debe actualizar la fecha de modificacion y el archivo si el archivo cambia su fecha" do
+      @hoja = Hoja.create(@valid_attributes)
+      @hoja2 = Hoja.buscar_o_crear(1, 0)
+      @hoja.fecha_archivo.should == @hoja2.fecha_archivo
+
+      file_time = File.atime(@hoja.ruta)
+      
+      now = @hoja.fecha_archivo
+      sleep(1)
+      @archivo_mock.stubs(:fecha_modificacion).returns((now + 10))
+      Hoja.any_instance.stubs(:archivo).returns(@archivo_mock)
+      @hoja = Hoja.buscar_o_crear(1, 0)
+      @hoja.fecha_archivo.to_s.should_not == now.to_s
+
+      # test para poder ver lo hora del archivo, realizado en este mismo caso debido a que los tests se han vuelto
+      # muy intensivos en el procesador (Largos)
+      file_time.to_s.should_not == File.atime(@hoja.ruta).to_s
+    end
+  end
 
 end
