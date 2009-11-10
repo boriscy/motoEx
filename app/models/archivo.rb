@@ -2,7 +2,6 @@ class Archivo < ActiveRecord::Base
 
   before_create :adicionar_usuario
   before_save :crear_fecha_modificacion
-  after_create :adicionar_fecha_archivo
 
   belongs_to :usuario
   has_many :hojas
@@ -15,6 +14,7 @@ class Archivo < ActiveRecord::Base
   serialize :lista_hojas
 
   has_attached_file :archivo_excel, :path => "archivos/:id/:basename.xls"
+
 
  # Validacion de tipos de contenido para excel
   validates_attachment_content_type :archivo_excel, :content_type => ['application/vnd.ms-excel'],
@@ -48,7 +48,7 @@ protected
     if self.id
       old_model = self.class.find(self.id)
       test = false
-      unless old_model.prelectura == self.prelectura
+      unless old_model.prelectura == self.prelectura and old_model.archivo_excel.updated_at == self.archivo_excel.updated_at
         self.fecha_modificacion = Time.zone.now
       end
     else
@@ -56,9 +56,5 @@ protected
     end
   end
 
-  # Adiciona la fecha del archivo solo cuando lo salvo
-  def adicionar_fecha_archivo
-    self.fecha_archivo = File.atime(self.archivo_excel.path)
-  end
 
 end

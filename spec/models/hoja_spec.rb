@@ -14,8 +14,7 @@ describe Hoja do
     @archivo_mock = mock_model(Archivo, :archivo_excel_file_name => File.basename(@archivo), :prelectura => false, :archivo_excel => @path)
     @archivo_mock.stub!(:lista_hojas).and_return(mock("lista_hojas", :nil? => true))
     @archivo_mock.stub!(:valid?).and_return(true)
-    @archivo_mock.stub!(:update_attribute).with(:lista_hojas, kind_of(Array)).and_return(true)
-    @archivo_mock.stub!(:actualizar_fecha_archivo)
+    @archivo_mock.stub!(:lista_hojas=)
     @archivo_mock.stub!(:save).and_return(true)
     Hoja.any_instance.stubs(:archivo).returns(@archivo_mock)
 
