@@ -1,3 +1,4 @@
+# Para paperclip
 class AddArchivosFechaModificacion < ActiveRecord::Migration
   def self.up
     add_column :archivos, :fecha_modificacion, :datetime
