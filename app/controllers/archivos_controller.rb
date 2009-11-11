@@ -16,9 +16,9 @@ class ArchivosController < ApplicationController
   # GET /archivos/1
   # GET /archivos/1.xml
   def show
-    @archivo = Archivo.find(params[:id], :include => :hojas)
-    @archivo.hojas << Hoja.new if @archivo.hojas.size <= 0
+    @archivo = Archivo.find(params[:id])
 
+    @hoja = Hoja.buscar_o_crear(@archivo.id, 0)
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @archivo }

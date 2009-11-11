@@ -13,17 +13,27 @@ describe ArchivosController do
 
   describe "GET index" do
     it "assigns all archivoses as @archivoses" do
-      Archivo.stub!(:paginate).with(:page => kind_of(Fixnum)).and_return([mock_archivo])
-      #get :index
-      #assigns[:archivos].should == [mock_archivo]
+#      Archivo.stub!(:paginate).with(:page => kind_of(Fixnum)).and_return([mock_archivo])
+#      get :index
+#      assigns[:archivos].should == [mock_archivo]
     end
   end
 
   describe "GET show" do
     it "assigns the requested archivo as @archivo" do
-      Archivo.stub!(:find).with("37", :include => :hojas).and_return(mock_archivo(:hojas => []))
+      Archivo.stub!(:find).with("37").and_return(mock_archivo(:id => 37))
+      @mock_hoja = mock_model(Hoja, :id => 1)
+      Hoja.stub!(:buscar_o_crear).with(37, 0).and_return(@mock_hoja)
       get :show, :id => "37"
       assigns[:archivo].should equal(mock_archivo)
+    end
+
+    it "assings the request @hoja" do
+      Archivo.stub!(:find).with("37").and_return(mock_archivo(:id => 37))
+      @mock_hoja = mock_model(Hoja, :id => 1)
+      Hoja.stub!(:buscar_o_crear).with(37, 0).and_return(@mock_hoja)
+      get :show, :id => "37"
+      assigns[:hoja].should equal(@mock_hoja)
     end
 
   end
