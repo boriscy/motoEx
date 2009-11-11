@@ -638,7 +638,8 @@ class Spreadsheet_Excel_Reader {
 							$val = "<a href=\"$link\">$val</a>";
 						}
 					}
-					$out .= "<nobr>".nl2br($val)."</nobr>";
+					//$out .= "<nobr>".nl2br($val)."</nobr>";
+					$out .= nl2br($val);
 					$out .= "</td>";
 				}
 			}

@@ -20,10 +20,9 @@ ActiveRecord::Schema.define(:version => 20091110144310) do
     t.datetime "updated_at"
     t.string   "archivo_excel_file_name"
     t.integer  "archivo_excel_file_size"
-    t.boolean  "prelectura",               :default => false
     t.datetime "archivo_excel_updated_at"
+    t.boolean  "prelectura",               :default => false
     t.datetime "fecha_modificacion"
-    t.datetime "fecha_archivo"
   end
 
   create_table "hojas", :force => true do |t|
