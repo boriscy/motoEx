@@ -77,7 +77,7 @@ class ArchivosController < ApplicationController
 
   # DELETE /archivos/1
   # DELETE /archivos/1.xml
-  def destroy
+  def destroy 
     @archivo = Archivo.find(params[:id])
     @archivo.destroy
 
