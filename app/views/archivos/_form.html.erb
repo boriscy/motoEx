@@ -5,13 +5,13 @@
 <% semantic_form_for(@archivo, :html => {:multipart => true}) do |form| %>
   <%# f.error_messages %>
   <% form.inputs :name => 'Archivo' do %>
-    <%= form.input :nombre %>
+    <%= form.input :nombre, :required => true %>
     <%= form.input :descripcion, :label => 'Descripción', :input_html => {:rows => 5} %>
     <%= form.input :prelectura, :hint => 'Permite leer archivos en los cuales hay formatos no comunes, (Mas lento)' %>
-    <%= form.input :archivo_excel, :as => :file, :input_html => {:size => 50} %>
+    <%= form.input :archivo_excel, :as => :file, :input_html => {:size => 50}, :required => true %>
   <% end %>
   <% form.buttons do %>
-    <%= form.commit_button :button_html => {:value => "Salvar", :class => "ui-state-active"} %>
+    <%= form.commit_button "Salvar", :button_html => {:class => "ui-state-active"} %>
   <% end %>
 <% end %>
 

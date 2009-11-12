@@ -1,12 +1,15 @@
-<%= error_messages_for :usuario_session %>
-<% form_for @usuario_session do |f| %>
-  <div>
-    <%= f.label :login, "Usuario:" %><br/>
-    <%= f.text_field :login %>
-  </div>
-  <div>
-    <%= f.label :password, "Contraseña:" %><br/>
-    <%= f.password_field :password %>
-  </div>
-  <div><%= f.submit "Ingresar", :class => 'ui-state-active' %></div>
+<style type="text/css" media="screen">
+  label{ width: 8em;}
+  fieldset{ width: 40em;}
+</style>
+<%# error_messages_for :usuario_session %>
+
+<% semantic_form_for(@usuario_session) do |f| %>
+  <% f.inputs :name => "Autenticación" do %>
+    <%= f.input :login, :required => true, :label => 'Usuario:', :input_html => { :size => 30} %>
+    <%= f.input :password, :required => true,:label => 'Contraseña:' , :input_html => { :size => 30} %>
+  <% end %>
+  <% f.buttons do %>
+    <%= f.commit_button "Ingresar", :button_html => {:class => "ui-state-active"} %>
+  <% end %>
 <% end %>

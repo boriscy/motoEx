@@ -10,7 +10,7 @@
   </tr>
 
 <% @archivos.each do |archivo| %>
-  <tr>
+  <tr class="<%= cycle("odd", "even") %>">
     <td><%=h archivo.nombre %></td>
     <td><%=h archivo.descripcion.size > 70 ? archivo.descripcion[0, 70] + '...' : archivo.descripcion %></td>
     <td><%=h archivo.usuario %></td>

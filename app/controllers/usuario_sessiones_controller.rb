@@ -15,7 +15,7 @@ class UsuarioSessionesController < ApplicationController
       flash[:notice] = "Bienvenido Al Sistema de Almacenes."
       redirect_to usuario_url(current_user)
     else
-      flash[:notice] = "Usuario y/o Contraseña Incorrectos."
+      flash[:error] = "Usuario y/o Contraseña Incorrectos."
       render :action => 'new'
     end
   end

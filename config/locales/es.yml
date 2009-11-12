@@ -161,6 +161,8 @@ es:
     am: "am"
     pm: "pm"
 
+  #####################################################
+  # Authlogic
   authlogic:
     error_messages:
       login_blank: "no debe estar en blanco"
@@ -173,7 +175,7 @@ es:
       not_active: "Su cuenta no esta activa"
       not_confirmed: "Su cuenta no ha sido confirmada"
       not_approved: "Su cuenta no fue aprovada"
-      no_authentication_details: "Usted no proveio ningún detalle para la autentu¡icación."
+      no_authentication_details: "Usted no proveio ningún detalle para la autentuicación."
     models:
       user_session: "UsuarioSession (o lo que este usando)"
     attributes:
@@ -193,3 +195,12 @@ es:
       two_words_connector: " y "
       last_word_connector: " y "
 
+  ########################
+  # Formtastic
+  formtastic:
+    "yes": "Si"
+    "no": "No"
+    create: "Crear"
+    save: "Salvar"
+    submit: "Ingresar"
+    required: "Requerido"

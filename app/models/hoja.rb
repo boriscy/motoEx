@@ -106,7 +106,11 @@ private
   # leer sus datos con el php-excel-reader
   def prelectura(cell, fila, col)
     @excel ||= init_excel()
-    cell.inner_html = "#{@excel.cell(fila, col)}"
+    begin
+      cell.inner_html = "#{@excel.cell(fila, col)}"
+    rescue
+      cell.inner_html = ""
+    end
   end
 
   def init_excel

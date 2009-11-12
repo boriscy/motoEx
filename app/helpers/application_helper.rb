@@ -16,6 +16,21 @@ module ApplicationHelper
     messages
   end
 
+  def odd_even()
+    cycle("odd", "even")
+  end
+
+  def cycles(*list)
+    unless list == @list
+      @pos = 0
+      @list = list
+    end
+    @pos = 0 if @pos >= @list.size
+    @pos ||= 0
+    @pos += 1
+    list[@pos - 1]
+  end
+
 end
 
 #ActionView::Helpers::FormBuilder.class_eval do

@@ -7,7 +7,7 @@
 @color3: #9F9F9F;
 @a_color: #236B8F; 
 @a_hover: #0000FF;
-@red: #FF0000;
+@red: #E00029;
 @buscar_color: #595959; /**/
 @tr_background: #C2E0EF; /*Background TR*/
 @tr_selected: #61B5DF;
@@ -28,10 +28,17 @@ a { color: @a_color; text-decoration: underline; cursor: pointer; }
 a:hover { color: @a_hover; text-decoration: none; }
 #flashNotice{
   color: @a_color;
-  font-size: 1.8em;
+  font-size: 1.5em;
   font-weight: bold;
   margin: 10px;
 }
+#flashError{
+  color: @red;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 10px;
+}
+
 .fieldWithErrors {
   padding: 2px;
   background-color: red;
@@ -138,6 +145,8 @@ div#cont{
   text-align:left;
   margin:auto;
 }
+
+
 
 /*Menu*/
 @a_menu_color: #5f5f5f;
