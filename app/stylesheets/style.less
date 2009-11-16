@@ -12,6 +12,12 @@
 @tr_background: #C2E0EF; /*Background TR*/
 @tr_selected: #61B5DF;
 @table_border_color: #8f8f8f;
+@col1: #3B3B3B;
+@col2: #777777;
+@col3: #999999;
+@col4: #4A4A4A;
+@color_hi:#FFF8D5;
+@color_hi2:#E1D07A;
 
 body{
   padding: 0px;
@@ -102,7 +108,9 @@ form p{
 input, select, textarea{
   padding: 2px 3px;
   background: @background3;
-  border: 1px solid @border_color;
+  border-width: 1px;
+  border_style: solid;
+  border-color: @col1 @col2 @col3 @col4; /* @border_color;*/
   color: @color;
 }
 input[type="submit"] {
@@ -113,8 +121,11 @@ input[type="submit"] {
 }
 input[type="file"] {
   color: @color;
-  background-color: @background2;
-  border: 1px solid @border_color;
+  border-width: 1px;
+  border_style: solid;
+  border-color: @col1 @col2 @col3 @col4;
+  /*background-color: @background2;
+  border: 1px solid @border_color;*/
 }
 .num{
   text-align:right;
@@ -125,6 +136,7 @@ input.num{
 }
 legend{
   font-weight: bold;
+  padding: 4px 12px;
 }
 
 label{
@@ -134,6 +146,10 @@ label{
 }
 .input{
   padding: 4px;
+}
+input:focus, textarea:focus{
+  background-color: @color_hi;
+  border: 1px solid @color_hi2;
 }
 
 .i{
@@ -222,7 +238,7 @@ ul{margin:4px; padding:4px;}
         margin: 10px 4px;
     }
     label{ float: left }
-    fieldset{ border: 1px solid #7f7f7f;}
+    fieldset{ border: 1px solid @col3;}
     fieldset.buttons{
         padding: 0px;
         border: none;
