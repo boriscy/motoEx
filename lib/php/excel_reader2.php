@@ -628,7 +628,10 @@ class Spreadsheet_Excel_Reader {
 					if ($this->colhidden($col,$sheet)) {
 						$style .= "display:none;";
 					}
-					$out .= "\n\t\t<td style=\"$style\"" . ($colspan > 1?" colspan=$colspan":"") . ($rowspan > 1?" rowspan=$rowspan":"") . ">";
+					//$out .= "\n\t\t<td style=\"$style\"" . ($colspan > 1?" colspan=$colspan":"") . ($rowspan > 1?" rowspan=$rowspan":"") . ">";
+					//para que genere el id
+					$out .= "\n\t\t<td id='".$sheet."_".$row."_".$col."' style=\"$style\"" . ($colspan > 1?" colspan=$colspan":"") . ($rowspan > 1?" rowspan=$rowspan":"") . ">";
+					
 					$val = $this->val($row,$col,$sheet);
 					if ($val=='') { $val="&nbsp;"; }
 					else { 

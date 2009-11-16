@@ -1,6 +1,6 @@
 class Hoja < ActiveRecord::Base
   before_create :crear_hoja_html
-  after_save :asignar_ids_html
+  after_save :realizar_prelectura, :if => :prelectura?
 
 
   belongs_to :archivo
@@ -46,7 +46,7 @@ class Hoja < ActiveRecord::Base
   # Ejecuta procesos sobre la hoja creada de HTML
   # Se usa fila y columna con ids que parten del 1_1 y no del 0_0
   # debido al manejo que eraliza roo
-  def asignar_ids_html
+  def realizar_prelectura
 
     @areas = {}
     html = File.open(self.ruta){|f| Hpricot(f)}
@@ -60,7 +60,7 @@ class Hoja < ActiveRecord::Base
       cols.times do |j|
         columna = j + 1
         unless @areas["#{fila}-#{columna}"]
-          row[col].set_attribute("id", "#{fila}_#{columna}")
+          #row[col].set_attribute("id", "#{fila}_#{columna}")
           # Realizar la prelectura del documento en caso de que este seleccionado
           prelectura(row[col], fila, columna) if self.archivo.prelectura
           crear_merged(row[col], fila, columna)
@@ -81,7 +81,9 @@ class Hoja < ActiveRecord::Base
   end
   
 private
-
+  def prelectura?
+    self.archivo.prelectura
+  end
   # Crea un áreas para poder identificar en caso de colspan
   # y rowspan cuando se asignan los ids a las celdas "td"
   # @param Hpricot::Elem cell

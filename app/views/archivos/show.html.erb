@@ -1,24 +1,2 @@
-<div>
-  <b>Nombre:</b>
-  <%=h @archivo.nombre %>
-</div>
-
-
-<p>
-  <b>Descripcion:</b>
-  <%=h @archivo.descripcion %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%=h @archivo.usuario %>
-</p>
-
-<p>
-  <b>Archivo excel:</b>
-  <%=h @archivo.archivo_excel_file_name %>
-</p>
-<%= @hoja.html %>
-
-<%= link_to 'Editar', edit_archivo_path(@archivo) %> |
 <%= link_to 'Listado', archivos_path %>
+<%= render :partial => 'detalle' %>

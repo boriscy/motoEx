@@ -1,3 +1,313 @@
-<div>
-  
+<!--Construye los divs para cada hoja obteniendo el contenido html por ajax-->
+<!--Si el div ya tiene contenido html no carga por ajax solo lo muestra -->
+
+<%= javascript_include_tag "tabla/spreadsheet", "tabla/jquery.scrollTo-min","tabla/Sly-min" %>
+
+<div id="spreadsheet" style="text-align: default;">
+  <div id="doc-info" class="sheet-doc-info" style="top:0px;">
+    <h2><%= @archivo.nombre %></h2>
+    <h3><%= @archivo.archivo_excel_file_name %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= @archivo.archivo_excel_file_size / 1024 %> KB<h3>
+  </div>
+  <div id="toolbar" class="sheet-toolbar">
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td><a href="#"><label class="opt_save" /></a> </td>
+        <td><a href="#"><label class="opt_undo" /></a> </td>
+        <td><a href="#"><label class="opt_redo" /></a> </td>
+        <td><a href="#"><label class="opt_bold" /></a> </td>
+        <td><a href="#"><label class="opt_italic" /></a> </td>
+        <td><a href="#"><label class="opt_underline" /></a> </td>
+        <td><a href="#"><label class="opt_rowspan" /></a> </td>
+      </tr>
+    </table>
+  </div>
+  <div id="sheets" class="sheet-sheets" style="border: 0px">
+    <% @archivo.lista_hojas.each_with_index do |hojanombre, i| %>
+      <% if i == 0 %>
+        <div id="sheet-<%= i %>" class="sheet visible"><%= @hoja.html %></div>
+      <% else %>
+        <div id="sheet-<%= i %>" class="sheet"></div>
+      <% end %>
+    <% end %>
+    <div class="scroll">
+      <table><tr>
+        <td><label>&lt;&lt;</label></td>
+        <td><label>&lt;</label></td>
+        <td><label>&gt;</label></td>
+        <td><label>&gt;&gt;</label></td>
+      </tr></table>
+    </div>
+    <div class="lista_hojas" id="lista_hojas">
+      <table><tr>
+        <% @archivo.lista_hojas.each_with_index do |hoja, i| %>
+          <td><a href="#sheet-<%= i %>" <%= 'class="active"' if i == 0 %> ><span><%= hoja || "Hoja #{i + 1}" %></span></a></td>
+        <% end %>
+      </tr></table>
+    </div>
+  </div>
 </div>
+<style type='text/css'>
+  .sheet {
+    position: absolute;
+    overflow:auto;
+    right:0px;
+    left:0px;
+    top:220px;
+    bottom:40px;
+    padding: 0px;
+    display: none;
+  }
+  .visible {
+    display: block;
+  }
+  .sheet table {
+    border-style:ridge;
+    border-width:1;
+    border-collapse:collapse;
+    font-family:sans-serif;
+    font-size:12px;
+  }
+  .sheet table thead th, .sheet table tbody th {
+    background:#CCCCCC;
+    border-style:ridge;
+    border-width:1;
+    text-align: center;
+    vertical-align:bottom;
+  }
+  .sheet table tbody th {
+    text-align:center;
+    width:20px;
+  }
+  .sheet table tbody td {
+    vertical-align:bottom;
+  }
+  .sheet table tbody td {
+    padding: 0 3px;
+    border: 1px solid #EEEEEE;
+  }
+  
+  .sheet-cols{
+    position: absolute;
+    overflow: hidden;
+    right: 0px;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    padding: 0px;
+    cursor: default;
+  }
+  .sheet-rows{
+     position: absolute;
+     overflow: hidden;
+     left: 0px;
+     top: 27px;
+     bottom: 15px;
+     padding: 0px;
+     cursor: default;
+  }
+  .sheet-content{
+     position: absolute;
+     overflow: auto;
+     right: 0px;
+     left: 43px;
+     top: 27px;
+     bottom: 0px;
+     padding: 0px;
+     cursor: url("/images/excel_cursor_cross.cur"), crosshair;
+  }
+  
+  .lista_hojas{
+    width: 500px;
+    height: 40px;
+    left: 150px;
+    position: absolute;
+    bottom: 0px;
+    overflow:hidden;
+    display: inline;
+    float: left;
+  }
+  
+  .lista_hojas table{
+    border: 0px;
+  }
+  
+  .lista_hojas tr{
+    border: 0px;
+  }
+  
+  .lista_hojas td{
+    padding: 0px 0px;
+  }
+  
+  .lista_hojas a{
+    font-size: 15px;
+    padding: 2px 12px;
+    text-decoration: none;
+    display: block;
+    color: #000;
+    -moz-border-radius-bottomleft: 8px;
+    -moz-border-radius-bottomright: 8px;
+    background: #CCC;
+    border: 1px solid #AAA;
+  }
+  
+  .lista_hojas a.move{
+    font-size: 15px;
+    padding: 2px 12px;
+    text-decoration: none;
+    display: block;
+    color: #FFF;
+    -moz-border-radius: 4px;
+    background: #444;
+    border: 1px solid #6B6B6B;
+    font-weight: bold;
+  }
+  
+  .lista_hojas a.move:hover {
+    color: #FFF;
+  }
+  
+  .lista_hojas a.active{
+    background: #EEE;
+    font-weight: bold;
+    border: 1px solid #333;
+  }
+  
+  .lista_hojas a:hover {
+    color: #505050;
+  }
+  
+  .scroll {
+    width: 150px;
+    height: 40px;
+    left: 0px;
+    position: absolute;
+    bottom: 0px;
+    overflow:hidden;
+    display: inline;
+    float: left;
+  }
+  
+  .scroll label{
+    cursor: pointer;
+  }
+  
+  td.sel{
+      background: #E1EAF6 !important;
+  }
+  td.bold{
+      font-weight: bold;
+  }
+  td.curr_cel{
+      border: 1px solid;
+  }
+  td.hidden_cel{
+      visibility: hidden;
+      border: 0px none;
+      padding: 0px;
+      height: 30px;
+  }
+  
+  /*  ICONS  */
+  #toolbar label{
+    height: 16px;
+    width: 16px; 
+    position: relative;
+    display:inline-block;
+  }
+  
+  label.opt_save{
+    background: transparent url(/images/icons/save.png) no-repeat;
+  }
+  label.opt_undo{
+    background: transparent url(/images/icons/undo.png) no-repeat;
+  }
+  label.opt_redo{
+    background: transparent url(/images/icons/redo.png) no-repeat;
+  }
+  label.opt_bold{
+    background: transparent url(/images/icons/text_bold.png) no-repeat;
+  }
+  label.opt_italic{
+    background: transparent url(/images/icons/text_italic.png) no-repeat;
+  }
+  label.opt_underline{
+    background: transparent url(/images/icons/text_underline.png) no-repeat;
+  }
+  label.opt_rowspan{
+    background: transparent url(/images/icons/rowspan.png) no-repeat;
+  }
+  
+  .bold{
+    font-weight: bold; 
+  }
+</style>
+
+<script type='text/javascript'>
+  $(document).ready(function(){
+      var hoja_actual = $('#sheet-0').spreadsheet({numero: 0});
+      
+      //barra de herramientas
+      
+      $('#toolbar label:eq(3)').live('click', function(){
+          
+      });
+      $('#toolbar label:eq(1)').live('click', function(){
+          
+      });
+      $('#toolbar label:eq(2)').live('click', function(){
+          
+      });
+      
+      $('.scroll label:eq(0)').live('click', function(){
+          $('#lista_hojas').scrollTo(0, 0, {duration: 500});
+      });
+      $('.scroll label:eq(1)').live('click', function(){
+          var posicion = $('#lista_hojas').scrollLeft()-80;
+          $('#lista_hojas').scrollTo(posicion >= 0 ? posicion : 0 , 0, {duration: 200});
+      });
+      $('.scroll label:eq(2)').live('click', function(){
+          var posicion = $('#lista_hojas').scrollLeft()+80;
+          $('#lista_hojas').scrollTo(posicion, 0, {duration: 200});
+      });
+      $('.scroll label:eq(3)').live('click', function(){
+          $('#lista_hojas').scrollTo($('#lista_hojas').width(), {duration: 500});
+      });
+      
+      //$('.opt_bold').live('click',function(){ $('.visible').setBold(); });
+      
+      //var lista_hojas = $('.lista_hojas').tabsajax();
+      
+      $('#lista_hojas a').live('click',function(){
+          
+          var num = $(this).attr('href').split('-')[1];
+          var newtab = $(this);
+          var newhoja = $('#sheet-' + num);
+          if ( !newtab.parent().hasClass('active') ){
+              $('.visible table:first').unbind('mousedown');
+              $('.visible table:first').unbind('mouseup');
+              $('.visible table:first').unbind('mouseover');
+              
+              $('.active').removeClass('active');
+              newtab.addClass('active');
+              $('.visible').removeClass('visible');
+              hoja_actual = newhoja.addClass('visible');
+              
+              if (newhoja.html() == "" ){
+                  newhoja.html("<div style='text-align: center; height:100%;'><img src='/images/ajax-loader.gif' /></div>");
+                  //carga el contenido de la hoja por ajax
+                  $.ajax({
+                      type: "POST",
+                      url: "../hoja",
+                      data: "archivo_id=<%= @archivo.id %>&numero="+num,
+                      success: function(html){
+                          newhoja.html(html);
+                          //ejecuta el codigo para muestra de hojas
+                          newhoja.spreadsheet({numero: num});
+                      }
+                  });
+              }
+          }
+      });
+  });
+</script>
