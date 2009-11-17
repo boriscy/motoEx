@@ -604,14 +604,14 @@ class Spreadsheet_Excel_Reader {
 		if ($col_letters) {
 			$out .= "<thead>\n\t<tr>";
 			if ($row_numbers) {
-				$out .= "\n\t\t<th>&nbsp</th>";
+				$out .= "\n\t\t<th style='width:50px'><div>&nbsp</div></th>";
 			}
 			for($i=1;$i<=$this->colcount($sheet);$i++) {
 				$style = "width:" . ($this->colwidth($i,$sheet)*1) . "px;";
 				if ($this->colhidden($i,$sheet)) {
 					$style .= "display:none;";
 				}
-				$out .= "\n\t\t<th style=\"$style\">" . strtoupper($this->colindexes[$i]) . "</th>";
+				$out .= "\n\t\t<th style=\"$style\"><div>" . strtoupper($this->colindexes[$i]) . "</div></th>";
 			}
 			$out .= "</tr></thead>\n";
 		}

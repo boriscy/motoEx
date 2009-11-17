@@ -17,43 +17,56 @@
         table = $(div_sheet).find('.sheet-content table:first');
         
         function initSheet(numero){
+            //crea los divs:
+            //sheet-0-cols: para guardar los nombres de las columnas => A, B, C, D, etc.
+            //sheet-0-rows: para guardar los nombres de las filas => 1, 2, 3, 4, etc.
+            //sheet-0-content: para colocar la nueva tabla html, y sheet-0-cols y sheet-0-rows hagan scroll con sheet-0-content
+            $(idtabla).before('<div id="sheet-' + numero + '-cols" class="sheet-cols"></div>');
+            $(idtabla).before('<div id="sheet-' + numero + '-rows" class="sheet-rows"></div>');
+            $(idtabla).before('<div id="sheet-' + numero + '-content" class="sheet-content"></div>');
+            //coloca un id único a la tabla
+            $(idtabla).attr('id', 'tabla-' + numero);
+            var tabla = $(idtabla).prependTo('#sheet-' + numero + '-content');
+            var html="";
+            
+            //copia el ancho de la tabla como estilo 
+            tabla.css('width', tabla.width());
+            
             //saca los nombres de las columnas a un nuevo div
-            var html = "<table style='width:"+ ($(idtabla).width()+15) +"px'><colgroup>";
-            var content = "";
-            $(idtabla + ' tr:first th').each(function(i, el) {
-                html += "<col style='width:" + $(el).width() + "px' />";
-                content += "<th style='width:" + $(el).width() + "px'>"+ el.innerHTML +"</th>";
+            //crea un nuevo elemento tabla para agregar ahi las columnas
+            tab = document.createElement("table");
+            $(tab).addClass("excel");
+            tr = document.createElement("tr");
+            $("#sheet-"+numero+"-content table tr:first th").each(function(i, e){
+                //creando las cabeceras
+                th = document.createElement("th");
+                //copia el display:none si es que la columna estuviera oculta
+                if ($(e).css('display') == "none") $(th).css('display','none');
+                //copia el contenido de la celda
+                th.innerHTML = $(e).html();
+                //establece el ancho de acuerdo a la propiedad DOM clientWidth
+                $(th).css('width',$(e)[0].clientWidth);
+                tr.appendChild(th);
             });
-            html += "<col style='width:15px; padding: 0 0;' /></colgroup><tr>"+content+"<th style='width: 0px; padding: 0 0;' /></tr></table>";
-            $(idtabla).before('<div id="sheet-' + numero + '-cols" class="sheet-cols">' + html + '</div>');
+            tab.appendChild(tr);
+            //copia el ancho de la tabla contenido a la nueva tabla de columnas 
+            $(tab).css('width',$('#sheet-' + numero + '-content table').width() + 'px');
+            //y la inserta en el div de columnas
+            $('#sheet-' + numero + '-cols').append(tab);
             
             //saca los nombres de las filas a un nuevo div
-            //para que no se oculten las filas cuando NO hay contenido => copia los altos de las filas a los estilos en tr
-            $(idtabla + ' tr:not(:first)').each(function(i, el) {
-                $(el).css('height', $(el).height());
-            });
-            
-            html = "<table style='height:"+ ($(idtabla).height()) +"px'>";
-            $(idtabla + ' tr:not(:first)').each(function(i, el) {
-                    html += "<tr style='height:" + ($(el).height()) + "px; border:0px;'><th style='padding: 0px 0px;'>"+ $(el).find('th')[0].innerHTML +"</th></tr>";
+            //crea elementos a partir de estilos
+            html = "<table style='width:50px;height:"+ (tabla.height()) +"px'>";
+            tabla.find('tr:not(:first)').each(function(i, el) {
+                html += "<tr style='height:" + (el.clientHeight) + "px; border:0px;";
+                if ($(el).css('display') == "none") html += "display:none;";
+                html += "'><th style='padding: 0px 0px;'>"+ $(el).find('th')[0].innerHTML +"</th></tr>";
             });
             html += "</table>";
-            $(idtabla).before('<div id="sheet-' + numero + '-rows" class="sheet-rows">'+html+'</div>');
-            //probando una mejor forma de generar los altos de las columnas
-            $('#sheet-' + numero + '-rows tr').each(function(i, e){
-                //$(e).height($(idtabla + ' tr:eq(i+1)').height());
-            });
-            $('#sheet-' + numero + '-rows table').height($(idtabla).height());
-            //coloca la tabla en un nuevo div
-            $(idtabla).before('<div id="sheet-' + numero + '-content" class="sheet-content"></div>');
-            $(idtabla).prependTo('#sheet-' + numero + '-content');
-            $(idtabla).attr('id', 'tabla-' + numero);
-           
-            //ocultando las filas y columnas innecesarias
-            $(idtabla + ' tr:first').hide();
-            $(idtabla + ' tr:not(:first) th').hide();
+            $('#sheet-' + numero + '-rows').append(html);
+            $('#sheet-' + numero + '-rows table').height((tabla.height()-20) + 'px' );
             
-            //haciendo los scrolls
+            //Une los scrolls de las filas y columnas al contenido
             $('#sheet-' + numero + '-content').scroll(function(){
                 $('#sheet-' + numero + '-cols').scrollLeft($('#sheet-' + numero + '-content').scrollLeft());
             });
@@ -61,8 +74,12 @@
                 $('#sheet-' + numero + '-rows').scrollTop($('#sheet-' + numero + '-content').scrollTop());
             });
             
-            
-            //setea los eventos para las celdas
+            //ubicando los divs de contenido y filas de acuerdo al ancho de la primera celda (la que esta vacia [0, 0]) de la tabla contenido
+            var anchofila = $('#sheet-'+numero+'-content table tr:first th:first').css('width','50px').clientWidth;
+            $('#sheet-'+numero+'-content table').css('margin','-19px 0 0 -' + anchofila + 'px');
+            $('#sheet-'+numero+'-content').css('left', anchofila + 'px');
+            $('#sheet-'+numero+'-rows').css('width', anchofila + 'px');
+            $('#sheet-'+numero+'-rows table').css('width', (anchofila + 1) + 'px');
             
         }
         
@@ -82,16 +99,6 @@
             return false;
         });
         
-        /*
-        document.body.onmousedown = function(e){
-            target = e.target || e.srcElement;
-            if (/^\d+_\d$/.test(target.id)){
-                initCell = target;
-                mouseIsDown = true;
-                createArea(target, target);
-            }
-        }*/
-
         /**
          * Captura de selección del mouse, Fin
          */

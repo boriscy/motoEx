@@ -61,27 +61,26 @@
     display: block;
   }
   .sheet table {
-    border-style:ridge;
+    border-style: solid;
     border-width:1;
     border-collapse:collapse;
     font-family:sans-serif;
     font-size:12px;
   }
-  .sheet table thead th, .sheet table tbody th {
+  .sheet table th{
     background:#CCCCCC;
-    border-style:ridge;
-    border-width:1;
+    border: 1px solid #000;
+    border-collapse:collapse;
     text-align: center;
     vertical-align:bottom;
-  }
-  .sheet table tbody th {
     text-align:center;
     width:20px;
+    padding: 0px;
   }
-  .sheet table tbody td {
+  .sheet table td {
     vertical-align:bottom;
   }
-  .sheet table tbody td {
+  .sheet table td {
     padding: 0 3px;
     border: 1px solid #EEEEEE;
   }
@@ -89,7 +88,7 @@
   .sheet-cols{
     position: absolute;
     overflow: hidden;
-    right: 0px;
+    right: 16px;
     left: 0px;
     top: 0px;
     bottom: 0px;
@@ -100,17 +99,18 @@
      position: absolute;
      overflow: hidden;
      left: 0px;
-     top: 27px;
-     bottom: 15px;
+     top: 19px;
+     bottom: 16px;
      padding: 0px;
      cursor: default;
+     width: 50px;
   }
   .sheet-content{
      position: absolute;
-     overflow: auto;
+     overflow: scroll;
      right: 0px;
-     left: 43px;
-     top: 27px;
+     left: 50px;
+     top: 19px;
      bottom: 0px;
      padding: 0px;
      cursor: url("/images/excel_cursor_cross.cur"), crosshair;
@@ -247,6 +247,8 @@
   $(document).ready(function(){
       var hojas = new Array();
       var hoja_actual = $('#sheet-0').spreadsheet({numero: 0});
+      
+      
       hojas[0] = hoja_actual;
       //$('#opt_bold').bind('click', function (){
       //   hojas[0].bold();
