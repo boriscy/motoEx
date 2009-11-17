@@ -1,7 +1,7 @@
 <!--Construye los divs para cada hoja obteniendo el contenido html por ajax-->
 <!--Si el div ya tiene contenido html no carga por ajax solo lo muestra -->
 
-<%= javascript_include_tag "tabla/spreadsheet", "tabla/jquery.scrollTo-min","tabla/Sly-min" %>
+<%= javascript_include_tag "tabla/spreadsheet", "tabla/jquery.scrollTo-min" %>
 
 <div id="spreadsheet" style="text-align: default;">
   <div id="doc-info" class="sheet-doc-info" style="top:0px;">
@@ -11,13 +11,13 @@
   <div id="toolbar" class="sheet-toolbar">
     <table cellspacing="0" cellpadding="0">
       <tr>
-        <td><a href="#"><label class="opt_save" /></a> </td>
-        <td><a href="#"><label class="opt_undo" /></a> </td>
-        <td><a href="#"><label class="opt_redo" /></a> </td>
-        <td><a href="#"><label class="opt_bold" /></a> </td>
-        <td><a href="#"><label class="opt_italic" /></a> </td>
-        <td><a href="#"><label class="opt_underline" /></a> </td>
-        <td><a href="#"><label class="opt_rowspan" /></a> </td>
+        <td><a href="#"><label id="opt_save" class="opt_save" /></a> </td>
+        <td><a href="#"><label id="opt_undo" class="opt_undo" /></a> </td>
+        <td><a href="#"><label id="opt_redo" class="opt_redo" /></a> </td>
+        <td><a href="#"><label id="opt_bold" class="opt_bold" /></a> </td>
+        <td><a href="#"><label id="opt_italic" class="opt_italic" /></a> </td>
+        <td><a href="#"><label id="opt_underline" class="opt_underline" /></a> </td>
+        <td><a href="#"><label id="opt_rowspan" class="opt_rowspan" /></a> </td>
       </tr>
     </table>
   </div>
@@ -31,10 +31,10 @@
     <% end %>
     <div class="scroll">
       <table><tr>
-        <td><label>&lt;&lt;</label></td>
-        <td><label>&lt;</label></td>
-        <td><label>&gt;</label></td>
-        <td><label>&gt;&gt;</label></td>
+        <td><label id="scroll_start">&lt;&lt;</label></td>
+        <td><label id="scroll_left">&lt;</label></td>
+        <td><label id="scroll_right">&gt;</label></td>
+        <td><label id="scroll_end">&gt;&gt;</label></td>
       </tr></table>
     </div>
     <div class="lista_hojas" id="lista_hojas">
@@ -245,32 +245,25 @@
 
 <script type='text/javascript'>
   $(document).ready(function(){
+      var hojas = new Array();
       var hoja_actual = $('#sheet-0').spreadsheet({numero: 0});
-      
-      //barra de herramientas
-      
-      $('#toolbar label:eq(3)').live('click', function(){
-          
-      });
-      $('#toolbar label:eq(1)').live('click', function(){
-          
-      });
-      $('#toolbar label:eq(2)').live('click', function(){
-          
-      });
-      
-      $('.scroll label:eq(0)').live('click', function(){
+      hojas[0] = hoja_actual;
+      //$('#opt_bold').bind('click', function (){
+      //   hojas[0].bold();
+      //});
+      //var numhoja = parseInt($('.visible').attr('id').split('-')[1]);
+
+      $('#scroll_start').click(function(){
           $('#lista_hojas').scrollTo(0, 0, {duration: 500});
       });
-      $('.scroll label:eq(1)').live('click', function(){
+      $('#scroll_left').click(function(){
           var posicion = $('#lista_hojas').scrollLeft()-80;
           $('#lista_hojas').scrollTo(posicion >= 0 ? posicion : 0 , 0, {duration: 200});
       });
-      $('.scroll label:eq(2)').live('click', function(){
-          var posicion = $('#lista_hojas').scrollLeft()+80;
-          $('#lista_hojas').scrollTo(posicion, 0, {duration: 200});
+      $('#scroll_right').click(function(){
+          $('#lista_hojas').scrollTo($('#lista_hojas').scrollLeft() + 80, 0, {duration: 200});
       });
-      $('.scroll label:eq(3)').live('click', function(){
+      $('#scroll_end').click(function(){
           $('#lista_hojas').scrollTo($('#lista_hojas').width(), {duration: 500});
       });
       
@@ -284,9 +277,9 @@
           var newtab = $(this);
           var newhoja = $('#sheet-' + num);
           if ( !newtab.parent().hasClass('active') ){
-              $('.visible table:first').unbind('mousedown');
-              $('.visible table:first').unbind('mouseup');
-              $('.visible table:first').unbind('mouseover');
+              //$('.visible table:first').unbind('mousedown');
+              //$('.visible table:first').unbind('mouseup');
+              //$('.visible table:first').unbind('mouseover');
               
               $('.active').removeClass('active');
               newtab.addClass('active');
@@ -303,10 +296,18 @@
                       success: function(html){
                           newhoja.html(html);
                           //ejecuta el codigo para muestra de hojas
-                          newhoja.spreadsheet({numero: num});
+                          hoja_actual = newhoja.spreadsheet({numero: num});
+                          hojas[num] = hoja_actual;
                       }
                   });
               }
+              /*
+              //agrega los eventos de la barra de herramientas para la hoja
+              $('#opt_bold').unbind('click');
+              $('#opt_bold').bind('click',function (){
+                  hojas[num].bold();
+              });
+              */
           }
       });
   });
