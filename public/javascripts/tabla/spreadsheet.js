@@ -148,7 +148,7 @@
             //table.find(c0).addClass('curr_cel');
             $(c0).addClass('curr_cel');
             //quita el estilo a todos los seleccionados
-            table.find('.sel').removeClass('sel');
+            $(idtabla).find('.sel').removeClass('sel');
             //aplica el estilo a todos los elementos dentro del area
             for (var row = row0; row <= row1; row++) {
                 for (var col = col0; col <= col1; col++) {
