@@ -18,6 +18,7 @@ class ArchivosController < ApplicationController
   def show
     @archivo = Archivo.find(params[:id])
     @hoja = Hoja.buscar_o_crear(@archivo.id, 0)
+    @archivo = @hoja.archivo
 
     respond_to do |format|
       format.html # show.html.erb

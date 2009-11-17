@@ -90,15 +90,18 @@ describe Hoja do
 
     it "debe crear si no hay hoja en el archivo y asignar la fecha modificacion" do
       now = Time.zone.now + 10
-      @archivo_mock.stubs(:fecha_modificacion).returns(now)
+      @archivo_mock.stub!(:fecha_modificacion).and_return(now)
+ #     @mock_archivo.hojas.stub!(:find_by_numero).with(kind_of(Fixnum)).and_return(nil)
       Hoja.any_instance.stubs(:archivo).returns(@archivo_mock)
+
+
       @hoja = Hoja.buscar_o_crear(1, 0)
       @hoja.fecha_archivo.to_s.should == now.to_s
     end
 
     it "debe actualizar la fecha de modificacion y el archivo si el archivo cambia su fecha" do
       @hoja = Hoja.create(@valid_attributes)
-      @hoja2 = Hoja.buscar_o_crear(1, 0)
+      @hoja2 = Hoja.buscar_o_crear(@mock_archivo, 0)
       @hoja.fecha_archivo.should == @hoja2.fecha_archivo
 
       file_time = File.atime(@hoja.ruta)

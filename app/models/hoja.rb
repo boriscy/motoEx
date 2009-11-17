@@ -20,7 +20,6 @@ class Hoja < ActiveRecord::Base
     path = File.join(RAILS_ROOT, "lib", "php", "excel_to_html.php")
     #num = self.numero_hoja if self.numero_hoja
     self.numero ||= 0
-
     begin
       texto = `php #{path} '#{File.expand_path(self.archivo.archivo_excel.path)}' #{self.numero} '#{PATRON_SEPARACION}'`
       hojas, html = texto.split(PATRON_SEPARACION)
