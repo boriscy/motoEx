@@ -165,12 +165,13 @@
         }
         
         function bold(){
-            var seleccionados = $(idtabla).find('.sel');
+            var seleccionados = table.find('.sel');
             if( seleccionados.size() > 0 ) {
                 var agregar = true;
-                if (seleccionados.find('.bold').size() > 0){
+                if (table.find('.sel.bold').size() > 0){
                     agregar = false;
                 }
+                
                 if (agregar)
                     seleccionados.addClass('bold');
                 else

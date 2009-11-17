@@ -430,7 +430,7 @@ class Spreadsheet_Excel_Reader {
 		$color=$this->color($row,$col,$sheet);
 		if ($color!="") {
 			$css .= "color:$color;";
-		}
+		}/*
 		$bold=$this->bold($row,$col,$sheet);
 		if ($bold) {
 			$css .= "font-weight:bold;";
@@ -442,7 +442,7 @@ class Spreadsheet_Excel_Reader {
 		$underline=$this->underline($row,$col,$sheet);
 		if ($underline) {
 			$css .= "text-decoration:underline;";
-		}
+		}*/
 		// Borders
 		$bLeft = $this->borderLeft($row,$col,$sheet);
 		$bRight = $this->borderRight($row,$col,$sheet);
@@ -470,7 +470,22 @@ class Spreadsheet_Excel_Reader {
 		
 		return $css;
 	}
-	
+	function classes($row,$col,$sheet=0,$properties='') {
+		$classes = "";
+		$bold=$this->bold($row,$col,$sheet);
+		if ($bold) {
+			$classes .= "bold ";
+		}
+		$italic=$this->italic($row,$col,$sheet);
+		if ($italic) {
+			$classes .= "italic ";
+		}
+		$underline=$this->underline($row,$col,$sheet);
+		if ($underline) {
+			$classes .= "underline ";
+		}
+		return $classes;
+	}
 	// FORMAT PROPERTIES
 	// =================
 	function format($row,$col,$sheet=0) {
@@ -625,12 +640,15 @@ class Spreadsheet_Excel_Reader {
 				}
 				if(!$this->sheets[$sheet]['cellsInfo'][$row][$col]['dontprint']) {
 					$style = $this->style($row,$col,$sheet);
+					
+					$classes = $this->classes($row,$col,$sheet);
+					
 					if ($this->colhidden($col,$sheet)) {
 						$style .= "display:none;";
 					}
 					//$out .= "\n\t\t<td style=\"$style\"" . ($colspan > 1?" colspan=$colspan":"") . ($rowspan > 1?" rowspan=$rowspan":"") . ">";
 					//para que genere el id
-					$out .= "\n\t\t<td id='".$sheet."_".$row."_".$col."' style=\"$style\"" . ($colspan > 1?" colspan=$colspan":"") . ($rowspan > 1?" rowspan=$rowspan":"") . ">";
+					$out .= "\n\t\t<td id='".$sheet."_".$row."_".$col."' class='$classes' style=\"$style\"" . ($colspan > 1?" colspan=$colspan":"") . ($rowspan > 1?" rowspan=$rowspan":"") . ">";
 					
 					$val = $this->val($row,$col,$sheet);
 					if ($val=='') { $val="&nbsp;"; }
