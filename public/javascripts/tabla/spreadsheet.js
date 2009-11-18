@@ -35,7 +35,6 @@
             //saca los nombres de las columnas a un nuevo div
             //crea un nuevo elemento tabla para agregar ahi las columnas
             tab = document.createElement("table");
-            $(tab).addClass("excel");
             tr = document.createElement("tr");
             $("#sheet-"+numero+"-content table tr:first th").each(function(i, e){
                 //creando las cabeceras
@@ -55,16 +54,21 @@
             $('#sheet-' + numero + '-cols').append(tab);
             
             //saca los nombres de las filas a un nuevo div
-            //crea elementos a partir de estilos
-            html = "<table style='width:50px;height:"+ (tabla.height()) +"px'>";
-            tabla.find('tr:not(:first)').each(function(i, el) {
-                html += "<tr style='height:" + (el.clientHeight) + "px; border:0px;";
-                if ($(el).css('display') == "none") html += "display:none;";
-                html += "'><th style='padding: 0px 0px;'>"+ $(el).find('th')[0].innerHTML +"</th></tr>";
+            //crea un nuevo elemento tabla para agregar ahi las filas
+            tab = document.createElement("table");
+            tabla.find('tr:not(:first)').each(function(i, e) {
+                tr = document.createElement("tr");
+                if ($(e).css('display') == "none") $(tr).css('display','none');
+                th = document.createElement("th");
+                th.innerHTML = $(e).find('th')[0].innerHTML;
+                $(th).css('height',$(e)[0].clientHeight);
+                tr.appendChild(th);
+                tab.appendChild(tr);
             });
-            html += "</table>";
-            $('#sheet-' + numero + '-rows').append(html);
-            $('#sheet-' + numero + '-rows table').height((tabla.height()-20) + 'px' );
+            $(tab).css('width','50px');
+            $(tab).css('height',(tabla.height()-20) + 'px');
+            $(tab).height((tabla.height()-20) + 'px');
+            $('#sheet-' + numero + '-rows').append(tab);
             
             //Une los scrolls de las filas y columnas al contenido
             $('#sheet-' + numero + '-content').scroll(function(){
@@ -75,7 +79,7 @@
             });
             
             //ubicando los divs de contenido y filas de acuerdo al ancho de la primera celda (la que esta vacia [0, 0]) de la tabla contenido
-            var anchofila = $('#sheet-'+numero+'-content table tr:first th:first').css('width','50px').clientWidth;
+            var anchofila = $('#sheet-'+numero+'-content table tr:first th:first').css('width','50px')[0].clientWidth;
             $('#sheet-'+numero+'-content table').css('margin','-19px 0 0 -' + anchofila + 'px');
             $('#sheet-'+numero+'-content').css('left', anchofila + 'px');
             $('#sheet-'+numero+'-rows').css('width', anchofila + 'px');
@@ -112,12 +116,10 @@
         /**
          * Captura de selección del mouse, a medida que se mueve
          */
-        //table.live('mouseover', function(e) {
         table.mouseover(function(e) {
             if (mouseIsDown) {
                 var target = getEventTarget(e);
                 createArea(initCell, target);
-                //$(idtabla).find('.curr_cel').removeClass('curr_cel');
                 $(idtabla).find('.curr_cel').removeClass('curr_cel');
                 $(idtabla).find(target).addClass('curr_cel');
                 endCell = getEventTarget(e);
@@ -140,6 +142,8 @@
             var col0 = parseInt(c0.id.split('_')[2]);
             var row1 = parseInt(c1.id.split('_')[1]) + (parseInt($(c1).attr('rowspan')) || 1) - 1;
             var col1 = parseInt(c1.id.split('_')[2]) + (parseInt($(c1).attr('colspan')) || 1) - 1;
+            //var row1 = parseInt(c1.id.split('_')[1]);
+            //var col1 = parseInt(c1.id.split('_')[2]);
             if (row0 > row1){
                 t = row0;
                 row0 = row1;
@@ -152,17 +156,24 @@
             }
             if (row0 <= 0) row0 = 1; //para que no seleccione la primera fila (la de los nombres de las columnas)
             table.find('.curr_cel').removeClass('curr_cel');
-            //table.find(c0).addClass('curr_cel');
             $(c0).addClass('curr_cel');
             //quita el estilo a todos los seleccionados
             $(idtabla).find('.sel').removeClass('sel');
             //aplica el estilo a todos los elementos dentro del area
             for (var row = row0; row <= row1; row++) {
                 for (var col = col0; col <= col1; col++) {
-                    //table.find('#'+numero+'_'+row+'_'+col).addClass('sel');
-                    $('#'+config.numero+'_'+row+'_'+col).addClass('sel');
-                    //if (table[0].rows[row].cell[col].id)
-                    //table[0].rows[row].cell[col]
+                    celda = $('#'+config.numero+'_'+row+'_'+col).addClass('sel');
+                    /*
+                    if ( col + (parseInt(celda.attr('colspan')) || 1) - 1 > col1 ){
+                        col1 = col + (parseInt(celda.attr('colspan')) || 1) - 1;
+                        //agrega a las anteriores celdas
+                        for (var r = row0; r <= row1; row++) {
+                            for (var col = col0; col <= col1; col++) {
+                                
+                            }
+                        }
+                    }
+                    */
                 }
             }
         }
