@@ -660,7 +660,7 @@ class Spreadsheet_Excel_Reader {
 						}
 					}
 					//$out .= "<nobr>".nl2br($val)."</nobr>";
-					$out .= nl2br($val);
+					$out .= '<div style="overflow:hidden">'. nl2br($val) .'</div>';
 					$out .= "</td>";
 				}
 			}

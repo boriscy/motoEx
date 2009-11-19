@@ -126,6 +126,9 @@
 
         /**
          * Crea un area marcando todas las celdas como seleccionadas
+         * @param DOM c0 # Objeto de celda inicial "td"
+         * @param DOM c1 # Objeto de celda final "td"
+         * @param String css # Clase css (opcional)
          */
         function createArea(c0, c1, css) {
             css = css || 'sel';
