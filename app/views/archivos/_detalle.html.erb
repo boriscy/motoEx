@@ -1,7 +1,7 @@
 <!--Construye los divs para cada hoja obteniendo el contenido html por ajax-->
 <!--Si el div ya tiene contenido html no carga por ajax solo lo muestra -->
 
-<%= javascript_include_tag "tabla/spreadsheet", "tabla/jquery.scrollTo-min" %>
+<%= javascript_include_tag "tabla/spreadsheet", "tabla/jquery.scrollTo-min", "tabla/areas", :cache => "todo" %>
 
 <div id="spreadsheet" style="text-align: default;">
   <div id="doc-info" class="sheet-doc-info" style="top:0px;">
@@ -20,7 +20,23 @@
         <td><a href="#"><label id="opt_rowspan" class="opt_rowspan" /></a> </td>
       </tr>
     </table>
-  </div>
+    <ul id="areas-importacion">
+      <li><a href="#" id="area-importar">Area</a></li>
+      <li><a href="#" id="area-encabezado">Encabezado</a></li>
+      <li><a href="#" id="area-descartar">Descartar</a></li>
+      <li><a href="#" id="area-fin" >Fin</a></li>
+    </ul>
+
+    <!--Aqui se crea un ejemplo de los colores utilizados para las aeras-->
+      <ul id="#jemplo-colores" style="display:none">
+        <li class="area-imp"></li>
+        <li class="area-enc"></li>
+        <li class="area-desc"></li>
+        <li class="area-fin"></li>
+      </ul>
+    <!--Fin-->
+
+    </div>
   <div id="sheets" class="sheet-sheets" style="border: 0px">
     <% @archivo.lista_hojas.each_with_index do |hojanombre, i| %>
       <% if i == 0 %>
@@ -61,27 +77,23 @@
     display: block;
   }
   .sheet table {
-    border-style:ridge;
-    border-width:1;
+    border: 1px solid #000;
     border-collapse:collapse;
     font-family:sans-serif;
     font-size:12px;
   }
-  .sheet table thead th, .sheet table tbody th {
+  .sheet table th{
     background:#CCCCCC;
-    border-style:ridge;
-    border-width:1;
+    border: 1px solid #000;
+    border-collapse:collapse;
     text-align: center;
     vertical-align:bottom;
-  }
-  .sheet table tbody th {
     text-align:center;
     width:20px;
+    padding: 0px;
   }
-  .sheet table tbody td {
+  .sheet table td {
     vertical-align:bottom;
-  }
-  .sheet table tbody td {
     padding: 0 3px;
     border: 1px solid #EEEEEE;
   }
@@ -89,7 +101,7 @@
   .sheet-cols{
     position: absolute;
     overflow: hidden;
-    right: 0px;
+    right: 16px;
     left: 0px;
     top: 0px;
     bottom: 0px;
@@ -100,17 +112,18 @@
      position: absolute;
      overflow: hidden;
      left: 0px;
-     top: 27px;
-     bottom: 15px;
+     top: 19px;
+     bottom: 16px;
      padding: 0px;
      cursor: default;
+     width: 50px;
   }
   .sheet-content{
      position: absolute;
-     overflow: auto;
+     overflow: scroll;
      right: 0px;
-     left: 43px;
-     top: 27px;
+     left: 50px;
+     top: 19px;
      bottom: 0px;
      padding: 0px;
      cursor: url("/images/excel_cursor_cross.cur"), crosshair;
@@ -149,22 +162,6 @@
     -moz-border-radius-bottomright: 8px;
     background: #CCC;
     border: 1px solid #AAA;
-  }
-  
-  .lista_hojas a.move{
-    font-size: 15px;
-    padding: 2px 12px;
-    text-decoration: none;
-    display: block;
-    color: #FFF;
-    -moz-border-radius: 4px;
-    background: #444;
-    border: 1px solid #6B6B6B;
-    font-weight: bold;
-  }
-  
-  .lista_hojas a.move:hover {
-    color: #FFF;
   }
   
   .lista_hojas a.active{
@@ -247,6 +244,37 @@
   $(document).ready(function(){
       var hojas = new Array();
       var hoja_actual = $('#sheet-0').spreadsheet({numero: 0});
+      
+      //Inicializacion de opciones de marcado de areas
+      grupoAreas = {
+          areas: {},
+          inicializar: function(){
+              $('#area-importar').click(function() {
+                  //deberia mostrar un formulario
+                  //devuelve el id del area
+                  this.areas[id] = new CrearArea(id);
+                  if(this.areas[id] === false) {
+                      delete(this.areas[id]);
+                  }
+              });
+              var ga = this;
+              $('#area-encabezado').click(function() { ga.llamarMetodo("definirAreaEncabezado"); } );
+              $('#area-descartar').click(function() { ga.llamarMetodo("definirAreaDescartar"); });
+              $('#area-fin').click(function() { ga.llamarMetodo("definirAreaFin"); });
+              
+          },
+          llamarMetodo: function(metodo) {
+              var id = $('.sel').attr("class").replace(/^.*(-id-[a-z0-9]+).*$/, "$1");
+              if(id != "") {
+                  this.areas[id][metodo]();
+              }else{
+                  this.mensajeError("Debe seleccionar dentro de un área definida");
+              }
+          }
+      };
+
+      var areas = {};
+      
       hojas[0] = hoja_actual;
       //$('#opt_bold').bind('click', function (){
       //   hojas[0].bold();
