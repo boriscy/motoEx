@@ -140,10 +140,10 @@
             css = css || 'sel';
             var row0 = parseInt(c0.id.split('_')[1]);
             var col0 = parseInt(c0.id.split('_')[2]);
-            var row1 = parseInt(c1.id.split('_')[1]) + (parseInt($(c1).attr('rowspan')) || 1) - 1;
-            var col1 = parseInt(c1.id.split('_')[2]) + (parseInt($(c1).attr('colspan')) || 1) - 1;
-            //var row1 = parseInt(c1.id.split('_')[1]);
-            //var col1 = parseInt(c1.id.split('_')[2]);
+            //var row1 = parseInt(c1.id.split('_')[1]) + (parseInt($(c1).attr('rowspan')) || 1) - 1;
+            //var col1 = parseInt(c1.id.split('_')[2]) + (parseInt($(c1).attr('colspan')) || 1) - 1;
+            var row1 = parseInt(c1.id.split('_')[1]);
+            var col1 = parseInt(c1.id.split('_')[2]);
             if (row0 > row1){
                 t = row0;
                 row0 = row1;
@@ -159,23 +159,77 @@
             $(c0).addClass('curr_cel');
             //quita el estilo a todos los seleccionados
             $(idtabla).find('.sel').removeClass('sel');
+            //obteniendo las nuevas celdas de inicio a fin para marcado
+            var celdas = celda_inicial_final(row0, col0, row1, col1);
+            row0 = celdas.row0;
+            col0 = celdas.col0;
+            row1 = celdas.row1;
+            col1 = celdas.col1;
             //aplica el estilo a todos los elementos dentro del area
             for (var row = row0; row <= row1; row++) {
                 for (var col = col0; col <= col1; col++) {
                     celda = $('#'+config.numero+'_'+row+'_'+col).addClass('sel');
-                    /*
-                    if ( col + (parseInt(celda.attr('colspan')) || 1) - 1 > col1 ){
-                        col1 = col + (parseInt(celda.attr('colspan')) || 1) - 1;
-                        //agrega a las anteriores celdas
-                        for (var r = row0; r <= row1; row++) {
-                            for (var col = col0; col <= col1; col++) {
-                                
-                            }
-                        }
-                    }
-                    */
                 }
             }
+        }
+        
+        /**
+         * Obtiene las celdas de marcado tomando en cuenta los colspan/rowspan de las celdas
+         * @param row0: el numero de fila de la celda inicial
+         * @param col0: el numero de columna de la celda inicial
+         * @param row1: el numero de fila de la celda final
+         * @param col1: el numero de columna de la celda final
+         * returns: las mismas variables modificadas
+         */
+        function celda_inicial_final(row0, col0, row1, col1){
+            //console.log("old ini cell: " + row0 + "_" + col0);
+            //console.log("old end cell: " + row1 + "_" + col1);
+            //busca las celdas a marcar para saber el nuevo ancho y alto de las celdas
+            for (var row = row0; row <= row1; row++) {
+                for (var col = col0; col <= col1; col++) {
+                    celda = $('#'+config.numero+'_'+row+'_'+col);
+                    if (celda.size() > 0){
+                        if ( col + (parseInt(celda.attr('colspan')) || 1) - 1 > col1 ){
+                            col1 = col + (parseInt(celda.attr('colspan')) || 1) - 1;
+                        }
+                        if ( row + (parseInt(celda.attr('rowspan')) || 1) - 1 > row1 ){
+                            row1 = row + (parseInt(celda.attr('rowspan')) || 1) - 1;
+                        }
+                    }else{
+                        //console.log("Celda no encontrada: " + row + "_"  + col);
+                        //no existe la celda debido a que un rowspan/colspan lo esta sobreescribiendo
+                        //busca el rowspan/colspan anterior
+                        encontrada = false;
+                        for (var r = row; r > 0 && !encontrada; r--){
+                            for (var c = col; c > 0 && !encontrada; c--){
+                                //console.log("Buscando Celda: " + r + "_"  + c);
+                                celda = $('#'+config.numero+'_'+r+'_'+c);
+                                if (celda.size() > 0){
+                                    //si existe la pone como nueva celda inicial
+                                    if ( c < col0 ){
+                                        col0 = c;
+                                    }
+                                    if ( r < row0 ){
+                                        row0 = r;
+                                    }
+                                    if ( c + (parseInt(celda.attr('colspan')) || 1) - 1 > col1 ){
+                                        col1 = c + (parseInt(celda.attr('colspan')) || 1) - 1;
+                                    }
+                                    if ( r + (parseInt(celda.attr('rowspan')) || 1) - 1 > row1 ){
+                                        row1 = r + (parseInt(celda.attr('rowspan')) || 1) - 1;
+                                    }
+                                    //y se sale del for
+                                    encontrada = true;
+                                }
+                            }
+                        }
+                        //console.log('Encontrada la celda: '+config.numero+'_'+r+'_'+c);
+                    }
+                }
+            }
+            //console.log("new ini cell: " + row0 + "_" + col0);
+            //console.log("new end cell: " + row1 + "_" + col1);
+            return {row0: row0, col0: col0, row1: row1, col1: col1}
         }
         
         function merge(){
