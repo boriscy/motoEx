@@ -68,7 +68,7 @@ CrearArea.prototype = {
         css2 = css2 || this.cssSeleccionado;
         css2 = '.' + css2;
         var ret = false;
-        $(css1 css2).each(function(i, el) {
+        $(css1 + " " + css2).each(function(i, el) {
             if($(el).hasClass(css1) && $(el).hasClass(css2)){ 
                 ret = true;
                 exit;
