@@ -1,0 +1,27 @@
+<div id="doc-info" class="sheet-doc-info" style="top:0px;">
+  <h2 class="dark-blue"><%= @archivo.nombre %></h2>
+  <strong class="dark-grey">
+    <%= @archivo.archivo_excel_file_name %> 
+    <span class="green" style="font-size: 1.1em"><%= @archivo.archivo_excel_file_size.to_byte_size %></span>
+  </strong>
+  <div style="clear:both"></div>
+</div>
+<div id="toolbar" class="sheet-toolbar">
+  <ul id="areas-importacion">
+    <li><a href="#" id="area-importar">Area</a></li>
+    <li><a href="#" id="area-encabezado">Encabezado</a></li>
+    <li><a href="#" id="area-descartar">Descartar</a></li>
+    <li><a href="#" id="area-fin" >Fin</a></li>
+  </ul>
+
+  <!--Aqui se crea un ejemplo de los colores utilizados para las aeras-->
+  <ul id="#jemplo-colores" style="display:none">
+    <li class="area-imp"></li>
+    <li class="area-enc"></li>
+    <li class="area-desc"></li>
+    <li class="area-fin"></li>
+  </ul>
+  <!--Fin-->
+
+</div>
+

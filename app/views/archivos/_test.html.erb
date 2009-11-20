@@ -1,0 +1,20 @@
+<%= javascript_include_tag "test/qunit/qunit" %>
+<%= stylesheet_link_tag "../javascripts/test/qunit/qunit" %>
+
+<button id="expandir-test">Expandir</button><br/>
+<h1 id="qunit-header">QUnit Test Suite</h1>
+<h2 id="qunit-banner"></h2>
+<div id="qunit-testrunner-toolbar"></div>
+<h2 id="qunit-userAgent"></h2>
+<ol id="qunit-tests"></ol>
+<div id="qunit-end" style="clear:both"></div>
+<script>
+  $(document).ready(function() {
+    $("#expandir-test").click(function() {
+      $('.sheet').css('top', $('#qunit-testresult').position().top + $('#qunit-tests').height() + 31);
+    });
+  });
+
+  /*setTimeout( function() { 
+  }, 500);*/
+</script>

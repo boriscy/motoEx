@@ -1,5 +1,4 @@
 // Deinida una area con una clase que agrupa 'sel'
-
 (function($) {
     $.fn.extend({
         tablesheet: function(config) { return new $.TableSheet(this[0], config); }

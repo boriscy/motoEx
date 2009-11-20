@@ -1,2 +1,8 @@
-<%= link_to 'Listado', archivos_path %>
+<%= javascript_include_tag "tabla/spreadsheet", "tabla/jquery.scrollTo-min", 
+  "tabla/areas", "tabla/tabla_iniciar", :cache => "todo" %>
+
+<%# link_to 'Listado', archivos_path %>
+<%= render :partial => 'test' if params[:test] and RAILS_ENV == "development" %>
+<%= render :partial => 'encabezado' %>
 <%= render :partial => 'detalle' %>
+<%= javascript_include_tag "test/#{params[:js]}" if params[:js] %>
