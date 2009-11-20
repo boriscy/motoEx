@@ -126,8 +126,19 @@
             }
             return false;            
         });
-
         
+        table.keypress(function(e){
+            console.log(e);
+            console.log(getmykey(e));
+        });
+
+        function getmykey(event) {
+          if (typeof(event)=="undefined") return window.event.keyCode;
+          if (event.keyCode==0 && event.charCode!=0) return event.charCode;
+          if (event.keyCode==0) return event.which;
+          return event.keyCode;
+        }
+
         function getEventTarget(e) {
             e = e || window.event;
             return e.target || e.srcElement;
