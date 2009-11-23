@@ -147,7 +147,6 @@ $(document).ready(function(){
             $('.visible').removeClass('visible');
             hoja_actual = newhoja.addClass('visible');
              // Destruir el formulario para areas
-             buscarCrear();
 
             if (newhoja.html() == "" ) {
                 newhoja.html("<div style='text-align: center; height:100%;'><img src='/images/ajax-loader.gif' /></div>");

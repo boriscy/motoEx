@@ -9,6 +9,8 @@
 
 <%# link_to 'Listado', archivos_path %>
 <%= render :partial => 'test' if params[:test] and RAILS_ENV == "development" %>
+
 <%= render :partial => 'encabezado' %>
 <%= render :partial => 'detalle' %>
-<%= javascript_include_tag "test/#{params[:js]}" if params[:js] %>
+
+<%= javascript_include_tag "test/#{params[:js]}" if params[:js] if RAILS_ENV == "development" and params[:js]%>

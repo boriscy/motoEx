@@ -1,4 +1,4 @@
-require 'spec_helper'
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Area do
   before(:each) do
@@ -11,7 +11,8 @@ describe Area do
       :rango => 1,
       :fija => false,
       :iterar_fila => false,
-      :encabezado => "value for encabezado",
+      :encabezado_celda_inicial => "A1",
+      :encabezado_celda_final => "B1",
       :titular => "value for titular",
       :fin => "value for fin",
       :no_importar => "value for no_importar"

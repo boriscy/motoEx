@@ -5,6 +5,8 @@ class HojasController < ApplicationController
   # GET /hojas/1.xml
   def hoja
     @hoja = Hoja.buscar_o_crear(params[:archivo_id], params[:numero])
+
+    render :inline => @hoja.html
   end
 
 end
