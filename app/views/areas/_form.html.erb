@@ -3,8 +3,9 @@
   <div id="area-tabs">
       
     <ul>
-      <li><a href="#general">Area</a></li>
+      <li><a href="#general">Selección</a></li>
       <li><a href="#encabezado">Encabezado</a></li>
+      <li><a href="#excluidas">Excluidas</a></li>
       <li><a href="#fin">Fin</a></li>
     </ul>
 
@@ -12,13 +13,18 @@
       <%= render :partial => "general", :locals => {:f => f} %>
     </div>
     <div id="encabezado">
-      <%# render :partial => "general" %>
+      <%= render :partial => "encabezado", :locals => {:f => f} %>
     </div>
+    <div id="excluidas">
+      <%= render :partial => "excluidas", :locals => {:f => f} %>
+    </div>
+
     <div id="fin">
       <%# render :partial => "general" %>
     </div>
   </div>
 
+  <%= f.submit "Salvar" %>
 
   <% end %>
 </div>

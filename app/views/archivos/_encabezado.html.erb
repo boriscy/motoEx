@@ -16,7 +16,7 @@
     </ul>
     <div class="forma_areas">
       <label>Areas:</label>
-      <%= select_tag("area", %(<option class="disabled">Deseleccionar</option>
+      <%= select_tag("area", %(<option value="disabled" class="disabled">Deseleccionar</option>
           #{options_from_collection_for_select(@hoja.areas, 'id', 'nombre')} ) )  %>
     </div>
   </div>

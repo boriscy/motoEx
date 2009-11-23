@@ -47,8 +47,18 @@ $(document).ready(function() {
     complete : function(event){
       $('#cargando').hide(1000);
     },
-    success : function(event){
+    success : function(event) {
       $('#cargando').hide(1000);
+    }
+  });
+
+  $.fn.extend({
+    hashify: function() {
+      var hash = {};
+      $('form').find('input, select, textarea').each(function(i, el){
+        if($(el).attr("type") != "submit")
+          hash[$(el).attr("name")] = $(el).val();
+      });
     }
   });
 

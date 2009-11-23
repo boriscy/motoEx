@@ -1,6 +1,11 @@
 <!--Construye los divs para cada hoja obteniendo el contenido html por ajax-->
 <!--Si el div ya tiene contenido html no carga por ajax solo lo muestra -->
 
+<script type="text/javascript" language="javascript" charset="utf-8">
+//<![CDATA[
+  hoja_id = '<%= @hoja.id %>';
+//]]>
+</script>
 <div id="sheets" class="sheet-sheets" style="border: 0px;">
   <div id="sheet-<%= @hoja.numero %>" class="sheet visible"><%= @hoja.html %></div>
 

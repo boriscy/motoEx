@@ -1,6 +1,6 @@
 <% f.inputs do %>
   <%= f.input :hoja_id, :as => :hidden %>
-  <%= f.input :nombre %>
+  <%= f.input :nombre, :input_html => {:size => 40} %>
   <%= f.input :celda_inicial, :as => :hidden %>
   <%= f.input :celda_final, :as => :hidden %>
   <%= f.input :rango, :input_html => {:size => 2} %>

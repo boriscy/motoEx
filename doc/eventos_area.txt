@@ -1,0 +1,9 @@
+Formulario
+- Cambio de hoja
+- Cambio de area (select#area)
+- Seleccionar area y hacer click en boton Area (Creación)
+
+Area
+- Cambio de area (select#area)
+    - encabezados...
+- arrastrar (drag)
