@@ -4,6 +4,7 @@ class Hoja < ActiveRecord::Base
 
 
   belongs_to :archivo
+  has_many :areas
 
   attr_accessor :numero_hoja
 

@@ -24,12 +24,14 @@
 @blue: #04428A;
 @dark_blue:#304F71;
 @dark_grey: #474747;
+@light_grey: #CCCCCC;
 
 /*Definicion de colores*/
 .red{ color: @red;}
 .green{ color: @green;}
 .blue{ color: @blue;}
 .dark-grey{ color: @dark_grey;}
+.light_grey{color: @light_grey; }
 .dark-blue{ color: @dark_blue;}
 
 body{
@@ -96,6 +98,15 @@ table{
 tr{
   border-top: 1px solid @table_border_color;
 }
+
+th, td{
+/*  border: 1px solid @border_color_table;*/
+  padding: 3px 10px;
+}
+
+
+/******************************/
+/*Clases generales*/
 .over{
   background-color: @tr_background !important;
 }
@@ -106,11 +117,11 @@ tr{
 .even{
   background-color: @background2;
 }
-th, td{
-/*  border: 1px solid @border_color_table;*/
-  padding: 3px 10px;
+.disabled{
+    color: @light_grey;
 }
 
+/***********************************************/
 /*Forms*/
 form p{
   clear: both;
@@ -284,32 +295,41 @@ ul{margin:4px; padding:4px;}
 
 /*******************************************/
 /*Menu para Tabla HojaElectronica*/
-ul#areas-importacion{
-    padding: 0px;
-    margin: 0px -10px;
-    list-style: none;
-    height: 28px;
-    background: @background3;
-    border-top: 2px solid @color3;
-    border-bottom: 1px solid @color3;
-    
-    li{
-        display: inline;
+div#areas-importacion{
+    ul{
         padding: 0px;
-        margin: 0px;
+        margin: 0px -10px;
+        list-style: none;
+        height: 28px;
+        background: @background3;
+        border-top: 2px solid @color3;
+        border-bottom: 1px solid @color3;
+        float: left;
         
-        a{
-            padding: 5px 10px;
-            font-weight: bold;
-            border-right: 1px solid @border_color;
-            float: left;
-            margin-left: -1px;
-            text-decoration: none;
+        li{
+            display: inline;
+            padding: 0px;
+            margin: 0px;
+            
+            a{
+                padding: 5px 10px;
+                font-weight: bold;
+                border-right: 1px solid @border_color;
+                float: left;
+                margin-left: -1px;
+                text-decoration: none;
+            }
+            a:hover{
+                background-color: @color3;
+                color: @a_hover_ligth;
+            }
         }
-        a:hover{
-            background-color: @color3;
-            color: @a_hover_ligth;
-        }
+    }
+
+    .forma_areas{
+        margin-left: 8em;
+        float: left;
+        select{ margin-left: 3em}
     }
     
 }

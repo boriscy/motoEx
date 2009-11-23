@@ -7,12 +7,21 @@
   <div style="clear:both"></div>
 </div>
 <div id="toolbar" class="sheet-toolbar">
-  <ul id="areas-importacion">
-    <li><a href="#" id="area-importar">Area</a></li>
-    <li><a href="#" id="area-encabezado">Encabezado</a></li>
-    <li><a href="#" id="area-descartar">Descartar</a></li>
-    <li><a href="#" id="area-fin" >Fin</a></li>
-  </ul>
+  <div id="areas-importacion">
+    <ul>
+      <li><a href="#" id="area-importar">Area</a></li>
+      <li><a href="#" id="area-encabezado">Encabezado</a></li>
+      <li><a href="#" id="area-descartar">Descartar</a></li>
+      <li><a href="#" id="area-fin" >Fin</a></li>
+    </ul>
+    <div class="forma_areas">
+      <label>Areas:</label>
+      <%= select_tag("area", %(<option class="disabled">Deseleccionar</option>
+          #{options_from_collection_for_select(@hoja.areas, 'id', 'nombre')} ) )  %>
+    </div>
+  </div>
+
+
 
   <!--Aqui se crea un ejemplo de los colores utilizados para las aeras-->
   <ul id="#jemplo-colores" style="display:none">

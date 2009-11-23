@@ -31,6 +31,8 @@ describe Hoja do
 
   end
 
+  it {should have_many(:areas)}
+
   it "should create a new instance given valid attributes" do
     Hoja.create!(@valid_attributes)
   end

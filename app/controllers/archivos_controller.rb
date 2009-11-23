@@ -16,8 +16,9 @@ class ArchivosController < ApplicationController
   # GET /archivos/1
   # GET /archivos/1.xml
   def show
-    @archivo = Archivo.find(params[:id])
-    @hoja = Hoja.buscar_o_crear(@archivo.id, 0)
+    #@archivo = Archivo.find(params[:id])
+    #@hoja = Hoja.buscar_o_crear(@archivo.id, 0)
+    @hoja = Hoja.buscar_o_crear(params[:id].to_i, 0)
     @archivo = @hoja.archivo
 
     respond_to do |format|

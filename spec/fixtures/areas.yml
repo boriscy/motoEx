@@ -1,0 +1,29 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  hoja: 
+  nombre: MyString
+  celda_inicial: MyString
+  celda_final: MyString
+  tipo: MyString
+  rango: 1
+  fija: false
+  iterar_fila: false
+  encabezado: MyText
+  titular: MyText
+  fin: MyText
+  no_importar: MyText
+
+two:
+  hoja: 
+  nombre: MyString
+  celda_inicial: MyString
+  celda_final: MyString
+  tipo: MyString
+  rango: 1
+  fija: false
+  iterar_fila: false
+  encabezado: MyText
+  titular: MyText
+  fin: MyText
+  no_importar: MyText

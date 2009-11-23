@@ -1,0 +1,42 @@
+<h1>Listing areas</h1>
+
+<table>
+  <tr>
+    <th>Hoja</th>
+    <th>Nombre</th>
+    <th>Celda inicial</th>
+    <th>Celda final</th>
+    <th>Tipo</th>
+    <th>Rango</th>
+    <th>Fija</th>
+    <th>Iterar fila</th>
+    <th>Encabezado</th>
+    <th>Titular</th>
+    <th>Fin</th>
+    <th>No importar</th>
+  </tr>
+
+<% @areas.each do |area| %>
+  <tr>
+    <td><%=h area.hoja %></td>
+    <td><%=h area.nombre %></td>
+    <td><%=h area.celda_inicial %></td>
+    <td><%=h area.celda_final %></td>
+    <td><%=h area.tipo %></td>
+    <td><%=h area.rango %></td>
+    <td><%=h area.fija %></td>
+    <td><%=h area.iterar_fila %></td>
+    <td><%=h area.encabezado %></td>
+    <td><%=h area.titular %></td>
+    <td><%=h area.fin %></td>
+    <td><%=h area.no_importar %></td>
+    <td><%= link_to 'Show', area %></td>
+    <td><%= link_to 'Edit', edit_area_path(area) %></td>
+    <td><%= link_to 'Destroy', area, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New area', new_area_path %>
