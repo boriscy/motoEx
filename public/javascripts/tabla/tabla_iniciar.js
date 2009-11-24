@@ -8,30 +8,9 @@ $(document).ready(function(){
     $('#sheet-0').spreadsheet({numero: 0});
     var hojaActual =  0;
     
-    // Inicializacion de opciones de marcado de areas
-    Area = {
-        inicializar: function(){
-            
-            var ga = this;
-            $('#area-encabezado').click(function() { ga.llamarMetodo("definirAreaEncabezado"); } );
-            $('#area-descartar').click(function() { ga.llamarMetodo("definirAreaDescartar"); });
-            $('#area-fin').click(function() { ga.llamarMetodo("definirAreaFin"); });
-            
-        },
-        llamarMetodo: function(metodo) {
-            var id = $('.sel').attr("class").replace(/^.*(-id-[a-z0-9]+).*$/, "$1");
-            if(id != "") {
-                this.areas[id][metodo]();
-            }else{
-                this.mensajeError("Debe seleccionar dentro de un área definida");
-            }
-        }
-    };
-
-    //new Area();
-
     hojas[0] = hojaActual;
 
+    // Funciiones para scroll de hojas
     $('#scroll_start').click(function() {
         $('#lista_hojas').scrollTo(0, 0, {duration: 500});
     });
@@ -45,93 +24,39 @@ $(document).ready(function(){
     $('#scroll_end').click(function(){
         $('#lista_hojas').scrollTo($('#lista_hojas').width(), {duration: 500});
     });
-    
-    //$('.opt_bold').live('click',function(){ $('.visible').setBold(); });
-    
-    //var lista_hojas = $('.lista_hojas').tabsajax();
 
-    /**
-     * Clase para poder manejar el formulario de Area
-     */
-    FormularioArea = function(options) {
-      this.merge(options);
-      this.eventosCrear();
-      this.eventosDestruir();
-      
+
+    Iniciar = function() {
+        this.init();
+    }
+    Iniciar.prototype = {
+        cssSeleccionado: 'sel',
+        init: function() {
+            var ini = this;
+            $("#area-importar").live('click', function() {
+                  if(typeof(area) == 'undefined') {
+                      puntos = ini.obtenerPuntos();
+                      area = new AreaGeneral(puntos[0], puntos[1]);
+                  }else{
+                      $("#formulario-areas").dialog("open");
+                  }
+            });
+        },
+        obtenerPuntos: function() {
+            arr = [];
+            arr.push(this.punto( $('.' + this.cssSeleccionado +':first').attr("id")) );
+            arr.push(this.punto( $('.' + this.cssSeleccionado +':last').attr("id")) );
+            return arr;
+        },
+        punto: function(p) {
+            return p.replace(/^\d+_([\d_]+)$/, "$1");
+        }
     }
 
-    FormularioArea.prototype = {
-      id: '',
-      formOptions:{ width: 600, title: 'Definición de areas', modal: true},
-      /**
-       * Se une con otro JSON
-       */
-      merge: function(options) {
-        for(var k in options) {
-          this.formOptions[k] = options[k];
-        }
-      },
-      /**
-       * Muestra un formulario para la búsqueda o creacion de areas
-       */
-      buscarCrear:function () {
+    iniciar = new Iniciar();
 
-        var formulario = this;
-        if ($('#area').val() == 'disabled') {
-          if($('#formulario-areas').length == 0){
-            $.get('/areas/new', function(html){
-              $(html).dialog(formulario.formOptions);
-              $('#area-tabs').tabs();
-              $("form").live('submit', function() {
-                formulario.guardar(); 
-                return false;
-              });
-            });
-          }else{
-            $('#formulario-areas').dialog("open");
-          }
-        }else{
-          $.get('/areas/'+$('#area').val()+'/edit', function(){
-            
-          });
-        }
-      },
-      guardar: function() {
-        var formulario = this;
-          $("#area_hoja_id").val(hoja_id);
-          $.post('/areas/'+formulario.id, $('#formulario-areas').hashify(),  function(resp){
-            //$('#area-tabs').
-            $('#area').append("<option value='"+ resp["area"]["id"] +"'>" + resp["area"]["nombre"] + "</option>")
-            .select(resp["area"]["id"]);
-            $('#formulario-areas').attr('action', '/areas/' + resp["area"]["id"] + '/edit');
-            $('#formulario-areas').append('<input type="hidden" value="put" />');
-            $('.sel').addClass('green');
-            console.log(resp);
-          }, 'json');
-      },
-      eventosCrear: function() {
-        var formulario = this;
-        $("#area-importar").click(function() {
-            formulario.buscarCrear();
-        });
-      },
-      /**
-       * Eventos que eliminan el formulario
-       */
-      eventosDestruir: function() {
-        var formulario = this;
-        $("#area").select(function() { formulario.eliminarFormulario() });
-        $("#lista_hojas a").click(function() { formulario.eliminarFormulario() });
-      },
-      /**
-       * Función que elimina el formulario del DOM
-       */
-      eliminarFormulario: function() {
-        $('#formulario-areas').remove();
-      }
-    };
-
-    var formArea = new FormularioArea();
+   
+    //var formArea = new FormularioArea();
 
   
     /*************************************************/

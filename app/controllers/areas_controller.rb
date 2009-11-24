@@ -39,15 +39,10 @@ class AreasController < ApplicationController
   def create
     @area = Area.new(params[:area])
 
-    respond_to do |format|
-      if @area.save
-        flash[:notice] = 'Area was successfully created.'
-        format.html { redirect_to(@area) }
-        format.xml  { render :xml => @area, :status => :created, :location => @area }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @area.errors, :status => :unprocessable_entity }
-      end
+    if @area.save
+      render :json => @area
+    else
+      render :json => @area.errors #, :status => :unprocessable_entity
     end
   end
 

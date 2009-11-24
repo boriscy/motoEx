@@ -1,22 +1,54 @@
-CrearArea = function(idArea, config) {
-    var area = this;
-    this.idArea = "-" + idArea; // El id del area se identifica con el guion por delante de la clase css
-    return this.definirAreaImportar();
-}
 
-CrearArea.prototype = {
-    idArea: '',
-    cssSeleccionado: 'sel',
-    cssAreaImp: 'area-imp',
-    areaSel: false, // Indica si es que el área principal ha sido seleccioanda
-    cssAreaEnc: 'area-enc',
-    areaEncSel: false, // Indica si se ha seleccionado el encabezado
-    cssAreaDesc: 'area-desc',
-    cssAreaFin: 'area-fin',
+/**
+ * Clase madre de la cual heredan todas las demas areas
+ */
+var Area = Class.extend({
+    init: function(ini, fin) {
+        this.celdaInicial = ini;
+        this.celdaFinal = fin;
+    },
+    /**
+     *
+     */
+    marcarArea: function(css, cssSel){
+        cssSel = cssSel || this.cssSeleccionado;
+        $('.' + cssSel).addClass(css);
+        //$( $("a.active").attr("href") + ' .' + this.cssSeleccionado )
+    },
+    desmarcarArae: function(css) {
+        cssSel = cssSel || this.cssSeleccionado;
+        $('.' + cssSel).removeClass(css);
+    },
+    celdaInicial: '',
+    celdaFinal: '',
+    cssSeleccionado: 'sel'
+});
+
+
+ 
+AreaGeneral = Area.extend({
+    formulario: '',
+    init: function(ini, fin) {
+        this._super(ini, fin);
+        if(this.formulario == '') {
+            this.formulario = new FormularioArea(this);
+            // buscar hoja visble
+            var areagen = this; 
+            $('.visible').bind("area:cambiar", function() { areagen.triggerMarcar() });
+        }
+    },
+    /**
+     *
+     */
+    triggerMarcar: function() {
+        this.marcarArea('bg-light-green');
+    },
     /**
     * Define el area a importar en base a los elementos seleccionados ".sel"
     */
-    definirAreaImportar: function() {
+    definirAreaImportar:function() {
+        $("#sheets td").bind("area:modificar", function() {
+        });
         var test = $('.' + this.cssAreaImp).find("." + this.cssSeleccionado).length > 0;
         if(!test) {
             $(".visible .sel").addClass("area-imp " + this.idArea);
@@ -27,12 +59,15 @@ CrearArea.prototype = {
             return false;
         }
     },
-    crearAreaImportar: function(){
+    /**
+     *
+     */
+    crearAreaImportar:function(){
     },
     /**
     * Define el area del encabezado, debe estar dentro del .area-importar
     */
-    definirAreaEncabezado: function() {
+    definirAreaEncabezado:function() {
         if(this.areaSel) {
             var inicio = $('.' + this.idArea + 'td:first');
             var fin = $('.' + this.idArea + 'td:first').parent("tr").find("td." + this.cssAreaImp + ":last");
@@ -45,14 +80,15 @@ CrearArea.prototype = {
     /**
     * Define el a descartar
     */
-    definirAreaDescartar: function() {
+    definirAreaDescartar:function() {
         if(this.crearArea(this.cssAreaDesc) && this.areaEncSel) {
             
         }
-    },/**
+    },
+    /**
     * Define el fin
     */
-    definirAreaFin: function() {
+    definirAreaFin:function() {
         //$('.' + this.cssAreaFin).removeClass(this.cssAreaFin);
         if(this.crearArea(this.cssAreaFin) && this.areaEncSel) {
         }
@@ -63,12 +99,12 @@ CrearArea.prototype = {
     * @param String css2 # Nombre de la clase css elementos 2
     * @return Boolean # true, false
     */
-    revisarInterseccionAlguno: function(css1, css2) {
+    revisarInterseccionAlguno:function(css1, css2) {
         css1 = '.' + css1;
         css2 = css2 || this.cssSeleccionado;
         css2 = '.' + css2;
         var ret = false;
-        $(css1 + " " + css2).each(function(i, el) {
+            $(css1 + " " + css2).each(function(i, el) {
             if($(el).hasClass(css1) && $(el).hasClass(css2)){ 
                 ret = true;
                 exit;
@@ -79,7 +115,7 @@ CrearArea.prototype = {
     /**
      *
      */
-    crearArea: function(css) {
+    crearArea:function(css) {
         if(this.revisarInterseccionAlguno(this.cssAreaImp)) {
             $(".visible .sel").addClass(css);
             return true
@@ -90,6 +126,10 @@ CrearArea.prototype = {
     /**
      * Marca el borde con el color del css1, es necesario definir en el DOM la lista de colores de cada Area
      */
-    marcarBordeSobreArea: function(css1, css2) {
+    marcarBordeSobreArea:function(css1, css2) {
     }
-}
+
+
+  
+});
+    

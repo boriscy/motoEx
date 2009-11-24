@@ -18,6 +18,7 @@ String.class_eval do
     end
   end
 
+  # Crea un br por cada \n
   def nl2br
     self.gsub(/\n/, "<br/>")
   end
@@ -52,6 +53,12 @@ Integer.class_eval do
       else
         "#{(self.to_f/1.exabyte).round(r)} EB"
     end
+  end
+
+  # Convierte un mumero a una columna de una hoja electronica
+  # @param Integer num
+  def excel_col(num)
+    ( ( ( (num-1)/26>=1) ? ( (num-1)/26+64).chr: '') + ((num-1)%26+65).chr)
   end
 end
 
