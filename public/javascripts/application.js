@@ -52,6 +52,9 @@ $(document).ready(function() {
     }
   });
 
+  /**
+   * Funcion que devuelve serializado como JSON los elementos de un formulario
+   */
   $.fn.extend({
     hashify: function() {
       var hash = {};
@@ -72,6 +75,18 @@ $(document).ready(function() {
  */
 function numExcelCol(num) {
   return (( ( parseInt((num-1)/26)>=1) ? String.fromCharCode( parseInt((num-1)/26)+64): '') + String.fromCharCode((num-1)%26+65));
+}
+function celdaExcel(pos) {
+  var p = pos.split("_");
+  return numExcelCol( parseInt(p[1]) ) + p[0];
+}
+
+/**
+ *
+ */
+function getEventTarget(e) {
+    e = e || window.event;
+    return e.target || e.srcElement;
 }
  
 /**

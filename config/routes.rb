@@ -1,8 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+
   map.resources :areas
-
-
-
   map.hoja '/hoja', :controller => :hojas, :action => :hoja, :conditions => {:method => :post}
   map.resources :archivos
 

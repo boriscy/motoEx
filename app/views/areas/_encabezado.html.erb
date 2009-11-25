@@ -1,4 +1,12 @@
 <% f.inputs do %>
-  <%= f.input :encabezado_celda_inicial, :label => "Celda inicial", :input_html => {:size => 7} %>
-  <%= f.input :encabezado_celda_final, :label => "Celda final", :input_html => {:size => 7} %>
+  <li class="string">
+    <label for="id">Celda Inicial</label>
+    <span id="span_encabezado_celda_inicial"><%= @area.formato_excel(:encabezado_celda_inicial) %></span>
+  </li>
+  <li class="string">
+    <label for="id">Celda Final</label>
+    <span id="span_encabezado_celda_final"><%= @area.formato_excel(:encabezado_celda_final) %></span>
+  </li>
+  <%= f.input :encabezado_celda_inicial, :as => :hidden %>
+  <%= f.input :encabezado_celda_final, :as => :hidden %>
 <% end %>

@@ -10,17 +10,17 @@
     </ul>
 
     <div id="general">
-      <%= render :partial => "general", :locals => {:f => f} %>
+      <%= render :partial => "areas/general", :locals => {:f => f} %>
     </div>
     <div id="encabezado">
-      <%= render :partial => "encabezado", :locals => {:f => f} %>
+      <%= render :partial => "areas/encabezado", :locals => {:f => f} %>
     </div>
     <div id="excluidas">
-      <%= render :partial => "excluidas", :locals => {:f => f} %>
+      <%= render :partial => "areas/excluidas", :locals => {:f => f} %>
     </div>
 
     <div id="fin">
-      <%# render :partial => "general" %>
+      <%= render :partial => "areas/fin", :locals => {:f => f} %>
     </div>
   </div>
 

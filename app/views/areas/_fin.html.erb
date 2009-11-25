@@ -1,0 +1,12 @@
+<% f.inputs do %>
+  <li class="string">
+    <label for="id">Celda Inicial</label>
+    <span id="span_fin_celda_inicial"><%= @area.formato_excel(:fin_celda_inicial) %></span>
+  </li>
+  <li class="string">
+    <label for="id">Celda Final</label>
+    <span id="span_fin_celda_final"><%= @area.formato_excel(:fin_celda_final) %></span>
+  </li>
+  <%= f.input :fin_celda_inicial, :as => :hidden %>
+  <%= f.input :fin_celda_final, :as => :hidden %>
+<% end %>

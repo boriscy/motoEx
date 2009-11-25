@@ -16,10 +16,9 @@ class ArchivosController < ApplicationController
   # GET /archivos/1
   # GET /archivos/1.xml
   def show
-    #@archivo = Archivo.find(params[:id])
-    #@hoja = Hoja.buscar_o_crear(@archivo.id, 0)
     @hoja = Hoja.buscar_o_crear(params[:id].to_i, 0)
     @archivo = @hoja.archivo
+    @area = Area.new(:iterar_fila => true, :rango => 5)
 
     respond_to do |format|
       format.html # show.html.erb

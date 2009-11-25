@@ -31,16 +31,43 @@ $(document).ready(function(){
     }
     Iniciar.prototype = {
         cssSeleccionado: 'sel',
+        area: false,
         init: function() {
             var ini = this;
-            $("#area-importar").live('click', function() {
-                  if(typeof(area) == 'undefined') {
-                      puntos = ini.obtenerPuntos();
-                      area = new AreaGeneral(puntos[0], puntos[1]);
-                  }else{
-                      $("#formulario-areas").dialog("open");
-                  }
+            // Evento para el vinculo a#area-importar
+            $("#area-importar").click( function() {
+                if(!this.area) {
+                    var puntos = ini.obtenerPuntos();
+                    ini["area"] = new AreaGeneral(puntos[0], puntos[1]);
+                }else{
+                    $("#formulario-areas").dialog("open");
+                }
             });
+            // Evento cuando se cambia area (select#area)
+            $('select#area').change(function() {
+                $('body').trigger("destruir:area");
+                ini.destruir();
+                if($(this).val() != 'disabled') {
+                    ini['area'] = new AreaGeneral();
+                }
+            });
+            // Evento cuando se cambia de hoja
+            $("div#lista_hojas a").click(function() { 
+                $('#sheet-'+hoja_numero).trigger("destruir:area");
+                ini.destruir();
+            });
+        },
+        /**
+         * Elimina el area
+         */
+        destruir: function() {
+            if(typeof(this.area) != 'undefined') {
+                delete(this.area);
+            }
+        },
+        crear: function() {
+            //
+            this['area']= new AreaGeneral();
         },
         obtenerPuntos: function() {
             arr = [];

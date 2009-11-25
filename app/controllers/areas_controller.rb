@@ -21,7 +21,7 @@ class AreasController < ApplicationController
   # GET /areas/new
   # GET /areas/new.xml
   def new
-    @area = Area.new(:iterar_fila => true)
+    @area = Area.new(:iterar_fila => true, :rango => 5)
 
     respond_to do |format|
       format.html # new.html.erb

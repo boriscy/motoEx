@@ -1,8 +1,17 @@
 <script type="text/javascript" language="javascript" charset="utf-8">
 //<![CDATA[
-  archivo_id = <%= @archivo.id %>
+  archivo_id = '<%= @archivo.id %>';
+  hoja_id = '<%= @hoja.id %>';
+  hoja_numero = '<%= @hoja.numero %>';
 //]]>
 </script>
+
+<style type="text/css" media="screen">
+  #formulario-areas label{width: 7em;}
+  #formulario-areas{display:none;}
+</style>
+
+<%= render :partial => "areas/form" %>
 
 <%= javascript_include_tag "tabla/spreadsheet", "tabla/jquery.scrollTo-min", 
   "tabla/areas", "tabla/tabla_iniciar", "tabla/formulario", :cache => "todo" %>
@@ -12,5 +21,6 @@
 
 <%= render :partial => 'encabezado' %>
 <%= render :partial => 'detalle' %>
+
 
 <%= javascript_include_tag "test/#{params[:js]}" if params[:js] if RAILS_ENV == "development" and params[:js]%>

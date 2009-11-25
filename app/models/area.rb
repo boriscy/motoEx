@@ -3,6 +3,7 @@ class Area < ActiveRecord::Base
 
   [:celda_inicial, :celda_final, :celdas].each do |m|
     attr_accessor "encabezado_#{m}".to_sym
+    attr_accessor "fin_#{m}".to_sym
   end
   attr_accessor :excluida
 
@@ -15,4 +16,12 @@ class Area < ActiveRecord::Base
   validates_presence_of :nombre, :celda_inicial, :celda_final
   validates_numericality_of :rango
 
+  def formato_excel(celda)
+    if self.send(celda).nil?
+      "&nbsp;"
+    else
+      sp = self.send(celda).split("_")
+      %(#{sp[1].to_i.excel_col} #{sp[0]})
+    end
+  end
 end
