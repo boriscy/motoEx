@@ -1,70 +1,26 @@
-
-/**
- * Clase madre de la cual heredan todas las demas areas
- */
-var Area = Class.extend({
-    init: function(ini, fin) {
-        this.celdaInicial = ini || '';
-        this.celdaFinal = fin || '';
-    },
-    /**
-     *
-     */
-    marcarArea: function(css, cssSel){
-        cssSel = cssSel || this.cssSeleccionado;
-        $('.' + cssSel).addClass(css);
-    },
-    desmarcarArea: function(css) {
-        css = css || this.cssSeleccionado;
-        $('.' + css).removeClass(css);
-    },
-    /**
-     * marca con el css indicado desde el inicio al fin
-     */
-    'marcarCeldas': function(inicio, fin, css) {
-        inicio = inicio.split("_");
-        fin = fin.split("_");
-        
-        var iIni = parseInt(inicio[0]);
-        var iFin = parseInt(fin[0]);
-        var jIni = parseInt(inicio[1]);
-        var jFin = parseInt(fin[1]);
-
-        for(var i = iIni; i <= iFin; i++) {
-            console.log(i);
-            for(j = jIni; j <= jFin; j++) {
-                $('#' + hoja_numero + '_' + i + '_' + j).addClass(css);
-            }
-        }
-    },
-    celdaInicial: '',
-    celdaFinal: '',
-    cssSeleccionado: 'sel',
-    cssMarcar: ''
-});
-
-
 /**
  * Formulario general, clase principal a la cual todas
  * las clases estan realcionadas
  */
 AreaGeneral = Area.extend({
-    formulario: false,
-    // encabezado: '',
+    'formulario': false,
+    'areaMinima': 4,
+    'encabezado': false,
+    'fin': false,
     // fin: '',
     datos: {},
     init: function(ini, fin) {
         var area_id = $('select#area').val();
         this._super(ini, fin);
-        this.formulario = new FormularioArea(this);
         this.cssMarcar = "bg-light-green";
+        this.formulario = new FormularioArea(this);
         this.crearEventos();
         var area = this;
-        if(area_id == 'disabled') {
-            area.formulario.cargarDatosArea();
-        }else{   
-            area.cargarDatos();
-        }
+
+        this.marcarArea(this.cssMarcar);
+        this.encabezado = new Encabezado(false, false, this);
+        this.fin = new Fin(false, false, this);
+
     },
     /**
      * Eventos generales
@@ -75,8 +31,10 @@ AreaGeneral = Area.extend({
             area.desmarcarArea(area.cssMarcar);
         });
         $("#sheet-"+hoja_numero).bind("marcar:area", function(){
-            area.marcarArea(area.cssMarcar);
-            //$('.'+area.cssSeleccionado).removeClass(area.cssSeleccionado);
+            if(area.validarAreaMinima() ) {
+                area.desmarcarArea(area.cssMarcar);
+                area.marcarArea(area.cssMarcar);
+            }
         });
     },
     /**
@@ -202,4 +160,3 @@ AreaGeneral = Area.extend({
 
   
 });
-    

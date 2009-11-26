@@ -82,15 +82,17 @@ function celdaExcel(pos) {
 }
 
 /**
- *
+ * Obtiene el DOM que genero el evento
  */
 function getEventTarget(e) {
     e = e || window.event;
     return e.target || e.srcElement;
 }
- 
+
+
 /**
  * Herencia
+ * Debe estar antes de los prototype de otras clases
  */
 // Inspired by base2 and Prototype
 
@@ -153,3 +155,21 @@ function getEventTarget(e) {
     return Class;
   };
 })();
+
+
+/**
+ * Extensiones a clases
+ * Debe ir despues de Class
+ */
+String.prototype.trim = function() {
+    return this.replace(/^\s+|\s+$/g,"");
+}
+String.prototype.ltrim = function() {
+    return this.replace(/^\s+/,"");
+}
+String.prototype.rtrim = function() {
+    return '';this.replace(/\s+$/,"");
+}
+function isArray(value){
+  return Object.prototype.toString.apply(value) === '[object Array]';
+}

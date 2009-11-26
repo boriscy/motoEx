@@ -26,23 +26,19 @@ $(document).ready(function(){
     });
 
 
+    /**
+     * Objeto principal que inicializa todo
+     */
     Iniciar = function() {
         this.init();
     }
+
     Iniciar.prototype = {
-        cssSeleccionado: 'sel',
-        area: false,
+        'cssSeleccionado': 'sel',
+        'area': false,
+        'areaMinima': 4,
         init: function() {
             var ini = this;
-            // Evento para el vinculo a#area-importar
-            $("#area-importar").click( function() {
-                if(!this.area) {
-                    var puntos = ini.obtenerPuntos();
-                    ini["area"] = new AreaGeneral(puntos[0], puntos[1]);
-                }else{
-                    $("#formulario-areas").dialog("open");
-                }
-            });
             // Evento cuando se cambia area (select#area)
             $('select#area').change(function() {
                 $('body').trigger("destruir:area");
@@ -56,6 +52,40 @@ $(document).ready(function(){
                 $('#sheet-'+hoja_numero).trigger("destruir:area");
                 ini.destruir();
             });
+            // Evento para mostrar el formulario con propiedades
+            $("#propiedades").click(function() {
+                $("#propiedades").trigger('cargar:datos');
+                $("#formulario-areas").dialog("open");
+            });
+            //Evento para guardar con Salvar
+            $('#salvar').click(function(){
+                $("#formulario-areas form").trigger('submit');    
+            });
+
+            this.eventosMenu();
+        },
+        /**
+         * Eventos realacionados la menu
+         */
+        'eventosMenu': function() {
+            var ini = this;
+            // Evento para el vinculo a#area-importar
+            $("#area-importar").click( function() {
+                // Se deberia definir area minima
+                if( $('.' + ini.cssSeleccionado).length >= ini.areaMinima) {
+                    // Crea un area o sino presenta el formulario
+                    if(!ini.area) {
+                        var puntos = ini.obtenerPuntos();
+                        ini["area"] = new AreaGeneral(puntos[0], puntos[1]);
+                    }else{
+                        $('#sheet-'+hoja_numero).trigger('marcar:area');
+                    }
+                }
+            });
+
+            $('#area-encabezado').click(function() { $('#area-encabezado').trigger("marcar:encabezado") } );
+            $('#area-fin').click(function() { $('#area-fin').trigger("marcar:fin") } );
+            $('#area-descartar').click(function() { $('#area-descartar').trigger("marcar:descartar") });
         },
         /**
          * Elimina el area
@@ -122,25 +152,5 @@ $(document).ready(function(){
             }
         }
     });
-    /*
-    $('#area-importar').click(function() {
-        // deberia mostrar un formulario
-        // devuelve el id del area
-        if($('#sheet-'+hojaActual).find('.sel').length > 1){
-          buscarCrear();
-        }
-    });
-    
-    // Cargar los datos del area
-    $('#area').select(function() {
-        if ($(this).val() != 'disabled'){
-          $.getJSON('/areas/'+$(this).val(), function(e) {
-
-          });
-        }
-    });
-    */
-
-    
     
 });

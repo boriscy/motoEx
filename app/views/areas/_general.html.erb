@@ -12,6 +12,6 @@
   <%= f.input :celda_inicial, :as => :hidden %>
   <%= f.input :celda_final, :as => :hidden %>
   <%= f.input :rango, :input_html => {:size => 2} %>
-  <%= f.input :fija, :hint => 'Indica si es que la dimención del área es fija o varia por los datos' %>
-  <%= f.input :iterar_fila, :hint => 'Indica si itera fila o columna' %>
+  <%= f.input :fija, :label => 'Área fija', :hint => 'Indica si es que la dimención del área es fija o varia por los datos' %>
+  <%= f.input :iterar_fila, :as => :radio, :collection => Area::FILAS, :label => 'Iterar', :hint => 'Indica si itera fila o columna' %>
 <% end %>
