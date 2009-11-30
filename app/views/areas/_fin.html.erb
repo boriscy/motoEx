@@ -1,12 +1,12 @@
 <% f.inputs do %>
   <li class="string">
     <label for="id">Celda Inicial</label>
-    <span id="span_fin_celda_inicial"><%= @area.formato_excel(:fin_celda_inicial) %></span>
+    <span id="span_fin_celda_inicial">&nbsp;</span>
   </li>
   <li class="string">
     <label for="id">Celda Final</label>
-    <span id="span_fin_celda_final"><%= @area.formato_excel(:fin_celda_final) %></span>
+    <span id="span_fin_celda_final">&nbsp;</span>
   </li>
-  <%= f.input :fin_celda_inicial, :as => :hidden %>
-  <%= f.input :fin_celda_final, :as => :hidden %>
+  <%= hidden_field_tag "#{f.object.class.to_s.underscore}[fin][celda_inicial]" %>
+  <%= hidden_field_tag "#{f.object.class.to_s.underscore}[fin][celda_final]" %>
 <% end %>

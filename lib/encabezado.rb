@@ -1,8 +1,3 @@
-class Encabezado
-  attr_accessor :celda_inicial, :celda_final
-
-  def initialize(ini, fin)
-    @celda_inicial, @celda_final = ini, fin
-  end
-  
+# Clase que maneja los encabezados de un area
+class Encabezado < AreaPadre
 end

@@ -2,9 +2,10 @@ Fin = Area.extend({
     'area': false,
     'areaMinima': 1,
     'init': function(ini, fin, area){
-        this.cssMarcar = 'bg-light-yellow';
-        this._super(ini, fin);
         this.area = area;
+        this.cssMarcar = 'bg-light-yellow';
+        this.serialize = 'fin';
+        this._super(ini, fin);
         this.crearEventos();
     },
     /**

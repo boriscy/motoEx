@@ -25,7 +25,8 @@ $(document).ready(function(){
         $('#lista_hojas').scrollTo($('#lista_hojas').width(), {duration: 500});
     });
 
-
+    // Variable que almancena el estado general de un area
+    estado = {};
     /**
      * Objeto principal que inicializa todo
      */
@@ -43,10 +44,16 @@ $(document).ready(function(){
             $('select#area').change(function() {
                 $('body').trigger("destruir:area");
                 ini.destruir();
+
                 if($(this).val() != 'disabled') {
-                    ini['area'] = new AreaGeneral();
+                    // AJAX
+                    $.getJSON("/areas/"+$(this).val(), function(resp) {
+                        estado = resp;
+                        ini['area'] = new AreaGeneral();
+                    });
                 }
             });
+
             // Evento cuando se cambia de hoja
             $("div#lista_hojas a").click(function() { 
                 $('#sheet-'+hoja_numero).trigger("destruir:area");

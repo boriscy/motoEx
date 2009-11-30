@@ -11,16 +11,44 @@ var Area = Class.extend({
     'cssMarcar': '',
     'areaMinima': 1,
     /**
-     * Constructor
+     * Indica como esta serializado el campo en la BD, que esta almacenado
+     * en la variable global "estado" si esta vacio no produce cambios
+     * pero en caso de que contenga un valor se mapea de la siguiente forma:
+     * Ej.
+     *    serialize: 'encabezado' => estado.area.encabezado
+     */
+    'serialize': '',
+    /**
+     * Constructor que esta intimamente ligado a la variable global "estado"
+     * en la cual se almancena las respuestas de la BD en formato JSON
+     * @param String ini
+     * @param String fin
      */
     'init': function(ini, fin) {
-        this.celdaInicial = ini || '';
-        this.celdaFinal = fin || '';
+        if(this.serialize != '') {
+            try{
+                this.celdaInicial = estado.area[this.serialize].celda_inicial;
+                this.celdaFinal = estado.area[this.serialize].celda_final;
+                this.marcarCeldas(this.celdaInicial, this.celdaFinal, this.cssMarcar);
+            }catch(e){
+                this.celdaInicial = '';
+                this.celdaFinal = '';
+            }
+        }else{
+            try{
+                this.celdaInicial = estado.area.celda_inicial;
+                this.celdaFinal = estado.area.celda_final;
+                this.marcarCeldas(this.celdaInicial, this.celdaFinal, this.cssMarcar);
+           }catch(e) {
+                this.celdaInicial = '';
+                this.celdaFinal = '';
+            }
+        }
     },
     /**
      * Aciciona una clase css a un area
      */
-    'marcarArea': function(css, cssSel){
+    'marcarArea': function(css, cssSel) {
         cssSel = cssSel || this.cssSeleccionado;
         $('.' + cssSel).addClass(css);
     },
@@ -38,6 +66,8 @@ var Area = Class.extend({
      * @param String css
      */
     'marcarCeldas': function(inicio, fin, css) {
+        if(!inicio && !fin)
+            return false;
         inicio = inicio.split("_");
         fin = fin.split("_");
         

@@ -1,6 +1,13 @@
 Encabezado = Area.extend({
     'area': false,
     'areaMinima': 1,
+    'serialize': 'encabezado',
+    /**
+     * Constructor
+     * @param String ini
+     * @param String fin
+     * @param AreaGeneral area
+     */
     'init': function(ini, fin, area){
         this.cssMarcar = 'bg-light-blue';
         this._super(ini, fin);

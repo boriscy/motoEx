@@ -11,16 +11,18 @@ AreaGeneral = Area.extend({
     datos: {},
     init: function(ini, fin) {
         var area_id = $('select#area').val();
-        this._super(ini, fin);
         this.cssMarcar = "bg-light-green";
+        // Parent
+        this._super(ini, fin);
         this.formulario = new FormularioArea(this);
         this.crearEventos();
         var area = this;
-
-        this.marcarArea(this.cssMarcar);
+        // Creación en caso de que no sea AJAX
+        if(!ini && !fin)
+            this.marcarArea(this.cssMarcar);
+        // Sub Areas
         this.encabezado = new Encabezado(false, false, this);
         this.fin = new Fin(false, false, this);
-
     },
     /**
      * Eventos generales

@@ -13,8 +13,8 @@ class ArchivosController < ApplicationController
     end
   end
 
-  # GET /archivos/1
-  # GET /archivos/1.xml
+  # Se asigna a tres variables @hoja, @archivo y se crea 
+  # @area = Area.new(:iterar_fila => true, :rango => 5)
   def show
     @hoja = Hoja.buscar_o_crear(params[:id].to_i, 0)
     @archivo = @hoja.archivo
