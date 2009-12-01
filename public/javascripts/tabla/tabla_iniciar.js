@@ -160,4 +160,30 @@ $(document).ready(function(){
         }
     });
     
+    //configurando el formulario de los patrones de las columnas a descartar
+    $("select[multiple]").asmSelect({
+        addItemTarget: 'bottom',
+        animate: true,
+        //highlight: true,
+        sortable: true,
+        removeLabel: 'quitar'
+    });
+    $('#asmSelect0 option:eq(0)').remove();
+    $('#asmSelect0').attr('multiple','multiple');
+    $('#asmContainer0').css('float','left');
+    //colocando el sortable a la derecha
+    $('#asmContainer0').prepend("<div id='columnas-seleccionadas' style='float:left'></div>");
+    $('#asmContainer0').prepend("<div id='columnas-boton' style='float:left'> | </div>");
+    $('#asmContainer0').prepend("<div id='columnas-multiple' style='float:left'></div>");
+    $('#asmSelect0').prependTo('#columnas-multiple');
+    $('#asmList0').prependTo('#columnas-seleccionadas');
+    //para que siempre tenga un ancho correcto
+    //$('#columnas-seleccionadas').width($('#asmSelect0')[0].clientWidth + 50);
+    $('#columnas-seleccionadas').width(250);
+    $('#columnas').css('width',250);
+    //probando los estilos
+    $('#asmSelect0 option').each(function(i, e){
+        $(e).addClass('asmListItem');
+    });
+    
 });

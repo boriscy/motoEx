@@ -85,6 +85,27 @@
             $('#sheet-'+numero+'-rows').css('width', anchofila + 'px');
             $('#sheet-'+numero+'-rows table').css('width', (anchofila + 1) + 'px');
             
+            //una vez ubicado todo, agrega las propiedades para el menu contextual
+            $('.sheet-content').contextMenu('popup-menu', {
+                bindings: {
+                  'menu-area': function(t) {
+                      //alert('Trigger was '+t.id+'\nAction was Open');
+                  },
+                  'menu-titular': function(t) {
+                      //alert('Trigger was '+t.id+'\nAction was Open');
+                  },
+                  'menu-encabezado': function(t) {
+                      //alert('Trigger was '+t.id+'\nAction was Open');
+                  },
+                  'menu-fin': function(t) {
+                      //alert('Trigger was '+t.id+'\nAction was Open');
+                  },
+                  'menu-descartar': function(t) {
+                      //abre el formulario de las columnas a descartar
+                      $("#formulario-descartar").dialog("open");
+                  }
+                }
+            });
         }
         
         /**
@@ -196,54 +217,77 @@
          * returns: las mismas variables modificadas
          */
         function celda_inicial_final(row0, col0, row1, col1){
-            //console.log("old ini cell: " + row0 + "_" + col0);
-            //console.log("old end cell: " + row1 + "_" + col1);
-            //busca las celdas a marcar para saber el nuevo ancho y alto de las celdas
+            //console.log("INICIO =====> -De- " + row0 + "_" + col0 + " -A- " + row1 + "_" + col1);
+            var marcados = [];
+            var salir = false;
+            var encontrada = false;
+            var cs = 0;
+            var rs = 0;
+            //probando nuevo metodo
             for (var row = row0; row <= row1; row++) {
                 for (var col = col0; col <= col1; col++) {
                     celda = $('#'+config.numero+'_'+row+'_'+col);
                     if (celda.size() > 0){
+                        for (var r = row; r <= row + (parseInt(celda.attr('rowspan')) || 1) - 1; r++){
+                            for (var c = col; c <= col + (parseInt(celda.attr('colspan')) || 1) - 1; c++){
+                                marcados[r + "_" + c] = true;
+                            }
+                        }
                         if ( col + (parseInt(celda.attr('colspan')) || 1) - 1 > col1 ){
                             col1 = col + (parseInt(celda.attr('colspan')) || 1) - 1;
+                            salir = true;
                         }
                         if ( row + (parseInt(celda.attr('rowspan')) || 1) - 1 > row1 ){
                             row1 = row + (parseInt(celda.attr('rowspan')) || 1) - 1;
+                            salir = true;
                         }
-                    }else{
-                        //console.log("Celda no encontrada: " + row + "_"  + col);
-                        //no existe la celda debido a que un rowspan/colspan lo esta sobreescribiendo
-                        //busca el rowspan/colspan anterior
+                    }else if(!marcados[row + "_" + col]){
+                        //console.log("SIN MARCAR: "+row + "_" + col);
+                        //busca la celda que contiene a ESTA celda
                         encontrada = false;
                         for (var r = row; r > 0 && !encontrada; r--){
                             for (var c = col; c > 0 && !encontrada; c--){
                                 //console.log("Buscando Celda: " + r + "_"  + c);
                                 celda = $('#'+config.numero+'_'+r+'_'+c);
                                 if (celda.size() > 0){
-                                    //si existe la pone como nueva celda inicial
-                                    if ( c < col0 ){
-                                        col0 = c;
+                                    cp = (parseInt(celda.attr('colspan')) || 1);
+                                    rp = (parseInt(celda.attr('rowspan')) || 1);
+                                    //si la celda de la izquierda la contiene => las marca a todos en el array
+                                    if ((c + cp - 1 >= col) && (r + rp - 1 >= row)){
+                                        //console.log("contiene la numero %d + %d - 1 >= %d",r,rp,row);
+                                        //la contiene
+                                        for (var x = r; x <= r + rp - 1; x++){
+                                            for (var y = c; y <= c + cp - 1; y++){
+                                                marcados[x + "_" + y] = true;
+                                                //console.log("marcando: "+x + "_" + y);
+                                            }
+                                        }
+                                        encontrada = true;
+                                        salir = true;
+                                        if ( c < col0 ){
+                                            col0 = c;
+                                        }
+                                        if ( r < row0 ){
+                                            row0 = r;
+                                        }
+                                        if ( c + cp - 1 > col1 ){
+                                            col1 = c + cp - 1;
+                                        }
+                                        if ( r + rp - 1 > row1 ){
+                                            row1 = r + rp - 1;
+                                        }
                                     }
-                                    if ( r < row0 ){
-                                        row0 = r;
-                                    }
-                                    if ( c + (parseInt(celda.attr('colspan')) || 1) - 1 > col1 ){
-                                        col1 = c + (parseInt(celda.attr('colspan')) || 1) - 1;
-                                    }
-                                    if ( r + (parseInt(celda.attr('rowspan')) || 1) - 1 > row1 ){
-                                        row1 = r + (parseInt(celda.attr('rowspan')) || 1) - 1;
-                                    }
-                                    //y se sale del for
-                                    encontrada = true;
                                 }
                             }
                         }
-                        //console.log('Encontrada la celda: '+config.numero+'_'+r+'_'+c);
                     }
                 }
             }
-            //console.log("new ini cell: " + row0 + "_" + col0);
-            //console.log("new end cell: " + row1 + "_" + col1);
-            return {row0: row0, col0: col0, row1: row1, col1: col1}
+            if (!salir){
+                return {row0: row0, col0: col0, row1: row1, col1: col1};
+            }else{
+                return celda_inicial_final(row0, col0, row1, col1); //si se salio debido a un colspan-rowspan, vuelve a calcular las celdas
+            }
         }
         
         function merge(){
@@ -251,18 +295,7 @@
         }
         
         function bold(){
-            var seleccionados = table.find('.sel');
-            if( seleccionados.size() > 0 ) {
-                var agregar = true;
-                if (table.find('.sel.bold').size() > 0){
-                    agregar = false;
-                }
-                
-                if (agregar)
-                    seleccionados.addClass('bold');
-                else
-                    seleccionados.removeClass('bold');
-            }
+            
         }
         
         return {

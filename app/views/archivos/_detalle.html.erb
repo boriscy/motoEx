@@ -32,4 +32,28 @@
   </div>
 
 </div>
-
+<!--Para el menu contextual-->
+<div class="contextMenu" id="popup-menu">
+  <ul>
+    <li id="menu-area"><img src="folder.png" /> Marcar &aacute;rea de importaci&oacute;n</li>
+    <li id="menu-encabezado"><img src="email.png" /> Encabezado</li>
+    <li id="menu-titular"><img src="disk.png" /> Titular</li>
+    <li id="menu-fin"><img src="cross.png" /> Fin</li>
+    <li id="menu-descartar"><img src="cross.png" /> Descartar</li>
+  </ul>
+</div>
+<!--Para el formulario de las columnas a descartar-->
+<div id="formulario-descartar">
+    <form action="#" method="post">
+      <label for="columnas">Seleccione las columnas a utilizar como patr&oacute;n</label>
+      <select id="columnas" multiple="multiple" name="columnas[]" title="" style="width:250px">
+                          <option selected="selected">Amsterdam</option>      
+                          <option>Atlanta</option>
+                          <option>Baltimore</option>
+                          <option>Dubai</option>
+                          <option>Toronto</option>
+                          <option>Vancouver</option>
+      </select>
+      <p><input type="submit" name="submit" value="Marcar" /></p>
+    </form>
+</div>
