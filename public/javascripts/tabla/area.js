@@ -25,32 +25,40 @@ var Area = Class.extend({
      * @param String fin
      */
     'init': function(ini, fin) {
-        if(this.serialize != '') {
-            try{
+        // Llamada JSON
+        if(this.serialize!= '') {
+            if(estado.area[this.serialize]) {
                 this.celdaInicial = estado.area[this.serialize].celda_inicial;
                 this.celdaFinal = estado.area[this.serialize].celda_final;
                 this.marcarCeldas(this.celdaInicial, this.celdaFinal, this.cssMarcar);
-            }catch(e){
-                this.celdaInicial = '';
-                this.celdaFinal = '';
+            }else {
+                estado.area[this.serialize] = {};
             }
         }else{
-            try{
+            if(estado['area'] ) {
                 this.celdaInicial = estado.area.celda_inicial;
                 this.celdaFinal = estado.area.celda_final;
                 this.marcarCeldas(this.celdaInicial, this.celdaFinal, this.cssMarcar);
-           }catch(e) {
-                this.celdaInicial = '';
-                this.celdaFinal = '';
+            }else {
+                estado['area'] = {};
+                this.marcarArea(this.cssMarcar);
             }
         }
+
+        var area = this;
+        $('body').bind("destruir:area", function() { area.desmarcarArea(area.cssMarcar) });
     },
     /**
      * Aciciona una clase css a un area
      */
     'marcarArea': function(css, cssSel) {
+        // Validacion de area minima
+        if(!this.validarAreaMinima)
+            return false;
         cssSel = cssSel || this.cssSeleccionado;
         $('.' + cssSel).addClass(css);
+        $('.' + cssSel).removeClass(cssSel);
+        this.cambiarEstado();
     },
     /**
      * Elimina la clase css de un area 
@@ -58,6 +66,41 @@ var Area = Class.extend({
     'desmarcarArea': function(css) {
         css = css || this.cssSeleccionado;
         $('.' + css).removeClass(css);
+        this.borrarAreaEstado();
+    },
+    /**
+     * Cambia la variable global estado
+     */
+    'cambiarEstado': function() {
+        var puntos = this.obtenerPuntos(this.cssMarcar);
+        if(this.serialize != '') {
+            estado.area[this.serialize]['celda_inicial'] = puntos[0];
+            estado.area[this.serialize]['celda_final'] = puntos[1];
+            estado.area[this.serialize]['celdas'] = this.listaCeldas();
+        }else {
+            estado.area['celda_inicial'] = puntos[0];
+            estado.area['celda_final'] = puntos[1];
+        }
+    },
+    /**
+     * Lista de celdas que incluye
+     */
+    'listaCeldas': function() {
+        var lista = [];
+        $('.' + this.cssMarcar).each(function(i, el) {
+            lista[i] = {'texto': $(el).text(), 'pos': $(el).attr("id").replace(/^\d+_(\d_\d+)$/, "$1") };
+        });
+        return lista;
+    },
+    /**
+     * Inicializa en 0 los valores del estado
+     */
+    'borrarAreaEstado': function() {
+        if(this.serialize != '') {
+            estado.area[this.serialize] = {};
+        }else{
+            estado.area = {};
+        }
     },
     /**
      * marca con el css indicado desde el inicio al fin
@@ -118,6 +161,48 @@ var Area = Class.extend({
             return false;
         }
         return true;
+    },
+     /**
+     * Obtiene el punto inicial y final del area
+     * @param String css
+     * @return Array
+     */
+    'obtenerPuntos': function(css) {
+        arr = [];
+        try{
+            arr.push(this.punto( $('.' + css + ':first').attr("id") ) );
+            var $fin = $('.' + css + ':last');
+            var punto = $fin.attr("id");
+            var pp = punto.split("_");
+
+            if ($fin.attr('colspan') && $fin.attr('colspan') > 1){
+                pp[2] = parseInt(pp[2]) + parseInt($fin.attr('colspan')) - 1;
+            }
+            if ($fin.attr('rowspan') && $fin.attr('rowspan') > 1){
+                pp[1] = parseInt(pp[1]) + parseInt($fin.attr('rowspan')) - 1;
+            }
+
+            punto = pp.join("_");
+            arr.push(this.punto( punto ) );
+        }catch(e){
+            arr[0] = "", arr[1] = "";
+        }
+
+        return arr;
+    },
+    /**
+    * Retorna el id de la celda sin hoja
+    * @return String
+    */
+    'punto': function(p) {
+        return p.replace(/^\d+_([\d_]+)$/, "$1");
+    },
+    /**
+     * Destructor que elimina eventos y areas marcadas
+     */
+    'destruir': function() {
+        this.destruirEventos();
+        this.desmarcarArea(this.cssMarcar);
     }
 });
 

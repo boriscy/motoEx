@@ -14,7 +14,7 @@
 <%= render :partial => "areas/form" %>
 
 <%= javascript_include_tag "tabla/spreadsheet", "tabla/jquery.scrollTo-min", 
-  "tabla/area", "tabla/area_general", "tabla/encabezado", "tabla/fin", "tabla/tabla_iniciar", "tabla/formulario", :cache => "todo" %>
+  "tabla/area", "tabla/area_general", "tabla/titular", "tabla/encabezado", "tabla/fin", "tabla/descartar", "tabla/tabla_iniciar", "tabla/formulario", :cache => "todo" %>
 
 <%# link_to 'Listado', archivos_path %>
 <%= render :partial => 'test' if params[:test] and RAILS_ENV == "development" %>

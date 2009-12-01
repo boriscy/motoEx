@@ -15,11 +15,9 @@ Fin = Area.extend({
         var fin = this;
         $('#area-fin').bind('marcar:fin', function(){
             // Validar que este dentro del AreaGeneral
-            if (fin.validarInclusion(fin.area.cssMarcar) && fin.validarSolapamiento([fin.area.encabezado.cssMarcar]) && fin.validarAreaMinima()) {
+            if (fin.validarInclusion(fin.area.cssMarcar) && fin.validarSolapamiento([fin.area.encabezado.cssMarcar]) ) {
                 fin.desmarcarArea(fin.cssMarcar);
                 fin.marcarArea(fin.cssMarcar);
-            }else{
-                
             }
         });
     },

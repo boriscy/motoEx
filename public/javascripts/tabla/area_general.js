@@ -7,9 +7,10 @@ AreaGeneral = Area.extend({
     'areaMinima': 4,
     'encabezado': false,
     'fin': false,
+    'descartar': false,
     // fin: '',
-    datos: {},
-    init: function(ini, fin) {
+    'datos': {},
+    'init': function(ini, fin) {
         var area_id = $('select#area').val();
         this.cssMarcar = "bg-light-green";
         // Parent
@@ -18,39 +19,44 @@ AreaGeneral = Area.extend({
         this.crearEventos();
         var area = this;
         // Creación en caso de que no sea AJAX
-        if(!ini && !fin)
-            this.marcarArea(this.cssMarcar);
+        /*if(!ini && !fin)
+            this.marcarArea(this.cssMarcar);*/
         // Sub Areas
+        this.titular= new Titular(false, false, this);
         this.encabezado = new Encabezado(false, false, this);
         this.fin = new Fin(false, false, this);
+        this.descartar = new Descartar([], this);
     },
     /**
      * Eventos generales
      */
-    crearEventos: function() {
+    'crearEventos': function() {
         var area = this;
-        $("#sheet-"+hoja_numero).bind("destruir:area", function() {
-            area.desmarcarArea(area.cssMarcar);
+        $("#sheet-" + hoja_numero).bind("destruir:area", function() {
+            area.destruir();
         });
-        $("#sheet-"+hoja_numero).bind("marcar:area", function(){
-            if(area.validarAreaMinima() ) {
-                area.desmarcarArea(area.cssMarcar);
-                area.marcarArea(area.cssMarcar);
-            }
-        });
+    },
+    /**
+     * Llama a las funciones de destruccion de la areas dependientes
+     */
+    'destruirAreas': function() {
+          var area = this;
+          $(['encabezado', 'fin', 'titular', 'descartar']).each(function(i, el) {
+              area[el].destruir();
+          });
     },
     /**
      * Elimina los ventos creados en la clase
      */
-    borrarEventos: function() {
+    'destruirEventos': function() {
         var area = this;
-        $("#sheet-"+hoja_numero).unbind("destruir:area");
-        $("#sheet-"+hoja_numero).unbind("marcar:area");
+        $("#sheet-" + hoja_numero).unbind("destruir:area");
+        $("#sheet-" + hoja_numero).unbind("marcar:area");
     },
     /**
      * Realiza la carga de datos relacionada a un area
      */
-    cargarDatos: function() {
+    'cargarDatos': function() {
         var area = this;
         $.getJSON('/areas/' + $("select#area").val(), function(resp){
             // Cargar datos en area
@@ -60,23 +66,25 @@ AreaGeneral = Area.extend({
         });
     },
     /**
-     *
+     * Elimina todas las variables y desmarca
      */
-    destruir: function() {
+    'destruir': function() {
+        this._super();
         delete(this.formulario);
-        //delete(this.encabezado);
-        //delete(this.fin);
-    },
-    /**
-     *
-     */
-    triggerMarcar: function() {
-        this.marcarArea(this.cssMarcar);
+        this.encabezado.destruir();
+        this.titular.destruir();
+        this.fin.destruir();
+        this.descartar.destruir();
+        // Borrado de variavles
+        delete(this.encabezado);
+        delete(this.fin);
+        delete(this.titular);
+        delete(this.descartar);
     },
     /**
     * Define el area a importar en base a los elementos seleccionados ".sel"
     */
-    definirAreaImportar:function() {
+    'definirAreaImportar': function() {
         $("#sheets td").bind("area:modificar", function() {
         });
         var test = $('.' + this.cssAreaImp).find("." + this.cssSeleccionado).length > 0;
@@ -90,14 +98,9 @@ AreaGeneral = Area.extend({
         }
     },
     /**
-     *
-     */
-    crearAreaImportar:function(){
-    },
-    /**
     * Define el area del encabezado, debe estar dentro del .area-importar
     */
-    definirAreaEncabezado:function() {
+    'definirAreaEncabezado': function() {
         if(this.areaSel) {
             var inicio = $('.' + this.idArea + 'td:first');
             var fin = $('.' + this.idArea + 'td:first').parent("tr").find("td." + this.cssAreaImp + ":last");
@@ -105,22 +108,6 @@ AreaGeneral = Area.extend({
                 this.crearArea(this.cssAreaEnc);
                 this.areaEncSel = true;
             }
-        }
-    },
-    /**
-    * Define el a descartar
-    */
-    definirAreaDescartar:function() {
-        if(this.crearArea(this.cssAreaDesc) && this.areaEncSel) {
-            
-        }
-    },
-    /**
-    * Define el fin
-    */
-    definirAreaFin:function() {
-        //$('.' + this.cssAreaFin).removeClass(this.cssAreaFin);
-        if(this.crearArea(this.cssAreaFin) && this.areaEncSel) {
         }
     },
     /**
@@ -152,13 +139,5 @@ AreaGeneral = Area.extend({
         }else{
           return false;
         }
-    },
-    /**
-     * Marca el borde con el color del css1, es necesario definir en el DOM la lista de colores de cada Area
-     */
-    marcarBordeSobreArea:function(css1, css2) {
     }
-
-
-  
 });

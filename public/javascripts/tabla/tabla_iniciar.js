@@ -38,6 +38,9 @@ $(document).ready(function(){
         'cssSeleccionado': 'sel',
         'area': false,
         'areaMinima': 4,
+        /**
+         * Constructor
+         */
         init: function() {
             var ini = this;
             // Evento cuando se cambia area (select#area)
@@ -56,7 +59,7 @@ $(document).ready(function(){
 
             // Evento cuando se cambia de hoja
             $("div#lista_hojas a").click(function() { 
-                $('#sheet-'+hoja_numero).trigger("destruir:area");
+                $('body').trigger("destruir:area");
                 ini.destruir();
             });
             // Evento para mostrar el formulario con propiedades
@@ -78,28 +81,25 @@ $(document).ready(function(){
             var ini = this;
             // Evento para el vinculo a#area-importar
             $("#area-importar").click( function() {
-                // Se deberia definir area minima
-                if( $('.' + ini.cssSeleccionado).length >= ini.areaMinima) {
-                    // Crea un area o sino presenta el formulario
-                    if(!ini.area) {
-                        var puntos = ini.obtenerPuntos();
-                        ini["area"] = new AreaGeneral(puntos[0], puntos[1]);
-                    }else{
-                        $('#sheet-'+hoja_numero).trigger('marcar:area');
-                    }
+                if(ini['area']) {
+                    $('#sheet-' + hoja_numero).trigger("destruir:area");
+                    ini.destruir();
                 }
+                ini['area'] = new AreaGeneral();
             });
 
+            $('#area-titular').click(function() { $('#area-titular').trigger("marcar:titular") } );
             $('#area-encabezado').click(function() { $('#area-encabezado').trigger("marcar:encabezado") } );
             $('#area-fin').click(function() { $('#area-fin').trigger("marcar:fin") } );
             $('#area-descartar').click(function() { $('#area-descartar').trigger("marcar:descartar") });
         },
         /**
-         * Elimina el area
+         * Elimina el area y inicializa la variable global "estado"
          */
         destruir: function() {
             if(typeof(this.area) != 'undefined') {
                 delete(this.area);
+                estado = {};
             }
         },
         crear: function() {

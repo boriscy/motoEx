@@ -2,20 +2,16 @@
  * Clase para poder manejar el formulario de Area
  */
 FormularioArea = function(area, options) {
-    this['area'] = area;
-    this['areas']['general'] = this.area.cssMarcar;
     this.merge(options);
     // Inicializacion de dialog y tabs jQueryUI
-    
+    this.area = area;
     this.crearEventos();
 }
 
 FormularioArea.prototype = {
     'area': '',
-    'areas': {
-      'encabezado':"bg-light-blue", 
-      'fin':"bg-light-yellow"
-    },
+    'celdas': ['celda_inicial', 'celda_final'],
+    'areas': ['', 'encabezado', 'fin', 'titular'],
     /**
      * Se une con otro JSON
      */
@@ -35,7 +31,7 @@ FormularioArea.prototype = {
           return false;
       });
       $('div#formulario-areas').bind("salvar:datos", function(datos) { 
-          if (form.cargarDatosArea())
+          if (form.cargarDatos())
               form.guardar(); 
       });
 
@@ -52,48 +48,22 @@ FormularioArea.prototype = {
      * @return boolean
      */
     'cargarDatos': function() {
-        for(var k in this.areas) {
-            var id = k == 'general' ? '': '_' + k;
-            var celdas = this.obtenerPuntos(this.areas[k]);
-            $('#area'+ id +'_celda_inicial').val( celdas[0] );
-            $('#area'+ id +'_celda_final').val( celdas[1] );
-            // span
-            $('#span'+ id +'_celda_inicial').html( celdaExcel(celdas[0]) );
-            $('#span'+ id +'_celda_final').html( celdaExcel(celdas[1]) );
+        
+        for(var k in this.celdas) {
+            var celda = this.celdas[k];
+            for(var l in this.areas){
+                var area = this.areas[l];
+                if( area == '' ) {
+                    $('#area_' + celda).val( estado.area[celda] );
+                    $('#span_' + celda).html( celdaExcel(estado.area[celda]) );
+                }else {
+                    $('#area_' + area + '_' + celda).val( estado.area[area][celda] );
+                    $('#span_' + area + '_' + celda).html( celdaExcel(estado.area[area][celda]) );
+                }
+            }
         }
         $("#area_hoja_id").val(hoja_id);
         return true;
-    },
-    /**
-     * Obtiene el punto inicial y final del area
-     * @return Array
-     */
-    'obtenerPuntos': function(param) {
-        arr = [];
-        try{
-            arr.push(this.punto( $('.' + param +':first').attr("id") ) );
-            var $fin = $('.' + param +':last');
-            var punto = $fin.attr("id");
-            var pp = punto.split("_");
-            if ($fin.attr('colspan') && $fin.attr('colspan') > 1){
-                pp[2] = parseInt(pp[2]) + parseInt($fin.attr('colspan')) - 1;
-            }
-            if ($fin.attr('rowspan') && $fin.attr('rowspan') > 1){
-                pp[1] = parseInt(pp[1]) + parseInt($fin.attr('rowspan')) - 1;
-            }
-            punto = pp.join("_");
-            arr.push(this.punto( punto ) );
-        }catch(e){
-            arr[0] = "", arr[1] = "";
-        }
-        return arr;
-    },
-    /**
-    * Retorna el id de la celda sin hoja
-    * @return String
-    */
-    'punto': function(p) {
-        return p.replace(/^\d+_([\d_]+)$/, "$1");
     },
     /**
      * Prepara en el formulario las celdas inicial, final
@@ -117,7 +87,10 @@ FormularioArea.prototype = {
      * guarda el area seleccionada en BD usando AJAX
      */
     'guardar': function() {
-        if (this.validarDatos() && this.cargarDatos()){
+        if (! this.cargarDatos())
+            return false;
+
+        if (this.validarDatos()){
             var formulario = this;
             var area_id = $('select#area').val();
             var post = area_id == 'disabled' ? '/areas' : '/areas/' + area_id;
@@ -126,13 +99,11 @@ FormularioArea.prototype = {
               // Crear
                 if(area_id == 'disabled') {
                     area_id = resp['area']['id'];
-                    $('select#area').append("<option value='"+ area_id +"'>" + resp["area"]["nombre"] + "</option>");
-                    $('select#area option[value='+ area_id +']').attr("selected", "selected");
+                    $('select#area').append("<option value='" + area_id + "'>" + resp["area"]["nombre"] + "</option>");
+                    $('select#area option[value=' + area_id + ']').attr("selected", "selected");
                     $('input:hidden[name=_method]').val("put");
                     $('div#formulario-areas').append('<input type="hidden" name="_method" value="put" />');
                 }
-                // Clase para todos los eventos, Evento definido en la clase AreaGeneral tabla/areas.js
-                //$('#sheet-'+hoja_numero).trigger("marcar:area");
             }, 'json');
         }else{
             $("#formulario-areas").dialog("open");
@@ -148,22 +119,17 @@ FormularioArea.prototype = {
         if(nombre == "") {
             this.adicionarError('#area_nombre', 'No debe estar el nombre en blanco');
             val = false;
-        }else if( $('select#aera option:contains('+nombre+')').length > 0 ) {
+        }else if( $('select#aera option:contains(' + nombre + ')').length > 0 ) {
             this.adicionarError('#area_nombre', "El nombre ya esta en uso");
             val = false;
         }
-        
-        if ($('.'+this.area.cssMarcar).length <= 1){
+        if ($('.' + this.area.cssMarcar).length <= 1){
             this.adicionarError('#span_celda_inicial',"El area marcada debe ser mayor que una celda");
             val = false;
         }
 
         if (! /^\d+$/.test($('#area_rango').val())){
             this.adicionarError('#area_rango',"El rango debe ser un valor numérico"); 
-            val = false;
-        }
-        if ($('.'+this.area.cssMarcar).length <= 1){
-            this.adicionarError('#span_celda_inicial',"El area marcada debe ser mayor que una celda");
             val = false;
         }
         return val;

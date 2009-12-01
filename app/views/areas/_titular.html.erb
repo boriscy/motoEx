@@ -1,0 +1,12 @@
+<% f.inputs do %>
+  <li class="string">
+    <label for="id">Celda Inicial</label>
+    <span id="span_titular_celda_inicial">&nbsp&nbsp;</span>
+  </li>
+  <li class="string">
+    <label for="id">Celda Final</label>
+    <span id="span_titular_celda_final">&nbsp;</span>
+  </li>
+  <%= hidden_field_tag "#{f.object.class.to_s.underscore}[titular][celda_inicial]" %>
+  <%= hidden_field_tag "#{f.object.class.to_s.underscore}[titular][celda_final]" %>
+<% end %>

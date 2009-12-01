@@ -21,18 +21,16 @@ Encabezado = Area.extend({
         var enc = this;
         $('#area-encabezado').bind('marcar:encabezado', function(){
             // Validar que este dentro del AreaGeneral
-            if (enc.validarInclusion(enc.area.cssMarcar) && enc.validarSolapamiento([enc.area.fin.cssMarcar]) && enc.validarAreaMinima()) {
+            if (enc.validarInclusion(enc.area.cssMarcar) && enc.validarSolapamiento([enc.area.fin.cssMarcar]) ) {
                 enc.desmarcarArea(enc.cssMarcar);
                 enc.marcarArea(enc.cssMarcar);
-            }else{
-                //trigger();
             }
         });
     },
     /**
      * Elimina los eventos creados
      */
-    'destruirEventos': function(){
+    'destruirEventos': function() {
         $('#area-encabezado').unbind('marcar:encabezado');
     }
 });
