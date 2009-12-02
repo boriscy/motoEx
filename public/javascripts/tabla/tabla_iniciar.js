@@ -4,13 +4,9 @@
 $(document).ready(function(){
     // posicionamiento dinamico de las hojas dependiendo del contenido del div spreadsheet
     $('.sheet').css('top', $('#areas-importacion').position().top + 31);
-    var hojas = new Array();
     $('#sheet-0').spreadsheet({numero: 0});
-    var hojaActual =  0;
-    
-    hojas[0] = hojaActual;
 
-    // Funciiones para scroll de hojas
+    // Funciones para scroll de hojas
     $('#scroll_start').click(function() {
         $('#lista_hojas').scrollTo(0, 0, {duration: 500});
     });
@@ -80,19 +76,27 @@ $(document).ready(function(){
         'eventosMenu': function() {
             var ini = this;
             // Evento para el vinculo a#area-importar
-            $("#area-importar").click( function() {
-                if(ini['area']) {
-                    $('#sheet-' + hoja_numero).trigger("destruir:area");
-                    ini.destruir();
-                }
-                ini['area'] = new AreaGeneral();
-            });
-
+            //cambiando el click con un binding para que se pueda llamar desde otros metodos
+            $("#area-importar").bind('marcar:area', function(){ ini.crearArea(); });
+            $("#area-importar").click( function() { $("#area-importar").trigger("marcar:area"); });
+            
             $('#area-titular').click(function() { $('#area-titular').trigger("marcar:titular") } );
             $('#area-encabezado').click(function() { $('#area-encabezado').trigger("marcar:encabezado") } );
             $('#area-fin').click(function() { $('#area-fin').trigger("marcar:fin") } );
             $('#area-descartar').click(function() { $('#area-descartar').trigger("marcar:descartar") });
         },
+        /**
+         * Código extraido y adaptado de $("#area-importar").click()
+         * Crea el areaGeneral para su marcado
+         */
+        'crearArea': function(){
+            if(this['area']) {
+                $('#sheet-' + hoja_numero).trigger("destruir:area");
+                this.destruir();
+            }
+            this['area'] = new AreaGeneral();
+        },
+        
         /**
          * Elimina el area y inicializa la variable global "estado"
          */
@@ -118,7 +122,9 @@ $(document).ready(function(){
     }
 
     iniciar = new Iniciar();
-
+    
+    //para el menu contextual
+    popmenu = new PopupMenu();
    
     //var formArea = new FormularioArea();
 
@@ -134,7 +140,7 @@ $(document).ready(function(){
             $('.active').removeClass('active');
             newtab.addClass('active');
             $('.visible').removeClass('visible');
-            hoja_actual = newhoja.addClass('visible');
+            newhoja.addClass('visible');
              // Destruir el formulario para areas
 
             if (newhoja.html() == "" ) {
@@ -147,12 +153,11 @@ $(document).ready(function(){
                     success: function(html) {
                         newhoja.html(html);
                         //ejecuta el codigo para muestra de hojas
-                        hoja_actual = newhoja.spreadsheet({numero: num});
-                        hojas[num] = hoja_actual;
+                        newhoja.spreadsheet({numero: num});
                     },
                     failure: function() {
-                      alert("Error al cargar la hoja");
-                      newhoja.html(""); 
+                        alert("Error al cargar la hoja");
+                        newhoja.html(""); 
                     }
 
                 });
@@ -181,7 +186,7 @@ $(document).ready(function(){
     //$('#columnas-seleccionadas').width($('#asmSelect0')[0].clientWidth + 50);
     $('#columnas-seleccionadas').width(250);
     $('#columnas').css('width',250);
-    //probando los estilos
+    //colocando los mismos estilos
     $('#asmSelect0 option').each(function(i, e){
         $(e).addClass('asmListItem');
     });

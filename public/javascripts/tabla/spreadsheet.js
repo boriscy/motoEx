@@ -84,28 +84,6 @@
             $('#sheet-'+numero+'-content').css('left', anchofila + 'px');
             $('#sheet-'+numero+'-rows').css('width', anchofila + 'px');
             $('#sheet-'+numero+'-rows table').css('width', (anchofila + 1) + 'px');
-            
-            //una vez ubicado todo, agrega las propiedades para el menu contextual
-            $('.sheet-content').contextMenu('popup-menu', {
-                bindings: {
-                  'menu-area': function(t) {
-                      //alert('Trigger was '+t.id+'\nAction was Open');
-                  },
-                  'menu-titular': function(t) {
-                      //alert('Trigger was '+t.id+'\nAction was Open');
-                  },
-                  'menu-encabezado': function(t) {
-                      //alert('Trigger was '+t.id+'\nAction was Open');
-                  },
-                  'menu-fin': function(t) {
-                      //alert('Trigger was '+t.id+'\nAction was Open');
-                  },
-                  'menu-descartar': function(t) {
-                      //abre el formulario de las columnas a descartar
-                      $("#formulario-descartar").dialog("open");
-                  }
-                }
-            });
         }
         
         /**
