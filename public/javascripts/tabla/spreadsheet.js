@@ -114,14 +114,17 @@
         
         //table.live('mousedown', function(e) {
         table.mousedown(function(e) {
-            initCell = getEventTarget(e);
-            if (initCell.id.split('_')[1] != '0'){
-                //$(idtabla).find(initCell).addClass('sel');
-                $(initCell).addClass('sel');
-                mouseIsDown = true;
-                createArea(initCell, initCell);
+            //para que solo active en click izquierdo
+            if( (!$.browser.msie && e.button == 0) || ($.browser.msie && e.button == 1) ) {
+                initCell = getEventTarget(e);
+                if (initCell.id.split('_')[1] != '0'){
+                    //$(idtabla).find(initCell).addClass('sel');
+                    $(initCell).addClass('sel');
+                    mouseIsDown = true;
+                    createArea(initCell, initCell);
+                }
+                return false;
             }
-            return false;
         });
         
         /**
@@ -129,9 +132,12 @@
          */
         //table.live('mouseup', function(e) {
         table.mouseup(function(e) {
-            endCell = getEventTarget(e);
-            mouseIsDown = false;
-            return false;
+            //para que desactive con click izquierdo
+            if( (!$.browser.msie && e.button == 0) || ($.browser.msie && e.button == 1) ) {
+                endCell = getEventTarget(e);
+                mouseIsDown = false;
+                return false;
+            }
         });
 
         /**
