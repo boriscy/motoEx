@@ -55,10 +55,10 @@ FormularioArea.prototype = {
                 var area = this.areas[l];
                 if( area == '' ) {
                     $('#area_' + celda).val( estado.area[celda] );
-                    $('#span_' + celda).html( celdaExcel(estado.area[celda]) );
+                    //$('#span_' + celda).html( celdaExcel(estado.area[celda]) );
                 }else {
                     $('#area_' + area + '_' + celda).val( estado.area[area][celda] );
-                    $('#span_' + area + '_' + celda).html( celdaExcel(estado.area[area][celda]) );
+                    //$('#span_' + area + '_' + celda).html( celdaExcel(estado.area[area][celda]) );
                 }
             }
         }

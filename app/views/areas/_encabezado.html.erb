@@ -1,12 +1,14 @@
-<% f.inputs do %>
-  <li class="string">
-    <label for="id">Celda Inicial</label>
-    <span id="span_encabezado_celda_inicial">&nbsp&nbsp;</span>
-  </li>
-  <li class="string">
-    <label for="id">Celda Final</label>
-    <span id="span_encabezado_celda_final">&nbsp;</span>
-  </li>
-  <%= hidden_field_tag "#{f.object.class.to_s.underscore}[encabezado][celda_inicial]" %>
-  <%= hidden_field_tag "#{f.object.class.to_s.underscore}[encabezado][celda_final]" %>
+<% f.inputs :style =>"overflow:auto" do  %>
+  <p class="inline-hints">
+    Seleccione los campos que desea importar de la hoja
+  </p>
+  <div style="height:270px; overflow:auto">
+    <table id="tabla-encabezado">
+      <tr>
+        <th class="ui-state-active">Celdas</th>
+        <th class="ui-state-active">Campo ID (Base de datos)</th>
+      </tr>
+    </table>
+  </div>
 <% end %>
+

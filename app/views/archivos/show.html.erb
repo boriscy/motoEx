@@ -29,7 +29,7 @@
 <%= javascript_include_tag "test/#{params[:js]}" if params[:js] if RAILS_ENV == "development" and params[:js]%>
 <script type="text/javascript" language="javascript" charset="utf-8">
 //<![CDATA[
-  $("div#formulario-areas").dialog({'width': 600, 'resizable': false, 'modal': true, 'title': 'Detalles areas'}).dialog('close');
+  $("div#formulario-areas").dialog({'width': 600, 'height': 500 ,'resizable': false, 'modal': true, 'title': 'Detalles areas'}).dialog('close');
   $("#area-tabs").tabs();
   //Para el formulario de los patrones de las columnas a descartar
   $("div#formulario-descartar").dialog({'width': 600, 'resizable': false, 'modal': true, 'title': 'Patrones de columnas a descartar'}).dialog('close');

@@ -46,7 +46,6 @@ var Area = Class.extend({
         }
 
         var area = this;
-        $('body').bind("destruir:area", function() { area.desmarcarArea(area.cssMarcar) });
     },
     /**
      * Aciciona una clase css a un area

@@ -1,14 +1,6 @@
 <% f.inputs do %>
   <%= f.input :hoja_id, :as => :hidden %>
   <%= f.input :nombre, :input_html => {:size => 40} %>
-  <li class="string">
-    <label>Inicio</label>
-    <span id="span_celda_inicial"><%= @area.formato_excel(:celda_inicial) %></span>
-  </li>
-  <li class="string">
-    <label>Fin</label>
-    <span id="span_celda_final"><%= @area.formato_excel(:celda_final) %></span>
-  </li>
   <%= f.input :celda_inicial, :as => :hidden %>
   <%= f.input :celda_final, :as => :hidden %>
   <%= f.input :rango, :input_html => {:size => 2} %>
