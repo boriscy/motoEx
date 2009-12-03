@@ -13,9 +13,9 @@
 
 <%= render :partial => "areas/form" %>
 
-<%= javascript_include_tag "tabla/spreadsheet", "tabla/jquery.scrollTo-min", 
-  "tabla/area", "tabla/area_general", "tabla/titular", "tabla/encabezado", "tabla/fin", "tabla/descartar", "tabla/tabla_iniciar", "tabla/formulario",
-  "tabla/jquery.asmselect", "tabla/jquery.color", "tabla/jquery.contextmenu.r2", "tabla/popup-menu", :cache => "todo" %>
+<%= javascript_include_tag "plugins/jquery.scrollTo-min","plugins/jquery.contextmenu.r2", "plugins/jquery.asmselect", "plugins/jquery.color", :cache => "plugins" %>
+<%= javascript_include_tag "tabla/spreadsheet",  "tabla/area", "tabla/area_general", "tabla/titular", 
+"tabla/encabezado", "tabla/fin", "tabla/descartar", "tabla/tabla_iniciar", "tabla/formulario","tabla/popup-menu", "tabla/formulario_descartar", :cache => "todo" %>
   
 <%= stylesheet_link_tag "tabla/jquery.asmselect" %>
 
@@ -25,13 +25,25 @@
 <%= render :partial => 'encabezado' %>
 <%= render :partial => 'detalle' %>
 
-
+<!--Popup Menu y Formulario Descartar-->
+<%= render :partial => "areas/popupmenu" %>
+<%= render :partial => "areas/form_descartar" %>
+<!--
+<div id="je" style="position:absolute; width: 200px; height: 300px; background: #EFEFEF; padding: 4px">Hola</div>
+-->
 <%= javascript_include_tag "test/#{params[:js]}" if params[:js] if RAILS_ENV == "development" and params[:js]%>
 <script type="text/javascript" language="javascript" charset="utf-8">
-//<![CDATA[
+  //<![CDATA[
+$(document).ready(function() {
   $("div#formulario-areas").dialog({'width': 600, 'height': 500 ,'resizable': false, 'modal': true, 'title': 'Detalles areas'}).dialog('close');
   $("#area-tabs").tabs();
   //Para el formulario de los patrones de las columnas a descartar
-  $("div#formulario-descartar").dialog({'width': 600, 'resizable': false, 'modal': true, 'title': 'Patrones de columnas a descartar'}).dialog('close');
-//]]>
+  $("div#formulario-descartar").dialog({'width': 600, 'height': 300, 'resizable': false, 'modal': true, 'title': 'Patrones de columnas a descartar'}).dialog('close');
+
+  ///////////////
+  /*$('body').click(function(e){
+  $('#je').css({'left': e.clientX+"px", 'top': e.clientY+"px"});
+  });*/
+});
+  //]]>
 </script>

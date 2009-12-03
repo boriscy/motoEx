@@ -29,8 +29,9 @@ var Descartar = Area.extend({
     'crearEventos': function() {
         var desc = this;
         $('#area-descartar').bind('marcar:descartar', function() {
-            if(desc.validarSolapamiento([desc.area.encabezado.cssMarcar, desc.area.titular.cssMarcar]) ) {
+            if(desc.validarInclusion(desc.area.cssMarcar) && desc.validarSolapamiento([desc.area.encabezado.cssMarcar, desc.area.titular.cssMarcar]) ) {
                 desc.marcarArea(desc.cssMarcar);
+                desc.mostrarFormulario();
             }
         });
     },
@@ -42,17 +43,23 @@ var Descartar = Area.extend({
     /**
      * Marca el area seleccionada y añade un ID en forma de clase css
      */
-    'marcarArea': function() {
-        var cssEsp = 'desc' + this.contador;
-        $('.' + this.cssSeleccionado).addClass(cssEsp);
-        // Marcar con una clase especial a todos los que se intersecten con area Fin
-        var fin = $('.' + cssEsp + '[class*=' + this.area.fin.cssMarcar + ']');
-        if( fin.length > 0 ) {
-            $(fin).addClass(this.cssMarcarAlt);
-        }
-        $('.' + this.cssSeleccionado + ':not([class*=' + this.cssMarcarAlt + '])').addClass(this.cssMarcar);
+    'marcarArea': function(cssSel) {
+        desc = this;
+        var cssEsp = 'desc' + desc.contador;
+        // Iterar
+        $('.' + this.cssSeleccionado).parent('tr').each(function(i, el) {
+            $(el).find("td." + desc.area.cssMarcar).addClass('desc'+desc.contador).addClass(desc.cssMarcar);
+        });
+        $('.' + cssEsp + '[class*=' + desc.area.fin.cssMarcar + ']').removeClass(desc.cssMarcar).addClass(desc.cssMarcarAlt);
+        desc.contador++;
         estado.area.descartar = [{}];
-        this.contador++;
+    },
+    /**
+     * Obtiene toda la fila del area seleccionada 
+     */
+    'obtenerFila': function(el) {
+        var ini = $('.' + this.area.cssMarcar).parent('tr td:first').attr("id");
+        var fin = $('.' + this.area.cssMarcar).parent('tr td:last').attr("id");
     },
     /**
      * Funcion especializada para cambiar el estado
@@ -64,5 +71,11 @@ var Descartar = Area.extend({
      */
     'destruir': function() {
         this.destruirEventos();
+    },
+    /**
+     * Muestra el formulario para patrón
+     */
+    'mostrarFormulario': function() {
+        $('#formulario-descartar').trigger("formulario:mostrar");
     }
 });

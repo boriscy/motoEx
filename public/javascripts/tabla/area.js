@@ -202,6 +202,15 @@ var Area = Class.extend({
     'destruir': function() {
         this.destruirEventos();
         this.desmarcarArea(this.cssMarcar);
+    },
+    /**
+     * Obtiene el borde del area
+     * return Object
+     */
+    'obtenerBordes': function() {
+        var ini = this.celdaInicial.split("_");
+        var fin = this.celdaFinal.split("_");
+        return {'filaInicial': ini[0], 'filaFinal': fin[0], 'columnaInicial': ini[1], 'columnaFinal': fin[1] }
     }
 });
 

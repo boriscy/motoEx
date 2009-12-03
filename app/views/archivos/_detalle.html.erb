@@ -7,7 +7,9 @@
 //]]>
 </script>
 <div id="sheets" class="sheet-sheets" style="border: 0px;">
-  <div id="sheet-<%= @hoja.numero %>" class="sheet visible"><%= @hoja.html %></div>
+  <div id="sheet-<%= @hoja.numero %>" class="sheet visible">
+    <%= @hoja.html %>
+  </div>
 
   <% @archivo.lista_hojas.size.times do |i| %>
     <%= %{<div id="sheet-#{i}" class="sheet"></div>} if i > 0 %>
@@ -30,25 +32,4 @@
         <% end %>
     </tr></table>
   </div>
-
-</div>
-<!--Para el menu contextual-->
-<div class="contextMenu" id="popup-menu">
-  <ul>
-    <li id="menu-area"><img src="folder.png" /> Marcar &aacute;rea de importaci&oacute;n</li>
-    <li id="menu-encabezado"><img src="email.png" /> Encabezado</li>
-    <li id="menu-titular"><img src="disk.png" /> Titular</li>
-    <li id="menu-fin"><img src="cross.png" /> Fin</li>
-    <li id="menu-descartar"><img src="cross.png" /> Descartar</li>
-  </ul>
-</div>
-<!--Para el formulario de las columnas a descartar-->
-<div id="formulario-descartar">
-    <form action="#" method="post">
-      <label for="columnas">Seleccione las columnas a utilizar como patr&oacute;n</label>
-      <select id="columnas" multiple="multiple" name="columnas[]" title="" style="width:250px">
-          <option selected="selected">Seleccion</option>
-      </select>
-      <p><input type="submit" name="submit" value="Marcar" /></p>
-    </form>
 </div>

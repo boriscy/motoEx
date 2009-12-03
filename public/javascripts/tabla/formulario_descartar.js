@@ -37,7 +37,7 @@ FormularioDescartar.prototype = {
      * Crea el select para la seleccion de columnas de descartar
      */
     'crearSelect': function(){
-        $('#asmContainer0').remove();
+        $('.asmContainer0').remove();
         var html = '<select id="columnas-descartar" multiple="multiple">';
         $(".visible .sel").each(function(i, e){
             html += "<option>" + (e.innerHTML || ("(Columna) " + i)) + "</option>";
@@ -54,13 +54,15 @@ FormularioDescartar.prototype = {
         //$('#asmSelect0 option:eq(0)').remove();
         $('#asmSelect0').attr('multiple','multiple');
         //colocando el sortable a la derecha
-        html = "<table><tr><td><div id='columnas-multiple'></div></td>" + 
+        html = "<table><tr><th class='ui-active-state'>Columnas</th><th class='ui-active-state'>Seleccionadas</th></tr>" + 
+                      "<tr><td><div id='columnas-multiple'></div></td>" + 
                           "<td><div id='columnas-seleccionadas'></div></td></tr></table>";
+        $('.asmContainer').append(html);
         $('#asmSelect0').prependTo('#columnas-multiple');
         $('#asmList0').prependTo('#columnas-seleccionadas');
         //para que siempre tenga un ancho correcto
         $('#columnas-seleccionadas').width(250);
-        $('#columnas').css('width',250);
+        $('#columnas-multiple').width(250);
         //colocando los mismos estilos
         $('#asmSelect0 option').addClass('asmListItem');
     }

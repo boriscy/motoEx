@@ -35,14 +35,12 @@ PopupMenu.prototype = {
                     $('#area-fin').trigger("marcar:fin");
                 },
                 'menu-descartar': function(t) {
+                    $('#area-descartar').trigger("marcar:descartar");
                     //abre el formulario de las columnas a descartar
-                    $("#formulario-descartar").dialog("open");
+                    //$("#formulario-descartar").dialog("open");
                     //y le agrega las columnas dentro de la seleccion para desmarcar
-                    $("#columnas").innerHTML = "";
-                    $(".visible .sel").each(function(i, e){
-                        $("#columnas").append("<option>" + (e.innerHTML || ("Columna " + i)) + "</option>");
-                        $("#asmSelect0").append("<option>" + (e.innerHTML || ("Columna " + i)) + "</option>");
-                    });
+                    //$("#columnas").innerHTML = "";
+                    /**/
                 }
             }
         });
