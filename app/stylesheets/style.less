@@ -7,7 +7,7 @@
 @color3: #9F9F9F;
 @a_color: #236B8F; 
 @a_hover: #0000FF;
-@a_hover_ligth: #FFFFFF;
+@a_hover_light: #FFFFFF;
 @buscar_color: #595959; /**/
 @tr_background: #C2E0EF; /*Background TR*/
 @tr_selected: #61B5DF;
@@ -347,7 +347,7 @@ div#areas-importacion{
             }
             a:hover{
                 background-color: @color3;
-                color: @a_hover_ligth;
+                color: @a_hover_light;
             }
         }
     }
@@ -520,11 +520,38 @@ td.hidden_cel{
     height: 30px;
 }
 
-/*  ICONS  */
-#toolbar label{
-    height: 16px;
-    width: 16px; 
-    position: relative;
-    display:inline-block;
+/*Menu contextual*/
+#menu-contextual{
+    width: 300px;
+    position: absolute;
+    border: 1px solid @dark_blue;
+    background-color: @a_hover_light;
+     ul{
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+        li{
+            margin: 0px;
+            padding: 0px;
+            a{
+                display: block;
+                background-color:@a_hover_light;
+                color: @color;
+                padding: 4px 6px;
+                border-bottom: 1px solid @color3;
+                text-decoration: none;
+            }
+            a:hover{
+                background-color: @dark_blue;
+                color: @a_hover_light;
+            }
+        }
+     }
 }
 
+.icon{
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+.fl{ float:left; }

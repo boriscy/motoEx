@@ -46,6 +46,10 @@ var Area = Class.extend({
         }
 
         var area = this;
+        // Evento para menu contextaul
+        $('.context-' + this.cssMarcar).live("click", function() {
+            area.desmarcarArea(area.cssMarcar);
+        });
     },
     /**
      * Aciciona una clase css a un area
@@ -66,6 +70,8 @@ var Area = Class.extend({
         css = css || this.cssSeleccionado;
         $('.' + css).removeClass(css);
         this.borrarAreaEstado();
+        // Elimina el evento de menu contextual
+        $('.context-' + this.cssMarcar).expire("click");
     },
     /**
      * Cambia la variable global estado

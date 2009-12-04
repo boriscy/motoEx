@@ -101,10 +101,11 @@
                     mouseIsDown = true;
                     createArea(initCell, initCell);
                 }
+                //para que oculte el menu contextual
+                $('#menu-contextual').hide();
                 return false;
             }
         });
-        
         /**
          * Captura de selección del mouse, Fin
          */

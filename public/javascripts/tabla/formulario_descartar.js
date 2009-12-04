@@ -16,19 +16,16 @@ FormularioDescartar.prototype = {
             this.formOptions[k] = options[k];
         }
     },
-    'init': function(){
-        this.crearEventos();
-    },
-    'crearEventos': function(){
-        form = this;
-        $('#formulario-descartar').bind('formulario:mostrar', function(){
-            form.mostrar();
-        });
+    /**
+     * Constructor
+     */
+    'init': function() {
     },
     /**
      * Muestra el formulario de las columnas a descartar
+     * @param DOM target
      */
-    'mostrar': function(){
+    'mostrar': function(target) {
         this.crearSelect();
         //y por ultimo muestra el formulario
         $("#formulario-descartar").dialog("open");

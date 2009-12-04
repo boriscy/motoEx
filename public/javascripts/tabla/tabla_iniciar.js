@@ -23,6 +23,7 @@ $(document).ready(function(){
 
     // Variable que almancena el estado general de un area
     estado = {};
+    
     /**
      * Objeto principal que inicializa todo
      */
@@ -66,6 +67,10 @@ $(document).ready(function(){
             //Evento para guardar con Salvar
             $('#salvar').click(function(){
                 $("#formulario-areas form").trigger('submit');    
+            });
+            //Evento para menu contextual
+            $(".sheet-content").rightClick(function(e) {
+                $('.sheet-content').trigger("menu:contextual", e);
             });
 
             this.eventosMenu();
@@ -123,13 +128,11 @@ $(document).ready(function(){
 
     iniciar = new Iniciar();
     
-    //para el menu contextual
-    popmenu = new PopupMenu();
-    
     //para el formulario de descartar por patrones
     formulario_descartar = new FormularioDescartar();
-   
-    //var formArea = new FormularioArea();
+
+    // Menu contextual
+    menuContextual = new MenuContextual();
 
   
     /*************************************************/
