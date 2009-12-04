@@ -29,7 +29,6 @@ Encabezado = Area.extend({
             }
             // Eventos para crear campos en la BD
             $('.enc-check').live("click", function() { enc.adicionarBorrarCampo(this);});
-            //$('.enc-text').bind("mapear:campo", function() { enc.mapearCampo(this);});
             $('.enc-text').livequery("blur", function() { enc.mapearCampo(this);});
         });
     },
@@ -38,15 +37,29 @@ Encabezado = Area.extend({
      */
     'marcarArea': function(css, cssSel) {
         this._super(css, cssSel);
-        estado.area[this.serialize]['campos'] = [];
+        estado.area[this.serialize]['campos'] = {};
+        this.destruirTablasCeldas();
     },
     /**
      * Elimina los eventos creados
      */
     'destruirEventos': function() {
         $('#area-encabezado').unbind('marcar:encabezado');
+        this.destruirEventosTablaCeldas();
+    },
+    /**
+     * Elimina los eventos de la tabla de encabezados
+     */
+    'destruirEventosTablaCeldas': function() {
         $('.enc-check').die("click");
         $('.enc-text').expire("blur");
+    },
+    /**
+     * Desmarca el area de encabezado y destruye los eventos de marcado
+     */
+    'desmarcarArea': function(css, e) {
+        this._super(css, e);
+        this.destruirEventosTablaCeldas();
     },
     /**
      * Crea una tabla con todas las celdas a seleccionar para importar
@@ -55,11 +68,18 @@ Encabezado = Area.extend({
         var celdas = estado.area[this.serialize].celdas;
         var $tabla = $('#tabla-encabezado');
         for(i = 0, l = celdas.length; i < l; i++) {
-            var html = '<tr><label id="label-enc-campo' + i + '"><input type="checkbox" name="area[encabezado][' + i + '][sel]" class="enc-check"/>' + celdas[i].texto + '</label></td>';
+            var html = '<tr><td><input type="hidden" name="area[encabezado][' + i + '][hidden]" value="' + celdas[i].pos + '"/>';
+              html += '<label id="label-enc-campo' + i + '"><input type="checkbox" name="area[encabezado][' + i + '][sel]" class="enc-check"/>' + celdas[i].texto + '</label></td>';
             var evento = "$('.enc-text').trigger('mapear:campo', this)";
             html += '<td><input type="text" name="area[encabezado][' + i + '][text]" value="' + celdas[i].texto + '" class="enc-text" disabled="disabled"/></td></tr>';
             $tabla.append(html);
         }
+    },
+    /**
+     * Elimina las celdas del formulario y el estado
+     */
+    'destruirTablasCeldas': function() {
+        $('#tabla-encabezado tr:not(.th-head)').remove();
     },
     /**
      * Adiciona campos a la variable de estado además de habilitar
@@ -70,15 +90,16 @@ Encabezado = Area.extend({
         var texto = $(el).parent('label').text();
         var val = $(el).attr("checked");
         $inputText = $('input:text[name="' + nombre + '"]');
+        nombre = nombre.replace(/\[text\]$/, "[hidden]");
+        $inputHidden = $('input:hidden[name="' + nombre + '"]');
         $inputText.attr("disabled", !val);
 
+        var pos = $inputHidden.val();
+
         if(val) {
-            estado.area[this.serialize].campos.push({'texto': texto, 'campo': texto });
+            estado.area[this.serialize].campos[pos] = {'texto': texto, 'campo': texto};
         } else{
-            var i = this.buscarCampo(texto);
-          console.log(i);
-            if(i !== false)
-                delete(estado.area[this.serialize].campos[i]);
+            delete(estado.area[this.serialize].campos[pos]);
         }
     },
     /**

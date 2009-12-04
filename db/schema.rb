@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20091123150839) do
     t.text     "encabezado"
     t.text     "titular"
     t.text     "fin"
-    t.text     "no_importar"
+    t.text     "descartar"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

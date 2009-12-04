@@ -26,5 +26,12 @@ Fin = Area.extend({
      */
     'destruirEventos': function(){
         $('#area-fin').unbind('marcar:fin');
+    },
+    /**
+     * desmarca el area seleccionada
+     */
+    'desmarcarArea': function(css, e) {
+        $('#area-fin').trigger("desmarcar:fin:desc");
+        this._super(css, e);
     }
 });

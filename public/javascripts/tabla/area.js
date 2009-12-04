@@ -46,9 +46,9 @@ var Area = Class.extend({
         }
 
         var area = this;
-        // Evento para menu contextaul
-        $('.context-' + this.cssMarcar).live("click", function() {
-            area.desmarcarArea(area.cssMarcar);
+        // Evento para menu contextual
+        $('.context-' + this.cssMarcar).live("click", function(e) {
+            area.desmarcarArea(area.cssMarcar, e);
         });
     },
     /**
@@ -65,8 +65,10 @@ var Area = Class.extend({
     },
     /**
      * Elimina la clase css de un area 
+     * @param String css
+     * @param Event e
      */
-    'desmarcarArea': function(css) {
+    'desmarcarArea': function(css, e) {
         css = css || this.cssSeleccionado;
         $('.' + css).removeClass(css);
         this.borrarAreaEstado();

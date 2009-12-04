@@ -11,7 +11,7 @@ class CreateAreas < ActiveRecord::Migration
       t.text :encabezado
       t.text :titular
       t.text :fin
-      t.text :no_importar
+      t.text :descartar
 
       t.timestamps
     end

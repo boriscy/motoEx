@@ -20,6 +20,14 @@ FormularioDescartar.prototype = {
      * Constructor
      */
     'init': function() {
+        this.crearEventos();
+    },
+    /**
+     * Creacion de eventos
+     */
+    'crearEventos': function() {
+        $('')
+        //$('.' + );
     },
     /**
      * Muestra el formulario de las columnas a descartar

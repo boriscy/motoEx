@@ -14,7 +14,8 @@ MenuContextual.prototype = {
         'bg-light-blue': 'Desmarcar encabezado',
         'bg-light-yellow': 'Desmarcar fin',
         'bg-light-grey': 'Desmarcar titular',
-        'bg-red-color': 'Desmarcar area de descarte'
+        'bg-red-color': 'Desmarcar area de descarte',
+        'border-red-top': 'Desmarcar area de descarte'
     },
     /**
      * estilos de area descartar
@@ -46,9 +47,6 @@ MenuContextual.prototype = {
         // Para ocultar cuando se hace click en alguna opcion
         $('#menu-contextual').click(function(e) {
             target = getEventTarget(e);
-            if($(target).hasClass("context-desc")) {
-                $('.sheet-content').trigger("desmarcar:area", target);
-            }
             if($(target).hasClass("context-desc-opciones")) {
                 context.mostrar(target);
             }
@@ -65,11 +63,19 @@ MenuContextual.prototype = {
         var context = this;
         var target = getEventTarget(e);
         $('#menu-contextual ul li').remove();
+
         if ($(target).hasClass('bg-light-green')) {
-            var clases = $(target).attr("class").split(" ");
+            var clases = $(target).attr("class");
+            var cssDesc = clases.replace(/.*(desc\d).*/, "$1");
+            clases = clases.split(" ");
             $(clases).each(function(i, el) {
-                if (context.areas[el]){
-                    $('#menu-contextual ul').append('<li><a class="context-' + el + '"><span class="'+ el +' icon fl"></span>&nbsp;' + context.areas[el] + '</a></li>');
+                if (context.areas[el]) {
+                    // En caso especial para areas desmarcar
+                    var extraCss = '';
+                    if(el == 'bg-red-color' || el == 'border-red-top')
+                        extraCss = ' ' + cssDesc;
+                        
+                    $('#menu-contextual ul').append('<li><a class="context-' + el + extraCss +'"><span class="'+ el +' icon fl"></span>&nbsp;' + context.areas[el] + '</a></li>');
                 }
                 if(context.areasOpciones[el]) {
                     var clase = el.replace(/^opciones-/, "");

@@ -4,7 +4,7 @@
  * - Para cada selección tambien se debe crear un cssID
  */
 var Descartar = Area.extend({
-    'serialize': 'no_importar',
+    'serialize': 'descartar',
     'area': false,
     /**
      * Clase css para marcar
@@ -29,7 +29,9 @@ var Descartar = Area.extend({
     'init': function(areas, area) {
         this.area = area;
         this.cssMarcarOpts = 'opciones-' + this.cssMarcar;
+        this._super();
         this.crearEventos();
+        estado.area[this.serialize] = {};
     },
     /**
      * Creación de eventos
@@ -43,11 +45,18 @@ var Descartar = Area.extend({
                 desc.mostrarFormulario();
             }
         });
+        $('#area-fin').bind("desmarcar:fin:desc", function() { desc.desmarcarFin(); });
+        // para desmarcar menu contextual y css alternativo
+        $('.context-' + this.cssMarcarAlt).live("click", function(e) {
+            desc.desmarcarArea(desc.cssMarcar, e);
+        });
     },
     /**
      * Destruccion de eventos
      */
     'destruirEventos': function() {
+        $('#area-descartar').unbind("marcar:descartar");
+        $('.context-' + this.cssMarcarAlt).expire("click");
     },
     /**
      * Marca el area seleccionada y añade un ID en forma de clase css
@@ -68,9 +77,28 @@ var Descartar = Area.extend({
             $('.' + cssEsp).addClass(desc.cssMarcarOpts);
         
         desc.contador++;
-        estado.area.descartar = [{}];
+        this.cambiarEstado(cssEsp);
         // Quitar css seleccionado
         $('.' + this.cssSeleccionado).removeClass(this.cssSeleccionado);
+    },
+    /**
+     * Funcion para pode desmarcar un area especifica
+     * @param String css
+     * @param Event e
+     */
+    'desmarcarArea': function(css, e) {
+        var target = getEventTarget(e);
+        var css = $(target).attr("class").replace(/.*(desc\d+).*/, "$1");
+        $('.' + css).removeClass(css).removeClass(this.cssMarcar).removeClass(this.cssMarcarAlt);
+        this.borrarAreaEstado(css);
+    },
+    /**
+     * Para marcar cambiar el css del area que tenia fin
+     */
+    'desmarcarFin': function() {
+        $fin = $('.' + this.area.fin.cssMarcar)
+        if($fin.hasClass(this.cssMarcarAlt))
+            $fin.removeClass(this.cssMarcarAlt).addClass(this.cssMarcar);
     },
     /**
      * Obtiene toda la fila del area seleccionada 
@@ -81,8 +109,23 @@ var Descartar = Area.extend({
     },
     /**
      * Funcion especializada para cambiar el estado
+     * @param String cssEsp # css para poder definir el id
      */
-    'cambiarEstado': function() {
+    'cambiarEstado': function(cssEsp) {
+        var desc = this;
+        var puntos = this.obtenerPuntos(cssEsp);
+        estado.area[this.serialize][cssEsp] = {'celda_inicial': puntos[0], 'celda_final': puntos[1], 'celdas': []};
+        $('.' + cssEsp).each(function(i, el) {
+              var $el = $(el);
+              estado.area[desc.serialize][cssEsp].celdas.push({'id': $el.attr("id"), 'texto': $el.text()});
+        });
+    },
+    /**
+     * Elimina el area de la variable global estado
+     * @param String cssEsp # css para poder definir el id
+     */
+    'borrarAreaEstado': function(cssEsp) {
+        delete(estado.area[this.serialize][cssEsp]);
     },
     /**
      * Elimina el area y los eventos
