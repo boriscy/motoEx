@@ -37,7 +37,8 @@ class AreasController < ApplicationController
   # POST /areas
   # POST /areas.xml
   def create
-    @area = Area.new(params[:area])
+    # Decodificacion de post que se hizo con JSON
+    @area = Area.new(ActiveSupport::JSON.encode(params[:area]))
 
     if @area.save
       render :json => @area
