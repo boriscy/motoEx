@@ -8,7 +8,7 @@ class Area < ActiveRecord::Base
 
   serialize :encabezado
   serialize :fin
-  serialize :no_importar
+  serialize :descartar
   serialize :titular
 
 #  [:celda_inicial, :celda_final, :celdas].each do |m|

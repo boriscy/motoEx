@@ -94,8 +94,14 @@ FormularioArea.prototype = {
             var formulario = this;
             var area_id = $('select#area').val();
             var post = area_id == 'disabled' ? '/areas' : '/areas/' + area_id;
+            //llena los datos restantes del formulario
+            estado.area['nombre'] = $('#area_nombre').val();
+            estado.area['rango'] = $('#area_rango').val();
+            estado.area['iterar_fila'] = $('#area_iterar_fila_true')[0].checked;
+            estado.area['fija'] = $('#area_fija')[0].checked;
+            estado.area['hoja_id'] = hoja_id;
             // AJAX
-            $.post(post, $('div#formulario-areas').hashify(),  function(resp) {
+            $.post(post,{'area': JSON.stringify(estado.area)},  function(resp) {
               // Crear
                 if(area_id == 'disabled') {
                     area_id = resp['area']['id'];
@@ -130,6 +136,15 @@ FormularioArea.prototype = {
 
         if (! /^\d+$/.test($('#area_rango').val())){
             this.adicionarError('#area_rango',"El rango debe ser un valor numérico"); 
+            val = false;
+        }
+        var encabezados = 0;
+        for (var k in estado.area.encabezado.campos){
+            encabezados++;
+        }
+        //que al menos un campo este seleccionado
+        if (encabezados == 0){
+            this.adicionarError('#encabezado p',"Debe seleccionar al menos un campo");
             val = false;
         }
         return val;

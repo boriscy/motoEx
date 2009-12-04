@@ -227,24 +227,19 @@
                             salir = true;
                         }
                     }else if(!marcados[row + "_" + col]){
-                        //console.log("SIN MARCAR: "+row + "_" + col);
                         //busca la celda que contiene a ESTA celda
                         encontrada = false;
                         for (var r = row; r > 0 && !encontrada; r--){
                             for (var c = col; c > 0 && !encontrada; c--){
-                                //console.log("Buscando Celda: " + r + "_"  + c);
                                 celda = $('#'+config.numero+'_'+r+'_'+c);
                                 if (celda.size() > 0){
                                     cp = (parseInt(celda.attr('colspan')) || 1);
                                     rp = (parseInt(celda.attr('rowspan')) || 1);
-                                    //si la celda de la izquierda la contiene => las marca a todos en el array
                                     if ((c + cp - 1 >= col) && (r + rp - 1 >= row)){
-                                        //console.log("contiene la numero %d + %d - 1 >= %d",r,rp,row);
                                         //la contiene
                                         for (var x = r; x <= r + rp - 1; x++){
                                             for (var y = c; y <= c + cp - 1; y++){
                                                 marcados[x + "_" + y] = true;
-                                                //console.log("marcando: "+x + "_" + y);
                                             }
                                         }
                                         encontrada = true;
