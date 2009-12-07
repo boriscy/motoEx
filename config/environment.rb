@@ -51,3 +51,4 @@ end
 
 require 'active_record_extensions'
 require 'class_extensions'
+require 'roo_extra'

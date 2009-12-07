@@ -4,10 +4,23 @@
     $.fn.extend({
         spreadsheet: function(config) { return new $.SpreadSheet(this[0], config); }
     });
-    
+
+    // Variable global para sabe cuando shift es presionada
+    shift = false;
+    $(window).keydown( function(e) {
+        if(e.keyCode == 16)
+            shift = true;
+    }).keyup( function(e) {
+        if(shift)
+            shift = false;
+    });
+
+
+
     $.SpreadSheet= function(div_sheet, config) {
         var initCell, endCell, mouseIsDown = false;
-        
+       
+         
         //para conocer la tabla actual
         var idhoja = "#sheet-" + config.numero;
         var idtabla = idhoja + " table.excel";
@@ -15,8 +28,11 @@
         initSheet(config.numero);
         
         table = $(div_sheet).find('.sheet-content table:first');
-        
-        function initSheet(numero){
+       
+        /**
+         * Funcion constructura
+         */
+        function initSheet(numero) {
             //crea los divs:
             //sheet-0-cols: para guardar los nombres de las columnas => A, B, C, D, etc.
             //sheet-0-rows: para guardar los nombres de las filas => 1, 2, 3, 4, etc.
@@ -91,7 +107,7 @@
          */
         
         //table.live('mousedown', function(e) {
-        table.mousedown(function(e) {
+        /*table.mousedown(function(e) {
             //para que solo active en click izquierdo
             if( (!$.browser.msie && e.button == 0) || ($.browser.msie && e.button == 1) ) {
                 initCell = getEventTarget(e);
@@ -105,19 +121,45 @@
                 $('#menu-contextual').hide();
                 return false;
             }
+        });*/
+
+        /**
+         * Marcado usando shift
+         * @param Event e
+         */
+        table.live('click', function(e) {
+            var target = getEventTarget(e);
+            if(!initCell) {
+                initCell = $(target).attr("id");
+            }
         });
+
+        /**
+         * Marcado en caso de que haya una celda inicial
+         * @param Event e
+         */
+        table.live('mousedown', function(e) {
+            var target = getEventTarget(e);
+            if(initCell && shift) {
+                endCell = $(target).attr("id");
+                console.log("%s, %s", initCell, endCell);
+                iniCell = false;
+                return false;
+            }
+        });
+
         /**
          * Captura de selección del mouse, Fin
          */
         //table.live('mouseup', function(e) {
-        table.mouseup(function(e) {
+        /*table.mouseup(function(e) {
             //para que desactive con click izquierdo
             if( (!$.browser.msie && e.button == 0) || ($.browser.msie && e.button == 1) ) {
                 endCell = getEventTarget(e);
                 mouseIsDown = false;
                 return false;
             }
-        });
+        });*/
 
         /**
          * Captura de selección del mouse, a medida que se mueve
@@ -143,11 +185,6 @@
           if (event.keyCode==0 && event.charCode!=0) return event.charCode;
           if (event.keyCode==0) return event.which;
           return event.keyCode;
-        }
-
-        function getEventTarget(e) {
-            e = e || window.event;
-            return e.target || e.srcElement;
         }
 
         /**
@@ -286,4 +323,5 @@
     }
     
 })(jQuery);
+
 

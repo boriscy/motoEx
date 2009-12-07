@@ -1,7 +1,15 @@
 /**
  * Funciones al iniciar la hoja
  */
-$(document).ready(function(){
+$(document).ready(function() {
+
+// Variable global para sabe cuando shift es presionada
+shift = false;
+$(window).keydown( function(e) {
+    if(e.keyCode == 16)
+        shift = true;
+});
+
     // posicionamiento dinamico de las hojas dependiendo del contenido del div spreadsheet
     $('.sheet').css('top', $('#areas-importacion').position().top + 31);
     $('#sheet-0').spreadsheet({numero: 0});
