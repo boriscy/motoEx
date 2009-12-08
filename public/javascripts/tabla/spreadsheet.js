@@ -31,7 +31,7 @@
         
         initSheet(config.numero);
         
-        table = $(div_sheet).find('.sheet-content table:first');
+        $table = $(div_sheet).find('.sheet-content table:first');
        
         /**
          * Funcion constructura
@@ -115,8 +115,7 @@
          * Captura de selección del mouse, Inicio
          */
         
-        //table.live('mousedown', function(e) {
-        /*table.mousedown(function(e) {
+        /*$table.mousedown(function(e) {
             //para que solo active en click izquierdo
             if( (!$.browser.msie && e.button == 0) || ($.browser.msie && e.button == 1) ) {
                 initCell = getEventTarget(e);
@@ -133,60 +132,48 @@
         });*/
 
         /**
-         * Marcado usando shift
-         * @param Event e
-         */
-        table.live('click', function(e) {
-            /*var target = getEventTarget(e);
-            if (shift){
-                //marca
-                //antes de crear el area cambia el focus
-                createArea(initCell, target);
-                $('#area')[0].focus();
-                return false;
-            }else{
-                $('.sel').removeClass('sel');
-                $(target).addClass('sel');
-                initCell = target;
-            }*/
-        });
-
-        /**
          * Marcado en caso de que haya una celda inicial
          * @param Event e
          */
-        table.live('mousedown', function(e) {
+        $table.mousedown(function(e) {
             var target = getEventTarget(e);
             if (shift){
-                //marca
-                createArea(initCell, target);
-                //para que no seleccione celdas
-                return false;
+                if( (!$.browser.msie && e.button == 0) || ($.browser.msie && e.button == 1) ) {
+                    //marca
+                    createArea(initCell, target);
+                    //para que no seleccione celdas
+                    return false;
+                }
             }else{
-                //si no se hubiera presionado shift => selecciona una celda inicial
-                $(idtabla).find('.sel').removeClass('sel');
-                $(target).addClass('sel');
-                initCell = target;
+                if( (!$.browser.msie && e.button == 0) || ($.browser.msie && e.button == 1) ) {
+                    //si no se hubiera presionado shift => selecciona una celda inicial
+                    initCell = target;
+                    $(idtabla).find('.sel').removeClass('sel');
+                    $(target).addClass('sel');
+                    mouseIsDown = true;
+                    createArea(initCell, initCell);
+                    $('#menu-contextual').hide();
+                    return false;
+                }
             }
         });
 
         /**
          * Captura de selección del mouse, Fin
          */
-        //table.live('mouseup', function(e) {
-        /*table.mouseup(function(e) {
+        $table.mouseup(function(e) {
             //para que desactive con click izquierdo
             if( (!$.browser.msie && e.button == 0) || ($.browser.msie && e.button == 1) ) {
                 endCell = getEventTarget(e);
                 mouseIsDown = false;
                 return false;
             }
-        });*/
+        });
 
         /**
          * Captura de selección del mouse, a medida que se mueve
          */
-        /*table.mouseover(function(e) {
+        $table.mouseover(function(e) {
             if (mouseIsDown) {
                 var target = getEventTarget(e);
                 createArea(initCell, target);
@@ -194,12 +181,7 @@
                 $(idtabla).find(target).addClass('curr_cel');
                 endCell = getEventTarget(e);
             }
-            return false;            
-        });*/
-        
-        table.keypress(function(e){
-            console.log(e);
-            console.log(getmykey(e));
+            return false;
         });
 
         function getmykey(event) {
@@ -234,7 +216,7 @@
                 col1 = t;
             }
             if (row0 <= 0) row0 = 1; //para que no seleccione la primera fila (la de los nombres de las columnas)
-            table.find('.curr_cel').removeClass('curr_cel');
+            $table.find('.curr_cel').removeClass('curr_cel');
             $(c0).addClass('curr_cel');
             //quita el estilo a todos los seleccionados
             $(idtabla).find('.sel').removeClass('sel');

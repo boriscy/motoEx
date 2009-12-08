@@ -55,8 +55,9 @@ var Descartar = Area.extend({
      * Destruccion de eventos
      */
     'destruirEventos': function() {
-        $('#area-descartar').unbind("marcar:descartar");
-        $('.context-' + this.cssMarcarAlt).expire("click");
+        /*$('#area-descartar').unbind("marcar:descartar");
+        $('.context-' + this.cssMarcar).expire("click");
+        $('.context-' + this.cssMarcarAlt).expire("click");*/
     },
     /**
      * Marca el area seleccionada y añade un ID en forma de clase css
@@ -89,8 +90,9 @@ var Descartar = Area.extend({
     'desmarcarArea': function(css, e) {
         var target = getEventTarget(e);
         var css = $(target).attr("class").replace(/.*(desc\d+).*/, "$1");
-        $('.' + css).removeClass(css).removeClass(this.cssMarcar).removeClass(this.cssMarcarAlt);
+        $('.' + css).removeClass(css).removeClass(this.cssMarcar).removeClass(this.cssMarcarAlt).removeClass(this.cssMarcarOpts);
         this.borrarAreaEstado(css);
+        this.destruir();
     },
     /**
      * Para marcar cambiar el css del area que tenia fin

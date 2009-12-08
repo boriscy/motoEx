@@ -55,6 +55,11 @@ MenuContextual.prototype = {
         // oculta menu cuando hace click
         $('body').bind("ocultar:menucontextual", function() { $('#menu-contextual').hide();});
     },
+    'destruirEventos': function() {
+        $('.sheet-content').bind("menu:contextual");
+        //$('body').unbind("mousedown");
+        $('#menu-contextual').unbind("click");
+    },
     /**
      * crea el menún contextual
      * @param Event e
