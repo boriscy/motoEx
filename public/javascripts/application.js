@@ -78,7 +78,10 @@ function numExcelCol(num) {
 }
 function celdaExcel(pos) {
   var p = pos.split("_");
-  return numExcelCol( parseInt(p[1]) ) + p[0];
+  if(p.length > 2)
+      return numExcelCol( parseInt(p[2]) ) + p[1];
+  else if(p.length == 2)
+      return numExcelCol( parseInt(p[1]) ) + p[0];
 }
 
 /**

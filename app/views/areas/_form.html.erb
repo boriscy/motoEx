@@ -5,27 +5,14 @@
       
     <ul>
       <li><a href="#general">Selección</a></li>
-      <li><a href="#titular">Titular</a></li>
       <li><a href="#encabezado">Encabezado</a></li>
-      <li><a href="#excluidas">Excluidas</a></li>
-      <li><a href="#fin">Fin</a></li>
     </ul>
 
     <div id="general">
       <%= render :partial => "areas/general", :locals => {:f => f} %>
     </div>
-    <div id="titular">
-      <%= render :partial => "areas/titular" %>
-    </div>
     <div id="encabezado">
       <%= render :partial => "areas/encabezado" %>
-    </div>
-    <div id="excluidas">
-      <%= render :partial => "areas/excluidas" %>
-    </div>
-
-    <div id="fin">
-      <%= render :partial => "areas/fin" %>
     </div>
   </div>
 

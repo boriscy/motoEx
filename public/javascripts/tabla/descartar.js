@@ -50,6 +50,7 @@ var Descartar = Area.extend({
         $('.context-' + this.cssMarcarAlt).live("click", function(e) {
             desc.desmarcarArea(desc.cssMarcar, e);
         });
+        $('#area-descartar').bind("actualizar:estado", function(){ desc.actualizarEstado(); });
     },
     /**
      * Destruccion de eventos
@@ -120,6 +121,19 @@ var Descartar = Area.extend({
         $('.' + cssEsp).each(function(i, el) {
               var $el = $(el);
               estado.area[desc.serialize][cssEsp].celdas.push({'id': $el.attr("id"), 'texto': $el.text()});
+        });
+    },
+    /**
+     * Actualiza la variable estado para el area de descarte 'area'
+     * param String area
+     */
+    'actualizarEstado': function(){
+        var area = $("#formulario-descartar #id-descartar").val();
+        estado.area.descartar[area]['campos'] = {};
+        $('#formulario-descartar .asmListItemLabel').each(function (i, el) {
+            var texto = $(el).text().replace(/^\([A-Z\d]+\)\s/,"");
+            var pos = $(el).text().replace(/.*([A-Z]+[\d]+).*/, "$1");
+            estado.area.descartar[area]['campos'][pos] = {'texto': texto};
         });
     },
     /**

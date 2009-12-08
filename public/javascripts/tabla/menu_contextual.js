@@ -22,7 +22,7 @@ MenuContextual.prototype = {
      */
     'areasOpciones':{
         'bg-light-blue': 'Opciones area de Encabezado',
-        'opciones-bg-red-color': 'Opciones area de descarte'
+        'bg-red-color': 'Opciones area de descarte'
     },
     /**
      * Constructor
@@ -45,16 +45,25 @@ MenuContextual.prototype = {
                 $('#menu-contextual').hide();
         });
         // Para ocultar cuando se hace click en alguna opcion
-        $('#menu-contextual').click(function(e) {
+        $('#menu-contextual').live("click", function(e) {
             target = getEventTarget(e);
-            if($(target).hasClass("context-desc-opciones")) {
-                context.mostrar(target);
+            // formulario para descartar
+            if($(target).hasClass("desc")) {
+                $("#formulario-descartar").trigger("mostrar", target);
+            // formulario para encabezado
+            }else if($(target).hasClass("enc") ) { 
+                $('#formulario-areas').dialog("open");
+                $('#area-tabs').tabs('select', 1);
             }
+
             setTimeout(function() { $('#menu-contextual').hide(); }, 100);
         });
         // oculta menu cuando hace click
         $('body').bind("ocultar:menucontextual", function() { $('#menu-contextual').hide();});
     },
+    /**
+     * Destruccion de eventos
+     */
     'destruirEventos': function() {
         $('.sheet-content').bind("menu:contextual");
         //$('body').unbind("mousedown");
@@ -72,8 +81,12 @@ MenuContextual.prototype = {
         if ($(target).hasClass('bg-light-green')) {
             var clases = $(target).attr("class");
             var cssDesc = clases.replace(/.*(desc\d).*/, "$1");
+            if(!/^desc\d$/.test(cssDesc))
+                cssDesc = '';
+
             clases = clases.split(" ");
             $(clases).each(function(i, el) {
+                // Desmarcar
                 if (context.areas[el]) {
                     // En caso especial para areas desmarcar
                     var extraCss = '';
@@ -82,9 +95,10 @@ MenuContextual.prototype = {
                         
                     $('#menu-contextual ul').append('<li><a class="context-' + el + extraCss +'"><span class="'+ el +' icon fl"></span>&nbsp;' + context.areas[el] + '</a></li>');
                 }
+                // Otras opciones
                 if(context.areasOpciones[el]) {
-                    var clase = el.replace(/^opciones-/, "");
-                    $('#menu-contextual ul').append('<li><a class="context-' + el + '"><span class="'+ clase +' icon fl"></span>&nbsp;' + context.areasOpciones[el] + '</a></li>');
+                    var css = cssDesc != '' ? 'desc' : 'enc';
+                    $('#menu-contextual ul').append('<li><a class="opciones-' + el + ' ' + cssDesc + ' ' + css + '"><span class="'+ el +' icon fl"></span>&nbsp;' + context.areasOpciones[el] + '</a></li>');
                 }
             });
             // Posicionar menu
@@ -97,6 +111,7 @@ MenuContextual.prototype = {
      */
     'crearMenuOpciones': function(css, opt) {
         var num = css.replace(/^desc(\d+)$/, "$1");
+
         $('#menu-contextual ul').append('<li><a class="context-desc desc' + num + '">Desmarcar area de descarte ' + num +  '</a></li>');
         //$('#menu-contextual ul').append('<li><a class="context-desc-opciones desc' + num + '">' + this.areas-desc. + num +  '</a></li>');
     }

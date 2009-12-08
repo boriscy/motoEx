@@ -25,14 +25,13 @@ FormularioArea.prototype = {
      */
     'crearEventos': function() {
       var form = this;
-      $('#propiedades').bind("cargar:datos", function(datos) { form.cargarDatos(datos) });
       $('#formulario-areas form').submit(function() {
           form.guardar();
           return false;
       });
+
       $('div#formulario-areas').bind("salvar:datos", function(datos) { 
-          if (form.cargarDatos())
-              form.guardar(); 
+          form.guardar(); 
       });
 
     },
@@ -42,28 +41,6 @@ FormularioArea.prototype = {
     'destruirEventos': function() {
         $('div#formulario-areas').unbind("cargar:datos");
         $('div#formulario-areas form').unbind("submit");
-    },
-     /**
-     * Carga los datos de un area al formulario en base a las clases css
-     * @return boolean
-     */
-    'cargarDatos': function() {
-        
-        for(var k in this.celdas) {
-            var celda = this.celdas[k];
-            for(var l in this.areas){
-                var area = this.areas[l];
-                if( area == '' ) {
-                    $('#area_' + celda).val( estado.area[celda] );
-                    //$('#span_' + celda).html( celdaExcel(estado.area[celda]) );
-                }else {
-                    $('#area_' + area + '_' + celda).val( estado.area[area][celda] );
-                    //$('#span_' + area + '_' + celda).html( celdaExcel(estado.area[area][celda]) );
-                }
-            }
-        }
-        $("#area_hoja_id").val(hoja_id);
-        return true;
     },
     /**
      * Prepara en el formulario las celdas inicial, final
@@ -87,8 +64,6 @@ FormularioArea.prototype = {
      * guarda el area seleccionada en BD usando AJAX
      */
     'guardar': function() {
-        if (! this.cargarDatos())
-            return false;
 
         if (this.validarDatos()){
             var formulario = this;

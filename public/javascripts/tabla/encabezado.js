@@ -41,6 +41,13 @@ Encabezado = Area.extend({
         this.destruirTablasCeldas();
     },
     /**
+     * Desmarca el area de encabezado y destruye los eventos de marcado
+     */
+    'desmarcarArea': function(css, e) {
+        this._super(css, e);
+        this.destruirEventosTablaCeldas();
+    },
+    /**
      * Elimina los eventos creados
      */
     'destruirEventos': function() {
@@ -55,13 +62,6 @@ Encabezado = Area.extend({
         $('.enc-text').expire("blur");
     },
     /**
-     * Desmarca el area de encabezado y destruye los eventos de marcado
-     */
-    'desmarcarArea': function(css, e) {
-        this._super(css, e);
-        this.destruirEventosTablaCeldas();
-    },
-    /**
      * Crea una tabla con todas las celdas a seleccionar para importar
      */
     'crearTablaCeldas': function() {
@@ -69,6 +69,7 @@ Encabezado = Area.extend({
         var $tabla = $('#tabla-encabezado');
         for(i = 0, l = celdas.length; i < l; i++) {
             var html = '<tr><td><input type="hidden" name="area[encabezado][' + i + '][hidden]" value="' + celdas[i].pos + '"/>';
+              html += '<span>' + celdaExcel(celdas[i].pos) + '</span>';
               html += '<label id="label-enc-campo' + i + '"><input type="checkbox" name="area[encabezado][' + i + '][sel]" class="enc-check"/>' + celdas[i].texto + '</label></td>';
             var evento = "$('.enc-text').trigger('mapear:campo', this)";
             html += '<td><input type="text" name="area[encabezado][' + i + '][text]" value="' + celdas[i].texto + '" class="enc-text" disabled="disabled"/></td></tr>';
@@ -106,23 +107,10 @@ Encabezado = Area.extend({
      * Mapea el nombre del campo según el texto que tiene para el encabezado
      */
     'mapearCampo': function(el) {
-        var texto = $(el).parents('tr').find('label').text();
-        estado.area[this.serialize].campos[this.buscarCampo(texto)].campo = $(el).val();
+        var pos = $(el).parents('tr').find('input:hidden').val();
+        estado.area[this.serialize].campos[pos].campo = $(el).val();
     },
-    /**
-     * Busca el indice del campo por el texto
-     * @param String texto
-     * @return Integer
-     */
-    'buscarCampo': function(texto) {
-        var campos = estado.area[this.serialize].campos;
-        for(var i in campos) {
-            if(campos[i].texto == texto)
-                return i;
-        }
-        return false;
-    },
-    /**
+     /**
      * Destructor que elimina eventos y las filas de #tabla-encabezado
      */
     'destruir': function() {

@@ -26,26 +26,34 @@ FormularioDescartar.prototype = {
      * Creacion de eventos
      */
     'crearEventos': function() {
-        $('')
-        //$('.' + );
+        var form = this;
+        $("#formulario-descartar").bind("mostrar", function(e, target){
+            var area = $(target).attr("class").replace(/.*(desc\d).*/, "$1");
+            form.mostrar(area);
+        });
+        $("#formulario-descartar").dialog({
+            'close': function(e, ui) {
+                $("#area-descartar").trigger("actualizar:estado");
+            }
+        });
     },
     /**
      * Muestra el formulario de las columnas a descartar
      * @param DOM target
      */
-    'mostrar': function(target) {
-        this.crearSelect();
+    'mostrar': function(area) {
+        this.crearSelect(area);
         //y por ultimo muestra el formulario
         $("#formulario-descartar").dialog("open");
     },
     /**
      * Crea el select para la seleccion de columnas de descartar
      */
-    'crearSelect': function(){
+    'crearSelect': function(area){
         $('.asmContainer0').remove();
         var html = '<select id="columnas-descartar" multiple="multiple">';
-        $(".visible .sel").each(function(i, e){
-            html += "<option>" + (e.innerHTML || ("(Columna) " + i)) + "</option>";
+        $(estado.area.descartar[area].celdas).each(function (i, el){
+           html += "<option>(<span class=\"desc-opt\">" + celdaExcel(el.id) + '</span>) ' + el.texto + "</option>";
         });
         html += '</select>';
         $('#div-select').html(html);
@@ -70,5 +78,6 @@ FormularioDescartar.prototype = {
         $('#columnas-multiple').width(250);
         //colocando los mismos estilos
         $('#asmSelect0 option').addClass('asmListItem');
+        $('#id-descartar').val(area);
     }
 }
