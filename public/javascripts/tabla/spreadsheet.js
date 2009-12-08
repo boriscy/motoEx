@@ -8,11 +8,15 @@
     // Variable global para sabe cuando shift es presionada
     shift = false;
     $(window).keydown( function(e) {
-        if(e.keyCode == 16)
+        if(e.keyCode == 16){
             shift = true;
+            //console.log('shift on');
+        }
     }).keyup( function(e) {
-        if(shift)
+        if(shift){
             shift = false;
+            //console.log('shift off');
+        }
     });
 
 
@@ -95,11 +99,16 @@
             });
             
             //ubicando los divs de contenido y filas de acuerdo al ancho de la primera celda (la que esta vacia [0, 0]) de la tabla contenido
-            var anchofila = $('#sheet-'+numero+'-content table tr:first th:first').css('width','50px')[0].clientWidth;
-            $('#sheet-'+numero+'-content table').css('margin','-19px 0 0 -' + anchofila + 'px');
-            $('#sheet-'+numero+'-content').css('left', anchofila + 'px');
-            $('#sheet-'+numero+'-rows').css('width', anchofila + 'px');
-            $('#sheet-'+numero+'-rows table').css('width', (anchofila + 1) + 'px');
+            var anchofila = $('#sheet-' + numero + '-content table tr:first th:first').css('width','50px')[0].clientWidth;
+            $('#sheet-' + numero + '-content table').css('margin','-19px 0 0 -' + anchofila + 'px');
+            $('#sheet-' + numero + '-content').css('left', anchofila + 'px');
+            $('#sheet-' + numero + '-rows').css('width', anchofila + 'px');
+            $('#sheet-' + numero + '-rows table').css('width', (anchofila + 1) + 'px');
+            
+            //selecciona la primera celda por defecto
+            //para que siempre exista una celda inicial
+            initCell = $('#sheet-' + numero + '-content tr:eq(1) td:eq(0)').addClass('sel')[0];
+            //initCell = target;
         }
         
         /**
@@ -128,10 +137,18 @@
          * @param Event e
          */
         table.live('click', function(e) {
-            var target = getEventTarget(e);
-            if(!initCell) {
-                initCell = $(target).attr("id");
-            }
+            /*var target = getEventTarget(e);
+            if (shift){
+                //marca
+                //antes de crear el area cambia el focus
+                createArea(initCell, target);
+                $('#area')[0].focus();
+                return false;
+            }else{
+                $('.sel').removeClass('sel');
+                $(target).addClass('sel');
+                initCell = target;
+            }*/
         });
 
         /**
@@ -140,11 +157,16 @@
          */
         table.live('mousedown', function(e) {
             var target = getEventTarget(e);
-            if(initCell && shift) {
-                endCell = $(target).attr("id");
-                console.log("%s, %s", initCell, endCell);
-                iniCell = false;
+            if (shift){
+                //marca
+                createArea(initCell, target);
+                //para que no seleccione celdas
                 return false;
+            }else{
+                //si no se hubiera presionado shift => selecciona una celda inicial
+                $(idtabla).find('.sel').removeClass('sel');
+                $(target).addClass('sel');
+                initCell = target;
             }
         });
 
@@ -164,7 +186,7 @@
         /**
          * Captura de selección del mouse, a medida que se mueve
          */
-        table.mouseover(function(e) {
+        /*table.mouseover(function(e) {
             if (mouseIsDown) {
                 var target = getEventTarget(e);
                 createArea(initCell, target);
@@ -173,7 +195,7 @@
                 endCell = getEventTarget(e);
             }
             return false;            
-        });
+        });*/
         
         table.keypress(function(e){
             console.log(e);

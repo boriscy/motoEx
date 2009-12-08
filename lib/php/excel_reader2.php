@@ -1217,7 +1217,7 @@ class Spreadsheet_Excel_Reader {
 						$alignbit = ord($data[$pos+10]) & 3;
 						$bgi = (ord($data[$pos+22]) | ord($data[$pos+23]) << 8) & 0x3FFF;
 						$bgcolor = ($bgi & 0x7F);
-//						$bgcolor = ($bgi & 0x3f80) >> 7;
+						//$bgcolor = ($bgi & 0x3f80) >> 7;
 						$align = "";
 						if ($alignbit==3) { $align="right"; }
 						if ($alignbit==2) { $align="center"; }
@@ -1264,6 +1264,11 @@ class Spreadsheet_Excel_Reader {
 								if ($formatstr!="") {
 									$tmp = preg_replace("/\;.*/","",$formatstr);
 									$tmp = preg_replace("/^\[[^\]]*\]/","",$tmp);
+									//$tmp = preg_replace("/\"de\"/","",$tmp);
+									if (strpos($tmp,"mmmm")){
+									    $tmp = "dd/mm/yyyy";
+									}
+									//echo "$tmp<br/>";
 									if (preg_match("/[^hmsday\/\-:\s\\\,AMP]/i", $tmp) == 0) { // found day and time format
 										$isdate = TRUE;
 										$formatstr = $tmp;
@@ -1650,11 +1655,19 @@ class Spreadsheet_Excel_Reader {
 				$totalseconds -= $secs;
 				$hours = floor($totalseconds / (60 * 60));
 				$mins = floor($totalseconds / 60) % 60;
-				$string = date ($format, mktime($hours, $mins, $secs, $dateinfo["mon"], $dateinfo["mday"], $dateinfo["year"]));
+                $string = date ($format, mktime($hours, $mins, $secs, $dateinfo["mon"], $dateinfo["mday"], $dateinfo["year"]));
 			} else if ($type == 'number') {
 				$rectype = 'number';
-				$formatted = $this->_format_value($format, $numValue, $formatIndex);
-				$string = $formatted['string'];
+				//verifica si el formato es legible (con encoding)
+				if (checkEncoding($format, 'UTF-8')){
+                    $formatted = $this->_format_value($format, $numValue, $formatIndex);
+                    $string = $formatted['string'];
+                }else{
+                    //si no lo fuera, devuelve el valor numerico por defecto
+                    $formatted = $this->_format_value("#,##0.00", $numValue, $formatIndex);
+                    $string = $formatted['string'];
+                    //$string = $numValue;
+                }
 				$formatColor = $formatted['formatColor'];
 				$raw = $numValue;
 			} else{
@@ -1667,6 +1680,7 @@ class Spreadsheet_Excel_Reader {
 				$formatColor = $formatted['formatColor'];
 				$raw = $numValue;
 			}
+				//echo "$numValue - $format - $type<br>";
 
 			return array(
 				'string'=>$string,
@@ -1755,6 +1769,12 @@ class Spreadsheet_Excel_Reader {
 		return $value;
 	}
 
+}
+
+function checkEncoding ( $string, $string_encoding ) {
+    $fs = $string_encoding == 'UTF-8' ? 'UTF-32' : $string_encoding;
+    $ts = $string_encoding == 'UTF-32' ? 'UTF-8' : $string_encoding;
+    return $string === mb_convert_encoding ( mb_convert_encoding ( $string, $fs, $ts ), $ts, $fs );
 }
 
 ?>
