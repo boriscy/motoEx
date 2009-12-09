@@ -41,8 +41,8 @@ var Descartar = Area.extend({
         $('#area-descartar').bind('marcar:descartar', function() {
             if (desc.validarInclusion(desc.area.cssMarcar) && 
                 desc.validarSolapamiento([desc.area.encabezado.cssMarcar, desc.area.titular.cssMarcar, desc.cssMarcar]) ) {
-                desc.marcarArea(desc.cssMarcar);
-                desc.mostrarFormulario();
+                desc.marcarArea();
+                //desc.mostrarFormulario();
             }
         });
         $('#area-fin').bind("desmarcar:fin:desc", function() { desc.desmarcarFin(); });
@@ -50,7 +50,14 @@ var Descartar = Area.extend({
         $('.context-' + this.cssMarcarAlt).live("click", function(e) {
             desc.desmarcarArea(desc.cssMarcar, e);
         });
-        $('#area-descartar').bind("actualizar:estado", function(){ desc.actualizarEstado(); });
+        // estado
+        $('#area-descartar').bind("actualizar:estado", function(){ 
+            desc.actualizarEstado();
+        });
+        // patrones en el grid
+        $('#area-descartar').bind("actualizar:patrones", function(){ 
+            desc.actualizarPatrones();
+        });
     },
     /**
      * Destruccion de eventos
@@ -62,27 +69,36 @@ var Descartar = Area.extend({
     },
     /**
      * Marca el area seleccionada y añade un ID en forma de clase css
+     * @param String cssSel
      */
     'marcarArea': function(cssSel) {
         desc = this;
-        var cssEsp = 'desc' + this.contador;
-        var max = 0;
+        var cssID = 'desc' + this.contador;
+        cssSel = cssSel || this.cssSeleccionado;
         // Iterar
-        $('.' + this.cssSeleccionado).parent('tr').each(function(i, el) {
-            $(el).find("td." + desc.area.cssMarcar).addClass(desc.cssMarcar).addClass(cssEsp);
-            max = i;
-        });
-        // Para cambiar el estilo en caso de que sea fin
-        $('.' + cssEsp + '[class*=' + desc.area.fin.cssMarcar + ']').removeClass(desc.cssMarcar).addClass(desc.cssMarcarAlt);
-        // Marcar con clase especial
-        if(max == 0)
-            $('.' + cssEsp).addClass(desc.cssMarcarOpts);
-        
+        $('.' + cssSel).siblings('td.' + this.area.cssMarcar).andSelf().addClass(cssID);
+        var filas = $('tr td.' + cssID + ':nth-child(3)').parents("tr").length;
+
+        this.marcarAreaSinID(cssID, filas);
         desc.contador++;
-        this.cambiarEstado(cssEsp);
+        this.cambiarEstado(cssID);
         // Quitar css seleccionado
         $('.' + this.cssSeleccionado).removeClass(this.cssSeleccionado);
     },
+    /**
+     * marca un css sin aumentar el id en la clase
+     * @param String css
+     * @param Integer filas
+     */
+    'marcarAreaSinID': function(css, filas) {
+        filas = filas || 1;
+        $('.' + css).addClass(this.cssMarcar);
+        // Para cambiar el estilo en caso de que sea fin
+        $('.' + css + '[class*=' + this.area.fin.cssMarcar + ']').removeClass(this.cssMarcar).addClass(this.cssMarcarAlt);
+        // Marcar con clase especial
+        if(filas == 1)
+            $('.' + css).addClass(desc.cssMarcarOpts);
+    }, 
     /**
      * Funcion para pode desmarcar un area especifica
      * @param String css
@@ -128,11 +144,13 @@ var Descartar = Area.extend({
      * param String area
      */
     'actualizarEstado': function(){
-        var area = $("#formulario-descartar #id-descartar").val();
-        estado.area.descartar[area]['campos'] = {};
-        $('#formulario-descartar .asmListItemLabel').each(function (i, el) {
-            var texto = $(el).text().replace(/^\([A-Z\d]+\)\s/,"");
-            var pos = $(el).text().replace(/.*([A-Z]+[\d]+).*/, "$1");
+        var area = $("#id-descartar").val();
+        if(!estado.area.descartar[area]['campos'])
+            estado.area.descartar[area]['campos']= {};
+        $('#formulario-descartar .listado li').each(function (i, el) {
+            var $el = $(el);
+            var pos = $el.attr("class");
+            var texto = $el.find('span:first').text();
             estado.area.descartar[area]['campos'][pos] = {'texto': texto};
         });
     },
@@ -154,5 +172,39 @@ var Descartar = Area.extend({
      */
     'mostrarFormulario': function() {
         $('#formulario-descartar').trigger("formulario:mostrar");
+    },
+    /**
+     * Actualiza las celdas que cumplen con el patron
+     */
+    'actualizarPatrones': function() {
+        var id = $('#id-descartar').val();
+        var campos = estado.area[this.serialize][id];
+        if(estado.area.encabezado) {
+            var min = parseInt(estado.area.encabezado.celda_final.split("_")[0]);
+        }else{
+            var min = parseInt(estado.area.celda_inicial.split("_")[0]);
+        }
+        var max = parseInt(estado.area.celda_final.split("_")[0]);
+        if( campos ) {
+            campos = campos.campos;
+            console.log(campos);
+            for(var i = min; i < max; i++) {
+                var pass = true;
+                for(var k in campos) {
+                    var pos = k.split("_");
+                    pos[1] = i + 1;
+                    var $td = $('#' + pos.join("_"));
+                    if( campos[k].texto != $td.text()) {
+                        pass = false;
+                        break;
+                    }
+                }
+                // Marcar fila
+                if(pass) {
+                    $td.siblings('.' + this.area.cssMarcar).andSelf().addClass(id);
+                    this.marcarAreaSinID(id);
+                }
+            }
+        }
     }
 });

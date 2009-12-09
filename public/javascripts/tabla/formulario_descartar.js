@@ -33,8 +33,19 @@ FormularioDescartar.prototype = {
         });
         $("#formulario-descartar").dialog({
             'close': function(e, ui) {
+                $("#area-descartar").trigger("actualizar:patrones");
+            },
+            'beforeclose': function(e, ui) {
                 $("#area-descartar").trigger("actualizar:estado");
             }
+        });
+        $('#select-columnas').live("change", function() {
+            var values = $(this).val();
+            form.adicionarPatron(values);
+        });
+        $('#formulario-descartar .listado a.borrar-patron').live("click", function(e) {
+            var target = getEventTarget(e);
+            form.borrarPatron(target);
         });
     },
     /**
@@ -42,6 +53,7 @@ FormularioDescartar.prototype = {
      * @param DOM target
      */
     'mostrar': function(area) {
+        $('#id-descartar').val(area);
         this.crearSelect(area);
         //y por ultimo muestra el formulario
         $("#formulario-descartar").dialog("open");
@@ -49,35 +61,58 @@ FormularioDescartar.prototype = {
     /**
      * Crea el select para la seleccion de columnas de descartar
      */
-    'crearSelect': function(area){
-        $('.asmContainer0').remove();
-        var html = '<select id="columnas-descartar" multiple="multiple">';
-        $(estado.area.descartar[area].celdas).each(function (i, el){
-           html += "<option>(<span class=\"desc-opt\">" + celdaExcel(el.id) + '</span>) ' + el.texto + "</option>";
+    'crearSelect': function(area) {
+        $select = $('#select-columnas');
+        $select.find("option").remove();
+        $('#formulario-descartar ul.listado li').remove();
+        var html = '';
+        //.append('<option title="Este es un texto bastante largo 2">Este es un texto bastante largo 2</option>');
+        $(estado.area.descartar[area].celdas).each(function (i, el) {
+            html += '<option title="' + el.texto + '" value="' + el.id + '" class="' + el.id + '">(' + celdaExcel(el.id) + ') ' + el.texto + '</option>';
         });
-        html += '</select>';
-        $('#div-select').html(html);
-        //configurando el formulario de los patrones de las columnas a descartar
-        $("#columnas-descartar").asmSelect({
-            addItemTarget: 'bottom',
-            animate: true,
-            //removeLabel: 'quitar',
-            sortable: true
+        $select.append(html);
+        var values = [];
+        for (var k in estado.area.descartar[area].campos) {
+            values.push(k);
+        }
+        this.adicionarPatron(values);
+    },
+    /**
+     * Adiciona la lista de patrones
+     */
+    'adicionarPatron': function(values) {
+        var html = '';
+        $(values).each(function(i, el) {
+            var $option = $("#select-columnas option." + el);
+            var col = numExcelCol($option.val().split('_')[2]);
+            html += '<li class=' + el + '>(' + col + ') <span>' + $option.text().replace(/^\([\w]+\)\s/, "") + '</span> <a class="borrar-patron">borrar</a></li>';
+            $option.attr("disabled", true);
         });
-        //$('#asmSelect0 option:eq(0)').remove();
-        $('#asmSelect0').attr('multiple','multiple');
-        //colocando el sortable a la derecha
-        html = "<table><tr><th class='ui-active-state'>Columnas</th><th class='ui-active-state'>Seleccionadas</th></tr>" + 
-                      "<tr><td><div id='columnas-multiple'></div></td>" + 
-                          "<td><div id='columnas-seleccionadas'></div></td></tr></table>";
-        $('.asmContainer').append(html);
-        $('#asmSelect0').prependTo('#columnas-multiple');
-        $('#asmList0').prependTo('#columnas-seleccionadas');
-        //para que siempre tenga un ancho correcto
-        $('#columnas-seleccionadas').width(250);
-        $('#columnas-multiple').width(250);
-        //colocando los mismos estilos
-        $('#asmSelect0 option').addClass('asmListItem');
-        $('#id-descartar').val(area);
+        $('#formulario-descartar .listado').append(html);
+        $('#select-columnas option').attr("selected", false);
+        // cambio de estado
+        $("#area-descartar").trigger("actualizar:estado");
+    },
+    /**
+     * elimina el patron seleccionado
+     */
+    'borrarPatron': function(target){
+        var $li = $(target).parent('li');
+        $("#select-columnas option." + $li.attr("class")).attr("disabled", false);
+        var area = $('#id-descartar').val();
+        delete(estado.area.descartar[area]['campos'][$li.attr("class")]);
+        $li.remove();
+    },
+    /**
+     * Desabilita las columnas seleccionadas
+     */
+    'deshabilitarOpciones': function(values) {
+    },
+    /**
+     * Realiza un listado de las columnas
+     * @return Array
+     */
+    'listarColumnas': function() {
+        //
     }
 }
