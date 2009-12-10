@@ -37,7 +37,12 @@ FormularioDescartar.prototype = {
             },
             'beforeclose': function(e, ui) {
                 $("#area-descartar").trigger("actualizar:estado");
-            }
+            },
+            'width': 600, 
+            'height': 400, 
+            'resizable': false, 
+            'modal': true, 
+            'title': 'Patrones de columnas a descartar'
         });
         $('#select-columnas').live("change", function() {
             var values = $(this).val();
@@ -47,6 +52,32 @@ FormularioDescartar.prototype = {
             var target = getEventTarget(e);
             form.borrarPatron(target);
         });
+        
+        //para el formulario de seleccion de excepciones
+        $("#formulario-descartar-excepciones").dialog({
+            'close': function(e, ui) {
+                //$("#area-descartar").trigger("actualizar:patrones");
+                //agrega en el listado de excepciones
+                form.actualizaExcepciones();
+            },
+            'beforeclose': function(e, ui) {
+                //$("#area-descartar").trigger("actualizar:estado");
+            },
+            'width': 350, 
+            'height': 250, 
+            'resizable': false, 
+            'modal': true, 
+            'title': 'Excepciones'
+        });
+        $('#formulario-descartar .excepciones input:button').click(function() {
+            //agrega las columnas del area
+            //muestra el formulario de seleccion de columnas
+            $("#formulario-descartar-excepciones").dialog("open");
+        });
+        $('#formulario-descartar .excepciones-listado a.borrar-excepcion').live("click", function(e) {
+            var target = getEventTarget(e);
+            form.borrarExcepcion(target);
+        });
     },
     /**
      * Muestra el formulario de las columnas a descartar
@@ -55,6 +86,8 @@ FormularioDescartar.prototype = {
     'mostrar': function(area) {
         $('#id-descartar').val(area);
         this.crearSelect(area);
+        //y tambien crea el select de las excepciones
+        this.crearSelectExcepciones(area);
         //y por ultimo muestra el formulario
         $("#formulario-descartar").dialog("open");
     },
@@ -114,5 +147,44 @@ FormularioDescartar.prototype = {
      */
     'listarColumnas': function() {
         //
+    },
+    /**
+     * Llena el select de las excepciones con las columnas del area
+     */
+    'crearSelectExcepciones': function(area) {
+        $select = $('#select-excepciones');
+        $select.find("option").remove();
+        var html="";
+        $(estado.area.descartar[area].celdas).each(function (i, el) {
+            html += '<option title="' + el.texto + '" value="' + el.id + '" class="' + el.id + '">(' + celdaExcel(el.id) + ') ' + el.texto + '</option>';
+        });
+        $select.append(html);
+    },
+    /**
+     * Agrega la excepcion al listado del form-descartar
+     */
+    'actualizaExcepciones': function() {
+        var html = '';
+        if ($("select#select-excepciones").val()){
+            var el = $("select#select-excepciones").val();
+            
+            var $option = $("select#select-excepciones option." + el);
+            var col = numExcelCol($option.val().split('_')[2]);
+            html += '<li class=' + el + '>(' + col + ') <span>' + $option.text().replace(/^\([\w]+\)\s/, "") + '</span> <a class="borrar-excepcion">borrar</a></li>';
+            $option.attr("disabled", true);
+            
+            $('#formulario-descartar .excepciones-listado').append(html);
+            $('select#select-excepciones option').attr("selected", false);
+        }
+    },
+    /**
+     * elimina el excepcion seleccionada
+     */
+    'borrarExcepcion': function(target){
+        var $li = $(target).parent('li');
+        $("#select-excepciones option." + $li.attr("class")).attr("disabled", false);
+        var area = $('#id-descartar').val();
+        //delete(estado.area.descartar[area]['campos'][$li.attr("class")]);
+        $li.remove();
     }
 }

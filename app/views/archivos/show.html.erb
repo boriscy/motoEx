@@ -28,6 +28,9 @@
 <!--Popup Menu y Formulario Descartar-->
 <%= render :partial => "areas/form_descartar" %>
 
+<!--Formulario Descartar, Seleccion de columnas excepciones-->
+<%= render :partial => "areas/form_descartar_excepciones" %>
+
 <!--Menu contextual-->
 <div id="menu-contextual" style="display:none" class="menu-contextual">
   <ul>
@@ -43,6 +46,7 @@ $(document).ready(function() {
 
   //Para el formulario de los patrones de las columnas a descartar
   $("div#formulario-descartar").dialog({'width': 600, 'height': 400, 'resizable': false, 'modal': true, 'title': 'Patrones de columnas a descartar'}).dialog('close');
+  $("div#formulario-descartar-excepciones").dialog({'width': 300, 'height': 250, 'resizable': false, 'modal': false, 'title': 'Excepciones'}).dialog('close');
 
 });
   //]]>

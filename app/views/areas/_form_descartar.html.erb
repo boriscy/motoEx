@@ -3,7 +3,7 @@
     <p class="inline-hints">Para seleccionar por patrón seleccione uno o mas items</p>
     <div id="div-select"></div>
     <input type="hidden" id="id-descartar" />
-    <table id="tabla-patrones" height="400">
+    <table id="tabla-patrones" height="310">
       <tr height="20">
         <th class="ui-state-active" width="200">Columnas</th>
         <th class="ui-state-active" width="200">Patrón</th>
@@ -23,7 +23,11 @@
           </div>
         </td>
         <td>
-          <div class="excepciones" style="overflow:auto"></div>
+          <div class="excepciones" style="overflow:auto">
+            <input type="button" value="Añadir" id="agregar_excepcion"/>
+            <ul class="excepciones-listado">
+            </ul>
+          </div>
         </td>
       </tr>
     </table>
