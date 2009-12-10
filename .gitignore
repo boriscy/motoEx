@@ -13,3 +13,4 @@ ejemplos/*.html
 .~lock*
 doc/app/*
 ç
+*.vim

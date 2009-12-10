@@ -76,7 +76,7 @@ var Descartar = Area.extend({
         var cssID = 'desc' + this.contador;
         cssSel = cssSel || this.cssSeleccionado;
         // Iterar
-        $('.' + cssSel).siblings('td.' + this.area.cssMarcar).andSelf().addClass(cssID);
+        $('.' + cssSel + ':first').siblings('td.' + this.area.cssMarcar).andSelf().addClass(cssID);
         var filas = $('tr td.' + cssID + ':nth-child(3)').parents("tr").length;
 
         this.marcarAreaSinID(cssID, filas);
@@ -179,9 +179,9 @@ var Descartar = Area.extend({
     'actualizarPatrones': function() {
         var id = $('#id-descartar').val();
         var campos = estado.area[this.serialize][id];
-        if(estado.area.encabezado) {
+        try {
             var min = parseInt(estado.area.encabezado.celda_final.split("_")[0]);
-        }else{
+        }catch(e) {
             var min = parseInt(estado.area.celda_inicial.split("_")[0]);
         }
         var max = parseInt(estado.area.celda_final.split("_")[0]);
