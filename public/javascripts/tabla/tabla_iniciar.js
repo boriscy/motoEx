@@ -77,10 +77,15 @@ $(window).keydown( function(e) {
                 $("#formulario-areas form").trigger('submit');    
             });
             //Evento para menu contextual
-            $(".sheet-content").rightClick(function(e) {
+            $("#sheet-" + hoja_numero + "-content").rightClick(function(e) {
                 $('.sheet-content').trigger("menu:contextual", e);
             });
-
+            $('body').bind("right:click" , function() {
+                $("#sheet-" + hoja_numero + "-content").rightClick(function(e) {
+                    $('.sheet-content').trigger("menu:contextual", e);
+                });
+            });
+            
             this.eventosMenu();
         },
         /**
@@ -156,7 +161,6 @@ $(window).keydown( function(e) {
             $('.visible').removeClass('visible');
             newhoja.addClass('visible');
              // Destruir el formulario para areas
-
             if (newhoja.html() == "" ) {
                 newhoja.html("<div style='text-align: center; height:100%;'><img src='/images/ajax-loader.gif' /></div>");
                 //carga el contenido de la hoja por ajax
@@ -168,6 +172,7 @@ $(window).keydown( function(e) {
                         newhoja.html(html);
                         //ejecuta el codigo para muestra de hojas
                         newhoja.spreadsheet({numero: num});
+                        $('body').trigger("right:click");
                     },
                     failure: function() {
                         alert("Error al cargar la hoja");
