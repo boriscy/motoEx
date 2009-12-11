@@ -23,6 +23,10 @@ var Descartar = Area.extend({
      */
     'contador': 0,
     /**
+     * Guarda las excepciones por cada area de descarte
+     */
+    'excepciones': {},
+    /**
      * Constructor
      * @param Array areas
      */
@@ -54,9 +58,17 @@ var Descartar = Area.extend({
         $('#area-descartar').bind("actualizar:estado", function(){ 
             desc.actualizarEstado();
         });
-        // patrones en el grid
-        $('#area-descartar').bind("actualizar:patrones", function(){ 
-            desc.actualizarPatrones();
+        // patron en el grid
+        $('#area-descartar').bind("actualizar:tabla:patrones", function(){ 
+            desc.actualizarTablaPatrones();
+        });
+        // patrones
+        $('#area-descartar').bind("actualizar:patron", function(){ 
+            desc.actualizarEstadoPatron();
+        });
+        // creacion de excepciones
+        $('#area-descartar').bind("descartar:crear:excepcion", function() {
+            desc.crearExcepcion();
         });
     },
     /**
@@ -145,13 +157,33 @@ var Descartar = Area.extend({
      */
     'actualizarEstado': function(){
         var area = $("#id-descartar").val();
-        if(!estado.area.descartar[area]['campos'])
-            estado.area.descartar[area]['campos']= {};
+        if(!estado.area.descartar[area]['patron'])
+            estado.area.descartar[area]['patron']= {};
+        this.actualizarEstadoPatron();
+        console.log("Despues de actualizarEstadoPatron: %o", estado.area.descartar[area]['patron'] );//////////////
+    },
+    /**
+     * actualiza los patron de una area de descarte
+     */
+    'actualizarEstadoPatron': function() {
+        var area = $("#id-descartar").val();
+        var desc = this;
         $('#formulario-descartar .listado li').each(function (i, el) {
             var $el = $(el);
             var pos = $el.attr("class");
             var texto = $el.find('span:first').text();
-            estado.area.descartar[area]['campos'][pos] = {'texto': texto};
+            estado.area.descartar[area]['patron'][pos] = {'texto': texto};
+            // Excepciones
+            estado.area[desc.serialize][area].patron['excepciones'] = [];
+            $('ul.grupo-excepcion').each(function(i, el) {
+                estado.area[desc.serialize][area].patron['excepciones'][i] = [];
+                $(el).find('li.excepcion').each(function(ii, elem) {
+                    // Campo oculto
+                    var col = $(elem).find("span.col").text();
+                    var texto = $(elem).find("span.texto").text();
+                    estado.area[desc.serialize][area].patron['excepciones'][i].push({'col': col, 'texto': texto});
+                });
+            });
         });
     },
     /**
@@ -166,6 +198,7 @@ var Descartar = Area.extend({
      */
     'destruir': function() {
         this.destruirEventos();
+        
     },
     /**
      * Muestra el formulario para patrón
@@ -176,7 +209,7 @@ var Descartar = Area.extend({
     /**
      * Actualiza las celdas que cumplen con el patron
      */
-    'actualizarPatrones': function() {
+    'actualizarTablaPatrones': function() {
         var id = $('#id-descartar').val();
         var campos = estado.area[this.serialize][id];
         try {
@@ -185,26 +218,35 @@ var Descartar = Area.extend({
             var min = parseInt(estado.area.celda_inicial.split("_")[0]);
         }
         var max = parseInt(estado.area.celda_final.split("_")[0]);
+
         if( campos ) {
-            campos = campos.campos;
-            console.log(campos);
+            var patron = campos.patron;
             for(var i = min; i < max; i++) {
                 var pass = true;
-                for(var k in campos) {
+                for(var k in patron) {
+                    // No debe buscar excepciones
+                    if(k == 'excepciones')
+                        continue;
                     var pos = k.split("_");
                     pos[1] = i + 1;
                     var $td = $('#' + pos.join("_"));
-                    if( campos[k].texto != $td.text()) {
+                    if( patron[k].texto != $td.text()) {
                         pass = false;
                         break;
                     }
                 }
                 // Marcar fila
                 if(pass) {
-                    $td.siblings('.' + this.area.cssMarcar).andSelf().addClass(id);
-                    this.marcarAreaSinID(id);
+                    try{
+                        $td.siblings('.' + this.area.cssMarcar).andSelf().addClass(id);
+                        this.marcarAreaSinID(id);
+                    }catch(e){}
                 }
             }
         }
-    }
+    },
+    /**
+     * Crea excepciones para un patron
+     */
+    'crearExcepcion': function() {}
 });

@@ -8,6 +8,7 @@ FormularioDescartar = function(options) {
 }
 
 FormularioDescartar.prototype = {
+    'formularioExcepciones': '',
     /**
      * Se une con otro JSON
      */
@@ -20,6 +21,7 @@ FormularioDescartar.prototype = {
      * Constructor
      */
     'init': function() {
+        this.formularioExcepciones = new FormularioDescartarExcepciones();
         this.crearEventos();
     },
     /**
@@ -33,7 +35,8 @@ FormularioDescartar.prototype = {
         });
         $("#formulario-descartar").dialog({
             'close': function(e, ui) {
-                $("#area-descartar").trigger("actualizar:patrones");
+                // Actualizacion de la tabla con el patron seleccionado
+                $("#area-descartar").trigger("actualizar:tabla:patrones");
             },
             'beforeclose': function(e, ui) {
                 $("#area-descartar").trigger("actualizar:estado");
@@ -52,32 +55,6 @@ FormularioDescartar.prototype = {
             var target = getEventTarget(e);
             form.borrarPatron(target);
         });
-        
-        //para el formulario de seleccion de excepciones
-        $("#formulario-descartar-excepciones").dialog({
-            'close': function(e, ui) {
-                //$("#area-descartar").trigger("actualizar:patrones");
-                //agrega en el listado de excepciones
-                form.actualizaExcepciones();
-            },
-            'beforeclose': function(e, ui) {
-                //$("#area-descartar").trigger("actualizar:estado");
-            },
-            'width': 350, 
-            'height': 250, 
-            'resizable': false, 
-            'modal': true, 
-            'title': 'Excepciones'
-        });
-        $('#formulario-descartar .excepciones input:button').click(function() {
-            //agrega las columnas del area
-            //muestra el formulario de seleccion de columnas
-            $("#formulario-descartar-excepciones").dialog("open");
-        });
-        $('#formulario-descartar .excepciones-listado a.borrar-excepcion').live("click", function(e) {
-            var target = getEventTarget(e);
-            form.borrarExcepcion(target);
-        });
     },
     /**
      * Muestra el formulario de las columnas a descartar
@@ -86,11 +63,9 @@ FormularioDescartar.prototype = {
     'mostrar': function(area) {
         $('#id-descartar').val(area);
         this.crearSelect(area);
-        //y tambien crea el select de las excepciones
-        this.crearSelectExcepciones(area);
         //y por ultimo muestra el formulario
         $("#formulario-descartar").dialog("open");
-    },
+     },
     /**
      * Crea el select para la seleccion de columnas de descartar
      */
@@ -104,14 +79,23 @@ FormularioDescartar.prototype = {
             html += '<option title="' + el.texto + '" value="' + el.id + '" class="' + el.id + '">(' + celdaExcel(el.id) + ') ' + el.texto + '</option>';
         });
         $select.append(html);
+
         var values = [];
-        for (var k in estado.area.descartar[area].campos) {
+        for (var k in estado.area.descartar[area].patron) {
+            if (k == "excepciones")
+                continue;
             values.push(k);
         }
+        
+        // Patron
         this.adicionarPatron(values);
+
+        // Excepciones
+        $('#grupo-excepciones ul.grupo-excepcion').remove();
+        $('#area-descartar').trigger("cargar:excepciones");
     },
     /**
-     * Adiciona la lista de patrones
+     * Adiciona la lista de patron
      */
     'adicionarPatron': function(values) {
         var html = '';
@@ -133,63 +117,7 @@ FormularioDescartar.prototype = {
         var $li = $(target).parent('li');
         $("#select-columnas option." + $li.attr("class")).attr("disabled", false);
         var area = $('#id-descartar').val();
-        delete(estado.area.descartar[area]['campos'][$li.attr("class")]);
-        $li.remove();
-    },
-    /**
-     * Desabilita las columnas seleccionadas
-     */
-    'deshabilitarOpciones': function(values) {
-    },
-    /**
-     * Realiza un listado de las columnas
-     * @return Array
-     */
-    'listarColumnas': function() {
-        //
-    },
-    /**
-     * Llena el select de las excepciones con las columnas del area
-     */
-    'crearSelectExcepciones': function(area) {
-        $select = $('#select-excepciones');
-        $select.find("option").remove();
-        var html="";
-        var min = 0, max = 0;
-        
-        min = estado.area.celda_inicial.split('_')[1];
-        max = estado.area.celda_final.split('_')[1];
-        for (var i = min; i <= max; i++) {
-            //html += '<option title="' + numExcelCol(i) + '" value="' + i + '" class="' + el.id + '">(' + celdaExcel(el.id) + ') ' + el.texto + '</option>';
-            html += '<option title="' + numExcelCol(i) + '" value="' + area + '_excepcion_' + i + '" class="' + area + '_excepcion_' + i + '">Columna ' + numExcelCol(i) + '</option>';
-        }
-        $select.append(html);
-    },
-    /**
-     * Agrega la excepcion al listado del form-descartar
-     */
-    'actualizaExcepciones': function() {
-        var html = '';
-        if ($("select#select-excepciones").val()){
-            var el = $("select#select-excepciones").val();
-            
-            var $option = $("select#select-excepciones option." + el);
-            var col = numExcelCol($option.val().split('_')[2]);
-            html += '<li class=' + el + '>(' + col + ') <span>' + $("input#texto-excepciones").val() + '</span> <a class="borrar-excepcion">borrar</a></li>';
-            $option.attr("disabled", true);
-            
-            $('#formulario-descartar .excepciones-listado').append(html);
-            $('select#select-excepciones option').attr("selected", false);
-        }
-    },
-    /**
-     * elimina el excepcion seleccionada
-     */
-    'borrarExcepcion': function(target){
-        var $li = $(target).parent('li');
-        $("#select-excepciones option." + $li.attr("class")).attr("disabled", false);
-        var area = $('#id-descartar').val();
-        //delete(estado.area.descartar[area]['campos'][$li.attr("class")]);
+        delete(estado.area.descartar[area]['patron'][$li.attr("class")]);
         $li.remove();
     }
 }
