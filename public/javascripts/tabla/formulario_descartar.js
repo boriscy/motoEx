@@ -155,9 +155,14 @@ FormularioDescartar.prototype = {
         $select = $('#select-excepciones');
         $select.find("option").remove();
         var html="";
-        $(estado.area.descartar[area].celdas).each(function (i, el) {
-            html += '<option title="' + el.texto + '" value="' + el.id + '" class="' + el.id + '">(' + celdaExcel(el.id) + ') ' + el.texto + '</option>';
-        });
+        var min = 0, max = 0;
+        
+        min = estado.area.celda_inicial.split('_')[1];
+        max = estado.area.celda_final.split('_')[1];
+        for (var i = min; i <= max; i++) {
+            //html += '<option title="' + numExcelCol(i) + '" value="' + i + '" class="' + el.id + '">(' + celdaExcel(el.id) + ') ' + el.texto + '</option>';
+            html += '<option title="' + numExcelCol(i) + '" value="' + area + '_excepcion_' + i + '" class="' + area + '_excepcion_' + i + '">Columna ' + numExcelCol(i) + '</option>';
+        }
         $select.append(html);
     },
     /**
@@ -170,7 +175,7 @@ FormularioDescartar.prototype = {
             
             var $option = $("select#select-excepciones option." + el);
             var col = numExcelCol($option.val().split('_')[2]);
-            html += '<li class=' + el + '>(' + col + ') <span>' + $option.text().replace(/^\([\w]+\)\s/, "") + '</span> <a class="borrar-excepcion">borrar</a></li>';
+            html += '<li class=' + el + '>(' + col + ') <span>' + $("input#texto-excepciones").val() + '</span> <a class="borrar-excepcion">borrar</a></li>';
             $option.attr("disabled", true);
             
             $('#formulario-descartar .excepciones-listado').append(html);
