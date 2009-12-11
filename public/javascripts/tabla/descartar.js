@@ -145,7 +145,7 @@ var Descartar = Area.extend({
     'cambiarEstado': function(cssEsp) {
         var desc = this;
         var puntos = this.obtenerPuntos(cssEsp);
-        estado.area[this.serialize][cssEsp] = {'celda_inicial': puntos[0], 'celda_final': puntos[1], 'celdas': []};
+        estado.area[this.serialize][cssEsp] = {'celda_inicial': puntos[0], 'celda_final': puntos[1], 'celdas': [], 'patron': {'excepciones': []}};
         $('.' + cssEsp).each(function(i, el) {
               var $el = $(el);
               estado.area[desc.serialize][cssEsp].celdas.push({'id': $el.attr("id"), 'texto': $el.text()});
@@ -157,10 +157,7 @@ var Descartar = Area.extend({
      */
     'actualizarEstado': function(){
         var area = $("#id-descartar").val();
-        if(!estado.area.descartar[area]['patron'])
-            estado.area.descartar[area]['patron']= {};
         this.actualizarEstadoPatron();
-        console.log("Despues de actualizarEstadoPatron: %o", estado.area.descartar[area]['patron'] );//////////////
     },
     /**
      * actualiza los patron de una area de descarte
@@ -173,6 +170,7 @@ var Descartar = Area.extend({
             var pos = $el.attr("class");
             var texto = $el.find('span:first').text();
             estado.area.descartar[area]['patron'][pos] = {'texto': texto};
+
             // Excepciones
             estado.area[desc.serialize][area].patron['excepciones'] = [];
             $('ul.grupo-excepcion').each(function(i, el) {

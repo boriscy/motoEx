@@ -108,7 +108,7 @@ FormularioDescartar.prototype = {
         $('#formulario-descartar .listado').append(html);
         $('#select-columnas option').attr("selected", false);
         // cambio de estado
-        $("#area-descartar").trigger("actualizar:estado");
+        //$("#area-descartar").trigger("actualizar:estado");
     },
     /**
      * elimina el patron seleccionado
