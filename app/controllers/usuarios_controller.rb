@@ -1,4 +1,5 @@
 class UsuariosController < ApplicationController
+  before_filter :revisar_permiso
   # GET /usuarios
   # GET /usuarios.xml
   def index

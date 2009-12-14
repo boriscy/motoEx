@@ -186,8 +186,13 @@ var Descartar = Area.extend({
         var desc = this;
         $('#formulario-descartar .listado li').each(function (i, el) {
             var $el = $(el);
-            var pos = $el.attr("class");
+            /**
+             * Aquí debe guardarse la fila o la columna de acuerdo a lo que se selecciona en el formulariio principal 
+             */
+            var pos = $el.attr("class").explode("_")[2];
+
             var texto = $el.find('span:first').text();
+
             estado.area.descartar[area]['patron'][pos] = {'texto': texto};
 
             // Excepciones
