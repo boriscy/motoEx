@@ -58,6 +58,10 @@ $(window).keydown( function(e) {
                     $.getJSON("/areas/"+$(this).val(), function(resp) {
                         estado = resp;
                         ini['area'] = new AreaGeneral();
+                        $('#area_nombre').val(estado.area['nombre']);
+                        $('#area_rango').val(estado.area['rango']);
+                        $('#area_iterar_fila_true')[0].checked = estado.area['iterar_fila'];
+                        $('#area_fija')[0].checked = estado.area['fija'];
                     });
                 }
             });
@@ -109,7 +113,7 @@ $(window).keydown( function(e) {
          */
         'crearArea': function(){
             if(this['area']) {
-                $('#sheet-' + hoja_numero).trigger("destruir:area");
+                //$('#sheet-' + hoja_numero).trigger("destruir:area");
                 this.destruir();
             }
             this['area'] = new AreaGeneral();
@@ -119,6 +123,8 @@ $(window).keydown( function(e) {
          * Elimina el area y inicializa la variable global "estado"
          */
         destruir: function() {
+            $('#sheet-' + hoja_numero).trigger("destruir:area");
+            //$('.sel').removeClass("sel");
             if(typeof(this.area) != 'undefined') {
                 delete(this.area);
                 estado = {};
@@ -152,31 +158,32 @@ $(window).keydown( function(e) {
     $('#lista_hojas a').live('click',function() {
         
         var num = $(this).attr('href').split('-')[1];
-        var newtab = $(this);
-        var newhoja = $('#sheet-' + num);
-        if ( !newtab.parent().hasClass('active') ) {
-            
+        var $newtab = $(this);
+        var $newhoja = $('#sheet-' + num);
+        if ( !$newtab.parent().hasClass('active') ) {
+            //deselecciona las celdas que estuvieran seleccionadas
+            $('.sel').removeClass("sel");
             $('.active').removeClass('active');
-            newtab.addClass('active');
+            $newtab.addClass('active');
             $('.visible').removeClass('visible');
-            newhoja.addClass('visible');
+            $newhoja.addClass('visible');
              // Destruir el formulario para areas
-            if (newhoja.html() == "" ) {
-                newhoja.html("<div style='text-align: center; height:100%;'><img src='/images/ajax-loader.gif' /></div>");
+            if ($newhoja.html() == "" ) {
+                $newhoja.html("<div style='text-align: center; height:100%;'><img src='/images/ajax-loader.gif' /></div>");
                 //carga el contenido de la hoja por ajax
                 $.ajax({
                     type: "POST",
                     url: "/hoja",
                     data: "archivo_id="+archivo_id+"&numero="+num,
                     success: function(html) {
-                        newhoja.html(html);
+                        $newhoja.html(html);
                         //ejecuta el codigo para muestra de hojas
-                        newhoja.spreadsheet({numero: num});
+                        $newhoja.spreadsheet({numero: num});
                         $('body').trigger("right:click");
                     },
                     failure: function() {
                         alert("Error al cargar la hoja");
-                        newhoja.html(""); 
+                        $newhoja.html(""); 
                     }
 
                 });

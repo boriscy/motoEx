@@ -51,18 +51,25 @@ class AreasController < ApplicationController
   # PUT /areas/1
   # PUT /areas/1.xml
   def update
+    #@area = Area.find(params[:id])
     @area = Area.find(params[:id])
-
-    respond_to do |format|
-      if @area.update_attributes(params[:area])
-        flash[:notice] = 'Area was successfully updated.'
-        format.html { redirect_to(@area) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @area.errors, :status => :unprocessable_entity }
-      end
+    
+    if @area.update_attributes(ActiveSupport::JSON.decode(params[:area]))
+      render :json => @area
+    else
+      render :json => @area.errors
     end
+    
+    #respond_to do |format|
+    #  if @area.update_attributes(params[:area])
+    #    flash[:notice] = 'Area was successfully updated.'
+    #    format.html { redirect_to(@area) }
+    #    format.xml  { head :ok }
+    #  else
+    #    format.html { render :action => "edit" }
+    #    format.xml  { render :xml => @area.errors, :status => :unprocessable_entity }
+    #  end
+    #end
   end
 
   # DELETE /areas/1

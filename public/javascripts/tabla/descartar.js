@@ -33,9 +33,28 @@ var Descartar = Area.extend({
     'init': function(areas, area) {
         this.area = area;
         this.cssMarcarOpts = 'opciones-' + this.cssMarcar;
+        this.serialize = 'descartar';
         this._super();
         this.crearEventos();
-        estado.area[this.serialize] = {};
+        // si estado.area[this.serialize] carga los datos de las areas de descarte
+        if (estado.area[this.serialize]){
+            var max = 0;
+            //console.log(estado.area[this.serialize]);
+            for (var k in estado.area[this.serialize]){
+                // aumenta el contador
+                this.contador = parseInt(k.replace(/.*desc(\d+).*/, "$1"));
+                if (this.contador > max)
+                    max = this.contador;
+                // marca cada area
+                // selecciona la primera celda (para ejecutar el mismo algoritmo)
+                $('.' + this.cssSeleccionado).removeClass(this.cssSeleccionado);
+                $('#' + hoja_numero + '_' + estado.area[this.serialize][k]['celda_inicial']).addClass(this.cssSeleccionado);
+                this.marcarArea();
+            }
+            this.contador = max + 1;
+            $('.' + this.cssSeleccionado).removeClass(this.cssSeleccionado);
+        }
+        //estado.area[this.serialize] = {};
     },
     /**
      * Creación de eventos
@@ -121,7 +140,7 @@ var Descartar = Area.extend({
         var css = $(target).attr("class").replace(/.*(desc\d+).*/, "$1");
         $('.' + css).removeClass(css).removeClass(this.cssMarcar).removeClass(this.cssMarcarAlt).removeClass(this.cssMarcarOpts);
         this.borrarAreaEstado(css);
-        this.destruir();
+        //this.destruir();
     },
     /**
      * Para marcar cambiar el css del area que tenia fin
@@ -196,7 +215,12 @@ var Descartar = Area.extend({
      */
     'destruir': function() {
         this.destruirEventos();
-        
+        $('.' + this.cssMarcar).removeClass(this.cssMarcar);
+        $('.' + this.cssMarcarAlt).removeClass(this.cssMarcarAlt);
+        $('.' + this.cssMarcarOpts).removeClass(this.cssMarcarOpts);
+        for (var i = 0; i < this.contador; i++){
+            $('.desc' + i).removeClass('desc' + i);
+        }
     },
     /**
      * Muestra el formulario para patrón
@@ -236,6 +260,7 @@ var Descartar = Area.extend({
                 // Marcar fila
                 if(pass) {
                     try{
+                        console.log(this.area.cssMarcar);
                         $td.siblings('.' + this.area.cssMarcar).andSelf().addClass(id);
                         this.marcarAreaSinID(id);
                     }catch(e){}

@@ -12,7 +12,12 @@ Encabezado = Area.extend({
         this.cssMarcar = 'bg-light-blue';
         this._super(ini, fin);
         this.area = area;
-        estado.area[this.serialize]['campos'] = [];
+        if (!estado.area[this.serialize]['campos'])
+            estado.area[this.serialize]['campos'] = [];
+        else{
+            this.destruirTablasCeldas();
+            this.crearTablaCeldas();
+        }
         this.crearEventos();
     },
     /**
@@ -70,7 +75,11 @@ Encabezado = Area.extend({
         for(i = 0, l = celdas.length; i < l; i++) {
             var html = '<tr><td><input type="hidden" name="area[encabezado][' + i + '][hidden]" value="' + celdas[i].pos + '"/>';
               html += '<span>' + celdaExcel(celdas[i].pos) + '</span>';
-              html += '<label id="label-enc-campo' + i + '"><input type="checkbox" name="area[encabezado][' + i + '][sel]" class="enc-check"/>' + celdas[i].texto + '</label></td>';
+              html += '<label id="label-enc-campo' + i + '">';
+              html += '<input type="checkbox" name="area[encabezado][' + i + '][sel]" class="enc-check"';
+              if (estado.area[this.serialize].campos[celdas[i].pos])
+                  html += ' checked="checked"';
+              html +='/>' + celdas[i].texto + '</label></td>';
             var evento = "$('.enc-text').trigger('mapear:campo', this)";
             html += '<td><input type="text" name="area[encabezado][' + i + '][text]" value="' + celdas[i].texto + '" class="enc-text" disabled="disabled"/></td></tr>';
             $tabla.append(html);

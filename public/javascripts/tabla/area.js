@@ -28,9 +28,11 @@ var Area = Class.extend({
         // Llamada JSON
         if(this.serialize!= '') {
             if(estado.area[this.serialize]) {
-                this.celdaInicial = estado.area[this.serialize].celda_inicial;
-                this.celdaFinal = estado.area[this.serialize].celda_final;
-                this.marcarCeldas(this.celdaInicial, this.celdaFinal, this.cssMarcar);
+                if (this.serialize != 'descartar'){
+                    this.celdaInicial = estado.area[this.serialize].celda_inicial;
+                    this.celdaFinal = estado.area[this.serialize].celda_final;
+                    this.marcarCeldas(this.celdaInicial, this.celdaFinal, this.cssMarcar);
+                }
             }else {
                 estado.area[this.serialize] = {};
             }

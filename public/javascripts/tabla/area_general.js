@@ -8,6 +8,7 @@ AreaGeneral = Area.extend({
     'encabezado': false,
     'fin': false,
     'descartar': false,
+    'titular': false,
     // fin: '',
     'datos': {},
     'init': function(ini, fin) {

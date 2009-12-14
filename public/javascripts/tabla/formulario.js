@@ -30,8 +30,8 @@ FormularioArea.prototype = {
           return false;
       });
 
-      $('div#formulario-areas').bind("salvar:datos", function(datos) { 
-          form.guardar(); 
+      $('div#formulario-areas').bind("salvar:datos", function(datos) {
+          form.guardar();
       });
 
     },
@@ -41,6 +41,7 @@ FormularioArea.prototype = {
     'destruirEventos': function() {
         $('div#formulario-areas').unbind("cargar:datos");
         $('div#formulario-areas form').unbind("submit");
+        $('div#formulario-areas').unbind("salvar:datos");
     },
     /**
      * Prepara en el formulario las celdas inicial, final
@@ -76,7 +77,14 @@ FormularioArea.prototype = {
             estado.area['fija'] = $('#area_fija')[0].checked;
             estado.area['hoja_id'] = hoja_id;
             // AJAX
-            $.post(post,{'area': JSON.stringify(estado.area)},  function(resp) {
+            var areapost = {};
+            if(area_id == 'disabled') {
+                areapost = {'area': JSON.stringify(estado.area)};
+            }else{
+                areapost = {'area': JSON.stringify(estado.area), 'id': area_id};
+            }
+            // para actualizar tiene que hacer PUT
+            $.post(post, areapost, function(resp) {
               // Crear
                 if(area_id == 'disabled') {
                     area_id = resp['area']['id'];
@@ -95,6 +103,9 @@ FormularioArea.prototype = {
      * @return boolean
      */
     'validarDatos': function() {
+        //primero elimina los errores existentes
+        $('#formulario-areas .error').remove();
+        
         var nombre = $('#area_nombre').val();//.trim();
         var val=true;
         if(nombre == "") {
