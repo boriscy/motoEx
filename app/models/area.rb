@@ -23,7 +23,7 @@ class Area < ActiveRecord::Base
 #  serialize :titular
 #  serialize :fin
 #  serialize :no_importar
-  validates_presence_of :nombre#, :celda_inicial, :celda_final
+  validates_presence_of :nombre, :celda_inicial, :celda_final, :hoja
   validates_numericality_of :rango
 
   # Presenta la celda en formato excel

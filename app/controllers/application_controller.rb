@@ -4,6 +4,7 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  before_filter :adicionar_paginacion
 
   # Permite presentar en un layout AJAX automaticamente
   layout lambda{|controller| controller.request.xhr? ? false : "application"}
@@ -19,7 +20,7 @@ private
      
    def current_user  
      @current_user = current_user_session && current_user_session.record  
-   end  
+   end
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password

@@ -1,6 +1,6 @@
 class ArchivosController < ApplicationController
 
-  before_filter :revisar_permiso
+  #before_filter :revisar_permiso
 
   # GET /archivos
   # GET /archivos.xml
