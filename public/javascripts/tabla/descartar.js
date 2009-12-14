@@ -265,7 +265,6 @@ var Descartar = Area.extend({
                 // Marcar fila
                 if(pass) {
                     try{
-                        console.log(this.area.cssMarcar);
                         $td.siblings('.' + this.area.cssMarcar).andSelf().addClass(id);
                         this.marcarAreaSinID(id);
                     }catch(e){}

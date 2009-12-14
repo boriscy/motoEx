@@ -1,5 +1,4 @@
 class AreasController < ApplicationController
-  before_filter :revisar_permiso
   # GET /areas
   # GET /areas.xml
   def index
