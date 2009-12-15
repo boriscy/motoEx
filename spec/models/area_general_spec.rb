@@ -19,10 +19,12 @@ describe AreaGeneral do
       'rango' => 5,
       'iterar_fila' => true
     }
+    @hoja_electronica = Excel.new(File.join(File.expand_path(RAILS_ROOT), "ejemplos", "VentasPrecios2000-2008.xls") )
+
   end
 
   it "debe crear area valida" do
-    @area_gen = AreaGeneral.new(@params)
+    @area_gen = AreaGeneral.new(@params, @hoja_electronica)
 
     @area_gen.titular.should_not == nil
     @area_gen.encabezado.should_not == nil
@@ -32,6 +34,5 @@ describe AreaGeneral do
     @area_gen.rango.class.should == Fixnum
     @area_gen.nombre.class.should == String
     @area_gen.iterar_fila.should == (@params['iterar_fila'] == true)
-    
   end
 end

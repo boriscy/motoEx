@@ -189,7 +189,7 @@ var Descartar = Area.extend({
             /**
              * Aquí debe guardarse la fila o la columna de acuerdo a lo que se selecciona en el formulariio principal 
              */
-            var pos = $el.attr("class").explode("_")[2];
+            var pos = $el.attr("class").split("_")[2];
 
             var texto = $el.find('span:first').text();
 
