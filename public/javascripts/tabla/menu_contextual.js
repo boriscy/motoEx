@@ -65,7 +65,7 @@ MenuContextual.prototype = {
      * Destruccion de eventos
      */
     'destruirEventos': function() {
-        $('.sheet-content').bind("menu:contextual");
+        $('.sheet-content').unbind("menu:contextual");
         //$('body').unbind("mousedown");
         $('#menu-contextual').unbind("click");
     },

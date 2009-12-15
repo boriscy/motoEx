@@ -22,7 +22,7 @@ Titular = Area.extend({
         $('#area-titular').bind('marcar:titular', function() {
             // Validar que este dentro del AreaGeneral
             if (tit.validarInclusion(tit.area.cssMarcar) && 
-              tit.validarSolapamiento([tit.area.fin.cssMarcar, tit.area.encabezado.cssMarcar, tit.area.descartar.cssMarcar]) ) {
+              tit.validarSolapamiento([/*tit.area.fin.cssMarcar, */tit.area.encabezado.cssMarcar, tit.area.descartar.cssMarcar]) ) {
 
                 tit.desmarcarArea(tit.cssMarcar);
                 tit.marcarArea(tit.cssMarcar);

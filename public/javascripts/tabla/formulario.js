@@ -11,7 +11,7 @@ FormularioArea = function(area, options) {
 FormularioArea.prototype = {
     'area': '',
     'celdas': ['celda_inicial', 'celda_final'],
-    'areas': ['', 'encabezado', 'fin', 'titular'],
+    'areas': ['', 'encabezado',/* 'fin',*/ 'titular'],
     /**
      * Se une con otro JSON
      */
@@ -44,6 +44,18 @@ FormularioArea.prototype = {
         $('div#formulario-areas').unbind("salvar:datos");
     },
     /**
+     * Destruye el objeto
+     */
+    'destruir': function() {
+        //limpia los datos
+        $('#formulario-areas input#area_nombre').val("");
+        $('#formulario-areas input#area_rango').val("5");
+        $('#formulario-areas input#area_fija').attr("checked", "");
+        $('#formulario-areas input#area_iterar_fila_true').attr("checked", true);
+        $('#formulario-areas input#area_iterar_fila_false').attr("checked", false);
+        this.destruirEventos();
+    },
+    /**
      * Prepara en el formulario las celdas inicial, final
      */
     'iniciarCeldas': function() {
@@ -69,7 +81,17 @@ FormularioArea.prototype = {
         if (this.validarDatos()){
             var formulario = this;
             var area_id = $('select#area').val();
+            
+            if (estado.area['nombre']){
+                //ya existia un nombre
+                var temp = estado.area['nombre'];
+                if (temp != $('#area_nombre').val()){
+                    //el nombre del area se ha modificado => insertara uno nuevo (Guardar como)
+                    area_id = "disabled";
+                }
+            }
             var post = area_id == 'disabled' ? '/areas' : '/areas/' + area_id;
+            
             //llena los datos restantes del formulario
             estado.area['nombre'] = $('#area_nombre').val();
             estado.area['rango'] = $('#area_rango').val();
@@ -78,22 +100,34 @@ FormularioArea.prototype = {
             estado.area['hoja_id'] = hoja_id;
             // AJAX
             var areapost = {};
-            if(area_id == 'disabled') {
+            if(area_id == 'disabled') {                                                                                
                 areapost = {'area': JSON.stringify(estado.area)};
+                $.post(post, areapost, function(resp) {
+                  // Crear
+                    if(area_id == 'disabled') {
+                        area_id = resp['area']['id'];
+                        $('select#area').append("<option value='" + area_id + "'>" + resp["area"]["nombre"] + "</option>");
+                        $('select#area option[value=' + area_id + ']').attr("selected", "selected");
+                        $('input:hidden[name=_method]').val("put");
+                        $('div#formulario-areas').append('<input type="hidden" name="_method" value="put" />');
+                    }
+                }, 'json');
             }else{
+                // para actualizar tiene que hacer PUT
                 areapost = {'area': JSON.stringify(estado.area), 'id': area_id};
+                $.ajax({
+                    type: "PUT",
+                    url: post,
+                    data: areapost,
+                    success: function(html) {
+                        
+                    },
+                    failure: function() {
+                         
+                    }
+
+                });
             }
-            // para actualizar tiene que hacer PUT
-            $.post(post, areapost, function(resp) {
-              // Crear
-                if(area_id == 'disabled') {
-                    area_id = resp['area']['id'];
-                    $('select#area').append("<option value='" + area_id + "'>" + resp["area"]["nombre"] + "</option>");
-                    $('select#area option[value=' + area_id + ']').attr("selected", "selected");
-                    $('input:hidden[name=_method]').val("put");
-                    $('div#formulario-areas').append('<input type="hidden" name="_method" value="put" />');
-                }
-            }, 'json');
         }else{
             $("#formulario-areas").dialog("open");
         }
@@ -129,10 +163,26 @@ FormularioArea.prototype = {
             encabezados++;
         }
         //que al menos un campo este seleccionado
-        if (encabezados == 0){
-            this.adicionarError('#encabezado p',"Debe seleccionar al menos un campo");
+        if (encabezados < 3){
+            this.adicionarError('#encabezado p',"Debe seleccionar al menos tres campos");
             val = false;
         }
+        
+        //que no exista el nombre de esa area
+        var existe = false;
+        var valor = $('select#area').val(); 
+        $('select#area option').each(function(i, el) {
+            if (valor != $(el).val()){
+                if ($(el).text() == $("#area_nombre").val()){
+                    existe = true;
+                }
+            }
+        });
+        if (existe){
+            this.adicionarError('#area_nombre', 'El nombre del área ya existe');
+            val = false;
+        }
+        
         return val;
 
     },

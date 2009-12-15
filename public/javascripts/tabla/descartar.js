@@ -39,8 +39,10 @@ var Descartar = Area.extend({
         // si estado.area[this.serialize] carga los datos de las areas de descarte
         if (estado.area[this.serialize]){
             var max = 0;
-            //console.log(estado.area[this.serialize]);
             for (var k in estado.area[this.serialize]){
+                // si es que tuviera patrones actualiza las celdas correspondientes
+                $('#id-descartar').val(k);
+                this.actualizarTablaPatrones();
                 // aumenta el contador
                 this.contador = parseInt(k.replace(/.*desc(\d+).*/, "$1"));
                 if (this.contador > max)
@@ -50,8 +52,9 @@ var Descartar = Area.extend({
                 $('.' + this.cssSeleccionado).removeClass(this.cssSeleccionado);
                 $('#' + hoja_numero + '_' + estado.area[this.serialize][k]['celda_inicial']).addClass(this.cssSeleccionado);
                 this.marcarArea();
+                //actualiza el contador
+                this.contador = max + 1;
             }
-            this.contador = max + 1;
             $('.' + this.cssSeleccionado).removeClass(this.cssSeleccionado);
         }
         //estado.area[this.serialize] = {};
@@ -68,7 +71,7 @@ var Descartar = Area.extend({
                 //desc.mostrarFormulario();
             }
         });
-        $('#area-fin').bind("desmarcar:fin:desc", function() { desc.desmarcarFin(); });
+        //$('#area-fin').bind("desmarcar:fin:desc", function() { desc.desmarcarFin(); });
         // para desmarcar menu contextual y css alternativo
         $('.context-' + this.cssMarcarAlt).live("click", function(e) {
             desc.desmarcarArea(desc.cssMarcar, e);
@@ -97,6 +100,13 @@ var Descartar = Area.extend({
         /*$('#area-descartar').unbind("marcar:descartar");
         $('.context-' + this.cssMarcar).expire("click");
         $('.context-' + this.cssMarcarAlt).expire("click");*/
+        $('#area-descartar').unbind("actualizar:estado");
+        // patron en el grid
+        $('#area-descartar').unbind("actualizar:tabla:patrones");
+        // patrones
+        $('#area-descartar').unbind("actualizar:patron");
+        // creacion de excepciones
+        $('#area-descartar').unbind("descartar:crear:excepcion");
     },
     /**
      * Marca el area seleccionada y añade un ID en forma de clase css
@@ -125,10 +135,10 @@ var Descartar = Area.extend({
         filas = filas || 1;
         $('.' + css).addClass(this.cssMarcar);
         // Para cambiar el estilo en caso de que sea fin
-        $('.' + css + '[class*=' + this.area.fin.cssMarcar + ']').removeClass(this.cssMarcar).addClass(this.cssMarcarAlt);
+        //$('.' + css + '[class*=' + this.area.fin.cssMarcar + ']').removeClass(this.cssMarcar).addClass(this.cssMarcarAlt);
         // Marcar con clase especial
         if(filas == 1)
-            $('.' + css).addClass(desc.cssMarcarOpts);
+            $('.' + css).addClass(this.cssMarcarOpts);
     }, 
     /**
      * Funcion para pode desmarcar un area especifica
@@ -138,18 +148,21 @@ var Descartar = Area.extend({
     'desmarcarArea': function(css, e) {
         var target = getEventTarget(e);
         var css = $(target).attr("class").replace(/.*(desc\d+).*/, "$1");
-        $('.' + css).removeClass(css).removeClass(this.cssMarcar).removeClass(this.cssMarcarAlt).removeClass(this.cssMarcarOpts);
-        this.borrarAreaEstado(css);
+        if (css != ""){
+            //console.log("aki=>" + css);
+            $('.' + css).removeClass(css).removeClass(this.cssMarcar).removeClass(this.cssMarcarAlt).removeClass(this.cssMarcarOpts);
+            this.borrarAreaEstado(css);
+        }
         //this.destruir();
     },
     /**
      * Para marcar cambiar el css del area que tenia fin
      */
-    'desmarcarFin': function() {
-        $fin = $('.' + this.area.fin.cssMarcar)
+    /*'desmarcarFin': function() {
+        $fin = $('.' + this.area.fin.cssMarcar);
         if($fin.hasClass(this.cssMarcarAlt))
             $fin.removeClass(this.cssMarcarAlt).addClass(this.cssMarcar);
-    },
+    },*/
     /**
      * Obtiene toda la fila del area seleccionada 
      */
@@ -164,11 +177,27 @@ var Descartar = Area.extend({
     'cambiarEstado': function(cssEsp) {
         var desc = this;
         var puntos = this.obtenerPuntos(cssEsp);
-        estado.area[this.serialize][cssEsp] = {'celda_inicial': puntos[0], 'celda_final': puntos[1], 'celdas': [], 'patron': {'excepciones': []}};
-        $('.' + cssEsp).each(function(i, el) {
+        if (!(estado.area[this.serialize][cssEsp])){
+            estado.area[this.serialize][cssEsp] = {'celda_inicial': puntos[0], 'celda_final': puntos[1], 'celdas': [], 'patron': {'excepciones': []}};
+        }else{
+            puntos[0] = estado.area[this.serialize][cssEsp]['celda_inicial'];
+            puntos[1] = estado.area[this.serialize][cssEsp]['celda_final'];
+        }
+        estado.area[desc.serialize][cssEsp].celdas = [];
+        //para todas las celdas entre la celda_inicial y la celda_final
+        var x1 = puntos[0].split("_")[0], y1 = puntos[0].split("_")[1];
+        var x2 = puntos[1].split("_")[0], y2 = puntos[1].split("_")[1];
+        for (var i = x1; i <= x2; i++){
+            for (var k = y1; k <= y2; k++){
+              var $el = $("#" + hoja_numero + "_" + i + "_" + k);
+              if ($el)
+                  estado.area[desc.serialize][cssEsp].celdas.push({'id': $el.attr("id"), 'texto': $el.text()});
+            }
+        }
+        /*$('.' + cssEsp).each(function(i, el) {
               var $el = $(el);
               estado.area[desc.serialize][cssEsp].celdas.push({'id': $el.attr("id"), 'texto': $el.text()});
-        });
+        });*/
     },
     /**
      * Actualiza la variable estado para el area de descarte 'area'
@@ -184,12 +213,20 @@ var Descartar = Area.extend({
     'actualizarEstadoPatron': function() {
         var area = $("#id-descartar").val();
         var desc = this;
+        
+        //primero elimina todos los patrones
+        for (var k in estado.area.descartar[area]['patron']){
+            if (k != "excepciones"){
+                delete(estado.area.descartar[area]['patron'][k]);
+            }
+        }
+        
         $('#formulario-descartar .listado li').each(function (i, el) {
             var $el = $(el);
             /**
              * Aquí debe guardarse la fila o la columna de acuerdo a lo que se selecciona en el formulariio principal 
              */
-            var pos = $el.attr("class").explode("_")[2];
+            var pos = $el.attr("class").split("_")[2];
 
             var texto = $el.find('span:first').text();
 
@@ -225,6 +262,7 @@ var Descartar = Area.extend({
         $('.' + this.cssMarcarOpts).removeClass(this.cssMarcarOpts);
         for (var i = 0; i < this.contador; i++){
             $('.desc' + i).removeClass('desc' + i);
+            //this.borrarAreaEstado('desc' + i);
         }
     },
     /**
@@ -238,6 +276,8 @@ var Descartar = Area.extend({
      */
     'actualizarTablaPatrones': function() {
         var id = $('#id-descartar').val();
+        $('.' + id).removeClass(id).removeClass(this.cssMarcar).removeClass(this.cssMarcarOpts);
+        
         var campos = estado.area[this.serialize][id];
         try {
             var min = parseInt(estado.area.encabezado.celda_final.split("_")[0]);
@@ -245,21 +285,47 @@ var Descartar = Area.extend({
             var min = parseInt(estado.area.celda_inicial.split("_")[0]);
         }
         var max = parseInt(estado.area.celda_final.split("_")[0]);
+        
+        //marca las celdas de inicial a final (solo una fila)
+        var fila = estado.area[this.serialize][id]['celda_inicial'].split('_')[0];
+        var ini = estado.area[this.serialize][id]['celda_inicial'].split('_')[1];
+        var fin = estado.area[this.serialize][id]['celda_final'].split('_')[1];
+        for (var k = ini; k <= fin; k++){
+            $('#' + hoja_numero + '_' + fila + '_' + k).addClass(id).addClass(this.cssMarcar).addClass(this.cssMarcarOpts);
+        }
 
         if( campos ) {
             var patron = campos.patron;
             for(var i = min; i < max; i++) {
                 var pass = true;
                 for(var k in patron) {
-                    // No debe buscar excepciones
-                    if(k == 'excepciones')
-                        continue;
-                    var pos = k.split("_");
-                    pos[1] = i + 1;
-                    var $td = $('#' + pos.join("_"));
-                    if( patron[k].texto != $td.text()) {
-                        pass = false;
-                        break;
+                    var pos = [];
+                    pos[0] = hoja_numero; //hoja
+                    pos[1] = i + 1; //fila
+                    if(k == 'excepciones'){
+                        //busca excepciones
+                        for (var m in patron[k]){ //grupos de excepciones
+                            //que cumpla con todos las excepciones
+                            var total = patron[k][m].length;
+                            var cumple = 0;
+                            for (var n in patron[k][m]){
+                                pos[2] = patron[k][m][n].col;
+                                if (patron[k][m][n].texto == $('#' + pos.join("_")).text()){
+                                    cumple++;
+                                }
+                            }
+                            if (total == cumple){
+                                pass = false;
+                            }
+                        }
+                    }else{
+                        //construye la celda a comparar el patron
+                        pos[2] = k; //columna
+                        var $td = $('#' + pos.join("_"));
+                        if( patron[k].texto != $td.text()) {
+                            pass = false;
+                            break;
+                        }
                     }
                 }
                 // Marcar fila

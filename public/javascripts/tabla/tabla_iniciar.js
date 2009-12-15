@@ -3,12 +3,12 @@
  */
 $(document).ready(function() {
 
-// Variable global para sabe cuando shift es presionada
-shift = false;
-$(window).keydown( function(e) {
-    if(e.keyCode == 16)
-        shift = true;
-});
+    // Variable global para sabe cuando shift es presionada
+    shift = false;
+    $(window).keydown( function(e) {
+        if(e.keyCode == 16)
+            shift = true;
+    });
 
     // posicionamiento dinamico de las hojas dependiendo del contenido del div spreadsheet
     $('.sheet').css('top', $('#areas-importacion').position().top + 31);
@@ -63,6 +63,8 @@ $(window).keydown( function(e) {
                         $('#area_iterar_fila_true')[0].checked = estado.area['iterar_fila'];
                         $('#area_fija')[0].checked = estado.area['fija'];
                     });
+                }else{
+                    // limpia el formulario tambien
                 }
             });
 
@@ -78,7 +80,7 @@ $(window).keydown( function(e) {
             });
             //Evento para guardar con Salvar
             $('#salvar').click(function(){
-                $("#formulario-areas form").trigger('submit');    
+                $("#formulario-areas form").trigger('submit');
             });
             //Evento para menu contextual
             $("#sheet-" + hoja_numero + "-content").rightClick(function(e) {
@@ -104,7 +106,7 @@ $(window).keydown( function(e) {
             
             $('#area-titular').click(function() { $('#area-titular').trigger("marcar:titular") } );
             $('#area-encabezado').click(function() { $('#area-encabezado').trigger("marcar:encabezado") } );
-            $('#area-fin').click(function() { $('#area-fin').trigger("marcar:fin") } );
+            //$('#area-fin').click(function() { $('#area-fin').trigger("marcar:fin") } );
             $('#area-descartar').click(function() { $('#area-descartar').trigger("marcar:descartar") });
         },
         /**
@@ -126,6 +128,7 @@ $(window).keydown( function(e) {
             $('#sheet-' + hoja_numero).trigger("destruir:area");
             //$('.sel').removeClass("sel");
             if(typeof(this.area) != 'undefined') {
+                //this.area.destruir();
                 delete(this.area);
                 estado = {};
             }
@@ -161,8 +164,9 @@ $(window).keydown( function(e) {
         var $newtab = $(this);
         var $newhoja = $('#sheet-' + num);
         if ( !$newtab.parent().hasClass('active') ) {
-            //deselecciona las celdas que estuvieran seleccionadas
+            // deselecciona las celdas que estuvieran seleccionadas
             $('.sel').removeClass("sel");
+            // muestra la hoja seleccionada
             $('.active').removeClass('active');
             $newtab.addClass('active');
             $('.visible').removeClass('visible');

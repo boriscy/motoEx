@@ -6,7 +6,7 @@ AreaGeneral = Area.extend({
     'formulario': false,
     'areaMinima': 4,
     'encabezado': false,
-    'fin': false,
+    //'fin': false,
     'descartar': false,
     'titular': false,
     // fin: '',
@@ -25,7 +25,7 @@ AreaGeneral = Area.extend({
         // Sub Areas
         this.titular= new Titular(false, false, this);
         this.encabezado = new Encabezado(false, false, this);
-        this.fin = new Fin(false, false, this);
+        //this.fin = new Fin(false, false, this);
         this.descartar = new Descartar([], this);
     },
     /**
@@ -42,7 +42,7 @@ AreaGeneral = Area.extend({
      */
     'destruirAreas': function() {
           var area = this;
-          $(['encabezado', 'fin', 'titular', 'descartar']).each(function(i, el) {
+          $(['encabezado',/* 'fin',*/ 'titular', 'descartar']).each(function(i, el) {
               area[el].destruir();
           });
     },
@@ -71,20 +71,21 @@ AreaGeneral = Area.extend({
      */
     'destruir': function() {
         this._super();
+        this.formulario.destruir();
         delete(this.formulario);
         this.encabezado.destruir();
         this.titular.destruir();
-        this.fin.destruir();
+        //this.fin.destruir();
         this.descartar.destruir();
         // Borrado de variavles
         delete(this.encabezado);
-        delete(this.fin);
+        //delete(this.fin);
         delete(this.titular);
         delete(this.descartar);
     },
     /**
-    * Define el area a importar en base a los elementos seleccionados ".sel"
-    */
+     * Define el area a importar en base a los elementos seleccionados ".sel"
+     */
     'definirAreaImportar': function() {
         $("#sheets td").bind("area:modificar", function() {
         });
@@ -99,8 +100,8 @@ AreaGeneral = Area.extend({
         }
     },
     /**
-    * Define el area del encabezado, debe estar dentro del .area-importar
-    */
+     * Define el area del encabezado, debe estar dentro del .area-importar
+     */
     'definirAreaEncabezado': function() {
         if(this.areaSel) {
             var inicio = $('.' + this.idArea + 'td:first');
@@ -112,11 +113,11 @@ AreaGeneral = Area.extend({
         }
     },
     /**
-    * Revisa si dos clases CSS se intersectan en algún elemento
-    * @param String css1 # Nombre de la clase css elementos 1
-    * @param String css2 # Nombre de la clase css elementos 2
-    * @return Boolean # true, false
-    */
+     * Revisa si dos clases CSS se intersectan en algún elemento
+     * @param String css1 # Nombre de la clase css elementos 1
+     * @param String css2 # Nombre de la clase css elementos 2
+     * @return Boolean # true, false
+     */
     revisarInterseccionAlguno:function(css1, css2) {
         css1 = '.' + css1;
         css2 = css2 || this.cssSeleccionado;

@@ -84,7 +84,11 @@ FormularioDescartar.prototype = {
         for (var k in estado.area.descartar[area].patron) {
             if (k == "excepciones")
                 continue;
-            values.push(k);
+            var pos = [];
+            pos[0] = hoja_numero;
+            pos[1] = estado.area.descartar[area]['celda_inicial'].split('_')[0];
+            pos[2] = k;
+            values.push(pos.join("_"));
         }
         
         // Patron
