@@ -31,6 +31,19 @@ module ApplicationHelper
     list[@pos - 1]
   end
 
+  def ext_include
+    if RAILS_ENV == "development"
+      path = File.join( File.expand_path(RAILS_ROOT), "public", "javascripts", "ext" )
+      file = ActiveSupport::JSON.decode( File.read(File.join(path, "extjsb2") ) )
+
+      file['pkgs'].find{|v| v['file'] == 'ext-all.js'}['pkgDeps'].inject(""){|js , v|
+        js << "<script type=\"text/javascript\" src=\"/javascripts/ext/#{v}\"></script>"
+      }
+    else
+      "<script type=\"text/javascript\" src=\"/javascripts/ext/ext-all.js\"></script>"
+    end
+  end
+
 end
 
 #ActionView::Helpers::FormBuilder.class_eval do

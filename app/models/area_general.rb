@@ -25,10 +25,9 @@ class AreaGeneral < AreaImp
     desplazar = @encabezado.buscar_inicio(@hoja_electronica)
 
     if desplazar > 0
-      [@titular, @areas].each{|v| v.send(:actualizar_posicion, desplazar)
+      [@titular, @areas].each{|v| v.send(:actualizar_posicion, desplazar)}
     end
   end
-
 private
 
   # Se asignan las areas descartadas de acuerdo a su posicion

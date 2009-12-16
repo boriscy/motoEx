@@ -8,8 +8,8 @@ class Encabezado <  AreaEsp
   def buscar(rango)
     desplazar = 0
 
-    # Retorna el offset si encontro todos los valores de la cabecera
-    return desplazar if verificar_campos(offset)
+    # Retorna el desplazar si encontro todos los valores de la cabecera
+    return desplazar if verificar_campos(desplazar)
 
     # Iteración en el rango
     desplazar = false
@@ -22,7 +22,7 @@ class Encabezado <  AreaEsp
 
       if verificar_campos(v)
         desplazar = v
-        actualizar_posicion(v)
+        actualizar_posicion(desplazar)
         break
       end
     end

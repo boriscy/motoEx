@@ -5,7 +5,7 @@ describe AreaImp do
   before(:each) do
     @params = {
       'celda_inicial' => '1_2',
-      'celda_final' => '3_4'
+      'celda_final' => '3_4' 
     }
     @hoja_electronica = Object
     @hoja_electronica.stub!(:class).and_return(Excel)
@@ -45,4 +45,27 @@ describe AreaImp do
     @area_imp.celda_final.should == "3_3"
 
   end
+
+  describe "creacion de posicion" do
+
+    it "filas" do
+      # Positivo
+      @area_imp = AreaImp.new(@params, @hoja_electronica, true)
+      @area_imp.crear_posicion_desplazada('3_5', 2).should == '5_5'
+      # Negativo
+      @area_imp = AreaImp.new(@params, @hoja_electronica, true)
+      @area_imp.crear_posicion_desplazada('3_5', -2).should == '1_5'
+    end
+
+    it "columnas" do
+      # Positivo
+      @area_imp = AreaImp.new(@params, @hoja_electronica, false)
+      @area_imp.crear_posicion_desplazada('3_5', 2).should == '3_7'
+      # Negativo
+      @area_imp = AreaImp.new(@params, @hoja_electronica, false)
+      @area_imp.crear_posicion_desplazada('3_5', -2).should == '3_3'
+    end
+
+  end
+
 end

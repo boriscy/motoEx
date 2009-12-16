@@ -4,6 +4,7 @@ class AreaImp
 
   attr_reader :celda_inicial, :celda_final, :hoja_electronica
   attr_reader :fila_inicial, :fila_final, :columna_inicial, :columna_final, :iterar_filas
+
   # Constructor
   # En caso de que itererar_filas = false # => Se itera las columnas
   # @param Hash area
@@ -21,6 +22,12 @@ class AreaImp
     @columna_inicial = inicio[1]
     @fila_final = fin[0]
     @columna_final = fin[1]
+
+  end
+
+  # Alias del iterar_filas
+  def iterar_filas?
+    iterar_filas
   end
 
   # Actualiza la posicion del area desplazandola dependiento si itera filas o columnas
@@ -38,6 +45,31 @@ class AreaImp
     @celda_final = "#{@fila_final}_#{@columna_final}"
   end
 
+  # LLama directamente sin necesidad de indicar si itera filas o columnas
+  # @param String posicion
+  # @param Fixnum desplazar
+  def crear_posicion_desplazada(posicion, desplazar = 0)
+    self.class.crear_posicion_desplazada(posicion, desplazar, iterar_filas? )
+  end
+
+  # crear una posicion en base a la fila y la columna
+  # @param String posicion
+  # @param Fixnum desplazar
+  # @param Bool self_iterar_filas
+  def self.crear_posicion_desplazada( posicion, desplazar, self_iterar_filas )
+    return posicion if desplazar == 0
+
+    fila, columna = posicion.split("_").map(&:to_i)
+    
+    if self_iterar_filas
+      posicion = "#{fila + desplazar}_#{columna}"
+    else
+      posicion = "#{fila}_#{columna + desplazar}"
+    end
+
+    posicion
+  end
+
 protected
   # Asigna la hoja electronica correcta
   def asignar_hoja_electronica(hoja_electronica)
@@ -45,5 +77,5 @@ protected
     raise "Error: AreaGeneral linea: #{__LINE__}, debe seleccionar un documento xls, xlsx o ods" unless clases.include?(hoja_electronica.class)
     @hoja_electronica = hoja_electronica
   end
-
+  
 end

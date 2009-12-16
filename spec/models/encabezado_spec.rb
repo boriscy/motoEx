@@ -22,10 +22,25 @@ describe Encabezado do
   end
 
 
-  it "debe buscar el encabezado" do
-    @encabezado = Encabezado.new(@params, @hoja_electronica)
-    #debugger
-    @encabezado.buscar(@rango).should == 3
+  describe "buscar y actualizar posiciones" do
+
+    before do
+      @encabezado = Encabezado.new(@params, @hoja_electronica)
+    end
+
+    it "debe buscar el encabezado" do
+      @encabezado.buscar(@rango).should == 3
+    end
+
+    it "debe actualizar campos" do
+      @encabezado.buscar(@rango)
+
+      @encabezado.campos['5_1']['texto'].should == 'DESTINO'
+      @encabezado.campos['5_3']['texto'].should == 'BG COMGAS'
+      @encabezado.campos['5_7']['texto'].should == 'TOTAL GN'
+      @encabezado.campos['5_7']['campo'].should == 'total_gn'
+    end
+
   end
 
 
