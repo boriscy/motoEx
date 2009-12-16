@@ -11,10 +11,6 @@ var Descartar = Area.extend({
      */
     'cssMarcar': 'bg-red-color',
     /**
-     * clase css utilizada cuando se solapa en area fin
-     */
-    'cssMarcarAlt': 'border-red-top',
-    /**
      * css para poder indicar si la fila permite opciones
      */
     'cssMarcarOpts': 'opciones-',
@@ -57,7 +53,6 @@ var Descartar = Area.extend({
             }
             $('.' + this.cssSeleccionado).removeClass(this.cssSeleccionado);
         }
-        //estado.area[this.serialize] = {};
     },
     /**
      * Creación de eventos
@@ -68,13 +63,7 @@ var Descartar = Area.extend({
             if (desc.validarInclusion(desc.area.cssMarcar) && 
                 desc.validarSolapamiento([desc.area.encabezado.cssMarcar, desc.area.titular.cssMarcar, desc.cssMarcar]) ) {
                 desc.marcarArea();
-                //desc.mostrarFormulario();
             }
-        });
-        //$('#area-fin').bind("desmarcar:fin:desc", function() { desc.desmarcarFin(); });
-        // para desmarcar menu contextual y css alternativo
-        $('.context-' + this.cssMarcarAlt).live("click", function(e) {
-            desc.desmarcarArea(desc.cssMarcar, e);
         });
         // estado
         $('#area-descartar').bind("actualizar:estado", function(){ 
@@ -97,9 +86,9 @@ var Descartar = Area.extend({
      * Destruccion de eventos
      */
     'destruirEventos': function() {
-        /*$('#area-descartar').unbind("marcar:descartar");
-        $('.context-' + this.cssMarcar).expire("click");
-        $('.context-' + this.cssMarcarAlt).expire("click");*/
+        // marcado de descartes
+        $('#area-descartar').unbind('marcar:descartar');
+        // actualizacion de estados
         $('#area-descartar').unbind("actualizar:estado");
         // patron en el grid
         $('#area-descartar').unbind("actualizar:tabla:patrones");
@@ -134,8 +123,6 @@ var Descartar = Area.extend({
     'marcarAreaSinID': function(css, filas) {
         filas = filas || 1;
         $('.' + css).addClass(this.cssMarcar);
-        // Para cambiar el estilo en caso de que sea fin
-        //$('.' + css + '[class*=' + this.area.fin.cssMarcar + ']').removeClass(this.cssMarcar).addClass(this.cssMarcarAlt);
         // Marcar con clase especial
         if(filas == 1)
             $('.' + css).addClass(this.cssMarcarOpts);
@@ -149,20 +136,10 @@ var Descartar = Area.extend({
         var target = getEventTarget(e);
         var css = $(target).attr("class").replace(/.*(desc\d+).*/, "$1");
         if (css != ""){
-            //console.log("aki=>" + css);
-            $('.' + css).removeClass(css).removeClass(this.cssMarcar).removeClass(this.cssMarcarAlt).removeClass(this.cssMarcarOpts);
+            $('.' + css).removeClass(css).removeClass(this.cssMarcar).removeClass(this.cssMarcarOpts);
             this.borrarAreaEstado(css);
         }
-        //this.destruir();
     },
-    /**
-     * Para marcar cambiar el css del area que tenia fin
-     */
-    /*'desmarcarFin': function() {
-        $fin = $('.' + this.area.fin.cssMarcar);
-        if($fin.hasClass(this.cssMarcarAlt))
-            $fin.removeClass(this.cssMarcarAlt).addClass(this.cssMarcar);
-    },*/
     /**
      * Obtiene toda la fila del area seleccionada 
      */
@@ -194,10 +171,6 @@ var Descartar = Area.extend({
                   estado.area[desc.serialize][cssEsp].celdas.push({'id': $el.attr("id"), 'texto': $el.text()});
             }
         }
-        /*$('.' + cssEsp).each(function(i, el) {
-              var $el = $(el);
-              estado.area[desc.serialize][cssEsp].celdas.push({'id': $el.attr("id"), 'texto': $el.text()});
-        });*/
     },
     /**
      * Actualiza la variable estado para el area de descarte 'area'
@@ -258,11 +231,9 @@ var Descartar = Area.extend({
     'destruir': function() {
         this.destruirEventos();
         $('.' + this.cssMarcar).removeClass(this.cssMarcar);
-        $('.' + this.cssMarcarAlt).removeClass(this.cssMarcarAlt);
         $('.' + this.cssMarcarOpts).removeClass(this.cssMarcarOpts);
         for (var i = 0; i < this.contador; i++){
             $('.desc' + i).removeClass('desc' + i);
-            //this.borrarAreaEstado('desc' + i);
         }
     },
     /**

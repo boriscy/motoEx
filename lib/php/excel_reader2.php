@@ -1660,6 +1660,9 @@ class Spreadsheet_Excel_Reader {
 				$rectype = 'number';
 				//verifica si el formato es legible (con encoding)
 				if (checkEncoding($format, 'UTF-8')){
+				    //quita * y ?
+				    $format = str_replace("*","",$format);
+				    $format = str_replace("?","",$format);
                     $formatted = $this->_format_value($format, $numValue, $formatIndex);
                     $string = $formatted['string'];
                 }else{

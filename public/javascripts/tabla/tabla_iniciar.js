@@ -41,8 +41,7 @@ $(document).ready(function() {
 
     Iniciar.prototype = {
         'cssSeleccionado': 'sel',
-        'area': false,
-        'areaMinima': 4,
+        //'area': false,
         /**
          * Constructor
          */
@@ -50,37 +49,43 @@ $(document).ready(function() {
             var ini = this;
             // Evento cuando se cambia area (select#area)
             $('select#area').change(function() {
-                $('body').trigger("destruir:area");
+                var temp = $(this).val();
+                
                 ini.destruir();
-
-                if($(this).val() != 'disabled') {
+                
+                $(this).val(temp); //no hay problemas con esta linea ya que no llama al evento on change => no crea recursividad
+                
+                if (temp != 'disabled') {
                     // AJAX
-                    $.getJSON("/areas/"+$(this).val(), function(resp) {
+                    $.getJSON("/areas/" + temp, function(resp) {
                         estado = resp;
                         ini['area'] = new AreaGeneral();
                         $('#area_nombre').val(estado.area['nombre']);
                         $('#area_rango').val(estado.area['rango']);
                         $('#area_iterar_fila_true')[0].checked = estado.area['iterar_fila'];
+                        $('#area_iterar_fila_false')[0].checked = !estado.area['iterar_fila'];
                         $('#area_fija')[0].checked = estado.area['fija'];
                     });
-                }else{
-                    // limpia el formulario tambien
                 }
             });
-
             // Evento cuando se cambia de hoja
-            $("div#lista_hojas a").click(function() { 
-                $('body').trigger("destruir:area");
+            $("div#lista_hojas a").click(function() {
                 ini.destruir();
             });
             // Evento para mostrar el formulario con propiedades
             $("#propiedades").click(function() {
-                $("#propiedades").trigger('cargar:datos');
-                $("#formulario-areas").dialog("open");
+                //solo si hay un area_general seleccionada
+                if (typeof(ini.area) != 'undefined') {
+                    $("#propiedades").trigger('cargar:datos');
+                    $("#formulario-areas").dialog("open");
+                }
             });
             //Evento para guardar con Salvar
             $('#salvar').click(function(){
-                $("#formulario-areas form").trigger('submit');
+                //solo si hay un area_general seleccionada
+                if (typeof(ini.area) != 'undefined') {
+                    $("#formulario-areas form").trigger('submit');
+                }
             });
             //Evento para menu contextual
             $("#sheet-" + hoja_numero + "-content").rightClick(function(e) {
@@ -90,6 +95,10 @@ $(document).ready(function() {
                 $("#sheet-" + hoja_numero + "-content").rightClick(function(e) {
                     $('.sheet-content').trigger("menu:contextual", e);
                 });
+            });
+            //Evento para destruccion de area
+            $("body").bind("eliminar:area", function() {
+                ini.eliminarArea();
             });
             
             this.eventosMenu();
@@ -106,7 +115,6 @@ $(document).ready(function() {
             
             $('#area-titular').click(function() { $('#area-titular').trigger("marcar:titular") } );
             $('#area-encabezado').click(function() { $('#area-encabezado').trigger("marcar:encabezado") } );
-            //$('#area-fin').click(function() { $('#area-fin').trigger("marcar:fin") } );
             $('#area-descartar').click(function() { $('#area-descartar').trigger("marcar:descartar") });
         },
         /**
@@ -114,37 +122,29 @@ $(document).ready(function() {
          * Crea el areaGeneral para su marcado
          */
         'crearArea': function(){
-            if(this['area']) {
-                //$('#sheet-' + hoja_numero).trigger("destruir:area");
+            if (this['area']) {
                 this.destruir();
             }
             this['area'] = new AreaGeneral();
         },
-        
         /**
-         * Elimina el area y inicializa la variable global "estado"
+         * Elimina el area e inicializa la variable global "estado"
          */
-        destruir: function() {
+        'destruir': function() {
             $('#sheet-' + hoja_numero).trigger("destruir:area");
-            //$('.sel').removeClass("sel");
-            if(typeof(this.area) != 'undefined') {
-                //this.area.destruir();
+            this.eliminarArea();
+        },
+        /**
+         * Elimina la variable area
+         */
+        'eliminarArea': function() {
+            if (typeof(this.area) != 'undefined') {
                 delete(this.area);
                 estado = {};
             }
-        },
-        crear: function() {
-            //
-            this['area']= new AreaGeneral();
-        },
-        obtenerPuntos: function() {
-            arr = [];
-            arr.push(this.punto( $('.' + this.cssSeleccionado +':first').attr("id")) );
-            arr.push(this.punto( $('.' + this.cssSeleccionado +':last').attr("id")) );
-            return arr;
-        },
-        punto: function(p) {
-            return p.replace(/^\d+_([\d_]+)$/, "$1");
+            
+            if ($('select#area').val() != "disabled")
+                $('select#area').val("disabled"); //no llama al evento change
         }
     }
 
@@ -156,13 +156,13 @@ $(document).ready(function() {
     // Menu contextual
     menuContextual = new MenuContextual();
 
-  
     /*************************************************/
     $('#lista_hojas a').live('click',function() {
         
-        var num = $(this).attr('href').split('-')[1];
         var $newtab = $(this);
+        var num = $newtab.attr('href').split('-')[1];
         var $newhoja = $('#sheet-' + num);
+        
         if ( !$newtab.parent().hasClass('active') ) {
             // deselecciona las celdas que estuvieran seleccionadas
             $('.sel').removeClass("sel");
@@ -178,7 +178,7 @@ $(document).ready(function() {
                 $.ajax({
                     type: "POST",
                     url: "/hoja",
-                    data: "archivo_id="+archivo_id+"&numero="+num,
+                    data: {'archivo_id': archivo_id, 'numero': num},
                     success: function(html) {
                         $newhoja.html(html);
                         //ejecuta el codigo para muestra de hojas
@@ -189,7 +189,6 @@ $(document).ready(function() {
                         alert("Error al cargar la hoja");
                         $newhoja.html(""); 
                     }
-
                 });
             }
         }

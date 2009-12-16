@@ -10,12 +10,10 @@
     $(window).keydown( function(e) {
         if(e.keyCode == 16){
             shift = true;
-            //console.log('shift on');
         }
     }).keyup( function(e) {
         if(shift){
             shift = false;
-            //console.log('shift off');
         }
     });
 
@@ -108,29 +106,7 @@
             //selecciona la primera celda por defecto
             //para que siempre exista una celda inicial
             initCell = $('#sheet-' + numero + '-content tr:eq(1) td:eq(0)').addClass('sel')[0];
-            //initCell = target;
         }
-        
-        /**
-         * Captura de selección del mouse, Inicio
-         */
-        
-        /*$table.mousedown(function(e) {
-            //para que solo active en click izquierdo
-            if( (!$.browser.msie && e.button == 0) || ($.browser.msie && e.button == 1) ) {
-                initCell = getEventTarget(e);
-                if (initCell.id.split('_')[1] != '0'){
-                    //$(idtabla).find(initCell).addClass('sel');
-                    $(initCell).addClass('sel');
-                    mouseIsDown = true;
-                    createArea(initCell, initCell);
-                }
-                //para que oculte el menu contextual
-                $('#menu-contextual').hide();
-                return false;
-            }
-        });*/
-
         /**
          * Marcado en caso de que haya una celda inicial
          * @param Event e
@@ -185,10 +161,10 @@
         });
 
         function getmykey(event) {
-          if (typeof(event)=="undefined") return window.event.keyCode;
-          if (event.keyCode==0 && event.charCode!=0) return event.charCode;
-          if (event.keyCode==0) return event.which;
-          return event.keyCode;
+            if (typeof(event)=="undefined") return window.event.keyCode;
+            if (event.keyCode==0 && event.charCode!=0) return event.charCode;
+            if (event.keyCode==0) return event.which;
+            return event.keyCode;
         }
 
         /**
@@ -201,8 +177,6 @@
             css = css || 'sel';
             var row0 = parseInt(c0.id.split('_')[1]);
             var col0 = parseInt(c0.id.split('_')[2]);
-            //var row1 = parseInt(c1.id.split('_')[1]) + (parseInt($(c1).attr('rowspan')) || 1) - 1;
-            //var col1 = parseInt(c1.id.split('_')[2]) + (parseInt($(c1).attr('colspan')) || 1) - 1;
             var row1 = parseInt(c1.id.split('_')[1]);
             var col1 = parseInt(c1.id.split('_')[2]);
             if (row0 > row1){

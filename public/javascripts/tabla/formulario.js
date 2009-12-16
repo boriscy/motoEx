@@ -11,7 +11,7 @@ FormularioArea = function(area, options) {
 FormularioArea.prototype = {
     'area': '',
     'celdas': ['celda_inicial', 'celda_final'],
-    'areas': ['', 'encabezado',/* 'fin',*/ 'titular'],
+    'areas': ['', 'encabezado', 'titular'],
     /**
      * Se une con otro JSON
      */
@@ -47,31 +47,13 @@ FormularioArea.prototype = {
      * Destruye el objeto
      */
     'destruir': function() {
-        //limpia los datos
+        //limpia los datos => y pone los datos por defecto
         $('#formulario-areas input#area_nombre').val("");
         $('#formulario-areas input#area_rango').val("5");
         $('#formulario-areas input#area_fija').attr("checked", "");
         $('#formulario-areas input#area_iterar_fila_true').attr("checked", true);
         $('#formulario-areas input#area_iterar_fila_false').attr("checked", false);
         this.destruirEventos();
-    },
-    /**
-     * Prepara en el formulario las celdas inicial, final
-     */
-    'iniciarCeldas': function() {
-        var punto = this.obtenerPuntos();
-        $("input#area_celda_inicial").val(punto[0]);
-        $("span#span_celda_inicial").html(this.formatoSpan(punto[0]));
-        $("input#area_celda_final").val(punto[1]);
-        $("span#span_celda_final").html(this.formatoSpan(punto[1]));
-    },
-    /**
-     * Da formato para presentar en los spans estilo "Excel"
-     * @return String
-     */
-    'formatoSpan': function(sp) {
-        var f = sp.split("_");
-        return numExcelCol(parseInt(f[1])) + f[0];
     },
     /**
      * guarda el area seleccionada en BD usando AJAX
@@ -198,7 +180,7 @@ FormularioArea.prototype = {
      * Cierra el formulario y deselecciona
      */
     'cerrar': function() {
-      var formulario = this;
-      $('div#formulario-areas').dialog("close");
+        var formulario = this;
+        $('div#formulario-areas').dialog("close");
     }
 };

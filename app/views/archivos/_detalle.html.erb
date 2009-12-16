@@ -28,7 +28,7 @@
   <div class="lista_hojas" id="lista_hojas">
     <table><tr>
         <% @archivo.lista_hojas.each_with_index do |hoja, i| %>
-          <td><a href="#sheet-<%= i %>" <%= 'class="active"' if i == 0 %> ><span><%= hoja || "Hoja #{i + 1}" %></span></a></td>
+          <td><a href="#sheet-<%= i %>" class="ui-corner-bl ui-corner-br<%= ' active' if i == 0 %>" ><span><%= hoja || "Hoja #{i + 1}" %></span></a></td>
         <% end %>
     </tr></table>
   </div>

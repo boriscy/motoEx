@@ -51,6 +51,11 @@ var Area = Class.extend({
         // Evento para menu contextual
         $('.context-' + this.cssMarcar).live("click", function(e) {
             area.desmarcarArea(area.cssMarcar, e);
+            if (area.serialize == ''){
+                //si es area general => elimina la variable area del objeto Iniciar
+                $('body').trigger('eliminar:area');
+                $('#sheet-' + hoja_numero).trigger("destruir:area");
+            }
         });
     },
     /**

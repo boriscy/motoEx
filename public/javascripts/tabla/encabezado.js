@@ -27,7 +27,7 @@ Encabezado = Area.extend({
         var enc = this;
         $('#area-encabezado').bind('marcar:encabezado', function(){
             // Validar que este dentro del AreaGeneral
-            if (enc.validarInclusion(enc.area.cssMarcar) && enc.validarSolapamiento([enc.area.descartar.cssMarcar]) ) {
+            if (enc.validarInclusion(enc.area.cssMarcar) && enc.validarSolapamiento([enc.area.descartar.cssMarcar], [enc.area.titular.cssMarcar]) ) {
                 enc.desmarcarArea(enc.cssMarcar);
                 enc.marcarArea(enc.cssMarcar);
                 enc.crearTablaCeldas();

@@ -66,7 +66,6 @@ MenuContextual.prototype = {
      */
     'destruirEventos': function() {
         $('.sheet-content').unbind("menu:contextual");
-        //$('body').unbind("mousedown");
         $('#menu-contextual').unbind("click");
     },
     /**
@@ -113,6 +112,5 @@ MenuContextual.prototype = {
         var num = css.replace(/^desc(\d+)$/, "$1");
 
         $('#menu-contextual ul').append('<li><a class="context-desc desc' + num + '">Desmarcar area de descarte ' + num +  '</a></li>');
-        //$('#menu-contextual ul').append('<li><a class="context-desc-opciones desc' + num + '">' + this.areas-desc. + num +  '</a></li>');
     }
 }
