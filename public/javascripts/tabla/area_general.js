@@ -8,6 +8,7 @@ AreaGeneral = Area.extend({
     'encabezado': false,
     'descartar': false,
     'titular': false,
+    'iterarFilas': true,
     
     'init': function(ini, fin) {
         this.cssMarcar = "bg-light-green";
@@ -20,6 +21,15 @@ AreaGeneral = Area.extend({
         this.titular= new Titular(false, false, this);
         this.encabezado = new Encabezado(false, false, this);
         this.descartar = new Descartar([], this);
+
+        this.cambiarIterarFilas();
+    },
+    /**
+     * Para poder cambiar iterarFila
+     */
+    'cambiarIterarFilas': function() {
+        // Indica si itera fila
+        this.iterarFilas = $('#formulario-areas input:radio:checked[name="area[iterar_fila]"]').val();
     },
     /**
      * Eventos generales
@@ -29,6 +39,9 @@ AreaGeneral = Area.extend({
         $("#sheet-" + hoja_numero).bind("destruir:area", function() {
             area.destruir();
         });
+       $('#formulario-areas input:radio[name="area[iterar_fila]"]').click(function() {
+           area.cambiarIterarFilas();
+       });
     },
     /**
      * Llama a las funciones de destruccion de la areas dependientes

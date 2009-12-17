@@ -10,6 +10,7 @@ var Area = Class.extend({
     'cssSeleccionado': 'sel',
     'cssMarcar': '',
     'areaMinima': 1,
+    'iterarFila': true,
     /**
      * Indica como esta serializado el campo en la BD, que esta almacenado
      * en la variable global "estado" si esta vacio no produce cambios

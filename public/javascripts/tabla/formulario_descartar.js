@@ -54,7 +54,7 @@ FormularioDescartar.prototype = {
         $('#formulario-descartar .listado a.borrar-patron').live("click", function(e) {
             var target = getEventTarget(e);
             form.borrarPatron(target);
-        });
+        });:
     },
     /**
      * Muestra el formulario de las columnas a descartar
@@ -75,9 +75,12 @@ FormularioDescartar.prototype = {
         $('#formulario-descartar ul.listado li').remove();
         var html = '';
         //.append('<option title="Este es un texto bastante largo 2">Este es un texto bastante largo 2</option>');
-        $(estado.area.descartar[area].celdas).each(function (i, el) {
-            html += '<option title="' + el.texto + '" value="' + el.id + '" class="' + el.id + '">(' + celdaExcel(el.id) + ') ' + el.texto + '</option>';
-        });
+        var limites = this.crearLimitesCelda(area);
+        for(var i = limites[0], i <= limites[1]; i++) {
+            var pos = this.construirPosicion(area, i);
+            var $el = $('#' +  pos);
+            html += '<option title="' + $el.text() + '" value="' + $el.attr("id") + '" class="' + pos + '">(' + celdaExcel($el.attr("id")) + ') ' + $el.text() + '</option>';
+        }
         $select.append(html);
 
         var values = [];
@@ -97,6 +100,30 @@ FormularioDescartar.prototype = {
         // Excepciones
         $('#grupo-excepciones ul.grupo-excepcion').remove();
         $('#area-descartar').trigger("cargar:excepciones");
+    },
+    /**
+     * @return Array 
+     */
+    'crearLimitesCelda': function(area) {
+        var inicio = estado.area.descartar[area].celda_inicial.split("_"),
+        fin =  estado.area.descartar[area].celda_final.split("_");
+        
+        if( estado.area.iterar_filas ) {
+           return [inicio[1], fin[1]];
+        }else{
+           return [inicio[0], fin[0]];
+        }
+    },
+    /**
+     *
+     */
+    'construirPosicion': function(area, iteracion) {
+        var tmppos = estado.area.descartar[area].celda_inicial.split("_");
+        if( estado.area.iterar_filas ) {
+            return hoja_numero + '_' + tmppos[0]  + '_' + iteracion;
+        }else{
+            return hoja_numero + '_' + iteracion  + '_' + tmppos[1];
+        }
     },
     /**
      * Adiciona la lista de patron
