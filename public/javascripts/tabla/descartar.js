@@ -33,7 +33,7 @@ var Descartar = Area.extend({
         this._super();
         this.crearEventos();
         // si estado.area[this.serialize] carga los datos de las areas de descarte
-        if (estado.area[this.serialize]){
+        if (estado.area[this.serialize]) {
             var max = 0;
             for (var k in estado.area[this.serialize]){
                 // si es que tuviera patrones actualiza las celdas correspondientes
@@ -154,22 +154,11 @@ var Descartar = Area.extend({
     'cambiarEstado': function(cssEsp) {
         var desc = this;
         var puntos = this.obtenerPuntos(cssEsp);
-        if (!(estado.area[this.serialize][cssEsp])){
-            estado.area[this.serialize][cssEsp] = {'celda_inicial': puntos[0], 'celda_final': puntos[1], 'celdas': [], 'patron': {'excepciones': []}};
-        }else{
+        if (!(estado.area[this.serialize][cssEsp])) {
+            estado.area[this.serialize][cssEsp] = {'celda_inicial': puntos[0], 'celda_final': puntos[1], 'patron': {}, 'excepciones' : [] };
+        }else {
             puntos[0] = estado.area[this.serialize][cssEsp]['celda_inicial'];
             puntos[1] = estado.area[this.serialize][cssEsp]['celda_final'];
-        }
-        estado.area[desc.serialize][cssEsp].celdas = [];
-        //para todas las celdas entre la celda_inicial y la celda_final
-        var x1 = puntos[0].split("_")[0], y1 = puntos[0].split("_")[1];
-        var x2 = puntos[1].split("_")[0], y2 = puntos[1].split("_")[1];
-        for (var i = x1; i <= x2; i++){
-            for (var k = y1; k <= y2; k++){
-              var $el = $("#" + hoja_numero + "_" + i + "_" + k);
-              if ($el)
-                  estado.area[desc.serialize][cssEsp].celdas.push({'id': $el.attr("id"), 'texto': $el.text()});
-            }
         }
     },
     /**
@@ -182,16 +171,15 @@ var Descartar = Area.extend({
     },
     /**
      * actualiza los patron de una area de descarte
+     * en base a la lista en el  #formulario-descartar
      */
     'actualizarEstadoPatron': function() {
         var area = $("#id-descartar").val();
         var desc = this;
         
         //primero elimina todos los patrones
-        for (var k in estado.area.descartar[area]['patron']){
-            if (k != "excepciones"){
-                delete(estado.area.descartar[area]['patron'][k]);
-            }
+        for (var k in estado.area.descartar[area]['patron']) {
+           delete(estado.area.descartar[area]['patron'][k]);
         }
         
         $('#formulario-descartar .listado li').each(function (i, el) {
@@ -199,21 +187,21 @@ var Descartar = Area.extend({
             /**
              * Aquí debe guardarse la fila o la columna de acuerdo a lo que se selecciona en el formulariio principal 
              */
-            var pos = $el.attr("class").split("_")[2];
+            var pos = $el.attr("class").split("_")[2]; // Obtener columna
 
             var texto = $el.find('span:first').text();
 
             estado.area.descartar[area]['patron'][pos] = {'texto': texto};
 
-            // Excepciones
-            estado.area[desc.serialize][area].patron['excepciones'] = [];
+            // Excepciones del patron
             $('ul.grupo-excepcion').each(function(i, el) {
-                estado.area[desc.serialize][area].patron['excepciones'][i] = [];
+                estado.area[desc.serialize][area].excepciones[i] = [];
                 $(el).find('li.excepcion').each(function(ii, elem) {
                     // Campo oculto
                     var col = $(elem).find("span.col").text();
                     var texto = $(elem).find("span.texto").text();
-                    estado.area[desc.serialize][area].patron['excepciones'][i].push({'col': col, 'texto': texto});
+                    // en la excepcion "pos" puede ser fila o columna
+                    estado.area[desc.serialize][area].excepciones[i].push({'pos': col, 'texto': texto});
                 });
             });
         });
@@ -266,39 +254,21 @@ var Descartar = Area.extend({
         }
 
         if( campos ) {
-            var patron = campos.patron;
             for(var i = min; i < max; i++) {
                 var pass = true;
-                for(var k in patron) {
-                    var pos = [];
-                    pos[0] = hoja_numero; //hoja
-                    pos[1] = i + 1; //fila
-                    if(k == 'excepciones'){
-                        //busca excepciones
-                        for (var m in patron[k]){ //grupos de excepciones
-                            //que cumpla con todos las excepciones
-                            var total = patron[k][m].length;
-                            var cumple = 0;
-                            for (var n in patron[k][m]){
-                                pos[2] = patron[k][m][n].col;
-                                if (patron[k][m][n].texto == $('#' + pos.join("_")).text()){
-                                    cumple++;
-                                }
-                            }
-                            if (total == cumple){
-                                pass = false;
-                            }
-                        }
-                    }else{
-                        //construye la celda a comparar el patron
-                        pos[2] = k; //columna
-                        var $td = $('#' + pos.join("_"));
-                        if( patron[k].texto != $td.text()) {
-                            pass = false;
-                            break;
-                        }
+
+                for(var k in campos.patron) {
+                    var pos = this.construirPosicion(k, i);
+                    //construye la celda a comparar el patron
+                    var $td = $('#' + pos);
+                    if( campos.patron[k].texto != $td.text()) {
+                        pass = false;
+                        break;
                     }
                 }
+                // Acelera el proceso, no es necesario buscar excepciones si no encuentra el patron
+                if(pass)
+                    pass = this.actualizarTablaExcepciones(campos.excepciones, i);
                 // Marcar fila
                 if(pass) {
                     try{
@@ -310,7 +280,37 @@ var Descartar = Area.extend({
         }
     },
     /**
-     * Crea excepciones para un patron
+     * verifica que cumplan las excepciones
+     * @param Array
      */
-    'crearExcepcion': function() {}
+    'actualizarTablaExcepciones': function(excepciones, pos) {
+        //busca excepciones
+        for (var k in excepciones) { //grupos de excepciones
+            //que cumpla con todos las excepciones
+            for (var n in excepciones[k]) {
+                var tmppos = this.construirPosicion(excepciones[k][n].pos, pos);
+                if (!excepciones[k][n].texto == $('#' + tmppos).text()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    },
+    /**
+     * Construye la posicion para la celda en base a si se itera filas o columnas
+     * @param Integer pos # Fila o columna
+     * @param Integer iteracion # posicion actual
+     */
+    'construirPosicion': function(pos, iteracion) {
+        var tmppos = [hoja_numero];
+        if(this.area.iterarFilas) {
+            tmppos.push(iteracion);
+            tmppos.push(pos);
+        }else{
+            tmppos.push(pos);
+            tmppos.push(iteracion);
+        }
+        return tmppos.join("_");
+    }
 });

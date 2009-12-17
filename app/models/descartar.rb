@@ -6,10 +6,13 @@ class Descartar < AreaEsp
   # @param Hash descartadas
   def inicialize(area, hoja_electronica, iterar_filas = true)
     super(area, hoja_electronica, iterar_filas)
+    descartadas_patron = {}
+    descartadas_posicion = {}
 
     area.each do |k, v|
       if v.keys > 0
-        descartadas_patron[k]['patrones'] = v['exepciones']
+        v.delete('exceptiones')
+        descartadas_patron[k] = {'patron' => }
         v.delete('exceptiones')
         v.each{|po, val| descartadas_patron[k]['patrones'][k] = val }
       else
