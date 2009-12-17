@@ -256,12 +256,12 @@
         <text>produccion</text>
       </controlProperties>
     </control>
-    <control controlID="36" controlTypeID="com.balsamiq.mockups::DataGrid" x="346" y="234" w="496" h="99" measuredW="438" measuredH="88" zOrder="36" locked="false" isInGroup="-1">
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::DataGrid" x="346" y="234" w="496" h="99" measuredW="476" measuredH="88" zOrder="36" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Campo%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2C%20ID%20%20%20%20%20%20%20%2C%20%20%0A%28A1%29%20produccion%2C%20produccion%2C%20%5Bmapear%5D%20%20%20%20%20%5Bborrar%5D%0A%28B1%29%20cantidad%2C%20cantidad%2C%20%5Bmapear%5D%20%20%20%20%20%5Bborrar%5D</text>
+        <text>N%BA%2CCampo%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2C%20ID%20%20%20%20%20%20%20%2C%20%20%0A1%2C%28A1%29%20produccion%2C%20produccion%2C%20%5Bmapear%5D%20%20%20%20%20%5Bborrar%5D%0A2%2C%28B1%29%20cantidad%2C%20cantidad%2C%20%5Bmapear%5D%20%20%20%20%20%5Bborrar%5D</text>
       </controlProperties>
     </control>
-    <control controlID="37" controlTypeID="com.balsamiq.mockups::Title" x="564" y="122" w="-1" h="-1" measuredW="135" measuredH="46" zOrder="37" locked="false" isInGroup="-1">
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::Title" x="516" y="122" w="-1" h="-1" measuredW="135" measuredH="46" zOrder="37" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Sinonimos</text>
         <size>28</size>
@@ -287,12 +287,12 @@
         <size>16</size>
       </controlProperties>
     </control>
-    <control controlID="41" controlTypeID="com.balsamiq.mockups::Icon" x="744" y="268" w="-1" h="-1" measuredW="16" measuredH="16" zOrder="41" locked="false" isInGroup="-1">
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::Icon" x="756" y="268" w="-1" h="-1" measuredW="16" measuredH="16" zOrder="41" locked="false" isInGroup="-1">
       <controlProperties>
         <icon>DataBaseIcon%7Cxsmall</icon>
       </controlProperties>
     </control>
-    <control controlID="42" controlTypeID="com.balsamiq.mockups::Icon" x="744" y="298" w="-1" h="-1" measuredW="16" measuredH="16" zOrder="42" locked="false" isInGroup="-1">
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::Icon" x="756" y="298" w="-1" h="-1" measuredW="16" measuredH="16" zOrder="42" locked="false" isInGroup="-1">
       <controlProperties>
         <icon>DataBaseIcon%7Cxsmall</icon>
       </controlProperties>
