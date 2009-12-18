@@ -10,19 +10,19 @@ MenuContextual.prototype = {
      * estilos de areas
      */
     'areas': {
-        'bg-light-green': 'Desmarcar area',
+        'bg-light-green': 'Desmarcar área',
         'bg-light-blue': 'Desmarcar encabezado',
         'bg-light-yellow': 'Desmarcar fin',
         'bg-light-grey': 'Desmarcar titular',
-        'bg-red-color': 'Desmarcar area de descarte',
-        'border-red-top': 'Desmarcar area de descarte'
+        'bg-red-color': 'Desmarcar área de descarte'
     },
     /**
      * estilos de area descartar
      */
     'areasOpciones':{
-        'bg-light-blue': 'Opciones area de Encabezado',
-        'bg-red-color': 'Opciones area de descarte'
+        'bg-light-blue': 'Opciones área de Encabezado',
+        'bg-red-color': 'Opciones área de Descarte',
+        'bg-light-yellow': 'Opciones área Fin'
     },
     /**
      * Constructor
@@ -54,6 +54,9 @@ MenuContextual.prototype = {
             }else if($(target).hasClass("enc") ) { 
                 $('#formulario-areas').dialog("open");
                 $('#area-tabs').tabs('select', 1);
+            }else if($(target).hasClass("fin") ) { 
+                $('#formulario-areas').dialog("open");
+                $('#area-tabs').tabs('select', 2);
             }
 
             setTimeout(function() { $('#menu-contextual').hide(); }, 100);
@@ -89,14 +92,23 @@ MenuContextual.prototype = {
                 if (context.areas[el]) {
                     // En caso especial para areas desmarcar
                     var extraCss = '';
-                    if(el == 'bg-red-color' || el == 'border-red-top')
+                    if(el == 'bg-red-color')
                         extraCss = ' ' + cssDesc;
                         
                     $('#menu-contextual ul').append('<li><a class="context-' + el + extraCss +'"><span class="'+ el +' icon fl"></span>&nbsp;' + context.areas[el] + '</a></li>');
                 }
                 // Otras opciones
                 if(context.areasOpciones[el]) {
-                    var css = cssDesc != '' ? 'desc' : 'enc';
+                    var css = '';
+                    if (cssDesc != '') {
+                        css = 'desc';
+                    }else{
+                        if (el == 'bg-light-blue')
+                            css = 'enc';
+                        else
+                            css = 'fin'
+                    }
+                    
                     $('#menu-contextual ul').append('<li><a class="opciones-' + el + ' ' + cssDesc + ' ' + css + '"><span class="'+ el +' icon fl"></span>&nbsp;' + context.areasOpciones[el] + '</a></li>');
                 }
             });

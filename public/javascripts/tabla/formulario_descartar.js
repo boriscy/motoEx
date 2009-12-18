@@ -1,4 +1,4 @@
- /**
+/**
  * Clase para poder manejar el formulario de seleccion de columnas para los patrones
  */
 FormularioDescartar = function(options) {
@@ -45,7 +45,7 @@ FormularioDescartar.prototype = {
             'height': 400, 
             'resizable': false, 
             'modal': true, 
-            'title': 'Patrones de columnas a descartar'
+            'title': 'Patrones para descartar'
         });
         $('#select-columnas').live("change", function() {
             var values = $(this).val();
@@ -54,7 +54,7 @@ FormularioDescartar.prototype = {
         $('#formulario-descartar .listado a.borrar-patron').live("click", function(e) {
             var target = getEventTarget(e);
             form.borrarPatron(target);
-        });:
+        });
     },
     /**
      * Muestra el formulario de las columnas a descartar
@@ -65,7 +65,7 @@ FormularioDescartar.prototype = {
         this.crearSelect(area);
         //y por ultimo muestra el formulario
         $("#formulario-descartar").dialog("open");
-     },
+    },
     /**
      * Crea el select para la seleccion de columnas de descartar
      */
@@ -74,24 +74,18 @@ FormularioDescartar.prototype = {
         $select.find("option").remove();
         $('#formulario-descartar ul.listado li').remove();
         var html = '';
-        //.append('<option title="Este es un texto bastante largo 2">Este es un texto bastante largo 2</option>');
         var limites = this.crearLimitesCelda(area);
-        for(var i = limites[0], i <= limites[1]; i++) {
+        for(var i = limites[0]; i <= limites[1]; i++) {
             var pos = this.construirPosicion(area, i);
             var $el = $('#' +  pos);
-            html += '<option title="' + $el.text() + '" value="' + $el.attr("id") + '" class="' + pos + '">(' + celdaExcel($el.attr("id")) + ') ' + $el.text() + '</option>';
+            html += '<option title="' + $el.text().trim() + '" value="' + pos + '" class="' + pos + '">(' + celdaExcel(pos) + ') ' + $el.text().trim() + '</option>';
         }
         $select.append(html);
 
         var values = [];
         for (var k in estado.area.descartar[area].patron) {
-            if (k == "excepciones")
-                continue;
-            var pos = [];
-            pos[0] = hoja_numero;
-            pos[1] = estado.area.descartar[area]['celda_inicial'].split('_')[0];
-            pos[2] = k;
-            values.push(pos.join("_"));
+            var pos = this.construirPosicion(area, k);
+            values.push(pos);
         }
         
         // Patron
@@ -106,12 +100,12 @@ FormularioDescartar.prototype = {
      */
     'crearLimitesCelda': function(area) {
         var inicio = estado.area.descartar[area].celda_inicial.split("_"),
-        fin =  estado.area.descartar[area].celda_final.split("_");
+        fin = estado.area.descartar[area].celda_final.split("_");
         
-        if( estado.area.iterar_filas ) {
-           return [inicio[1], fin[1]];
+        if( estado.area['iterar_fila'] ) {
+            return [inicio[1], fin[1]];
         }else{
-           return [inicio[0], fin[0]];
+            return [inicio[0], fin[0]];
         }
     },
     /**
@@ -119,10 +113,21 @@ FormularioDescartar.prototype = {
      */
     'construirPosicion': function(area, iteracion) {
         var tmppos = estado.area.descartar[area].celda_inicial.split("_");
-        if( estado.area.iterar_filas ) {
+        if( estado.area['iterar_fila'] ) {
             return hoja_numero + '_' + tmppos[0]  + '_' + iteracion;
         }else{
             return hoja_numero + '_' + iteracion  + '_' + tmppos[1];
+        }
+    },
+    /**
+     * Devuelve el nombre de la fila o columna del patron
+     * @param String celda #id de la celda a generar
+     */
+    'obtenerPosicionPatron': function(celda) {
+        if (estado.area['iterar_fila']) {
+            return numExcelCol(celda.split('_')[2]);
+        }else{
+            return celda.split('_')[1];
         }
     },
     /**
@@ -130,16 +135,15 @@ FormularioDescartar.prototype = {
      */
     'adicionarPatron': function(values) {
         var html = '';
+        var form = this;
         $(values).each(function(i, el) {
             var $option = $("#select-columnas option." + el);
-            var col = numExcelCol($option.val().split('_')[2]);
-            html += '<li class=' + el + '>(' + col + ') <span>' + $option.text().replace(/^\([\w]+\)\s/, "") + '</span> <a class="borrar-patron">borrar</a></li>';
+            var pos = form.obtenerPosicionPatron($option.val());
+            html += '<li class=' + el + '>(' + pos + ') <span>' + $option.text().replace(/^\([\w]+\)\s/, "").trim() + '</span> <a class="borrar-patron">borrar</a></li>';
             $option.attr("disabled", true);
         });
         $('#formulario-descartar .listado').append(html);
         $('#select-columnas option').attr("selected", false);
-        // cambio de estado
-        //$("#area-descartar").trigger("actualizar:estado");
     },
     /**
      * elimina el patron seleccionado

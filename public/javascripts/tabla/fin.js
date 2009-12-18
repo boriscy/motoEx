@@ -1,12 +1,8 @@
-Fin = Area.extend({
-    'area': false,
-    'areaMinima': 1,
+Fin = Encabezado.extend({
+    'serialize': 'fin',
+    'cssMarcar': 'bg-light-yellow',
     'init': function(ini, fin, area){
-        this.area = area;
-        this.cssMarcar = 'bg-light-yellow';
-        this.serialize = 'fin';
-        this._super(ini, fin);
-        this.crearEventos();
+        this._super(ini, fin, area);
     },
     /**
      * Creación de eventos relacionados
@@ -15,23 +11,15 @@ Fin = Area.extend({
         var fin = this;
         $('#area-fin').bind('marcar:fin', function(){
             // Validar que este dentro del AreaGeneral
-            if (fin.validarInclusion(fin.area.cssMarcar) && fin.validarSolapamiento([fin.area.encabezado.cssMarcar]) ) {
+            if (fin.validarInclusion(fin.area.cssMarcar) && 
+                fin.validarSolapamiento([fin.area.titular.cssMarcar, fin.area.encabezado.cssMarcar, fin.area.descartar.cssMarcar]) ) {
+                
                 fin.desmarcarArea(fin.cssMarcar);
                 fin.marcarArea(fin.cssMarcar);
+                fin.crearTablaCeldas();
             }
         });
-    },
-    /**
-     * Elimina los eventos creados
-     */
-    'destruirEventos': function(){
-        $('#area-fin').unbind('marcar:fin');
-    },
-    /**
-     * desmarca el area seleccionada
-     */
-    'desmarcarArea': function(css, e) {
-        $('#area-fin').trigger("desmarcar:fin:desc");
-        this._super(css, e);
+        $('.' + fin.serialize + '-check').live("click", function() { fin.adicionarBorrarCampo(this);});
+        $('.' + fin.serialize + '-text').livequery("blur", function() { fin.mapearCampo(this);});
     }
 });

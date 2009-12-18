@@ -32,6 +32,21 @@ FormularioArea.prototype = {
             //solo funciona cuando se guarda una nueva area
             form.guardar("disabled", true);
         });
+        // para que copie el nombre del area del formulario guardar al campo guardar como
+        $('#formulario-areas input#area_nombre').livequery("blur", function() {
+            $('#formulario-guardar-como input#guardar_como_area_nombre').val($('#formulario-areas input#area_nombre').val());
+        });
+        // para que revise el area fin cuando hace click en area fija
+        $('#area_fija_input').click(function() {
+            if ($('#area_fija').attr("checked")){
+                for (var k in estado.area.fin){
+                    $('#area_fija_input span.error').remove();
+                    form.adicionarError('#area_fija_input label:first', "El área tiene marcado un fin, por favor desmarque el área fin para que sea fija");
+                    $('#area_fija').attr("checked", false);
+                    break;
+                }
+            }
+        });
     },
     /**
      * Destruir eventos
@@ -57,6 +72,12 @@ FormularioArea.prototype = {
      */
     'guardar': function(area_id, es_guardar_como) {
 
+        //llena los datos restantes del formulario
+        estado.area['nombre'] = $('#area_nombre').val();
+        estado.area['rango'] = $('#area_rango').val();
+        estado.area['iterar_fila'] = $('#area_iterar_fila_true')[0].checked;
+        estado.area['fija'] = $('#area_fija')[0].checked;
+        estado.area['hoja_id'] = hoja_id;
         if (this.validarDatos(area_id, es_guardar_como)){
             var formulario = this;
             
@@ -74,24 +95,21 @@ FormularioArea.prototype = {
             }*/
             var post = area_id == 'disabled' ? '/areas' : '/areas/' + area_id;
             
-            //llena los datos restantes del formulario
-            estado.area['nombre'] = $('#area_nombre').val();
-            estado.area['rango'] = $('#area_rango').val();
-            estado.area['iterar_fila'] = $('#area_iterar_fila_true')[0].checked;
-            estado.area['fija'] = $('#area_fija')[0].checked;
-            estado.area['hoja_id'] = hoja_id;
             // AJAX
             var areapost = {};
             if(area_id == 'disabled') {                                                                                
                 areapost = {'area': JSON.stringify(estado.area)};
                 $.post(post, areapost, function(resp) {
-                  // Crear
+                    // Crear
                     if(area_id == 'disabled') {
                         area_id = resp['area']['id'];
                         $('select#area').append("<option value='" + area_id + "'>" + resp["area"]["nombre"] + "</option>");
                         $('select#area option[value=' + area_id + ']').attr("selected", "selected");
                         $('input:hidden[name=_method]').val("put");
                         $('div#formulario-areas').append('<input type="hidden" name="_method" value="put" />');
+                    }
+                    if (es_guardar_como) {
+                        $("#formulario-guardar-como").dialog("close");
                     }
                 }, 'json');
             }else{
@@ -112,7 +130,7 @@ FormularioArea.prototype = {
                 });
             }
         }else{
-            if (!es_guardar_como)
+            if (!es_guardar_como || $('#formulario-areas .error').length > 0)
                 $("#formulario-areas").dialog("open");
         }
     },
@@ -138,14 +156,25 @@ FormularioArea.prototype = {
             this.adicionarError('#area_rango',"El rango debe ser un valor numérico"); 
             val = false;
         }
+        //que al menos tres campos este seleccionado
         var encabezados = 0;
         for (var k in estado.area.encabezado.campos){
             encabezados++;
         }
-        //que al menos un campo este seleccionado
         if (encabezados < 3){
-            this.adicionarError('#encabezado p',"Debe seleccionar al menos tres campos");
+            this.adicionarError('#encabezado p:first',"Debe seleccionar al menos tres campos");
             val = false;
+        }
+        //que al menos un campo este seleccionado ( sólo si NO es área fija )
+        if (!estado.area['fija']){
+            var fin = 0;
+            for (var k in estado.area.fin.campos){
+                fin++;
+            }
+            if (fin < 1){
+                this.adicionarError('#fin p:first',"Debe seleccionar al menos un campo");
+                val = false;
+            }
         }
         
         //que no exista el nombre de esa area
@@ -154,7 +183,7 @@ FormularioArea.prototype = {
         
         $('select#area option').each(function(i, el) {
             if ($(el).val() != area_id) {
-                if ($(el).text() == area_nombre) {
+                if ($(el).text().trim() == area_nombre) {
                     existe = true;
                 }
             }
