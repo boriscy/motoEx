@@ -84,8 +84,25 @@ $(document).ready(function() {
             $('#salvar').click(function(){
                 //solo si hay un area_general seleccionada
                 if (typeof(ini.area) != 'undefined') {
-                    $("#formulario-areas form").trigger('submit');
+                    $("#formulario-areas form").trigger('guardar');
                 }
+            });
+            //Evento para guardar un area nueva con Guardar como
+            $('#guardar-como').click(function(){
+                //solo si hay un area_general seleccionada
+                if (typeof(ini.area) != 'undefined') {
+                    //muestra un formulario con un campo de texto y con un boton de guardar
+                    $('#guardar_como_area_nombre').val($("#area_nombre").val());
+                    $("#formulario-guardar-como").dialog("open");
+                    //el boton guardar de ese formulario llama a la funcion submit
+                }
+            });
+            //Evento para el boton del formulario guardar-como
+            $('#boton-guardar-como').click(function(){
+                //el boton guardar de ese formulario llama a la funcion submit
+                //cambia el nombre del area pero NO del estado.area['nombre'] => para que guarde como una nueva area
+                $('#area_nombre').val($("#guardar_como_area_nombre").val());
+                $("#formulario-areas form").trigger('guardar:como');
             });
             //Evento para menu contextual
             $("#sheet-" + hoja_numero + "-content").rightClick(function(e) {
@@ -149,6 +166,9 @@ $(document).ready(function() {
     }
 
     iniciar = new Iniciar();
+    
+    //para el formulario de guardar como
+    //formulario_guardar_como = new FormularioGuardarComo();
     
     //para el formulario de descartar por patrones
     formulario_descartar = new FormularioDescartar();

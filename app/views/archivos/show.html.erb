@@ -26,6 +26,9 @@
 <%= render :partial => 'encabezado' %>
 <%= render :partial => 'detalle' %>
 
+<!--Formulario guardar como-->
+<%= render :partial => "areas/form_guardar_como" %>
+
 <!--Popup Menu y Formulario Descartar-->
 <%= render :partial => "areas/form_descartar" %>
 
@@ -44,7 +47,8 @@
 $(document).ready(function() {
   $("div#formulario-areas").dialog({'width': 600, 'height': 500 ,'resizable': false, 'modal': true, 'title': 'Detalles areas'}).dialog('close');
   $("#area-tabs").tabs();
-
+  //para el formulario de guardar como
+  $("div#formulario-guardar-como").dialog({'width': 450, 'height': 200, 'resizable': false, 'modal': true, 'title': 'Guardar área como'}).dialog('close');
   //Para el formulario de los patrones de las columnas a descartar
   $("div#formulario-descartar").dialog({'width': 600, 'height': 400, 'resizable': false, 'modal': true, 'title': 'Patrones de columnas a descartar'}).dialog('close');
   $("div#formulario-descartar-excepciones").dialog({'width': 300, 'height': 250, 'resizable': false, 'modal': false, 'title': 'Excepciones'}).dialog('close');

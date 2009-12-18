@@ -1,17 +1,14 @@
- /**
+/**
  * Clase para poder manejar el formulario de Area
  */
 FormularioArea = function(area, options) {
     this.merge(options);
-    // Inicializacion de dialog y tabs jQueryUI
     this.area = area;
     this.crearEventos();
 }
 
 FormularioArea.prototype = {
     'area': '',
-    'celdas': ['celda_inicial', 'celda_final'],
-    'areas': ['', 'encabezado', 'titular'],
     /**
      * Se une con otro JSON
      */
@@ -24,24 +21,24 @@ FormularioArea.prototype = {
      * Creacion de eventos
      */
     'crearEventos': function() {
-      var form = this;
-      $('#formulario-areas form').submit(function() {
-          form.guardar();
-          return false;
-      });
-
-      $('div#formulario-areas').bind("salvar:datos", function(datos) {
-          form.guardar();
-      });
-
+        var form = this;
+        // edita o guarda uno nuevo
+        $('#formulario-areas form').bind("guardar", function() {
+            var area_id = $('select#area').val();
+            form.guardar(area_id, false);
+        });
+        // siempre guarda uno nuevo
+        $('#formulario-areas form').bind("guardar:como", function() {
+            //solo funciona cuando se guarda una nueva area
+            form.guardar("disabled", true);
+        });
     },
     /**
      * Destruir eventos
      */
     'destruirEventos': function() {
-        $('div#formulario-areas').unbind("cargar:datos");
-        $('div#formulario-areas form').unbind("submit");
-        $('div#formulario-areas').unbind("salvar:datos");
+        $('div#formulario-areas form').unbind("guardar");
+        $('div#formulario-areas form').unbind("guardar:como");
     },
     /**
      * Destruye el objeto
@@ -58,20 +55,23 @@ FormularioArea.prototype = {
     /**
      * guarda el area seleccionada en BD usando AJAX
      */
-    'guardar': function() {
+    'guardar': function(area_id, es_guardar_como) {
 
-        if (this.validarDatos()){
+        if (this.validarDatos(area_id, es_guardar_como)){
             var formulario = this;
-            var area_id = $('select#area').val();
             
-            if (estado.area['nombre']){
+            /*if (estado.area['nombre']){
                 //ya existia un nombre
+                
+                //si es guardar como => nuevo
+                
+                //si es guardar => modifica
                 var temp = estado.area['nombre'];
                 if (temp != $('#area_nombre').val()){
                     //el nombre del area se ha modificado => insertara uno nuevo (Guardar como)
-                    area_id = "disabled";
+                    //area_id = "disabled";
                 }
-            }
+            }*/
             var post = area_id == 'disabled' ? '/areas' : '/areas/' + area_id;
             
             //llena los datos restantes del formulario
@@ -101,8 +101,9 @@ FormularioArea.prototype = {
                     type: "PUT",
                     url: post,
                     data: areapost,
-                    success: function(html) {
-                        
+                    success: function() {
+                        //actualiza los datos del area en el combobox
+                        $('select#area :selected').text(estado.area['nombre']);
                     },
                     failure: function() {
                          
@@ -111,19 +112,21 @@ FormularioArea.prototype = {
                 });
             }
         }else{
-            $("#formulario-areas").dialog("open");
+            if (!es_guardar_como)
+                $("#formulario-areas").dialog("open");
         }
     },
     /**
      * Valida los datos del area antes de guardarla en BD
      * @return boolean
      */
-    'validarDatos': function() {
+    'validarDatos': function(area_id, es_guardar_como) {
         //primero elimina los errores existentes
         $('#formulario-areas .error').remove();
+        $('#formulario-guardar-como .error').remove();
         
         var nombre = $('#area_nombre').val();//.trim();
-        var val=true;
+        var val = true;
         if(nombre == "") {
             this.adicionarError('#area_nombre', 'No debe estar el nombre en blanco');
             val = false;
@@ -131,11 +134,6 @@ FormularioArea.prototype = {
             this.adicionarError('#area_nombre', "El nombre ya esta en uso");
             val = false;
         }
-        if ($('.' + this.area.cssMarcar).length <= 1){
-            this.adicionarError('#span_celda_inicial',"El area marcada debe ser mayor que una celda");
-            val = false;
-        }
-
         if (! /^\d+$/.test($('#area_rango').val())){
             this.adicionarError('#area_rango',"El rango debe ser un valor numérico"); 
             val = false;
@@ -152,16 +150,20 @@ FormularioArea.prototype = {
         
         //que no exista el nombre de esa area
         var existe = false;
-        var valor = $('select#area').val(); 
+        var area_nombre = $("#area_nombre").val();
+        
         $('select#area option').each(function(i, el) {
-            if (valor != $(el).val()){
-                if ($(el).text() == $("#area_nombre").val()){
+            if ($(el).val() != area_id) {
+                if ($(el).text() == area_nombre) {
                     existe = true;
                 }
             }
         });
-        if (existe){
-            this.adicionarError('#area_nombre', 'El nombre del área ya existe');
+        if (existe) {
+            if (es_guardar_como)
+                this.adicionarError('#guardar_como_area_nombre', 'El nombre del área ya existe');
+            else
+                this.adicionarError('#area_nombre', 'El nombre del área ya existe');
             val = false;
         }
         
