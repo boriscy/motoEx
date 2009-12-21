@@ -9,7 +9,6 @@ class CreateAreas < ActiveRecord::Migration
       t.boolean :fija
       t.boolean :iterar_fila
       t.text :encabezado
-      t.text :titular
       t.text :fin
       t.text :descartar
 

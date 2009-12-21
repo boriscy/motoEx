@@ -7,6 +7,6 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.singular /^([a-z_]+)(es)$/, '\1'
 #   inflect.plural /^(ox)$/i, '\1en'
 #   inflect.singular /^(ox)en/i, '\1'
-#   inflect.irregular 'person', 'people'
+#  inflect.plural 'importar', 'importar' 
 #   inflect.uncountable %w( fish sheep )
 end

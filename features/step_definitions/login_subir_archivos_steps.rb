@@ -8,7 +8,7 @@ Dado /^que estoy en (.*)$/ do |uri|
   response.should contain("Contraseña:")
 end
 
-Entonces /^ingreso mi login y password$/ do
+Cuando /^ingreso mi login y password$/ do
   crear_usuario()
   fill_in "usuario_session[login]", :with => "admin"
   #fill_in "usuario_session[password]", :with => "demo123"

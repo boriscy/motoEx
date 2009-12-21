@@ -3,7 +3,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :areas
   map.hoja '/hoja', :controller => :hojas, :action => :hoja, :conditions => {:method => :post}
   map.resources :archivos
-  map.resources :importar
+  map.resources :importares
+  map.resources :importar, :controller => :importares, :as => :importar#, :only => [:index, :new, :create, :show]
 
   # The priority is based upon order of creation: first created -> highest priority.
 
