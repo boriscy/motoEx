@@ -21,5 +21,21 @@ Fin = Encabezado.extend({
         });
         $('.' + fin.serialize + '-check').live("click", function() { fin.adicionarBorrarCampo(this);});
         $('.' + fin.serialize + '-text').livequery("blur", function() { fin.mapearCampo(this);});
+    },
+    /**
+     * Funcion para que pueda realizar opciones adicionales
+     */
+    'marcarArea': function(css, cssSel) {
+        this._super(css, cssSel);
+        $('#formulario-areas').trigger("limpiar:errores");
+        //y desmarca el input de area_fija
+        $('#area_fija').attr("checked", false);
+    },
+    /**
+     * Desmarca el area de encabezado y destruye los eventos de marcado
+     */
+    'desmarcarArea': function(css, e) {
+        this._super(css, e);
+        $('#formulario-areas').trigger("limpiar:errores");
     }
 });

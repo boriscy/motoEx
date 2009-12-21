@@ -22,6 +22,11 @@ FormularioArea.prototype = {
      */
     'crearEventos': function() {
         var form = this;
+        //para mostrar el formulario
+        $('#formulario-areas').bind("limpiar:errores", function() {
+            $('#formulario-areas span.error').remove();
+            $('#formulario-guardar-como span.error').remove();
+        });
         // edita o guarda uno nuevo
         $('#formulario-areas form').bind("guardar", function() {
             var area_id = $('select#area').val();
@@ -37,13 +42,13 @@ FormularioArea.prototype = {
             $('#formulario-guardar-como input#guardar_como_area_nombre').val($('#formulario-areas input#area_nombre').val());
         });
         // para que revise el area fin cuando hace click en area fija
-        $('#area_fija_input').click(function() {
+        $('#area_fija_input').live("click", function() {
             if ($('#area_fija').attr("checked")){
-                for (var k in estado.area.fin){
-                    $('#area_fija_input span.error').remove();
+                if (estado.area.fin.celda_inicial){
+                    $('#formulario-areas li#area_fija_input span.error').remove();
                     form.adicionarError('#area_fija_input label:first', "El área tiene marcado un fin, por favor desmarque el área fin para que sea fija");
+                    //return false;
                     $('#area_fija').attr("checked", false);
-                    break;
                 }
             }
         });
@@ -54,6 +59,9 @@ FormularioArea.prototype = {
     'destruirEventos': function() {
         $('div#formulario-areas form').unbind("guardar");
         $('div#formulario-areas form').unbind("guardar:como");
+        $('#formulario-areas').unbind("limpiar:errores");
+        $('#area_fija_input').die("click");
+        $('#formulario-areas input#area_nombre').expire("blur");
     },
     /**
      * Destruye el objeto
@@ -140,8 +148,7 @@ FormularioArea.prototype = {
      */
     'validarDatos': function(area_id, es_guardar_como) {
         //primero elimina los errores existentes
-        $('#formulario-areas .error').remove();
-        $('#formulario-guardar-como .error').remove();
+        $('#formulario-areas').trigger("limpiar:errores");
         
         var nombre = $('#area_nombre').val();//.trim();
         var val = true;

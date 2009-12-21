@@ -77,6 +77,7 @@ $(document).ready(function() {
                 //solo si hay un area_general seleccionada
                 if (typeof(ini.area) != 'undefined') {
                     $("#propiedades").trigger('cargar:datos');
+                    $('#formulario-areas').trigger("limpiar:errores");
                     $("#formulario-areas").dialog("open");
                 }
             });
