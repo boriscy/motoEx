@@ -14,7 +14,6 @@ FormularioDescartarExcepciones.prototype = {
             },
             'beforeclose': function(e, ui) {
                 $("#formulario-descartar-excepciones").trigger("form:beforeclose");
-                //$("#area-descartar").trigger("actualizar:estado");
             },
             'width': 350, 
             'height': 250, 
@@ -71,7 +70,7 @@ FormularioDescartarExcepciones.prototype = {
     'actualizarFormulario': function() {
         var values = this.buscarValores();
         $('#formulario-descartar-excepciones select option').remove();
-        var html = "<option value=''>Col</option>";
+        var html = "<option value=''>Columna</option>";
         $('#select-columnas option').each(function (i, el) {
             if (!$(el).attr("disabled")){
                 var col = $(el).attr("class").split('_')[2];
@@ -91,7 +90,7 @@ FormularioDescartarExcepciones.prototype = {
     'buscarValores': function() {
         var values = {};
         $("#grupo-excepciones ." + this.cssSel + " li.excepcion").each(function(i, el) {
-            values[$(el).find("span.col").text()] = true;
+            values[$(el).find("span.col").text().trim()] = true;
         });
         return values;
     },
@@ -144,11 +143,11 @@ FormularioDescartarExcepciones.prototype = {
      */
     'cargarExcepciones': function() {
         var area = $('#id-descartar').val();
-        var excepciones = estado.area.descartar[area].patron.excepciones;
+        var excepciones = estado.area.descartar[area].excepciones;
         for(var k in excepciones) {
             $('#grupo-excepciones ul.grupo-excepcion').removeClass(this.cssSel);
             for(var l in excepciones[k]) {
-                this.crearHtmlExcepcion(excepciones[k][l].col, excepciones[k][l].texto);
+                this.crearHtmlExcepcion(excepciones[k][l].pos, excepciones[k][l].texto);
             }
         }
     }

@@ -1,12 +1,8 @@
-Fin = Area.extend({
-    'area': false,
-    'areaMinima': 1,
+Fin = Encabezado.extend({
+    'serialize': 'fin',
+    'cssMarcar': 'bg-light-yellow',
     'init': function(ini, fin, area){
-        this.area = area;
-        this.cssMarcar = 'bg-light-yellow';
-        this.serialize = 'fin';
-        this._super(ini, fin);
-        this.crearEventos();
+        this._super(ini, fin, area);
     },
     /**
      * Creación de eventos relacionados
@@ -15,23 +11,31 @@ Fin = Area.extend({
         var fin = this;
         $('#area-fin').bind('marcar:fin', function(){
             // Validar que este dentro del AreaGeneral
-            if (fin.validarInclusion(fin.area.cssMarcar) && fin.validarSolapamiento([fin.area.encabezado.cssMarcar]) ) {
+            if (fin.validarInclusion(fin.area.cssMarcar) && 
+                fin.validarSolapamiento([fin.area.titular.cssMarcar, fin.area.encabezado.cssMarcar, fin.area.descartar.cssMarcar]) ) {
+                
                 fin.desmarcarArea(fin.cssMarcar);
                 fin.marcarArea(fin.cssMarcar);
+                fin.crearTablaCeldas();
             }
         });
+        $('.' + fin.serialize + '-check').live("click", function() { fin.adicionarBorrarCampo(this);});
+        $('.' + fin.serialize + '-text').livequery("blur", function() { fin.mapearCampo(this);});
     },
     /**
-     * Elimina los eventos creados
+     * Funcion para que pueda realizar opciones adicionales
      */
-    'destruirEventos': function(){
-        $('#area-fin').unbind('marcar:fin');
+    'marcarArea': function(css, cssSel) {
+        this._super(css, cssSel);
+        $('#formulario-areas').trigger("limpiar:errores");
+        //y desmarca el input de area_fija
+        $('#area_fija').attr("checked", false);
     },
     /**
-     * desmarca el area seleccionada
+     * Desmarca el area de encabezado y destruye los eventos de marcado
      */
     'desmarcarArea': function(css, e) {
-        $('#area-fin').trigger("desmarcar:fin:desc");
         this._super(css, e);
+        $('#formulario-areas').trigger("limpiar:errores");
     }
 });

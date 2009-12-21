@@ -77,6 +77,7 @@ $(document).ready(function() {
                 //solo si hay un area_general seleccionada
                 if (typeof(ini.area) != 'undefined') {
                     $("#propiedades").trigger('cargar:datos');
+                    $('#formulario-areas').trigger("limpiar:errores");
                     $("#formulario-areas").dialog("open");
                 }
             });
@@ -133,6 +134,7 @@ $(document).ready(function() {
             $('#area-titular').click(function() { $('#area-titular').trigger("marcar:titular") } );
             $('#area-encabezado').click(function() { $('#area-encabezado').trigger("marcar:encabezado") } );
             $('#area-descartar').click(function() { $('#area-descartar').trigger("marcar:descartar") });
+            $('#area-fin').click(function() { $('#area-fin').trigger("marcar:fin") });
         },
         /**
          * Código extraido y adaptado de $("#area-importar").click()

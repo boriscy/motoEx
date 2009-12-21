@@ -8,6 +8,7 @@ AreaGeneral = Area.extend({
     'encabezado': false,
     'descartar': false,
     'titular': false,
+    'fin': false,
     'iterarFilas': true,
     
     'init': function(ini, fin) {
@@ -20,6 +21,7 @@ AreaGeneral = Area.extend({
         // Sub Areas
         this.titular= new Titular(false, false, this);
         this.encabezado = new Encabezado(false, false, this);
+        this.fin = new Fin(false, false, this);
         this.descartar = new Descartar([], this);
 
         this.cambiarIterarFilas();
@@ -30,6 +32,7 @@ AreaGeneral = Area.extend({
     'cambiarIterarFilas': function() {
         // Indica si itera fila
         this.iterarFilas = $('#formulario-areas input:radio:checked[name="area[iterar_fila]"]').val();
+        estado.area['iterar_fila'] = this.iterarFilas;
     },
     /**
      * Eventos generales
@@ -69,10 +72,12 @@ AreaGeneral = Area.extend({
         this.encabezado.destruir();
         this.titular.destruir();
         this.descartar.destruir();
+        this.fin.destruir();
         // Borrado de variables
         delete(this.encabezado);
         delete(this.titular);
         delete(this.descartar);
+        delete(this.fin);
     },
     /**
      * Revisa si dos clases CSS se intersectan en algún elemento
