@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091123150839) do
+ActiveRecord::Schema.define(:version => 20091214184806) do
 
   create_table "archivos", :force => true do |t|
     t.integer  "usuario_id"
@@ -31,16 +31,15 @@ ActiveRecord::Schema.define(:version => 20091123150839) do
     t.string   "nombre"
     t.string   "celda_inicial"
     t.string   "celda_final"
-    t.string   "tipo"
     t.integer  "rango"
     t.boolean  "fija"
     t.boolean  "iterar_fila"
     t.text     "encabezado"
-    t.text     "titular"
     t.text     "fin"
     t.text     "descartar"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "titular"
   end
 
   create_table "hojas", :force => true do |t|
@@ -48,6 +47,15 @@ ActiveRecord::Schema.define(:version => 20091123150839) do
     t.string   "nombre"
     t.integer  "numero"
     t.datetime "fecha_archivo"
+  end
+
+  create_table "importares", :force => true do |t|
+    t.integer  "usuario_id"
+    t.integer  "area_id"
+    t.integer  "archivo_size"
+    t.string   "hoja_electronica"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "usuarios", :force => true do |t|

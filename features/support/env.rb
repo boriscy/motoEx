@@ -30,3 +30,6 @@ end
 
 require 'cucumber/rails/rspec'
 require 'webrat/core/matchers'
+require 'factory_girl'
+
+Dir.glob(File.join(RAILS_ROOT, 'spec/factories/*.rb') ).each {|f| require f }

@@ -16,6 +16,10 @@ class Hoja < ActiveRecord::Base
     File.join(RAILS_ROOT, File.dirname(self.archivo.archivo_excel.path), "#{self.numero}.html")
   end
 
+  def to_s
+    nombre
+  end
+
   # Creación de la hoja html desde un archivo excel usando PHP
   # para luego ser utilizado en la edición, el número de hoja es obtenido
   # del campo *:hoja* del modelo *Hoja*

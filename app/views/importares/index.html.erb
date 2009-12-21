@@ -1,0 +1,16 @@
+<h1>Lista de Archivos</h1>
+
+<table>
+  <tr>
+    <th class="ui-state-active">Nombre</th>
+    <th class="ui-state-active">Descripcion</th>
+    <th class="ui-state-active">Archivo</th>
+  </tr>
+  <% @archivos.each do |archivo| %>
+  <tr class="<%= cycle("odd", "even") %>">
+    <td><%=h archivo.nombre %></td>
+    <td><%=h archivo.descripcion.size > 70 ? archivo.descripcion[0, 70] + '...' : archivo.descripcion %></td>
+    <td><%= link_to archivo.archivo_excel_file_name, new_importar_path(:id => archivo) %></td>
+  </tr>
+  <% end %>
+</table>

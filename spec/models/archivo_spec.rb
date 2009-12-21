@@ -9,12 +9,12 @@ describe Archivo do
   before(:each) do
    
     archivo = File.join(RAILS_ROOT, 'ejemplos/VentasPrecio2000-2008.xls')
-    up = ActionController::UploadedStringIO.new
-    up.original_path = archivo
-    up.content_type = 'application/vnd.ms-excel'
+#    up = ActionController::UploadedStringIO.new
+#    up.original_path = archivo
+#    up.content_type = 'application/vnd.ms-excel'
     @archivo_params = {
       :nombre => 'Excel', 
-      :archivo_excel => up
+      :archivo_excel => ActionController::TestUploadedFile.new(archivo, 'application/vnd.ms-excel')
     }
     @usuario_mock = mock_model(Usuario, :id => 1, :nombre => 'Juan', :valid? => true)
     Usuario.stub!(:find).with(kind_of(Fixnum)).and_return(@usuario_mock)

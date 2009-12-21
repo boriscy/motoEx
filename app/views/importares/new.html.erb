@@ -1,0 +1,17 @@
+<h1>Importar Archivo</h1>
+
+<% semantic_form_for(@importar, :html =>{:multipart => true}) do |f| -%>
+  <% f.inputs do  %>
+    <%= f.input :hoja_id, :as => :select, :label => 'Hoja', :collection => Hoja.all(:conditions => {:archivo_id => @archivo.id}) %>
+    <%= f.input :area_id, :label => 'Area', :collection => []%>
+    <%= f.input :hoja_electronica, :as => :file, :label => 'Archivo' %>
+  <% end %>
+<% end -%>
+<script type="text/javascript" language="javascript" charset="utf-8">
+//<![CDATA[
+$(document).ready(function () {
+    $('#importar_hoja_id')
+});
+//]]>
+</script>
+
