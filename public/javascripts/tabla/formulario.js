@@ -52,6 +52,15 @@ FormularioArea.prototype = {
                 }
             }
         });
+        // para que abra el formulario de sinonimos en click del formulario
+        $('#formulario-areas a.encabezado-sinonimos').live("click", function() {
+            //solo muestra el formulario cuando hay una columna de encabezado seleccionado
+            var cantcampos = 0;
+            for (var k in estado.area.encabezado['campos']) cantcampos++;
+            if (cantcampos > 0) {
+                $('#formulario-sinonimos').trigger("mostrar");
+            }
+        });
     },
     /**
      * Destruir eventos
@@ -62,6 +71,7 @@ FormularioArea.prototype = {
         $('#formulario-areas').unbind("limpiar:errores");
         $('#area_fija_input').die("click");
         $('#formulario-areas input#area_nombre').expire("blur");
+        $('#formulario-areas a.encabezado-sinonimos').die("click");
     },
     /**
      * Destruye el objeto
@@ -89,18 +99,6 @@ FormularioArea.prototype = {
         if (this.validarDatos(area_id, es_guardar_como)){
             var formulario = this;
             
-            /*if (estado.area['nombre']){
-                //ya existia un nombre
-                
-                //si es guardar como => nuevo
-                
-                //si es guardar => modifica
-                var temp = estado.area['nombre'];
-                if (temp != $('#area_nombre').val()){
-                    //el nombre del area se ha modificado => insertara uno nuevo (Guardar como)
-                    //area_id = "disabled";
-                }
-            }*/
             var post = area_id == 'disabled' ? '/areas' : '/areas/' + area_id;
             
             // AJAX

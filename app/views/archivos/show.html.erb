@@ -16,7 +16,8 @@
 <%= javascript_include_tag "plugins/jquery.scrollTo-min","plugins/jquery.rightClick", :cache => "plugins" %>
 <%= javascript_include_tag "tabla/spreadsheet",  "tabla/area", "tabla/area_general", "tabla/menu_contextual",
 "tabla/titular", "tabla/encabezado", "tabla/descartar", "tabla/fin", "tabla/tabla_iniciar", 
-"tabla/formulario", "tabla/formulario_descartar", "tabla/formulario_descartar_excepciones", :cache => "todo" %>
+"tabla/formulario", "tabla/formulario_descartar", "tabla/formulario_descartar_excepciones", 
+"tabla/formulario_sinonimos", "tabla/formulario_sinonimos_crear", :cache => "todo" %>
   
 <%= stylesheet_link_tag "tabla/jquery.asmselect" %>
 
@@ -40,6 +41,10 @@
   <ul>
   </ul>
 </div>
+
+<!--Formulario sinonimos-->
+<%= render :partial => "areas/formulario_sinonimos" %>
+<%= render :partial => "areas/formulario_sinonimos_crear" %>
 
 <%= javascript_include_tag "test/#{params[:js]}" if params[:js] if RAILS_ENV == "development" and params[:js]%>
 <script type="text/javascript" language="javascript" charset="utf-8">
