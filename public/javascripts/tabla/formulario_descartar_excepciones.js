@@ -18,7 +18,8 @@ FormularioDescartarExcepciones.prototype = {
             'width': 350, 
             'height': 250, 
             'resizable': false,
-            'title': 'Excepciones'
+            'title': 'Excepciones',
+            'autoOpen': false
         });
         this.crearEventos();
     },

@@ -43,8 +43,12 @@ FormularioSinonimos.prototype = {
             $("#formulario-sinonimos").dialog("open");
         });
         // edita o guarda uno nuevo
-        $('#formulario-sinonimos').bind("guardar", function() {
-            form.guardar();
+        $('#formulario-sinonimos').bind("adicionar", function() {
+            form.adicionarGrupoSinonimo();
+        });
+        // edita o guarda uno nuevo
+        $('#formulario-sinonimos').bind("cerrar", function() {
+            form.cerrar();
         });
         //muestra el formulario de adicion
         $('#formulario-sinonimos a.crear-sinonimos').live("click", function() {
@@ -56,6 +60,7 @@ FormularioSinonimos.prototype = {
      */
     'destruirEventos': function() {
         $('#formulario-sinonimos').unbind("mostrar");
+        $('#formulario-sinonimos').unbind("cerrar");
         $('#formulario-sinonimos').unbind("guardar");
         $('#formulario-sinonimos a.crear-sinonimos').die("click");
     },
@@ -66,19 +71,6 @@ FormularioSinonimos.prototype = {
         this.destruirEventos();
     },
     /**
-     * guarda los campos de los sinonimos en la variable global estado.area
-     */
-    'guardar': function() {
-        
-    },
-    /**
-     * Elimina los sinonimos existentes
-     */
-    'destruirSinonimos': function(){
-        $('#div-sinonimos').html("");
-        this.contador = 0;
-    },
-    /**
      * Llena la tabla con los datos de estado.area.encabezado.sinonimos
      */
     'cargarDatos': function() {
@@ -86,33 +78,12 @@ FormularioSinonimos.prototype = {
         this.destruirSinonimos();
         var $div = $("#div-sinonimos");
         for (var i in sinonimos) {
-            this.contador++;
-            var html = '<fieldset class="' + sinonimos[i] + '"><legend>' + sinonimos[i] + '</legend>';
-            html += '<a href="#" class="adicionar-sinonimos-campos">Adicionar campos</a>';
-            html += '<table class="tabla-sinonimos">';
-            html += '<tr class="th-head">';
-            html += '<th class="ui-state-active">Nº</th>';
-            html += '<th class="ui-state-active">Campo</th>';
-            html += '<th class="ui-state-active">ID</th>';
-            html += '<th class="ui-state-active"></th>';
-            html += '</tr>';
-            var total = 1;
-            for (var k in sinonimos[i]) {
-                html += "<tr>";
-                html += "<td><span>" + total + "</span></td>";
-                html += "<td><span>(" + obtieneFilaColumna(sinonimos[i][k].pos) + ")</span> " + sinonimos[i][k].campo + "</td>";
-                html += "<td>" + sinonimos[i][k].campo + "</td>";
-                html += "<td><a href='#'>Mapear</a> <a href='#'>Borrar</a></td>";
-                html += "</tr>";
-                total++;
-            }
-            html += '</table>';
-            html += '</fieldset>';
-            $tabla.append(html);
+            this.adicionarGrupoSinonimo(sinonimos[i]);
         }
     },
-    'adicionarGrupoSinonimo': function(nombreGrupo, elementos) {
-        var html = '<fieldset class="' + nombreGrupo + '"><legend>' + nombreGrupo + '</legend>';
+    'adicionarGrupoSinonimo': function(grupo) {
+        $('#sinonimos').trigger("agregar:grupo");
+        var html = '<fieldset class="' + grupo + '"><legend>' + grupo + '</legend>';
         html += '<a href="#" class="adicionar-sinonimos-campos">Adicionar campos</a>';
         html += '<table class="tabla-sinonimos">';
         html += '<tr class="th-head">';
@@ -122,11 +93,11 @@ FormularioSinonimos.prototype = {
         html += '<th class="ui-state-active"></th>';
         html += '</tr>';
         var total = 1;
-        for (var k in elementos) {
+        for (var k in grupo) {
             html += "<tr>";
             html += "<td><span>" + total + "</span></td>";
-            html += "<td><span>(" + obtieneFilaColumna(elementos[k].pos) + ")</span> " + elementos[k].campo + "</td>";
-            html += "<td>" + elementos[k].campo + "</td>";
+            html += "<td><span>(" + obtieneFilaColumna(grupo[k].pos) + ")</span> " + grupo[k].campo + "</td>";
+            html += "<td>" + grupo[k].campo + "</td>";
             html += "<td><a href='#'>Mapear</a> <a href='#'>Borrar</a></td>";
             html += "</tr>";
             total++;
@@ -143,5 +114,12 @@ FormularioSinonimos.prototype = {
         }else{
             return valor();
         }
+    },
+    /**
+     * Elimina los sinonimos existentes
+     */
+    'destruirSinonimos': function(){
+        $('#div-sinonimos').html("");
+        this.contador = 0;
     }
 };

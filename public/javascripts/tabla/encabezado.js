@@ -75,20 +75,28 @@ Encabezado = Area.extend({
      */
     'crearTablaCeldas': function() {
         var celdas = estado.area[this.serialize].celdas;
-        var $tabla = $('#tabla-' + this.serialize);
-        for(i = 0, l = celdas.length; i < l; i++) {
-            var html = '<tr><td><input type="hidden" name="area[' + this.serialize + '][' + i + '][hidden]" value="' + celdas[i].pos + '"/>';
-            html += '<span>' + celdaExcel(celdas[i].pos) + '</span>';
-            html += '<label id="label-' + this.serialize + '-campo' + i + '">';
-            html += '<input type="checkbox" name="area[' + this.serialize + '][' + i + '][sel]" class="' + this.serialize + '-check"';
-            if (estado.area[this.serialize].campos[celdas[i].pos])
-                html += ' checked="checked"';
-            html +='/>' + celdas[i].texto + '</label></td>';
-            html += '<td><input type="text" name="area[' + this.serialize + '][' + i + '][text]" value="' + celdas[i].texto + '" class="' + this.serialize + '-text"';
-            if (!estado.area[this.serialize].campos[celdas[i].pos])
-                html += ' disabled="disabled"';
-            html += '/></td></tr>';
-            $tabla.append(html);
+        if (celdas){
+            var $tabla = $('#tabla-' + this.serialize);
+            for(i = 0, l = celdas.length; i < l; i++) {
+                var html = '<tr><td><input type="hidden" name="area[' + this.serialize + '][' + i + '][hidden]" value="' + celdas[i].pos + '"/>';
+                html += '<span>' + celdaExcel(celdas[i].pos) + '</span>';
+                html += '<label id="label-' + this.serialize + '-campo' + i + '">';
+                html += '<input type="checkbox" name="area[' + this.serialize + '][' + i + '][sel]" class="' + this.serialize + '-check"';
+                if (estado.area[this.serialize].campos[celdas[i].pos])
+                    html += ' checked="checked"';
+                html +='/>' + celdas[i].texto + '</label></td>';
+                html += '<td><input type="text" name="area[' + this.serialize + '][' + i + '][text]" value="';
+                if (!estado.area[this.serialize].campos[celdas[i].pos]){
+                    html += celdas[i].texto;
+                }else{
+                    html += estado.area[this.serialize].campos[celdas[i].pos].campo;
+                }
+                html += '" class="' + this.serialize + '-text"';
+                if (!estado.area[this.serialize].campos[celdas[i].pos])
+                    html += ' disabled="disabled"';
+                html += '/></td></tr>';
+                $tabla.append(html);
+            }
         }
     },
     /**

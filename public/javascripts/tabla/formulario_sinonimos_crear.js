@@ -16,8 +16,8 @@ FormularioSinonimosCrear.prototype = {
             'close': function(e, ui) {
                 $("#formulario-sinonimos-crear").trigger("cerrar");
             },
-            'width': 300, 
-            'height': 250, 
+            'width': 450, 
+            'height': 300, 
             'resizable': false, 
             'modal': false, 
             'autoOpen': false,

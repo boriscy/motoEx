@@ -45,7 +45,8 @@ FormularioDescartar.prototype = {
             'height': 400, 
             'resizable': false, 
             'modal': true, 
-            'title': 'Patrones para descartar'
+            'title': 'Patrones para descartar',
+            'autoOpen': false
         });
         $('#select-columnas').live("change", function() {
             var values = $(this).val();

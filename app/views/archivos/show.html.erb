@@ -50,13 +50,13 @@
 <script type="text/javascript" language="javascript" charset="utf-8">
   //<![CDATA[
 $(document).ready(function() {
-  $("div#formulario-areas").dialog({'width': 600, 'height': 500 ,'resizable': false, 'modal': true, 'title': 'Detalles areas'}).dialog('close');
+  $("div#formulario-areas").dialog({'width': 600, 'height': 500 ,'resizable': false, 'modal': true, 'title': 'Detalles areas', 'autoOpen': false});
   $("#area-tabs").tabs();
   //para el formulario de guardar como
-  $("div#formulario-guardar-como").dialog({'width': 450, 'height': 200, 'resizable': false, 'modal': true, 'title': 'Guardar área como'}).dialog('close');
+  $("div#formulario-guardar-como").dialog({'width': 450, 'height': 200, 'resizable': false, 'modal': true, 'title': 'Guardar área como', 'autoOpen': false});
   //Para el formulario de los patrones de las columnas a descartar
-  $("div#formulario-descartar").dialog({'width': 600, 'height': 400, 'resizable': false, 'modal': true, 'title': 'Patrones de columnas a descartar'}).dialog('close');
-  $("div#formulario-descartar-excepciones").dialog({'width': 300, 'height': 250, 'resizable': false, 'modal': false, 'title': 'Excepciones'}).dialog('close');
+  $("div#formulario-descartar").dialog({'width': 600, 'height': 400, 'resizable': false, 'modal': true, 'title': 'Patrones de columnas a descartar', 'autoOpen': false});
+  $("div#formulario-descartar-excepciones").dialog({'width': 300, 'height': 250, 'resizable': false, 'modal': false, 'title': 'Excepciones', 'autoOpen': false});
 
 });
   //]]>
