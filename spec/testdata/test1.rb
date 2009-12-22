@@ -13,3 +13,5 @@
 }
 
 @@hoja_electronica = Excel.new(File.join(File.expand_path(RAILS_ROOT), "ejemplos", "VentasPrecio2000-2008.xls") )
+
+
