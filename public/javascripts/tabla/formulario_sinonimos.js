@@ -75,14 +75,12 @@ FormularioSinonimos.prototype = {
      */
     'cargarDatos': function() {
         var sinonimos = estado.area.encabezado['sinonimos'];
-        this.destruirSinonimos();
-        var $div = $("#div-sinonimos");
+        this.limpiar();
         for (var i in sinonimos) {
             this.adicionarGrupoSinonimo(sinonimos[i]);
         }
     },
     'adicionarGrupoSinonimo': function(grupo) {
-        $('#sinonimos').trigger("agregar:grupo");
         var html = '<fieldset class="' + grupo + '"><legend>' + grupo + '</legend>';
         html += '<a href="#" class="adicionar-sinonimos-campos">Adicionar campos</a>';
         html += '<table class="tabla-sinonimos">';
@@ -118,7 +116,7 @@ FormularioSinonimos.prototype = {
     /**
      * Elimina los sinonimos existentes
      */
-    'destruirSinonimos': function(){
+    'limpiar': function(){
         $('#div-sinonimos').html("");
         this.contador = 0;
     }

@@ -56,7 +56,10 @@ FormularioArea.prototype = {
         $('#formulario-areas a.encabezado-sinonimos').live("click", function() {
             //solo muestra el formulario cuando hay una columna de encabezado seleccionado
             var cantcampos = 0;
-            for (var k in estado.area.encabezado['campos']) cantcampos++;
+            for (var k in estado.area.encabezado['campos']) {
+                cantcampos++;
+                break;
+            }
             if (cantcampos > 0) {
                 $('#formulario-sinonimos').trigger("mostrar");
             }
