@@ -3,20 +3,31 @@ Encabezado = Area.extend({
     'areaMinima': 1,
     'serialize': 'encabezado',
     'cssMarcar': 'bg-light-blue',
+    'sinonimos': false,
     /**
      * Constructor
      * @param String ini
      * @param String fin
      * @param AreaGeneral area
      */
-    'init': function(ini, fin, area){
+    'init': function(ini, fin, area) {
         this._super(ini, fin);
         this.area = area;
-        if (!estado.area[this.serialize]['campos'])
-            estado.area[this.serialize]['campos'] = [];
-        else{
+        if (this.serialize == 'encabezado') {
+            this.sinonimos = new Sinonimos();
+        }
+        
+        if (!estado.area[this.serialize]['campos']) {
+            //estado.area[this.serialize]['campos'] = [];
+        }else{
             this.destruirTablasCeldas();
             this.crearTablaCeldas();
+        }
+        
+        if (this.serialize == 'encabezado') {
+            if (!estado.area[this.serialize]['sinonimos']) {
+                estado.area[this.serialize]['sinonimos'] = {};
+            }
         }
         this.crearEventos();
     },
@@ -46,6 +57,7 @@ Encabezado = Area.extend({
     'marcarArea': function(css, cssSel) {
         this._super(css, cssSel);
         estado.area[this.serialize]['campos'] = {};
+        estado.area[this.serialize]['sinonimos'] = {};
         //this.destruirTablasCeldas();
     },
     /**
@@ -53,7 +65,7 @@ Encabezado = Area.extend({
      */
     'desmarcarArea': function(css, e) {
         this._super(css, e);
-        $('#tabla-' + this.serialize + ' tr:not(:first)').remove();
+        $('#tabla-' + this.serialize + ' tr:not(.th-head)').remove();
         //this.destruirEventosTablaCeldas();
     },
     /**
@@ -137,6 +149,9 @@ Encabezado = Area.extend({
      */
     'destruir': function() {
         this._super();
-        $('#tabla-' + this.serialize + ' tr:not(:first)').remove();
+        $('#tabla-' + this.serialize + ' tr:not(.th-head)').remove();
+        if (this.serialize == 'encabezado') {
+            this.sinonimos.destruir();
+        }
     }
 });

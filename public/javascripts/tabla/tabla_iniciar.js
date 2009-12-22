@@ -177,6 +177,7 @@ $(document).ready(function() {
 
     // Menu contextual
     menuContextual = new MenuContextual();
+    // Sinonimos
     
     // Para el formulario de sinonimos
     formularioSinonimos = new FormularioSinonimos();
