@@ -1,0 +1,22 @@
+<h1>Listing sinonimos</h1>
+
+<table>
+  <tr>
+    <th>Nombre</th>
+    <th>Mapeado</th>
+  </tr>
+
+<% @sinonimos.each do |sinonimo| %>
+  <tr>
+    <td><%=h sinonimo.nombre %></td>
+    <td><%=h sinonimo.mapeado %></td>
+    <td><%= link_to 'Show', sinonimo %></td>
+    <td><%= link_to 'Edit', edit_sinonimo_path(sinonimo) %></td>
+    <td><%= link_to 'Destroy', sinonimo, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New sinonimo', new_sinonimo_path %>

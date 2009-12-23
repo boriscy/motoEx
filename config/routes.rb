@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :sinonimos
+
 
   map.resources :areas
   map.hoja '/hoja', :controller => :hojas, :action => :hoja, :conditions => {:method => :post}

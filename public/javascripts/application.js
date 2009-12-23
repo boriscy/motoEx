@@ -173,6 +173,15 @@ String.prototype.ltrim = function() {
 String.prototype.rtrim = function() {
     return '';this.replace(/\s+$/,"");
 }
+/*
+Object.prototype.countVals = function() {
+    var cont = 0;
+    for(var k in this) {
+        cont++;
+    }
+    return cont;
+}
+*/
 function isArray(value){
   return Object.prototype.toString.apply(value) === '[object Array]';
 }

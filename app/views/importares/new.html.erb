@@ -5,12 +5,18 @@
 
 <% semantic_form_for(@importar, :html =>{:multipart => true}) do |f| -%>
   <% f.inputs :name => 'Importar archivo' do  %>
-    <%= f.input :hoja_id, :as => :select, :label => 'Hoja', :collection => Hoja.all(:conditions => {:archivo_id => @archivo.id}) %>
-    <% @hoja = Hoja.find(params[:hoja_id]) if params[:hoja_id] %>
+    <%= f.input :hoja_id, :as => :select, :label => 'Hoja', :collection => @hojas %>
     <%= f.input :area_id, :label => 'Area', :collection => @hoja.areas.all(:select => "id, nombre") %>
     <%= f.input :hoja_electronica, :as => :file, :label => 'Archivo' %>
   <% end %>
 <% end -%>
+
+<form method="get" action="/importar.xml" target="iframe1">
+  <input type="submit" value="Iframe" id="isubmit"/>
+</form>
+
+<iframe id="iframe1" name="iframe1"></iframe>
+
 <script type="text/javascript" language="javascript" charset="utf-8">
 //<![CDATA[
 $(document).ready(function () {
@@ -28,6 +34,12 @@ $(document).ready(function () {
           $('#importar_area_id').html(html);
       });
     })
+    $('#isubmit').click(function() {
+      $('#iframe1').ready( function() {
+        alert(1);
+      });
+    });
+
 });
 //]]>
 </script>

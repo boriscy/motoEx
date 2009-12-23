@@ -74,20 +74,13 @@ FormularioSinonimosCrear.prototype = {
      */
     'cerrar': function() {
         // formatea los datos en objeto javascript
-        var nombre = $('#sinonimos_nombre').val();
-        var sinonimo = {}
-        sinonimo[nombre] = {};
-        $('#sinonimos_campos option:selected').each(function(i, el) {
-            sinonimo[nombre][$(this).attr("class")] = {
-                'campo': $(this).val(),
-                'lista': 0
-            };
-        });
         // llama al evento de la clase sinonimos que modifica la variable estado
         if (this.insertarNuevoGrupo){
-            $('#sinonimos').trigger("agregar", sinonimo);
+            $('#sinonimos').trigger("agregar");
+            $('#formulario-sinonimos').trigger("adicionar");
         }else{
-            $('#sinonimos').trigger("modificar", {'sinonimo': sinonimo, 'nombreGrupo': this.nombreGrupo});
+            $('#sinonimos').trigger("modificar", this.nombreGrupo);
+            $('#formulario-sinonimos').trigger("modificar", this.nombreGrupo);
         }
     },
     /**
@@ -118,7 +111,7 @@ FormularioSinonimosCrear.prototype = {
         var sinonimos = estado.area.encabezado.sinonimos;
         for (var k in sinonimos) {
             for (var m in sinonimos[k]) {
-                $('#sinonimos_campos option.' + m).attr("disabled", true);
+                $('#sinonimos_campos option.' + sinonimos[k][m].pos).attr("disabled", true);
             }
         }
     },

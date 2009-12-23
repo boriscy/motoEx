@@ -27,7 +27,7 @@ Rails::Initializer.run do |config|
   config.gem "roo", :version => '1.3.11'# La version 1.9.1 da problemas con authlogic
   config.gem "hpricot"
   config.gem "formtastic"
-  # config.gem "nokogiri"
+  config.gem "nokogiri"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

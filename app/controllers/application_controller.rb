@@ -7,8 +7,7 @@ class ApplicationController < ActionController::Base
   before_filter :adicionar_paginacion
 
   # Permite presentar en un layout AJAX automaticamente
-  layout lambda{|controller| controller.request.xhr? ? false : "application"}
-
+  layout lambda{|c| c.request.xhr? ? false : "application" }
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
 private

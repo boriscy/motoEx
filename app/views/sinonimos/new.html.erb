@@ -1,0 +1,16 @@
+<div id = "formulario-mapeados">
+  <%= render :partial => "formulario_mapeados"  %>
+  <% if request.xhr? %>
+    <iframe id="iframe-mapeo" style="display:none;"></iframe>
+  <% end %>
+
+  <a class="adicionar-sinonimo-mapeo">Adicionar sinonimo</a>
+  <table style="margin-top: 8px;" id="tabla-sinonimos-mapeo">
+    <tr>
+      <th class="ui-state-active">ID</th>
+      <th class="ui-state-active">Sinonimos</th>
+      <th class="ui-state-active"></th>
+    </tr>
+  </table>
+</div>
+

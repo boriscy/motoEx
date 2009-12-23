@@ -6,6 +6,7 @@ class ImportaresController < ApplicationController
     respond_to do |format|
       format.html
       format.xml {render :xml => @archivos}
+      format.json {render :text => @archivos.to_json}
     end
   end
 
@@ -24,13 +25,17 @@ class ImportaresController < ApplicationController
   # Crea una nueva importacion
   def new
     @archivo = Archivo.find(params[:id])
+    @hojas = @archivo.hojas.all(:select => "id, nombre")
     @importar = Importar.new(:hoja_id => params[:hoja_id].to_i)
+    @hoja = Hoja.new
+    @hoja = Hoja.find(params[:hoja_id]) if params[:hoja_id]
+    hash = {:importar => @importar, :archivo => @archivo, :hojas => @hojas}
 
     respond_to do |format|
       format.html
-      format.xml { remder :xml => @importar }
-      format.json { remder :json => @importar }
-      format.yaml { remder :yaml => @importar }
+      format.xml { render :xml => hash }
+      format.json { render :json => @importar }
+      format.yaml { render :yaml => @importar }
     end
   end
 

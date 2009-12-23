@@ -1,0 +1,11 @@
+<% @hash =  {:multipart => true, :target => 'iframe-mapeo'} %>
+<% @hash.delete(:target) unless request.xhr? %>
+
+<% semantic_form_for(@sinonimo, :html => @hash) do |f| %>
+  <% f.inputs :name => 'Importar' do %>
+    <%= f.input :nombre_archivo, :as => :hidden %>
+    <%= f.input :campo %>
+    <%= f.input :archivo_tmp, :as => :file, :hint => 'Debe seleccionar un archivo XML, JSON, CSV o YAML a ser importado' %>
+  <% end %>
+  <%= f.submit "Importar" %>
+<% end %>

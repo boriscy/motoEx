@@ -53,12 +53,12 @@ FormularioSinonimos.prototype = {
             }
         });
         // adiciona un grupo
-        $('#formulario-sinonimos').bind("adicionar", function(e, nombreSinonimo) {
-            form.adicionarGrupoSinonimo(nombreSinonimo);
+        $('#formulario-sinonimos').bind("adicionar", function(e) {
+            form.adicionarGrupoSinonimo();
         });
         // modifica un grupo
-        $('#formulario-sinonimos').bind("modificar", function(e, sinonimoAnteriorNuevo) {
-            form.modificarGrupoSinonimo(sinonimoAnteriorNuevo);
+        $('#formulario-sinonimos').bind("modificar", function(e, nombreGrupoAnterior) {
+            form.modificarGrupoSinonimo(nombreGrupoAnterior);
         });
         //muestra el formulario de adicion
         $('#formulario-sinonimos a.crear-sinonimos').live("click", function() {
@@ -74,6 +74,18 @@ FormularioSinonimos.prototype = {
             // llama al borrado de la fila
             var nombreGrupo = $(this).parent("fieldset").find("legend:first").html();
             $('#formulario-sinonimos-crear').trigger("adicionar:campos", nombreGrupo);
+        });
+        // mapeo de sinonimos
+        $('.mapear-sinonimo').live("click", function() {
+            form.mostrarFormularioMapeo(this);
+        });
+        // Adiciona un nuevo elemento
+        $('a.adicionar-sinonimo-mapeo').live("click", function() {
+            form.adicionarSinonimoMapeo();
+        });
+        // Borra el sinonimo seleccionado
+        $('.borrar-sinonimo-mapeo').live("click", function() {
+            $(this).parents("tr").remove();
         });
     },
     /**
@@ -100,7 +112,9 @@ FormularioSinonimos.prototype = {
         this.limpiar();
         var sinonimos = estado.area.encabezado['sinonimos'];
         for (var i in sinonimos) {
-            this.adicionarGrupoSinonimo(i);
+            var html = this.htmlGrupoSinonimo(i);
+            $('#sinonimos').append(html);
+            this.contador++;
         }
     },
     /**
@@ -108,18 +122,19 @@ FormularioSinonimos.prototype = {
      * obtiene los datos de la variable estado.area.encabezado.sinonimos
      * @param String nombreSinonimo #nombre del sinonimo a agregar
      */
-    'adicionarGrupoSinonimo': function(nombreSinonimo) {
-        var html = this.htmlGrupoSinonimo(nombreSinonimo);
+    'adicionarGrupoSinonimo': function() {
+        var nombreGrupo = $('#sinonimos_nombre').val();
+        if (!estado.area.encabezado.sinonimos[nombreGrupo])
+            return false;
+        var html = this.htmlGrupoSinonimo(nombreGrupo);
         $('#sinonimos').append(html);
         this.contador++;
     },
-    'modificarGrupoSinonimo': function(sinonimoAnteriorNuevo) {
-        var anterior = sinonimoAnteriorNuevo['nombreAnterior'];
-        var nuevo = sinonimoAnteriorNuevo['nombreNuevo'];
-        
+    'modificarGrupoSinonimo': function(grupoNombreAnterior) {
+        var nuevo = $('#sinonimos_nombre').val();
         var html = this.htmlGrupoSinonimo(nuevo);
         // busca al anterior e inserta al nuevo despues
-        $anterior = $('#sinonimos fieldset#sinonimo-' + anterior)
+        $anterior = $('#sinonimos fieldset#sinonimo-' + grupoNombreAnterior);
         $anterior.after(html);
         // elimina el anterior
         $anterior.remove();
@@ -132,8 +147,7 @@ FormularioSinonimos.prototype = {
         $target = $(target);
         $tabla = $target.parents("table.tabla-sinonimos");
         // llama al evento que modifica el estado.area
-        var fila = $target.parent("td").attr('class');
-        $('#sinonimos').trigger("borrar:sinonimo", fila);
+        $('#sinonimos').trigger("borrar:sinonimo", $target);
         // tambien borra la fila en la tabla
         $target.parents("table.tabla-sinonimos tr").remove();
         // si ya no quedan filas borra todo el fieldset
@@ -143,23 +157,24 @@ FormularioSinonimos.prototype = {
     },
     'htmlGrupoSinonimo': function(nombreSinonimo) {
         var html = '<fieldset id="sinonimo-' + nombreSinonimo + '"><legend>' + nombreSinonimo + '</legend>';
-        html += '<a href="#" class="adicionar-sinonimos-campos">Adicionar campos</a>';
-        html += '<table class="tabla-sinonimos">';
+        html += '<a class="adicionar-sinonimos-campos">Editar grupo</a>';
+        html += '<table class="tabla-sinonimos" style="margin-top: 8px">';
         html += '<tr class="th-head">';
         html += '<th class="ui-state-active">Nº</th>';
         html += '<th class="ui-state-active">Campo</th>';
-        html += '<th class="ui-state-active">ID</th>';
+        //html += '<th class="ui-state-active">ID</th>';
         html += '<th class="ui-state-active"></th>';
         html += '</tr>';
         var contador = 1;
         var sinonimo = estado.area.encabezado.sinonimos[nombreSinonimo];
         for (var k in sinonimo) {
-            html += "<tr>";
-            html += "<td><span>" + contador + "</span></td>";
-            html += "<td><span>(" + this.obtieneFilaColumna(k) + ")</span> " + sinonimo[k].campo + "</td>";
-            html += "<td>" + sinonimo[k].campo + "</td>";
-            html += "<td class='" + k + "'><a href='#' class='mapear-sinonimo'>Mapear</a> <a href='#' class='borrar-sinonimo'>Borrar</a></td>";
-            html += "</tr>";
+            html += '<tr>';
+            html += '<td><span>' + contador + '</span></td>';
+            html += '<td><span>(' + this.obtieneFilaColumna(sinonimo[k].pos) + ')</span> ' + sinonimo[k].campo + '</td>';
+            //html += '<td>' + sinonimo[k].campo + '</td>';
+            html += '<td class="' + k + '"><a class="mapear-sinonimo" rel="' + sinonimo[k].campo + '">Mapear</a>';
+            html += '<a class="borrar-sinonimo" rel="' + sinonimo[k].campo + '">Borrar</a></td>';
+            html += '</tr>';
             contador++;
         }
         html += '</table>';
@@ -185,5 +200,43 @@ FormularioSinonimos.prototype = {
     'limpiar': function(){
         $('#sinonimos').html("");
         this.contador = 0;
+    },
+    /**
+     * Revisa is es que el sinonimo ha sido mapeado
+     */
+    'revisarMapeo': function(el) {
+        var uri = $(el).attr("rel");
+        /*$.getJSON(uri, function(data) {
+        });*/
+    },
+    /**
+     * adiciona una fila
+     */
+    'adicionarSinonimoMapeo': function() {
+        var html = '<tr><td><input type="text" /></td><td><textarea></textarea></td><td><a class="borrar-sinonimo-mapeo">borrar</a></td></tr>';
+        $('#tabla-sinonimos-mapeo').append(html);
+    },
+    /**
+     * Construye o muestra el formulario de mapeo
+     */
+    'mostrarFormularioMapeo': function(el) {
+        var campo = $(el).attr("rel");
+
+        if( $('#formulario-mapeados').length <= 0) {
+            $.get('/sinonimos/new', function(data) {
+                $(data).dialog({
+                  'resizable': false, 
+                  'width': 550, 
+                  'title': 'Mapeo de sinónimos',
+                  'open': function() { $('#sinonimo_campo').val(campo);}
+                  });
+            });
+              
+        }else {
+            $('#formulario-mapeados').dialog("open");
+            $('#sinonimo_campo').val(campo);
+        }
+
+        this.revisarMapeo(el);
     }
 };
