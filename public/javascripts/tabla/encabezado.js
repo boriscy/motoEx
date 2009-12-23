@@ -57,7 +57,9 @@ Encabezado = Area.extend({
     'marcarArea': function(css, cssSel) {
         this._super(css, cssSel);
         estado.area[this.serialize]['campos'] = {};
-        estado.area[this.serialize]['sinonimos'] = {};
+        if (this.serialize == 'encabezado') {
+            estado.area[this.serialize]['sinonimos'] = {};
+        }
         //this.destruirTablasCeldas();
     },
     /**

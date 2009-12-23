@@ -85,6 +85,7 @@ FormularioSinonimos.prototype = {
         $('#formulario-sinonimos').unbind("modificar");
         $('#formulario-sinonimos a.crear-sinonimos').die("click");
         $('#formulario-sinonimos a.borrar-sinonimo').die("click");
+        $('#formulario-sinonimos a.adicionar-sinonimos-campos').die("click");
     },
     /**
      * Destruye el objeto
@@ -108,62 +109,19 @@ FormularioSinonimos.prototype = {
      * @param String nombreSinonimo #nombre del sinonimo a agregar
      */
     'adicionarGrupoSinonimo': function(nombreSinonimo) {
-        var html = '<fieldset class="sinonimo-' + nombreSinonimo + '"><legend>' + nombreSinonimo + '</legend>';
-        html += '<a href="#" class="adicionar-sinonimos-campos">Adicionar campos</a>';
-        html += '<table class="tabla-sinonimos">';
-        html += '<tr class="th-head">';
-        html += '<th class="ui-state-active">Nº</th>';
-        html += '<th class="ui-state-active">Campo</th>';
-        html += '<th class="ui-state-active">ID</th>';
-        html += '<th class="ui-state-active"></th>';
-        html += '</tr>';
-        var contador = 1;
-        var sinonimo = estado.area.encabezado.sinonimos[nombreSinonimo];
-        for (var k in sinonimo) {
-            html += "<tr>";
-            html += "<td><span>" + contador + "</span></td>";
-            html += "<td><span>(" + this.obtieneFilaColumna(k) + ")</span> " + sinonimo[k].campo + "</td>";
-            html += "<td>" + sinonimo[k].campo + "</td>";
-            html += "<td class='" + k + "'><a href='#' class='mapear-sinonimo'>Mapear</a> <a href='#' class='borrar-sinonimo'>Borrar</a></td>";
-            html += "</tr>";
-            contador++;
-        }
-        html += '</table>';
-        html += '</fieldset>';
+        var html = this.htmlGrupoSinonimo(nombreSinonimo);
         $('#sinonimos').append(html);
         this.contador++;
     },
     'modificarGrupoSinonimo': function(sinonimoAnteriorNuevo) {
         var anterior = sinonimoAnteriorNuevo['nombreAnterior'];
         var nuevo = sinonimoAnteriorNuevo['nombreNuevo'];
-        var nombreSinonimo = nuevo;
         
-        var html = '<fieldset class="sinonimo-' + nombreSinonimo + '"><legend>' + nombreSinonimo + '</legend>';
-        html += '<a href="#" class="adicionar-sinonimos-campos">Adicionar campos</a>';
-        html += '<table class="tabla-sinonimos">';
-        html += '<tr class="th-head">';
-        html += '<th class="ui-state-active">Nº</th>';
-        html += '<th class="ui-state-active">Campo</th>';
-        html += '<th class="ui-state-active">ID</th>';
-        html += '<th class="ui-state-active"></th>';
-        html += '</tr>';
-        var contador = 1;
-        var sinonimo = estado.area.encabezado.sinonimos[nombreSinonimo];
-        for (var k in sinonimo) {
-            html += "<tr>";
-            html += "<td><span>" + contador + "</span></td>";
-            html += "<td><span>(" + this.obtieneFilaColumna(k) + ")</span> " + sinonimo[k].campo + "</td>";
-            html += "<td>" + sinonimo[k].campo + "</td>";
-            html += "<td class='" + k + "'><a href='#' class='mapear-sinonimo'>Mapear</a> <a href='#' class='borrar-sinonimo'>Borrar</a></td>";
-            html += "</tr>";
-            contador++;
-        }
-        html += '</table>';
-        html += '</fieldset>';
+        var html = this.htmlGrupoSinonimo(nuevo);
         // busca al anterior e inserta al nuevo despues
-        $anterior = $('#sinonimos fieldset.sinonimo-' + anterior)
+        $anterior = $('#sinonimos fieldset#sinonimo-' + anterior)
         $anterior.after(html);
-        // elimina el anterior (solo si se ha cambiado el nombre)
+        // elimina el anterior
         $anterior.remove();
     },
     /**
@@ -182,6 +140,31 @@ FormularioSinonimos.prototype = {
         if ($tabla.find('tr:not(.th-head)').length == 0){
             $tabla.parent('fieldset').remove();
         }
+    },
+    'htmlGrupoSinonimo': function(nombreSinonimo) {
+        var html = '<fieldset id="sinonimo-' + nombreSinonimo + '"><legend>' + nombreSinonimo + '</legend>';
+        html += '<a href="#" class="adicionar-sinonimos-campos">Adicionar campos</a>';
+        html += '<table class="tabla-sinonimos">';
+        html += '<tr class="th-head">';
+        html += '<th class="ui-state-active">Nº</th>';
+        html += '<th class="ui-state-active">Campo</th>';
+        html += '<th class="ui-state-active">ID</th>';
+        html += '<th class="ui-state-active"></th>';
+        html += '</tr>';
+        var contador = 1;
+        var sinonimo = estado.area.encabezado.sinonimos[nombreSinonimo];
+        for (var k in sinonimo) {
+            html += "<tr>";
+            html += "<td><span>" + contador + "</span></td>";
+            html += "<td><span>(" + this.obtieneFilaColumna(k) + ")</span> " + sinonimo[k].campo + "</td>";
+            html += "<td>" + sinonimo[k].campo + "</td>";
+            html += "<td class='" + k + "'><a href='#' class='mapear-sinonimo'>Mapear</a> <a href='#' class='borrar-sinonimo'>Borrar</a></td>";
+            html += "</tr>";
+            contador++;
+        }
+        html += '</table>';
+        html += '</fieldset>';
+        return html;
     },
     /**
      * transforma el valor de tipo "fila_columna" a su valor de iteracion:
