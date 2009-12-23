@@ -1,9 +1,6 @@
 Fin = Encabezado.extend({
     'serialize': 'fin',
     'cssMarcar': 'bg-light-yellow',
-    'init': function(ini, fin, area){
-        this._super(ini, fin, area);
-    },
     /**
      * Creación de eventos relacionados
      */
