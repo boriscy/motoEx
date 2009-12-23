@@ -1,16 +1,33 @@
-<h1>Importar Archivo</h1>
+<h1>Importar Archivo <%= @archivo.nombre %></h1>
+<div class="sheet-doc-info">
+  <h2 class="dark-blue"><%= @archivo.archivo_excel_file_name %> <span class="green"><%= @archivo.archivo_excel_file_size.to_byte_size %></span></h2>
+</div>
 
 <% semantic_form_for(@importar, :html =>{:multipart => true}) do |f| -%>
-  <% f.inputs do  %>
+  <% f.inputs :name => 'Importar archivo' do  %>
     <%= f.input :hoja_id, :as => :select, :label => 'Hoja', :collection => Hoja.all(:conditions => {:archivo_id => @archivo.id}) %>
-    <%= f.input :area_id, :label => 'Area', :collection => []%>
+    <% @hoja = Hoja.find(params[:hoja_id]) if params[:hoja_id] %>
+    <%= f.input :area_id, :label => 'Area', :collection => @hoja.areas.all(:select => "id, nombre") %>
     <%= f.input :hoja_electronica, :as => :file, :label => 'Archivo' %>
   <% end %>
 <% end -%>
 <script type="text/javascript" language="javascript" charset="utf-8">
 //<![CDATA[
 $(document).ready(function () {
-    $('#importar_hoja_id')
+    $('#importar_hoja_id').change(function() {
+      //NO ejecutar en caso de que no se pase un numero
+      if(! /^\d+$/.test($(this).val()) )
+          return false
+
+      $.getJSON("/importar/" + $(this).val(), function(data) {
+          var html = "<option>   </option>";
+          $(data).each(function(i, el) {
+             html += '<option value="'+el.id+'">'+el.nombre+'</option>';
+          });
+          $('#importar_area_id option').remove();
+          $('#importar_area_id').html(html);
+      });
+    })
 });
 //]]>
 </script>

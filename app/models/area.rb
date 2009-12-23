@@ -36,4 +36,8 @@ class Area < ActiveRecord::Base
     end
   end
 
+  def to_s
+    nombre
+  end
+
 end

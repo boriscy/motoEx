@@ -10,6 +10,7 @@ class ArchivosController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @archivos }
+      format.json  { render :json => @archivos }
     end
   end
 

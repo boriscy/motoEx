@@ -25,12 +25,31 @@ Y /^visito (.*)$/ do |uri|
 end
 
 Entonces /^hago click en (.*)$/ do |link|
+  @@archivo_nombre = link
   crear_archivo_hojas(link)
   click_link(link)
 end
 
 Y /^debo seleccionar la hoja (.*)$/ do |hoja|
   select(hoja)
+  @@hoja_nombre = hoja
 end
 
+Cuando /^voy a importar$/ do
+  archivo = Archivo.find_by_archivo_excel_file_name(@@archivo_nombre)
+  @@hoja = archivo.hojas.find_by_nombre(@@hoja_nombre)
+  # Creacion de areas
+  crear_areas(@@hoja)
+
+  get "/importar/#{@@hoja.id}.json"
+end
+
+Entonces /^debo ver el listado$/ do
+  response.should have_text(@@hoja.areas.all(:select => "id, nombre").to_json )
+end
+
+Entonces /^selecciono la "([^\"]*)" y mi archivo "([^\"]*)"$/ do |arg1, arg2|
+  archivo = File.join(RAILS_ROOT, "ejemplos", @@archivo_nombre)
+  post :create => { :area_id => @@hoja.areas.first.id, :importar => archivo}
+end
 
