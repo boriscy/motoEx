@@ -16,11 +16,12 @@ class SinonimosController < ApplicationController
   # GET /sinonimos/1.xml
   def show
     @sinonimo = Sinonimo.find(params[:id])
+    render :text => @sinonimo.mapeado.to_json
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @sinonimo }
-    end
+#    respond_to do |format|
+#      format.html # show.html.erb
+#      format.xml  { render :xml => @sinonimo }
+#    end
   end
 
   # GET /sinonimos/new
@@ -43,17 +44,23 @@ class SinonimosController < ApplicationController
   # POST /sinonimos.xml
   def create
     @sinonimo = Sinonimo.new(params[:sinonimo])
-
-    respond_to do |format|
-      if @sinonimo.save
-        flash[:notice] = 'Sinonimo was successfully created.'
-        format.html { redirect_to(@sinonimo) }
-        format.xml  { render :xml => @sinonimo, :status => :created, :location => @sinonimo }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @sinonimo.errors, :status => :unprocessable_entity }
-      end
+    
+    if @sinonimo.save
+      render :text => @sinonimo.mapeado.to_json
+    else
     end
+
+#    respond_to do |format|
+#      if @sinonimo.save
+#        flash[:notice] = 'Sinonimo was successfully created.'
+#        format.html { redirect_to(@sinonimo) }
+#        format.xml  { render :xml => @sinonimo, :status => :created, :location => @sinonimo }
+#        format.json {  }
+#      else
+#        format.html { render :action => "new" }
+#        format.xml  { render :xml => @sinonimo.errors, :status => :unprocessable_entity }
+#      end
+#    end
   end
 
   # PUT /sinonimos/1
