@@ -1,0 +1,491 @@
+--- 
+- :codigo: CCB
+  :nombre: CASCABEL
+  :id: 1
+  :sinonimos: 
+  - CASCABEL
+  - ""
+- :codigo: VBR
+  :nombre: VIBORA
+  :id: 2
+  :sinonimos: 
+  - VIBORA
+  - ""
+- :codigo: SIR
+  :nombre: SIRARI
+  :id: 3
+  :sinonimos: 
+  - SIRARI
+  - ""
+- :codigo: GRY
+  :nombre: GUAIRUY
+  :id: 4
+  :sinonimos: 
+  - GUAIRUY
+  - ""
+- :codigo: DRD
+  :nombre: EL DORADO
+  :id: 5
+  :sinonimos: 
+  - EL DORADO
+  - ""
+- :codigo: RGD
+  :nombre: RIO GRANDE
+  :id: 6
+  :sinonimos: 
+  - RIO GRANDE
+  - ""
+- :codigo: TTR
+  :nombre: TATARENDA
+  :id: 7
+  :sinonimos: 
+  - TATARENDA
+  - ""
+- :codigo: PTJ
+  :nombre: PATUJU
+  :id: 8
+  :sinonimos: 
+  - PATUJU
+  - ""
+- :codigo: YPC
+  :nombre: YAPACANI
+  :id: 9
+  :sinonimos: 
+  - YAPACANI
+  - ""
+- :codigo: CBR
+  :nombre: COBRA
+  :id: 10
+  :sinonimos: 
+  - COBRA
+  - ""
+- :codigo: MGD
+  :nombre: MONTEAGUDO
+  :id: 11
+  :sinonimos: 
+  - MONTEAGUDO
+  - ""
+- :codigo: SAL
+  :nombre: SAN ALBERTO
+  :id: 12
+  :sinonimos: 
+  - SAN ALBERTO
+  - ""
+- :codigo: SBL
+  :nombre: "S\xC3\x81BALO"
+  :id: 13
+  :sinonimos: 
+  - "S\xC3\x81BALO"
+  - SABALO
+- :codigo: EDD
+  :nombre: ESCONDIDO
+  :id: 14
+  :sinonimos: 
+  - ESCONDIDO
+  - ""
+- :codigo: LVT
+  :nombre: LA VERTIENTE
+  :id: 15
+  :sinonimos: 
+  - LA VERTIENTE
+  - ""
+- :codigo: TGT
+  :nombre: TAIGUATI
+  :id: 16
+  :sinonimos: 
+  - TAIGUATI
+  - ""
+- :codigo: LSR
+  :nombre: LOS SURIS
+  :id: 17
+  :sinonimos: 
+  - LOS SURIS
+  - ""
+- :codigo: WRN
+  :nombre: WARNES
+  :id: 18
+  :sinonimos: 
+  - WARNES
+  - ""
+- :codigo: CHS
+  :nombre: CHACO SUR
+  :id: 19
+  :sinonimos: 
+  - CHACO SUR
+  - ""
+- :codigo: NJL
+  :nombre: NARANJILLOS
+  :id: 20
+  :sinonimos: 
+  - NARANJILLOS
+  - ""
+- :codigo: PVN
+  :nombre: PORVENIR
+  :id: 21
+  :sinonimos: 
+  - PORVENIR
+  - ""
+- :codigo: BJOP
+  :nombre: BERMEJO PROFUNDO
+  :id: 22
+  :sinonimos: 
+  - BERMEJO PROFUNDO
+  - X 44
+- :codigo: BJO
+  :nombre: BERMEJO SOMERO
+  :id: 23
+  :sinonimos: 
+  - BERMEJO SOMERO
+  - BERMEJO
+- :codigo: TGR
+  :nombre: TIGRE
+  :id: 24
+  :sinonimos: 
+  - TIGRE
+  - ""
+- :codigo: TOR
+  :nombre: TORO
+  :id: 25
+  :sinonimos: 
+  - TORO
+  - ""
+- :codigo: CAR
+  :nombre: CARANDA
+  :id: 26
+  :sinonimos: 
+  - CARANDA
+  - ""
+- :codigo: CLP
+  :nombre: COLPA
+  :id: 27
+  :sinonimos: 
+  - COLPA
+  - ""
+- :codigo: SRBNO
+  :nombre: SURUBI NOROESTE
+  :id: 28
+  :sinonimos: 
+  - SURUBI NOROESTE
+  - NOR - OESTE
+- :codigo: PLM
+  :nombre: PALOMA
+  :id: 29
+  :sinonimos: 
+  - PALOMA
+  - ""
+- :codigo: SRB
+  :nombre: SURUBI
+  :id: 30
+  :sinonimos: 
+  - SURUBI
+  - ""
+- :codigo: SRBBB
+  :nombre: SURUBI BLOQUE BAJO
+  :id: 31
+  :sinonimos: 
+  - SURUBI BLOQUE BAJO
+  - BLOQUE BAJO
+- :codigo: CBT
+  :nombre: CAMBEITI
+  :id: 32
+  :sinonimos: 
+  - CAMBEITI
+  - ""
+- :codigo: LSC
+  :nombre: LOS SAUCES
+  :id: 33
+  :sinonimos: 
+  - LOS SAUCES
+  - ""
+- :codigo: BQR
+  :nombre: "BOQUER\xC3\x93N"
+  :id: 34
+  :sinonimos: 
+  - "BOQUER\xC3\x93N"
+  - ""
+- :codigo: PLC
+  :nombre: PALACIOS
+  :id: 35
+  :sinonimos: 
+  - PALACIOS
+  - ""
+- :codigo: PPL
+  :nombre: PUERTO PALOS
+  :id: 36
+  :sinonimos: 
+  - PUERTO PALOS
+  - ""
+- :codigo: CAM
+  :nombre: CAMIRI
+  :id: 37
+  :sinonimos: 
+  - CAMIRI
+  - ""
+- :codigo: ECD
+  :nombre: ENCONADA
+  :id: 38
+  :sinonimos: 
+  - ENCONADA
+  - ""
+- :codigo: ARN
+  :nombre: ARROYO NEGRO
+  :id: 39
+  :sinonimos: 
+  - ARROYO NEGRO
+  - ""
+- :codigo: LPS
+  :nombre: LOS PENOCOS
+  :id: 40
+  :sinonimos: 
+  - LOS PENOCOS
+  - ""
+- :codigo: !binary |
+    TFDDkQ==
+
+  :nombre: "LA PE\xC3\x91A"
+  :id: 41
+  :sinonimos: 
+  - "LA PE\xC3\x91A"
+  - ""
+- :codigo: TND
+  :nombre: TUNDY
+  :id: 42
+  :sinonimos: 
+  - TUNDY
+  - ""
+- :codigo: PMR
+  :nombre: PALMAR
+  :id: 43
+  :sinonimos: 
+  - PALMAR
+  - ""
+- :codigo: MGR
+  :nombre: MARGARITA
+  :id: 44
+  :sinonimos: 
+  - MARGARITA
+  - ""
+- :codigo: HCY
+  :nombre: HUACAYA
+  :id: 45
+  :sinonimos: 
+  - HUACAYA
+  - ""
+- :codigo: RSC
+  :nombre: RIO SECO
+  :id: 46
+  :sinonimos: 
+  - RIO SECO
+  - ""
+- :codigo: TCB
+  :nombre: TACOBO
+  :id: 47
+  :sinonimos: 
+  - TACOBO
+  - ""
+- :codigo: TJB
+  :nombre: TAJIBO
+  :id: 48
+  :sinonimos: 
+  - TAJIBO
+  - ""
+- :codigo: HYC
+  :nombre: HUAYCO
+  :id: 49
+  :sinonimos: 
+  - HUAYCO
+  - ""
+- :codigo: MDB
+  :nombre: MADREJONES BOLIVIANO
+  :id: 50
+  :sinonimos: 
+  - MADREJONES BOLIVIANO
+  - ""
+- :codigo: !binary |
+    w5FQQw==
+
+  :nombre: "\xC3\x91UPUCO"
+  :id: 51
+  :sinonimos: 
+  - "\xC3\x91UPUCO"
+  - ""
+- :codigo: BBL
+  :nombre: BULO BULO
+  :id: 52
+  :sinonimos: 
+  - BULO BULO
+  - ""
+- :codigo: CAI
+  :nombre: CAIGUA
+  :id: 53
+  :sinonimos: 
+  - CAIGUA
+  - ""
+- :codigo: CRC
+  :nombre: CARRASCO
+  :id: 54
+  :sinonimos: 
+  - CARRASCO
+  - ""
+- :codigo: CFW
+  :nombre: CARRASCO FW
+  :id: 55
+  :sinonimos: 
+  - CARRASCO FW
+  - ""
+- :codigo: CHU
+  :nombre: CHURUMAS
+  :id: 56
+  :sinonimos: 
+  - CHURUMAS
+  - ""
+- :codigo: HSR
+  :nombre: "HUMBERTO SU\xC3\x81REZ ROCA"
+  :id: 57
+  :sinonimos: 
+  - "HUMBERTO SU\xC3\x81REZ ROCA"
+  - H. SUAREZ R.
+- :codigo: JNN
+  :nombre: JUNIN
+  :id: 58
+  :sinonimos: 
+  - JUNIN
+  - ""
+- :codigo: KNT
+  :nombre: KANATA
+  :id: 59
+  :sinonimos: 
+  - KANATA
+  - ""
+- :codigo: KNN
+  :nombre: KANATA NORTE
+  :id: 60
+  :sinonimos: 
+  - KANATA NORTE
+  - ""
+- :codigo: KTR
+  :nombre: KATARI
+  :id: 61
+  :sinonimos: 
+  - KATARI
+  - ""
+- :codigo: LCS
+  :nombre: LOS CUSIS
+  :id: 62
+  :sinonimos: 
+  - LOS CUSIS
+  - ""
+- :codigo: LMS
+  :nombre: LOS MONOS
+  :id: 63
+  :sinonimos: 
+  - LOS MONOS
+  - ""
+- :codigo: MCT
+  :nombre: MONTECRISTO
+  :id: 64
+  :sinonimos: 
+  - MONTECRISTO
+  - ""
+- :codigo: PNW
+  :nombre: PALOMETAS NW
+  :id: 65
+  :sinonimos: 
+  - PALOMETAS NW
+  - ""
+- :codigo: PJS
+  :nombre: PATUJUSAL
+  :id: 66
+  :sinonimos: 
+  - PATUJUSAL
+  - ""
+- :codigo: PJO
+  :nombre: PATUJUSAL OESTE
+  :id: 67
+  :sinonimos: 
+  - PATUJUSAL OESTE
+  - ""
+- :codigo: PCH
+  :nombre: PERCHELES
+  :id: 68
+  :sinonimos: 
+  - PERCHELES
+  - ""
+- :codigo: SIG
+  :nombre: SAN IGNACIO
+  :id: 69
+  :sinonimos: 
+  - SAN IGNACIO
+  - ""
+- :codigo: SNQ
+  :nombre: SAN ROQUE
+  :id: 70
+  :sinonimos: 
+  - SAN ROQUE
+  - ""
+- :codigo: SRS
+  :nombre: SANTA ROSA
+  :id: 71
+  :sinonimos: 
+  - SANTA ROSA
+  - ""
+- :codigo: SRW
+  :nombre: SANTA ROSA W
+  :id: 72
+  :sinonimos: 
+  - SANTA ROSA W
+  - ""
+- :codigo: VGR
+  :nombre: VUELTA GRANDE
+  :id: 73
+  :sinonimos: 
+  - VUELTA GRANDE
+  - ""
+- :codigo: IBB
+  :nombre: IBIBOBO
+  :id: 74
+  :sinonimos: 
+  - IBIBOBO
+  - ""
+- :codigo: PMO
+  :nombre: PALO MARCADO
+  :id: 75
+  :sinonimos: 
+  - PALO MARCADO
+  - ""
+- :codigo: ITU
+  :nombre: ITAU
+  :id: 76
+  :sinonimos: 
+  - ITAU
+  - ""
+- :codigo: ITT
+  :nombre: ITATIQUI
+  :id: 77
+  :sinonimos: 
+  - ITATIQUI
+  - ""
+- :codigo: ICS
+  :nombre: INCAHUASI
+  :id: 78
+  :sinonimos: 
+  - INCAHUASI
+  - ""
+- :codigo: KFW
+  :nombre: KANATA FOOTWALL
+  :id: 79
+  :sinonimos: 
+  - KANATA FOOTWALL
+  - KANATA FW
+- :codigo: CAMA
+  :nombre: CAMATINDI
+  :id: 80
+  :sinonimos: 
+  - CAMATINDI
+  - 
+- :codigo: PAL
+  :nombre: PALOMETA NW
+  :id: 81
+  :sinonimos: 
+  - PALOMETA NW
+  - 

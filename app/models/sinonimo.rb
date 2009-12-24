@@ -13,23 +13,26 @@ class Sinonimo < ActiveRecord::Base
   end
 
   def mapear_campo
-    arr = case( File.extname(archivo_tmp.original_filename).downcase)
+    self.mapeado = case( File.extname(archivo_tmp.original_filename).downcase)
     when '.yml' then parse_yaml()
     when '.xml' then parse_xml()
     when '.json' then parse_json()
     end
-    debugger
-    s = 0
   end
 
   def parse_yaml()
-    yaml = YAML::parse( File.open(archivo_tmp.path) )
-#    columns = yaml.transform['campos']['columns']
-#    records =  yaml.transform['campos']['records']
-#    lcol = lambda{|v, p| v[columns.find_index{|v| v==p}] }
-#    debugger
-#    records.inject([]){|s, v| s << { campo_id => lcol.call(v, campo_id), campo => lcol.call(v, campo) }; s  }
-    yaml.transform
+    YAML::parse( File.open(archivo_tmp.path) ).transform
+  end
+
+  def parse_xml()
+    xml = Nokogiri::XML(File.open(archivo_tmp.path))
+    campos = xml.css("record").first.css("*").inject([]){|s, v| s << v.name unless v.name =~ /sinonimo/; s}
+    xml.css('record').inject([]) do |arr, nodo|
+      arr << campos.inject({}){|hash, campo| 
+        hash[campo.to_sym] = nodo.css(campo).text
+        hash
+      }.merge({:sinonimos => nodo.css("sinonimos").inject([]){|ar, sin| ar << sin.css("sinonimo").text} } )
+    end
   end
 
   def self.yamel(param='nombre')
@@ -50,3 +53,10 @@ class Sinonimo < ActiveRecord::Base
   end
 
 end
+
+#campos = Campo.all.inject([]){|s, v| 
+#  s << {:id => v.id, :nombre => v.nombre, :codigo => v.codigo, :sinonimos => [{:sinonimo => v.nombre},{:sinonimo => v.sinonimo}]}
+#  s
+#}
+# # f.class # => File
+#f.inject(""){|s, v| s << v unless v =~ /^\s+<sinonimo>\n/ or v=~ /^\s+<\/sinonimo>\n/; s}
