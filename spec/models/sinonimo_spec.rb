@@ -26,6 +26,7 @@ describe Sinonimo do
     @sinonimo = Sinonimo.create(@params)
     @sinonimo.mapeado.first[:nombre].should == 'CASCABEL'
     @sinonimo.mapeado.last[:nombre].should == 'PALOMETA NW'
+    @sinonimo.mapeado.first[:sinonimos].first.should == 'CASCABEL'
   end
 
   it "debe parsear el dato correctamente XML" do
@@ -35,4 +36,13 @@ describe Sinonimo do
     @sinonimo.mapeado.last[:nombre].should == 'PALOMETA NW'
     @sinonimo.mapeado.first[:sinonimos].first.should == 'CASCABEL'
   end
+
+  it "debe parsear el dato correctamente JSON" do
+    set_archivo_tmp('json')
+    @sinonimo = Sinonimo.create(@params)
+    @sinonimo.mapeado.first['nombre'].should == 'CASCABEL'
+    @sinonimo.mapeado.last['nombre'].should == 'PALOMETA NW'
+    @sinonimo.mapeado.first['sinonimos'].first.should == 'CASCABEL'
+  end
+
 end

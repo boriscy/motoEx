@@ -12,19 +12,26 @@ class Sinonimo < ActiveRecord::Base
     "#{nombre} (#{archivo})"
   end
 
+  # Realiza el mapeado de un archivo XML, YAML, JSON o CSV
   def mapear_campo
     self.mapeado = case( File.extname(archivo_tmp.original_filename).downcase)
-    when '.yml' then parse_yaml()
-    when '.xml' then parse_xml()
-    when '.json' then parse_json()
+    when '.yml' then parsear_yaml()
+    when '.xml' then parsear_xml()
+    when '.json' then parsear_json()
     end
   end
 
-  def parse_yaml()
+  # Parseo de YAML
+  def parsear_yaml()
     YAML::parse( File.open(archivo_tmp.path) ).transform
   end
 
-  def parse_xml()
+  # Parseo de JSON
+  def parsear_json()
+    ActiveSupport::JSON.decode( File.open(archivo_tmp.path).inject(""){|s, v| s << v} )
+  end
+
+  def parsear_xml()
     xml = Nokogiri::XML(File.open(archivo_tmp.path))
     campos = xml.css("record").first.css("*").inject([]){|s, v| s << v.name unless v.name =~ /sinonimo/; s}
     xml.css('record').inject([]) do |arr, nodo|
@@ -41,15 +48,6 @@ class Sinonimo < ActiveRecord::Base
     records =  yaml.transform['campos']['records']
     lcol = lambda{|v, p| v[columns.find_index{|v| v==p}] }
     records.inject([]){|s, v| s << { :id => lcol.call(v, 'id'), param.to_sym => lcol.call(v, param) }; s  }
-  end
-
-  # Parsea un documento xml que se sube al servidor
-  def self.parse_xml(id, campo)
-
-  end
-
-  def self.parse_csv(id, campo)
-
   end
 
 end
