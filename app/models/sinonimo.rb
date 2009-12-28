@@ -23,7 +23,17 @@ class Sinonimo < ActiveRecord::Base
 
   # Parseo de YAML
   def parsear_yaml()
-    YAML::parse( File.open(archivo_tmp.path) ).transform
+    arr = YAML::parse( File.open(archivo_tmp.path) ).transform
+    if arr.first.keys.first.is_a? Symbol
+      arr.first.keys
+    end
+    arr
+  end
+
+  def parsear_csv(separador=",")
+    csv = FasterCSV.parse(File.open(archivo_tmp.path), :col_sep => separador)
+    cols = csv.shift
+    csv.inject([]){|arr, v| cols.inject({}){|hash, col| hash[col] = v } }
   end
 
   # Parseo de JSON
@@ -33,12 +43,16 @@ class Sinonimo < ActiveRecord::Base
 
   def parsear_xml()
     xml = Nokogiri::XML(File.open(archivo_tmp.path))
-    campos = xml.css("record").first.css("*").inject([]){|s, v| s << v.name unless v.name =~ /sinonimo/; s}
+    campos = xml.css("record").first.css("*").inject([]){|s, v| s << v.name unless v.name =~ /^sinonimos/; s}
+    sinonimos =  xml.css("record").first.css("*").inject([]){|s, v| s << v.name if v.name =~ /^sinonimos/; s}
     xml.css('record').inject([]) do |arr, nodo|
       arr << campos.inject({}){|hash, campo| 
         hash[campo.to_sym] = nodo.css(campo).text
         hash
-      }.merge({:sinonimos => nodo.css("sinonimos").inject([]){|ar, sin| ar << sin.css("sinonimo").text} } )
+      }.merge(sinonimos.inject({}){|h2, sin|
+        h2[sin] = nodo.css(sin).text
+#        {:sinonimos => nodo.css("sinonimos").inject([]){|ar, sin| ar << sin.css("sinonimo").text} } )
+      })
     end
   end
 
