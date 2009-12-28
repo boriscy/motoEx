@@ -4,729 +4,729 @@
     <codigo>CCB</codigo>
     <nombre>CASCABEL</nombre>
     <id type="integer">1</id>
-    <sinonimos type="array">
-        <sinonimo>CASCABEL</sinonimo>
-        <sinonimo></sinonimo>
-    </sinonimos>
+    <sinonimos_nombre type="array">
+        <sinonimo>Casca</sinonimo>
+        <sinonimo>Cascafrut</sinonimo>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>VBR</codigo>
     <nombre>VIBORA</nombre>
     <id type="integer">2</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>VIBORA</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>SIR</codigo>
     <nombre>SIRARI</nombre>
     <id type="integer">3</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>SIRARI</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>GRY</codigo>
     <nombre>GUAIRUY</nombre>
     <id type="integer">4</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>GUAIRUY</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>DRD</codigo>
     <nombre>EL DORADO</nombre>
     <id type="integer">5</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>EL DORADO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>RGD</codigo>
     <nombre>RIO GRANDE</nombre>
     <id type="integer">6</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>RIO GRANDE</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>TTR</codigo>
     <nombre>TATARENDA</nombre>
     <id type="integer">7</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>TATARENDA</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>PTJ</codigo>
     <nombre>PATUJU</nombre>
     <id type="integer">8</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>PATUJU</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>YPC</codigo>
     <nombre>YAPACANI</nombre>
     <id type="integer">9</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>YAPACANI</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>CBR</codigo>
     <nombre>COBRA</nombre>
     <id type="integer">10</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>COBRA</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>MGD</codigo>
     <nombre>MONTEAGUDO</nombre>
     <id type="integer">11</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>MONTEAGUDO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>SAL</codigo>
     <nombre>SAN ALBERTO</nombre>
     <id type="integer">12</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>SAN ALBERTO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>SBL</codigo>
     <nombre>S&#193;BALO</nombre>
     <id type="integer">13</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>S&#193;BALO</sinonimo>
         <sinonimo>SABALO</sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>EDD</codigo>
     <nombre>ESCONDIDO</nombre>
     <id type="integer">14</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>ESCONDIDO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>LVT</codigo>
     <nombre>LA VERTIENTE</nombre>
     <id type="integer">15</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>LA VERTIENTE</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>TGT</codigo>
     <nombre>TAIGUATI</nombre>
     <id type="integer">16</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>TAIGUATI</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>LSR</codigo>
     <nombre>LOS SURIS</nombre>
     <id type="integer">17</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>LOS SURIS</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>WRN</codigo>
     <nombre>WARNES</nombre>
     <id type="integer">18</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>WARNES</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>CHS</codigo>
     <nombre>CHACO SUR</nombre>
     <id type="integer">19</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>CHACO SUR</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>NJL</codigo>
     <nombre>NARANJILLOS</nombre>
     <id type="integer">20</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>NARANJILLOS</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>PVN</codigo>
     <nombre>PORVENIR</nombre>
     <id type="integer">21</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>PORVENIR</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>BJOP</codigo>
     <nombre>BERMEJO PROFUNDO</nombre>
     <id type="integer">22</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>BERMEJO PROFUNDO</sinonimo>
         <sinonimo>X 44</sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>BJO</codigo>
     <nombre>BERMEJO SOMERO</nombre>
     <id type="integer">23</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>BERMEJO SOMERO</sinonimo>
         <sinonimo>BERMEJO</sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>TGR</codigo>
     <nombre>TIGRE</nombre>
     <id type="integer">24</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>TIGRE</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>TOR</codigo>
     <nombre>TORO</nombre>
     <id type="integer">25</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>TORO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>CAR</codigo>
     <nombre>CARANDA</nombre>
     <id type="integer">26</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>CARANDA</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>CLP</codigo>
     <nombre>COLPA</nombre>
     <id type="integer">27</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>COLPA</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>SRBNO</codigo>
     <nombre>SURUBI NOROESTE</nombre>
     <id type="integer">28</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>SURUBI NOROESTE</sinonimo>
         <sinonimo>NOR - OESTE</sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>PLM</codigo>
     <nombre>PALOMA</nombre>
     <id type="integer">29</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>PALOMA</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>SRB</codigo>
     <nombre>SURUBI</nombre>
     <id type="integer">30</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>SURUBI</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>SRBBB</codigo>
     <nombre>SURUBI BLOQUE BAJO</nombre>
     <id type="integer">31</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>SURUBI BLOQUE BAJO</sinonimo>
         <sinonimo>BLOQUE BAJO</sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>CBT</codigo>
     <nombre>CAMBEITI</nombre>
     <id type="integer">32</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>CAMBEITI</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>LSC</codigo>
     <nombre>LOS SAUCES</nombre>
     <id type="integer">33</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>LOS SAUCES</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>BQR</codigo>
     <nombre>BOQUER&#211;N</nombre>
     <id type="integer">34</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>BOQUER&#211;N</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>PLC</codigo>
     <nombre>PALACIOS</nombre>
     <id type="integer">35</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>PALACIOS</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>PPL</codigo>
     <nombre>PUERTO PALOS</nombre>
     <id type="integer">36</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>PUERTO PALOS</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>CAM</codigo>
     <nombre>CAMIRI</nombre>
     <id type="integer">37</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>CAMIRI</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>ECD</codigo>
     <nombre>ENCONADA</nombre>
     <id type="integer">38</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>ENCONADA</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>ARN</codigo>
     <nombre>ARROYO NEGRO</nombre>
     <id type="integer">39</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>ARROYO NEGRO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>LPS</codigo>
     <nombre>LOS PENOCOS</nombre>
     <id type="integer">40</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>LOS PENOCOS</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>LP&#209;</codigo>
     <nombre>LA PE&#209;A</nombre>
     <id type="integer">41</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>LA PE&#209;A</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>TND</codigo>
     <nombre>TUNDY</nombre>
     <id type="integer">42</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>TUNDY</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>PMR</codigo>
     <nombre>PALMAR</nombre>
     <id type="integer">43</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>PALMAR</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>MGR</codigo>
     <nombre>MARGARITA</nombre>
     <id type="integer">44</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>MARGARITA</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>HCY</codigo>
     <nombre>HUACAYA</nombre>
     <id type="integer">45</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>HUACAYA</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>RSC</codigo>
     <nombre>RIO SECO</nombre>
     <id type="integer">46</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>RIO SECO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>TCB</codigo>
     <nombre>TACOBO</nombre>
     <id type="integer">47</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>TACOBO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>TJB</codigo>
     <nombre>TAJIBO</nombre>
     <id type="integer">48</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>TAJIBO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>HYC</codigo>
     <nombre>HUAYCO</nombre>
     <id type="integer">49</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>HUAYCO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>MDB</codigo>
     <nombre>MADREJONES BOLIVIANO</nombre>
     <id type="integer">50</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>MADREJONES BOLIVIANO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>&#209;PC</codigo>
     <nombre>&#209;UPUCO</nombre>
     <id type="integer">51</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>&#209;UPUCO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>BBL</codigo>
     <nombre>BULO BULO</nombre>
     <id type="integer">52</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>BULO BULO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>CAI</codigo>
     <nombre>CAIGUA</nombre>
     <id type="integer">53</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>CAIGUA</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>CRC</codigo>
     <nombre>CARRASCO</nombre>
     <id type="integer">54</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>CARRASCO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>CFW</codigo>
     <nombre>CARRASCO FW</nombre>
     <id type="integer">55</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>CARRASCO FW</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>CHU</codigo>
     <nombre>CHURUMAS</nombre>
     <id type="integer">56</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>CHURUMAS</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>HSR</codigo>
     <nombre>HUMBERTO SU&#193;REZ ROCA</nombre>
     <id type="integer">57</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>HUMBERTO SU&#193;REZ ROCA</sinonimo>
         <sinonimo>H. SUAREZ R.</sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>JNN</codigo>
     <nombre>JUNIN</nombre>
     <id type="integer">58</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>JUNIN</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>KNT</codigo>
     <nombre>KANATA</nombre>
     <id type="integer">59</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>KANATA</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>KNN</codigo>
     <nombre>KANATA NORTE</nombre>
     <id type="integer">60</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>KANATA NORTE</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>KTR</codigo>
     <nombre>KATARI</nombre>
     <id type="integer">61</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>KATARI</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>LCS</codigo>
     <nombre>LOS CUSIS</nombre>
     <id type="integer">62</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>LOS CUSIS</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>LMS</codigo>
     <nombre>LOS MONOS</nombre>
     <id type="integer">63</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>LOS MONOS</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>MCT</codigo>
     <nombre>MONTECRISTO</nombre>
     <id type="integer">64</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>MONTECRISTO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>PNW</codigo>
     <nombre>PALOMETAS NW</nombre>
     <id type="integer">65</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>PALOMETAS NW</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>PJS</codigo>
     <nombre>PATUJUSAL</nombre>
     <id type="integer">66</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>PATUJUSAL</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>PJO</codigo>
     <nombre>PATUJUSAL OESTE</nombre>
     <id type="integer">67</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>PATUJUSAL OESTE</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>PCH</codigo>
     <nombre>PERCHELES</nombre>
     <id type="integer">68</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>PERCHELES</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>SIG</codigo>
     <nombre>SAN IGNACIO</nombre>
     <id type="integer">69</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>SAN IGNACIO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>SNQ</codigo>
     <nombre>SAN ROQUE</nombre>
     <id type="integer">70</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>SAN ROQUE</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>SRS</codigo>
     <nombre>SANTA ROSA</nombre>
     <id type="integer">71</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>SANTA ROSA</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>SRW</codigo>
     <nombre>SANTA ROSA W</nombre>
     <id type="integer">72</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>SANTA ROSA W</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>VGR</codigo>
     <nombre>VUELTA GRANDE</nombre>
     <id type="integer">73</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>VUELTA GRANDE</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>IBB</codigo>
     <nombre>IBIBOBO</nombre>
     <id type="integer">74</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>IBIBOBO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>PMO</codigo>
     <nombre>PALO MARCADO</nombre>
     <id type="integer">75</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>PALO MARCADO</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>ITU</codigo>
     <nombre>ITAU</nombre>
     <id type="integer">76</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>ITAU</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>ITT</codigo>
     <nombre>ITATIQUI</nombre>
     <id type="integer">77</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>ITATIQUI</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>ICS</codigo>
     <nombre>INCAHUASI</nombre>
     <id type="integer">78</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>INCAHUASI</sinonimo>
         <sinonimo></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>KFW</codigo>
     <nombre>KANATA FOOTWALL</nombre>
     <id type="integer">79</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>KANATA FOOTWALL</sinonimo>
         <sinonimo>KANATA FW</sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>CAMA</codigo>
     <nombre>CAMATINDI</nombre>
     <id type="integer">80</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>CAMATINDI</sinonimo>
         <sinonimo nil="true"></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
   <record>
     <codigo>PAL</codigo>
     <nombre>PALOMETA NW</nombre>
     <id type="integer">81</id>
-    <sinonimos type="array">
+    <sinonimos_nombre type="array">
         <sinonimo>PALOMETA NW</sinonimo>
         <sinonimo nil="true"></sinonimo>
-    </sinonimos>
+    </sinonimos_nombre>
   </record>
 </records>

@@ -181,8 +181,6 @@ $(document).ready(function() {
     
     // Para el formulario de sinonimos
     formularioSinonimos = new FormularioSinonimos();
-    // Para el formulario de creacion de sinonimos
-    FormularioSinonimosCrear = new FormularioSinonimosCrear();
 
     /*************************************************/
     $('#lista_hojas a').live('click',function() {

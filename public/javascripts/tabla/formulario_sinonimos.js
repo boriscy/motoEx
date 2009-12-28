@@ -28,8 +28,12 @@ FormularioSinonimos.prototype = {
             'autoOpen': false,
             'title': 'Sinónimos'
         });
-        //crea los eventos
+        // crea los eventos
         this.crearEventos();
+        // lista los sinonimos AJAX
+        this.listarSinonimos();
+        // caargar el formulario AJAX
+        this.cargarFormularioSinonimos()
     },
     /**
      * Creacion de eventos
@@ -238,5 +242,71 @@ FormularioSinonimos.prototype = {
         }
 
         this.revisarMapeo(el);
+    },
+    /**
+     * Lista los sinonimos via AJAX
+     */
+    'listarSinonimos': function() {
+        var sin = this;
+
+        $('#a-lista-sinonimos').mouseover(function() {
+            $(this).removeClass("listar-up").addClass("listar-down");
+            $('#lista-sinonimos').show();
+            //Primera ves que se llama se debe llamar al AJAX
+            if($("#lista-sinonimos ul").length <= 0)
+                $('#importar-sinonimos .ajax').html( sin.listarSinonimosAjax() );
+            
+        }).mouseout(function() {
+            setTimeout(function() {
+                sin.listarSinonimosVer();
+            }, 200);
+            $('#a-lista-sinonimos').removeClass("listar-down").addClass("listar-up");
+        });
+        
+        $('#lista-sinonimos').mouseover(function() {
+            $('#a-lista-sinonimos').removeClass("listar-up").addClass("listar-down"); 
+        }).mouseout(function() {
+            $('#a-lista-sinonimos').removeClass("listar-down").addClass("listar-up"); 
+            setTimeout(function() {
+                sin.listarSinonimosVer();
+            }, 200);
+        });
+    },
+    /**
+     * Realiza una llamada AJAX para listar los sinonimos
+     * @return String
+     */
+    'listarSinonimosAjax': function() {
+        var html = '<ul>';
+        $.getJSON("/sinonimos.json", function(data) {
+            $(data).each(function(i, el){
+                html += '<li><a class="'+ el.sinonimo.id +'">' + el.sinonimo.nombre + '</a></li>'
+            });
+            html += '</ul>';
+        });
+        return html;
+    },
+    /**
+     * Presenta el listado de sinonimos cuando la clase  de "a" es listar-down
+     */
+    'listarSinonimosVer': function() {
+        if ($('#a-lista-sinonimos').hasClass("listar-up") ) {
+            $('#lista-sinonimos').hide();
+            $('#a-lista-sinonimos').removeClass("listar-down").addClass("listar-up");
+        }
+    },
+    /**
+     * Carga el formulario para poder crear o editar nuevos sinonimos
+     */
+    'cargarFormularioSinonimos': function() {
+        $('#formulario-sinonimos-new').load("/sinonimos/new", function() {
+            $('#sinonimo_tipo').change(function() {
+                if($(this).val() == "CSV") {
+                    $('#sinonimo-csv-separador').show();
+                }else{
+                    $('#sinonimo-csv-separador').hide();
+                }
+            });
+        });
     }
 };

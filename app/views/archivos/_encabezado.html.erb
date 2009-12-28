@@ -21,9 +21,18 @@
     <button id="guardar-como">Guardar como</button>
 
     <div class="forma_areas">
-      <label>Areas:</label>
-      <%= select_tag("area", %(<option value="disabled" class="disabled">Deseleccionar</option>
-          #{options_from_collection_for_select(@hoja.areas, 'id', 'nombre')} ) )  %>
+      <table>
+        <tr>
+          <td>
+            <h3 style="width:100px; float:left;">ID: <span></span></h3>
+          </td>
+          <td>
+            <label>Areas:</label>
+          </td>
+          <td>
+            <%= select_tag("area", %(<option value="disabled" class="disabled">Deseleccionar</option>#{options_from_collection_for_select(@hoja.areas, 'id', 'nombre')} ) )  %>
+          </td>
+      </table>
     </div>
   </div>
 

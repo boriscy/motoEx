@@ -3,9 +3,15 @@
 
 <% semantic_form_for(@sinonimo, :html => @hash) do |f| %>
   <% f.inputs :name => 'Importar' do %>
-    <%= f.input :nombre_archivo, :as => :hidden %>
-    <%= f.input :campo %>
+    <%= f.input :nombre, :label => "Nombre" %>
     <%= f.input :archivo_tmp, :as => :file, :hint => 'Debe seleccionar un archivo XML, JSON, CSV o YAML a ser importado' %>
+    <%= f.label :tipo %>
+    <li>
+      <%= f.select :tipo, Sinonimo::TIPOS, {:include_blank => true}, {:style => "display:block; float:left"} %>
+      <span id="sinonimo-csv-separador" style="display:none">
+        <%= f.label :separador %><%= f.select :separador, Sinonimo::SEPARADORES %>
+      </span>
+    </li>
   <% end %>
-  <%= f.submit "Importar", :id => 'iframe-submit' %>
+  <%= f.submit "Crear", :id => 'iframe-submit' %>
 <% end %>

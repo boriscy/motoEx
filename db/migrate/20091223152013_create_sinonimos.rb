@@ -1,9 +1,7 @@
 class CreateSinonimos < ActiveRecord::Migration
   def self.up
     create_table :sinonimos do |t|
-      t.string :nombre_archivo
-      t.string :campo
-      t.string :campo_id
+      t.string :nombre
       t.text :mapeado
 
       t.timestamps

@@ -44,7 +44,6 @@
 
 <!--Formulario sinonimos-->
 <%= render :partial => "areas/formulario_sinonimos" %>
-<%= render :partial => "areas/formulario_sinonimos_crear" %>
 
 <%= javascript_include_tag "test/#{params[:js]}" if params[:js] if RAILS_ENV == "development" and params[:js]%>
 <script type="text/javascript" language="javascript" charset="utf-8">
@@ -66,6 +65,15 @@ $(document).ready(function() {
       $('#iframe-mapeo').ready( function() {
         alert(1);
       });
+    });
+
+    // Indicar que area ID esta
+    $('#area').change(function() {
+        if($(this).val() != 'disabled')
+            $('.forma_areas h3 span').html($(this).val());
+        else{
+            $('.forma_areas h3 span').html('');
+        }
     });
 
 });

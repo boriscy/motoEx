@@ -1,491 +1,412 @@
 --- 
-- :codigo: CCB
-  :nombre: CASCABEL
-  :id: 1
-  :sinonimos: 
-  - CASCABEL
-  - ""
-- :codigo: VBR
-  :nombre: VIBORA
-  :id: 2
-  :sinonimos: 
-  - VIBORA
-  - ""
-- :codigo: SIR
-  :nombre: SIRARI
-  :id: 3
-  :sinonimos: 
-  - SIRARI
-  - ""
-- :codigo: GRY
-  :nombre: GUAIRUY
-  :id: 4
-  :sinonimos: 
-  - GUAIRUY
-  - ""
-- :codigo: DRD
-  :nombre: EL DORADO
-  :id: 5
-  :sinonimos: 
-  - EL DORADO
-  - ""
-- :codigo: RGD
-  :nombre: RIO GRANDE
-  :id: 6
-  :sinonimos: 
-  - RIO GRANDE
-  - ""
-- :codigo: TTR
-  :nombre: TATARENDA
-  :id: 7
-  :sinonimos: 
-  - TATARENDA
-  - ""
-- :codigo: PTJ
-  :nombre: PATUJU
-  :id: 8
-  :sinonimos: 
-  - PATUJU
-  - ""
-- :codigo: YPC
-  :nombre: YAPACANI
-  :id: 9
-  :sinonimos: 
-  - YAPACANI
-  - ""
-- :codigo: CBR
-  :nombre: COBRA
-  :id: 10
-  :sinonimos: 
-  - COBRA
-  - ""
-- :codigo: MGD
-  :nombre: MONTEAGUDO
-  :id: 11
-  :sinonimos: 
-  - MONTEAGUDO
-  - ""
-- :codigo: SAL
-  :nombre: SAN ALBERTO
-  :id: 12
-  :sinonimos: 
-  - SAN ALBERTO
-  - ""
-- :codigo: SBL
-  :nombre: "S\xC3\x81BALO"
-  :id: 13
-  :sinonimos: 
-  - "S\xC3\x81BALO"
+- nombre: CASCABEL
+  id: "1"
+  codigo: CCB
+  sinonimos_nombre: 
+  - Casca
+  - Cascafrut
+- nombre: VIBORA
+  id: "2"
+  codigo: VBR
+  sinonimos_nombre: []
+
+- nombre: SIRARI
+  id: "3"
+  codigo: SIR
+  sinonimos_nombre: []
+
+- nombre: GUAIRUY
+  id: "4"
+  codigo: GRY
+  sinonimos_nombre: []
+
+- nombre: EL DORADO
+  id: "5"
+  codigo: DRD
+  sinonimos_nombre: []
+
+- nombre: RIO GRANDE
+  id: "6"
+  codigo: RGD
+  sinonimos_nombre: []
+
+- nombre: TATARENDA
+  id: "7"
+  codigo: TTR
+  sinonimos_nombre: []
+
+- nombre: PATUJU
+  id: "8"
+  codigo: PTJ
+  sinonimos_nombre: []
+
+- nombre: YAPACANI
+  id: "9"
+  codigo: YPC
+  sinonimos_nombre: []
+
+- nombre: COBRA
+  id: "10"
+  codigo: CBR
+  sinonimos_nombre: []
+
+- nombre: MONTEAGUDO
+  id: "11"
+  codigo: MGD
+  sinonimos_nombre: []
+
+- nombre: SAN ALBERTO
+  id: "12"
+  codigo: SAL
+  sinonimos_nombre: []
+
+- nombre: "S\xC3\x81BALO"
+  id: "13"
+  codigo: SBL
+  sinonimos_nombre: 
   - SABALO
-- :codigo: EDD
-  :nombre: ESCONDIDO
-  :id: 14
-  :sinonimos: 
-  - ESCONDIDO
-  - ""
-- :codigo: LVT
-  :nombre: LA VERTIENTE
-  :id: 15
-  :sinonimos: 
-  - LA VERTIENTE
-  - ""
-- :codigo: TGT
-  :nombre: TAIGUATI
-  :id: 16
-  :sinonimos: 
-  - TAIGUATI
-  - ""
-- :codigo: LSR
-  :nombre: LOS SURIS
-  :id: 17
-  :sinonimos: 
-  - LOS SURIS
-  - ""
-- :codigo: WRN
-  :nombre: WARNES
-  :id: 18
-  :sinonimos: 
-  - WARNES
-  - ""
-- :codigo: CHS
-  :nombre: CHACO SUR
-  :id: 19
-  :sinonimos: 
-  - CHACO SUR
-  - ""
-- :codigo: NJL
-  :nombre: NARANJILLOS
-  :id: 20
-  :sinonimos: 
-  - NARANJILLOS
-  - ""
-- :codigo: PVN
-  :nombre: PORVENIR
-  :id: 21
-  :sinonimos: 
-  - PORVENIR
-  - ""
-- :codigo: BJOP
-  :nombre: BERMEJO PROFUNDO
-  :id: 22
-  :sinonimos: 
-  - BERMEJO PROFUNDO
+  - Sabalo
+- nombre: ESCONDIDO
+  id: "14"
+  codigo: EDD
+  sinonimos_nombre: []
+
+- nombre: LA VERTIENTE
+  id: "15"
+  codigo: LVT
+  sinonimos_nombre: []
+
+- nombre: TAIGUATI
+  id: "16"
+  codigo: TGT
+  sinonimos_nombre: []
+
+- nombre: LOS SURIS
+  id: "17"
+  codigo: LSR
+  sinonimos_nombre: []
+
+- nombre: WARNES
+  id: "18"
+  codigo: WRN
+  sinonimos_nombre: []
+
+- nombre: CHACO SUR
+  id: "19"
+  codigo: CHS
+  sinonimos_nombre: []
+
+- nombre: NARANJILLOS
+  id: "20"
+  codigo: NJL
+  sinonimos_nombre: []
+
+- nombre: PORVENIR
+  id: "21"
+  codigo: PVN
+  sinonimos_nombre: []
+
+- nombre: BERMEJO PROFUNDO
+  id: "22"
+  codigo: BJOP
+  sinonimos_nombre: 
   - X 44
-- :codigo: BJO
-  :nombre: BERMEJO SOMERO
-  :id: 23
-  :sinonimos: 
-  - BERMEJO SOMERO
+- nombre: BERMEJO SOMERO
+  id: "23"
+  codigo: BJO
+  sinonimos_nombre: 
   - BERMEJO
-- :codigo: TGR
-  :nombre: TIGRE
-  :id: 24
-  :sinonimos: 
-  - TIGRE
-  - ""
-- :codigo: TOR
-  :nombre: TORO
-  :id: 25
-  :sinonimos: 
-  - TORO
-  - ""
-- :codigo: CAR
-  :nombre: CARANDA
-  :id: 26
-  :sinonimos: 
-  - CARANDA
-  - ""
-- :codigo: CLP
-  :nombre: COLPA
-  :id: 27
-  :sinonimos: 
-  - COLPA
-  - ""
-- :codigo: SRBNO
-  :nombre: SURUBI NOROESTE
-  :id: 28
-  :sinonimos: 
-  - SURUBI NOROESTE
+- nombre: TIGRE
+  id: "24"
+  codigo: TGR
+  sinonimos_nombre: []
+
+- nombre: TORO
+  id: "25"
+  codigo: TOR
+  sinonimos_nombre: []
+
+- nombre: CARANDA
+  id: "26"
+  codigo: CAR
+  sinonimos_nombre: []
+
+- nombre: COLPA
+  id: "27"
+  codigo: CLP
+  sinonimos_nombre: []
+
+- nombre: SURUBI NOROESTE
+  id: "28"
+  codigo: SRBNO
+  sinonimos_nombre: 
   - NOR - OESTE
-- :codigo: PLM
-  :nombre: PALOMA
-  :id: 29
-  :sinonimos: 
-  - PALOMA
-  - ""
-- :codigo: SRB
-  :nombre: SURUBI
-  :id: 30
-  :sinonimos: 
-  - SURUBI
-  - ""
-- :codigo: SRBBB
-  :nombre: SURUBI BLOQUE BAJO
-  :id: 31
-  :sinonimos: 
-  - SURUBI BLOQUE BAJO
+- nombre: PALOMA
+  id: "29"
+  codigo: PLM
+  sinonimos_nombre: []
+
+- nombre: SURUBI
+  id: "30"
+  codigo: SRB
+  sinonimos_nombre: []
+
+- nombre: SURUBI BLOQUE BAJO
+  id: "31"
+  codigo: SRBBB
+  sinonimos_nombre: 
   - BLOQUE BAJO
-- :codigo: CBT
-  :nombre: CAMBEITI
-  :id: 32
-  :sinonimos: 
-  - CAMBEITI
-  - ""
-- :codigo: LSC
-  :nombre: LOS SAUCES
-  :id: 33
-  :sinonimos: 
-  - LOS SAUCES
-  - ""
-- :codigo: BQR
-  :nombre: "BOQUER\xC3\x93N"
-  :id: 34
-  :sinonimos: 
-  - "BOQUER\xC3\x93N"
-  - ""
-- :codigo: PLC
-  :nombre: PALACIOS
-  :id: 35
-  :sinonimos: 
-  - PALACIOS
-  - ""
-- :codigo: PPL
-  :nombre: PUERTO PALOS
-  :id: 36
-  :sinonimos: 
-  - PUERTO PALOS
-  - ""
-- :codigo: CAM
-  :nombre: CAMIRI
-  :id: 37
-  :sinonimos: 
-  - CAMIRI
-  - ""
-- :codigo: ECD
-  :nombre: ENCONADA
-  :id: 38
-  :sinonimos: 
-  - ENCONADA
-  - ""
-- :codigo: ARN
-  :nombre: ARROYO NEGRO
-  :id: 39
-  :sinonimos: 
-  - ARROYO NEGRO
-  - ""
-- :codigo: LPS
-  :nombre: LOS PENOCOS
-  :id: 40
-  :sinonimos: 
-  - LOS PENOCOS
-  - ""
-- :codigo: !binary |
+- nombre: CAMBEITI
+  id: "32"
+  codigo: CBT
+  sinonimos_nombre: []
+
+- nombre: LOS SAUCES
+  id: "33"
+  codigo: LSC
+  sinonimos_nombre: []
+
+- nombre: "BOQUER\xC3\x93N"
+  id: "34"
+  codigo: BQR
+  sinonimos_nombre: []
+
+- nombre: PALACIOS
+  id: "35"
+  codigo: PLC
+  sinonimos_nombre: []
+
+- nombre: PUERTO PALOS
+  id: "36"
+  codigo: PPL
+  sinonimos_nombre: []
+
+- nombre: CAMIRI
+  id: "37"
+  codigo: CAM
+  sinonimos_nombre: []
+
+- nombre: ENCONADA
+  id: "38"
+  codigo: ECD
+  sinonimos_nombre: []
+
+- nombre: ARROYO NEGRO
+  id: "39"
+  codigo: ARN
+  sinonimos_nombre: []
+
+- nombre: LOS PENOCOS
+  id: "40"
+  codigo: LPS
+  sinonimos_nombre: []
+
+- nombre: "LA PE\xC3\x91A"
+  id: "41"
+  codigo: !binary |
     TFDDkQ==
 
-  :nombre: "LA PE\xC3\x91A"
-  :id: 41
-  :sinonimos: 
-  - "LA PE\xC3\x91A"
-  - ""
-- :codigo: TND
-  :nombre: TUNDY
-  :id: 42
-  :sinonimos: 
-  - TUNDY
-  - ""
-- :codigo: PMR
-  :nombre: PALMAR
-  :id: 43
-  :sinonimos: 
-  - PALMAR
-  - ""
-- :codigo: MGR
-  :nombre: MARGARITA
-  :id: 44
-  :sinonimos: 
-  - MARGARITA
-  - ""
-- :codigo: HCY
-  :nombre: HUACAYA
-  :id: 45
-  :sinonimos: 
-  - HUACAYA
-  - ""
-- :codigo: RSC
-  :nombre: RIO SECO
-  :id: 46
-  :sinonimos: 
-  - RIO SECO
-  - ""
-- :codigo: TCB
-  :nombre: TACOBO
-  :id: 47
-  :sinonimos: 
-  - TACOBO
-  - ""
-- :codigo: TJB
-  :nombre: TAJIBO
-  :id: 48
-  :sinonimos: 
-  - TAJIBO
-  - ""
-- :codigo: HYC
-  :nombre: HUAYCO
-  :id: 49
-  :sinonimos: 
-  - HUAYCO
-  - ""
-- :codigo: MDB
-  :nombre: MADREJONES BOLIVIANO
-  :id: 50
-  :sinonimos: 
-  - MADREJONES BOLIVIANO
-  - ""
-- :codigo: !binary |
+  sinonimos_nombre: []
+
+- nombre: TUNDY
+  id: "42"
+  codigo: TND
+  sinonimos_nombre: []
+
+- nombre: PALMAR
+  id: "43"
+  codigo: PMR
+  sinonimos_nombre: []
+
+- nombre: MARGARITA
+  id: "44"
+  codigo: MGR
+  sinonimos_nombre: []
+
+- nombre: HUACAYA
+  id: "45"
+  codigo: HCY
+  sinonimos_nombre: []
+
+- nombre: RIO SECO
+  id: "46"
+  codigo: RSC
+  sinonimos_nombre: []
+
+- nombre: TACOBO
+  id: "47"
+  codigo: TCB
+  sinonimos_nombre: []
+
+- nombre: TAJIBO
+  id: "48"
+  codigo: TJB
+  sinonimos_nombre: []
+
+- nombre: HUAYCO
+  id: "49"
+  codigo: HYC
+  sinonimos_nombre: []
+
+- nombre: MADREJONES BOLIVIANO
+  id: "50"
+  codigo: MDB
+  sinonimos_nombre: []
+
+- nombre: "\xC3\x91UPUCO"
+  id: "51"
+  codigo: !binary |
     w5FQQw==
 
-  :nombre: "\xC3\x91UPUCO"
-  :id: 51
-  :sinonimos: 
-  - "\xC3\x91UPUCO"
-  - ""
-- :codigo: BBL
-  :nombre: BULO BULO
-  :id: 52
-  :sinonimos: 
-  - BULO BULO
-  - ""
-- :codigo: CAI
-  :nombre: CAIGUA
-  :id: 53
-  :sinonimos: 
-  - CAIGUA
-  - ""
-- :codigo: CRC
-  :nombre: CARRASCO
-  :id: 54
-  :sinonimos: 
-  - CARRASCO
-  - ""
-- :codigo: CFW
-  :nombre: CARRASCO FW
-  :id: 55
-  :sinonimos: 
-  - CARRASCO FW
-  - ""
-- :codigo: CHU
-  :nombre: CHURUMAS
-  :id: 56
-  :sinonimos: 
-  - CHURUMAS
-  - ""
-- :codigo: HSR
-  :nombre: "HUMBERTO SU\xC3\x81REZ ROCA"
-  :id: 57
-  :sinonimos: 
-  - "HUMBERTO SU\xC3\x81REZ ROCA"
+  sinonimos_nombre: []
+
+- nombre: BULO BULO
+  id: "52"
+  codigo: BBL
+  sinonimos_nombre: []
+
+- nombre: CAIGUA
+  id: "53"
+  codigo: CAI
+  sinonimos_nombre: []
+
+- nombre: CARRASCO
+  id: "54"
+  codigo: CRC
+  sinonimos_nombre: []
+
+- nombre: CARRASCO FW
+  id: "55"
+  codigo: CFW
+  sinonimos_nombre: []
+
+- nombre: CHURUMAS
+  id: "56"
+  codigo: CHU
+  sinonimos_nombre: []
+
+- nombre: "HUMBERTO SU\xC3\x81REZ ROCA"
+  id: "57"
+  codigo: HSR
+  sinonimos_nombre: 
   - H. SUAREZ R.
-- :codigo: JNN
-  :nombre: JUNIN
-  :id: 58
-  :sinonimos: 
-  - JUNIN
-  - ""
-- :codigo: KNT
-  :nombre: KANATA
-  :id: 59
-  :sinonimos: 
-  - KANATA
-  - ""
-- :codigo: KNN
-  :nombre: KANATA NORTE
-  :id: 60
-  :sinonimos: 
-  - KANATA NORTE
-  - ""
-- :codigo: KTR
-  :nombre: KATARI
-  :id: 61
-  :sinonimos: 
-  - KATARI
-  - ""
-- :codigo: LCS
-  :nombre: LOS CUSIS
-  :id: 62
-  :sinonimos: 
-  - LOS CUSIS
-  - ""
-- :codigo: LMS
-  :nombre: LOS MONOS
-  :id: 63
-  :sinonimos: 
-  - LOS MONOS
-  - ""
-- :codigo: MCT
-  :nombre: MONTECRISTO
-  :id: 64
-  :sinonimos: 
-  - MONTECRISTO
-  - ""
-- :codigo: PNW
-  :nombre: PALOMETAS NW
-  :id: 65
-  :sinonimos: 
-  - PALOMETAS NW
-  - ""
-- :codigo: PJS
-  :nombre: PATUJUSAL
-  :id: 66
-  :sinonimos: 
-  - PATUJUSAL
-  - ""
-- :codigo: PJO
-  :nombre: PATUJUSAL OESTE
-  :id: 67
-  :sinonimos: 
-  - PATUJUSAL OESTE
-  - ""
-- :codigo: PCH
-  :nombre: PERCHELES
-  :id: 68
-  :sinonimos: 
-  - PERCHELES
-  - ""
-- :codigo: SIG
-  :nombre: SAN IGNACIO
-  :id: 69
-  :sinonimos: 
-  - SAN IGNACIO
-  - ""
-- :codigo: SNQ
-  :nombre: SAN ROQUE
-  :id: 70
-  :sinonimos: 
-  - SAN ROQUE
-  - ""
-- :codigo: SRS
-  :nombre: SANTA ROSA
-  :id: 71
-  :sinonimos: 
-  - SANTA ROSA
-  - ""
-- :codigo: SRW
-  :nombre: SANTA ROSA W
-  :id: 72
-  :sinonimos: 
-  - SANTA ROSA W
-  - ""
-- :codigo: VGR
-  :nombre: VUELTA GRANDE
-  :id: 73
-  :sinonimos: 
-  - VUELTA GRANDE
-  - ""
-- :codigo: IBB
-  :nombre: IBIBOBO
-  :id: 74
-  :sinonimos: 
-  - IBIBOBO
-  - ""
-- :codigo: PMO
-  :nombre: PALO MARCADO
-  :id: 75
-  :sinonimos: 
-  - PALO MARCADO
-  - ""
-- :codigo: ITU
-  :nombre: ITAU
-  :id: 76
-  :sinonimos: 
-  - ITAU
-  - ""
-- :codigo: ITT
-  :nombre: ITATIQUI
-  :id: 77
-  :sinonimos: 
-  - ITATIQUI
-  - ""
-- :codigo: ICS
-  :nombre: INCAHUASI
-  :id: 78
-  :sinonimos: 
-  - INCAHUASI
-  - ""
-- :codigo: KFW
-  :nombre: KANATA FOOTWALL
-  :id: 79
-  :sinonimos: 
-  - KANATA FOOTWALL
+- nombre: JUNIN
+  id: "58"
+  codigo: JNN
+  sinonimos_nombre: []
+
+- nombre: KANATA
+  id: "59"
+  codigo: KNT
+  sinonimos_nombre: []
+
+- nombre: KANATA NORTE
+  id: "60"
+  codigo: KNN
+  sinonimos_nombre: []
+
+- nombre: KATARI
+  id: "61"
+  codigo: KTR
+  sinonimos_nombre: []
+
+- nombre: LOS CUSIS
+  id: "62"
+  codigo: LCS
+  sinonimos_nombre: []
+
+- nombre: LOS MONOS
+  id: "63"
+  codigo: LMS
+  sinonimos_nombre: []
+
+- nombre: MONTECRISTO
+  id: "64"
+  codigo: MCT
+  sinonimos_nombre: []
+
+- nombre: PALOMETAS NW
+  id: "65"
+  codigo: PNW
+  sinonimos_nombre: []
+
+- nombre: PATUJUSAL
+  id: "66"
+  codigo: PJS
+  sinonimos_nombre: []
+
+- nombre: PATUJUSAL OESTE
+  id: "67"
+  codigo: PJO
+  sinonimos_nombre: []
+
+- nombre: PERCHELES
+  id: "68"
+  codigo: PCH
+  sinonimos_nombre: []
+
+- nombre: SAN IGNACIO
+  id: "69"
+  codigo: SIG
+  sinonimos_nombre: []
+
+- nombre: SAN ROQUE
+  id: "70"
+  codigo: SNQ
+  sinonimos_nombre: []
+
+- nombre: SANTA ROSA
+  id: "71"
+  codigo: SRS
+  sinonimos_nombre: []
+
+- nombre: SANTA ROSA W
+  id: "72"
+  codigo: SRW
+  sinonimos_nombre: []
+
+- nombre: VUELTA GRANDE
+  id: "73"
+  codigo: VGR
+  sinonimos_nombre: []
+
+- nombre: IBIBOBO
+  id: "74"
+  codigo: IBB
+  sinonimos_nombre: []
+
+- nombre: PALO MARCADO
+  id: "75"
+  codigo: PMO
+  sinonimos_nombre: []
+
+- nombre: ITAU
+  id: "76"
+  codigo: ITU
+  sinonimos_nombre: []
+
+- nombre: ITATIQUI
+  id: "77"
+  codigo: ITT
+  sinonimos_nombre: []
+
+- nombre: INCAHUASI
+  id: "78"
+  codigo: ICS
+  sinonimos_nombre: []
+
+- nombre: KANATA FOOTWALL
+  id: "79"
+  codigo: KFW
+  sinonimos_nombre: 
   - KANATA FW
-- :codigo: CAMA
-  :nombre: CAMATINDI
-  :id: 80
-  :sinonimos: 
-  - CAMATINDI
-  - 
-- :codigo: PAL
-  :nombre: PALOMETA NW
-  :id: 81
-  :sinonimos: 
-  - PALOMETA NW
-  - 
+- nombre: CAMATINDI
+  id: "80"
+  codigo: CAMA
+  sinonimos_nombre: []
+
+- nombre: PALOMETA NW
+  id: "81"
+  codigo: PAL
+  sinonimos_nombre: []
+

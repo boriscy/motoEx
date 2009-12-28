@@ -559,3 +559,43 @@ td.hidden_cel{
 .br{
     border-right: 1px solid @table_border_color;
 }
+
+.listar{
+    padding: 2px 2px 2px 18px;
+}
+.listar-up{
+    .listar;
+    background: transparent url(/images/icons/up.png) no-repeat;
+}
+.listar-down{
+    .listar;
+    background: transparent url(/images/icons/down.png) no-repeat;
+}
+
+#lista-sinonimos{
+    width: 200px;
+    height: 200px;
+    display: none;
+    position: absolute;
+    background-color: #FFF;
+    border: 1px solid @dark_grey;
+    ul{
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+        overflow: auto;
+        li{
+            margin: 0px;
+            padding: 0px;
+            a{
+                display: block;
+            }
+        }
+    }
+}
+
+#formulario-sinonimos{
+    label{
+        width: 8em;
+    }
+}

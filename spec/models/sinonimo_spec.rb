@@ -10,9 +10,7 @@ describe Sinonimo do
   before(:each) do
 
     @params = {
-      :nombre_archivo => "partediario.xls",
-      :mapeado => "nombre",
-      :campo_id => "id"
+      :nombre => "mapeado 1"
     }
   end
 
@@ -21,20 +19,20 @@ describe Sinonimo do
     Sinonimo.create!(@params)
   end
 
+  it "debe parsear el dato correctamente CSV" do
+    set_archivo_tmp('csv')
+    @sinonimo = Sinonimo.create(@params)
+    @sinonimo.mapeado.first['nombre'].should == 'CASCABEL'
+    @sinonimo.mapeado.last['nombre'].should == 'PALOMETA NW'
+    @sinonimo.mapeado.first['sinonimos_nombre'].first.should == 'Casca'
+  end
+
   it "debe parsear el dato correctamente YAML" do
     set_archivo_tmp('yml')
     @sinonimo = Sinonimo.create(@params)
-    @sinonimo.mapeado.first[:nombre].should == 'CASCABEL'
-    @sinonimo.mapeado.last[:nombre].should == 'PALOMETA NW'
-    @sinonimo.mapeado.first[:sinonimos].first.should == 'CASCABEL'
-  end
-
-  it "debe parsear el dato correctamente XML" do
-    set_archivo_tmp('xml')
-    @sinonimo = Sinonimo.create(@params)
-    @sinonimo.mapeado.first[:nombre].should == 'CASCABEL'
-    @sinonimo.mapeado.last[:nombre].should == 'PALOMETA NW'
-    @sinonimo.mapeado.first[:sinonimos].first.should == 'CASCABEL'
+    @sinonimo.mapeado.first['nombre'].should == 'CASCABEL'
+    @sinonimo.mapeado.last['nombre'].should == 'PALOMETA NW'
+    @sinonimo.mapeado.first['sinonimos_nombre'].first.should == 'Casca'
   end
 
   it "debe parsear el dato correctamente JSON" do
@@ -42,7 +40,14 @@ describe Sinonimo do
     @sinonimo = Sinonimo.create(@params)
     @sinonimo.mapeado.first['nombre'].should == 'CASCABEL'
     @sinonimo.mapeado.last['nombre'].should == 'PALOMETA NW'
-    @sinonimo.mapeado.first['sinonimos'].first.should == 'CASCABEL'
+    @sinonimo.mapeado.first['sinonimos_nombre'].first.should == 'Casca'
   end
 
+  it "debe parsear el dato correctamente XML" do
+    set_archivo_tmp('xml')
+    @sinonimo = Sinonimo.create(@params)
+    @sinonimo.mapeado.first['nombre'].should == 'CASCABEL'
+    @sinonimo.mapeado.last['nombre'].should == 'PALOMETA NW'
+    @sinonimo.mapeado.first['sinonimos_nombre'].first.should == 'Casca'
+  end
 end

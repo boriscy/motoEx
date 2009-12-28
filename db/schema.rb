@@ -59,9 +59,7 @@ ActiveRecord::Schema.define(:version => 20091223152013) do
   end
 
   create_table "sinonimos", :force => true do |t|
-    t.string   "nombre_archivo"
-    t.string   "campo"
-    t.string   "campo_id"
+    t.string   "nombre"
     t.text     "mapeado"
     t.datetime "created_at"
     t.datetime "updated_at"
