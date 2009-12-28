@@ -45,7 +45,7 @@ class SinonimosController < ApplicationController
   # POST /sinonimos.xml
   def create
     @sinonimo = Sinonimo.new(params[:sinonimo])
-    
+
     if @sinonimo.save
       render :text => @sinonimo.mapeado.to_json
     else

@@ -91,6 +91,7 @@ FormularioSinonimos.prototype = {
         $('.borrar-sinonimo-mapeo').live("click", function() {
             $(this).parents("tr").remove();
         });
+        // Nuevo mapeo de sinonimos
     },
     /**
      * Destruir eventos

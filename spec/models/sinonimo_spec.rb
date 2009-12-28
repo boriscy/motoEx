@@ -12,6 +12,7 @@ describe Sinonimo do
     @params = {
       :nombre => "mapeado 1"
     }
+    @sinonimo = nil
   end
 
   it "debe subir el archivo" do

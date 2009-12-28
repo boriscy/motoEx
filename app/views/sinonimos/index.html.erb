@@ -2,17 +2,16 @@
 
 <table>
   <tr>
-    <th>Nombre</th>
-    <th>Mapeado</th>
+    <th class="ui-state-active">Nombre</th>
+    <th class="ui-state-active"></th>
   </tr>
 
 <% @sinonimos.each do |sinonimo| %>
   <tr>
     <td><%=h sinonimo.nombre %></td>
-    <td><%=h sinonimo.mapeado %></td>
-    <td><%= link_to 'Show', sinonimo %></td>
-    <td><%= link_to 'Edit', edit_sinonimo_path(sinonimo) %></td>
-    <td><%= link_to 'Destroy', sinonimo, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Show', sinonimo %>
+    <%= link_to 'Edit', edit_sinonimo_path(sinonimo) %>
+    <%= link_to 'Destroy', sinonimo, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

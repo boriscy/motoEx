@@ -2,6 +2,7 @@
 <% @hash.delete(:target) unless request.xhr? %>
 
 <% semantic_form_for(@sinonimo, :html => @hash) do |f| %>
+  <%= hidden_field_tag("iframe_submit") if request.xhr? %>
   <% f.inputs :name => 'Importar' do %>
     <%= f.input :nombre, :label => "Nombre" %>
     <%= f.input :archivo_tmp, :as => :file, :hint => 'Debe seleccionar un archivo XML, JSON, CSV o YAML a ser importado' %>
