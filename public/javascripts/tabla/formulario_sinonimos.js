@@ -91,7 +91,16 @@ FormularioSinonimos.prototype = {
         $('.borrar-sinonimo-mapeo').live("click", function() {
             $(this).parents("tr").remove();
         });
+        //////////////////////
+        $('body').append('<iframe name="iframe-mapeo" id="iframe-mapeo" style="display:none"></iframe>');
         // Nuevo mapeo de sinonimos
+        $('#formulario-mapeados form').live("submit", function() {
+            $(this).attr("target", "iframe-mapeo");
+            $('#iframe-mapeo')[0].onload = function() {
+                form.importarSinonimos();
+            }
+        });
+
     },
     /**
      * Destruir eventos
@@ -254,8 +263,9 @@ FormularioSinonimos.prototype = {
             $(this).removeClass("listar-up").addClass("listar-down");
             $('#lista-sinonimos').show();
             //Primera ves que se llama se debe llamar al AJAX
-            if($("#lista-sinonimos ul").length <= 0)
-                $('#importar-sinonimos .ajax').html( sin.listarSinonimosAjax() );
+            if($("#lista-sinonimos ul").length <= 0) {
+                sin.listarSinonimosAjax()
+            }
             
         }).mouseout(function() {
             setTimeout(function() {
@@ -275,17 +285,17 @@ FormularioSinonimos.prototype = {
     },
     /**
      * Realiza una llamada AJAX para listar los sinonimos
-     * @return String
+     * y llena el area #importar-sinonimos con la lista
      */
     'listarSinonimosAjax': function() {
         var html = '<ul>';
         $.getJSON("/sinonimos.json", function(data) {
             $(data).each(function(i, el){
-                html += '<li><a class="'+ el.sinonimo.id +'">' + el.sinonimo.nombre + '</a></li>'
+                html += '<li><a class="'+ el.sinonimo.id +'">' + el.sinonimo.nombre + '</a></li>';
             });
             html += '</ul>';
+            $('#importar-sinonimos .ajax').html( html );
         });
-        return html;
     },
     /**
      * Presenta el listado de sinonimos cuando la clase  de "a" es listar-down
@@ -309,5 +319,32 @@ FormularioSinonimos.prototype = {
                 }
             });
         });
+    },
+    /**
+     * Importa los sinonimos
+     */
+    'importarSinonimos': function() {
+        // Se recibe la respuesta y se adiciona el elmento ingresado a la lista
+        var json = eval( "(" + $('#iframe-mapeo').contents().find("body").text() + ")" );
+
+        if(json.sinonimo) {
+            var data = json.sinonimo;
+            if($('#formulario-mapeados input:hidden[name=_method]').length <= 0) {
+                // Adicion de metodo put y cambio de la ruta para el formulario
+                $('#formulario-mapeados form').attr("action", "/sinonimos/" + data.id)
+                .append('<input type="hidden" name="_method" value="put" />');
+                $('#iframe-submit').val("Editar");
+            }
+            $('#lista-sinonimos ul').append('<li><a href="' + data.id + '">' + data.nombre + '</a></li>');
+        }else {
+            var text = "Error";
+            alert("Errores");
+            $(json).each(function(i, el) {
+                var id = '#sinonimo_' + el[0];
+                var error = el[1];
+                //Adicionar error
+            });
+        }
     }
 };
+

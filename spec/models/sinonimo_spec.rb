@@ -22,6 +22,7 @@ describe Sinonimo do
 
   it "debe parsear el dato correctamente CSV" do
     set_archivo_tmp('csv')
+    @params[:separador] = ","
     @sinonimo = Sinonimo.create(@params)
     @sinonimo.mapeado.first['nombre'].should == 'CASCABEL'
     @sinonimo.mapeado.last['nombre'].should == 'PALOMETA NW'
@@ -50,5 +51,27 @@ describe Sinonimo do
     @sinonimo.mapeado.first['nombre'].should == 'CASCABEL'
     @sinonimo.mapeado.last['nombre'].should == 'PALOMETA NW'
     @sinonimo.mapeado.first['sinonimos_nombre'].first.should == 'Casca'
+  end
+
+  it "debe presentar errores cuando un sinonimo es creado sin archivo" do
+    set_archivo_tmp('yml')
+    @params.delete(:archivo_tmp)
+    @sinonimo = Sinonimo.create(@params)
+    @sinonimo.errors[:archivo_tmp].should_not == nil
+  end
+
+  describe "edicion" do
+    it "debe salvar sin modificar si es que no se envia el archivo" do
+      set_archivo_tmp('yml')
+      @sinonimo = Sinonimo.create(@params)
+      @sinonimo = Sinonimo.last
+      params2 = {:nombre => 'Nuevo nombre'}
+      @sinonimo.update_attributes(params2)
+      @sinonimo.save
+      @sinonimo.nombre.should == params2[:nombre]
+      @sinonimo.mapeado.first['nombre'].should == 'CASCABEL'
+      @sinonimo.mapeado.last['nombre'].should == 'PALOMETA NW'
+      @sinonimo.mapeado.first['sinonimos_nombre'].first.should == 'Casca'
+    end
   end
 end

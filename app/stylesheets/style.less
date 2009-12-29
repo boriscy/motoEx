@@ -22,6 +22,7 @@
 @red: #E00029;
 @green:#1B8800;
 @blue: #04428A;
+@white: #FFFFFF;
 @dark_blue:#304F71;
 @dark_grey: #474747;
 @light_grey: #CCCCCC;
@@ -582,6 +583,7 @@ td.hidden_cel{
     ul{
         margin: 0px;
         padding: 0px;
+        height: 150px;
         list-style: none;
         overflow: auto;
         li{
@@ -589,6 +591,15 @@ td.hidden_cel{
             padding: 0px;
             a{
                 display: block;
+                color: @white;
+                background-color: @dark_blue;
+                padding: 2px 8px;
+                font-weight: bold;
+                border-bottom: 1px solid @border_color;
+            }
+            a:hover{
+                background-color: @white;
+                color: @dark_blue;
             }
         }
     }
@@ -599,3 +610,4 @@ td.hidden_cel{
         width: 8em;
     }
 }
+

@@ -1,10 +1,14 @@
 class Sinonimo < ActiveRecord::Base
 
-  before_save :mapear_campo
+  before_save :mapear_campo, :unless => Proc.new{ |sinonimo| sinonimo.archivo_tmp.nil? }
 
   serialize :mapeado
 
   attr_protected :mapeado
+
+  validates_presence_of :nombre
+
+  validate :validar_archivo
 
   # No es necesaario crear attr_accessor para campos que existen el la Base de datos
   attr_accessor :archivo_tmp, :tipo, :separador
@@ -20,13 +24,12 @@ class Sinonimo < ActiveRecord::Base
   # Realiza el mapeado de un archivo XML, YAML, JSON o CSV
   def mapear_campo()
     self.mapeado = case( File.extname(archivo_tmp.original_filename).downcase)
-    when '.csv' then parsear_csv(separador)
+    when '.csv' then parsear_csv()
     when '.yml' then parsear_yaml()
     when '.xml' then parsear_xml()
     when '.json' then parsear_json()
     end
-    debugger
-    f = 0
+    archivo_tmp = nil
   end
 
   # Parseo de YAML
@@ -38,8 +41,11 @@ class Sinonimo < ActiveRecord::Base
     arr
   end
 
-  def parsear_csv(sep=",")
-    csv = FasterCSV.read(archivo_tmp.path, :col_sep => sep)
+  # Parseo de csv
+  def parsear_csv()
+    separador ||= ","
+    csv = FasterCSV.read(archivo_tmp.path, :col_sep => separador)
+
     cols = {}; cols_sinonimos = {}
     columnas = csv.shift
     # Indices de columnas
@@ -98,5 +104,24 @@ class Sinonimo < ActiveRecord::Base
 #    lcol = lambda{|v, p| v[columns.find_index{|v| v==p}] }
 #    records.inject([]){|s, v| s << { :id => lcol.call(v, 'id'), param.to_sym => lcol.call(v, param) }; s  }
 #  end
+private
+  # Valida el archivo temporal
+  def validar_archivo()
+    if self.id.nil?
+      add_archivo_tmp_error()
+    elsif self.id and !archivo_tmp.nil?
+      add_archivo_tmp_error()
+    end
+  end
+
+  def add_archivo_tmp_error
+    tipos = ["csv", "json", "xml", "yml", "yaml"]
+    begin
+      ext = File.extname(archivo_tmp.original_filename)[1,4]
+      errors.add(:archivo_tmp, 'Debe seleccionar un archivo CSV, JSON, XML o YAML') unless tipos.include?(ext.downcase)
+    rescue
+      errors.add(:archivo_tmp, 'Debe seleccionar un archivo CSV, JSON, XML o YAML')
+    end
+  end
 
 end

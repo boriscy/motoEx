@@ -4,7 +4,7 @@ class SinonimosController < ApplicationController
   # GET /sinonimos
   # GET /sinonimos.xml
   def index
-    @sinonimos = Sinonimo.all
+    @sinonimos = Sinonimo.all(:select => "id, nombre" )
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,12 +17,12 @@ class SinonimosController < ApplicationController
   # GET /sinonimos/1.xml
   def show
     @sinonimo = Sinonimo.find(params[:id])
-    render :text => @sinonimo.mapeado.to_json
 
-#    respond_to do |format|
-#      format.html # show.html.erb
-#      format.xml  { render :xml => @sinonimo }
-#    end
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @sinonimo }
+      format.json  { render :xml => @sinonimo }
+    end
   end
 
   # GET /sinonimos/new
@@ -47,8 +47,9 @@ class SinonimosController < ApplicationController
     @sinonimo = Sinonimo.new(params[:sinonimo])
 
     if @sinonimo.save
-      render :text => @sinonimo.mapeado.to_json
+      render :text => @sinonimo.to_json
     else
+      render :text => @sinonimo.errors.to_json, :status => :unprocessable_entity
     end
 
 #    respond_to do |format|
