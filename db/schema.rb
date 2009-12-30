@@ -51,9 +51,9 @@ ActiveRecord::Schema.define(:version => 20091223152013) do
 
   create_table "importares", :force => true do |t|
     t.integer  "usuario_id"
-    t.integer  "area_id"
+    t.string   "areas"
     t.integer  "archivo_size"
-    t.string   "hoja_electronica"
+    t.string   "archivo_nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

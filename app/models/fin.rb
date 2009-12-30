@@ -1,0 +1,2 @@
+class Fin < AreaEsp
+end

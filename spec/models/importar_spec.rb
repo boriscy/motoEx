@@ -2,8 +2,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Importar do
   before(:each) do
-    @valid_attributes = {
-      
+    @params = {
+      'areas' => ["1", "2"]
     }
   end
 

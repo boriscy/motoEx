@@ -1,0 +1,90 @@
+--- 
+area: 
+  fin:
+    celdas: 
+    - texto: TOTAL 2000
+      pos: 0_19_1
+    - texto: "693,590.00"
+      pos: 0_19_2
+    - texto: "0.00"
+      pos: 0_19_3
+    - texto: "0.00"
+      pos: 0_19_4
+    - texto: "75,197,776.90"
+      pos: 0_19_5
+    - texto: "39,042,206.31"
+      pos: 0_19_6
+    - texto: "114,933,573.21"
+      pos: 0_19_7
+    campos: 
+      0_19_1: 
+        campo: TOTAL 2000
+        texto: TOTAL 2000
+    celda_final: 19_7
+    celda_inicial: 19_1
+
+  nombre: area ejemplo
+  iterar_fila: t
+  descartar:
+    desc0: 
+      excepciones: 
+      - - texto: JUNIO
+          pos: "1"
+      patron: 
+        "2": 
+          texto: ""
+      celda_final: 10_7
+      celda_inicial: 10_1
+
+  fija: f
+  rango: "5"
+  hoja_id: "10"
+  celda_final: 19_7
+  encabezado:
+    celdas: 
+    - texto: DESTINO
+      pos: 5_1
+    - texto: ARGENTINA
+      pos: 5_2
+    - texto: BG COMGAS
+      pos: 5_3
+    - texto: CUIABA
+      pos: 5_4
+    - texto: GSA
+      pos: 5_5
+    - texto: MERCADO  INTERNO
+      pos: 5_6
+    - texto: TOTAL GN
+      pos: 5_7
+    - texto: (EN MMBTU)
+      pos: 6_2
+    sinonimos: {}
+    
+    campos: 
+      5_5: 
+        campo: gsa
+        texto: GSA
+      5_7: 
+        campo: total
+        texto: TOTAL GN
+      5_1: 
+        campo: destino
+        texto: DESTINO
+      5_2: 
+        campo: argentina
+        texto: ARGENTINA
+      6_2: 
+        campo: total_mmbtu
+        texto: (EN MMBTU)
+    celda_final: 6_7
+    celda_inicial: 5_1
+
+  celda_inicial: 3_1
+  titular:
+    celdas: 
+    - texto: "VENTAS DE GAS NATURAL GESTI\xC3\x93N 2000"
+      pos: 3_1
+    celda_final: 3_7
+    celda_inicial: 3_1
+
+

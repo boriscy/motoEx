@@ -24,12 +24,6 @@ class ImportaresController < ApplicationController
 
   # Crea una nueva importacion
   def new
-    @archivo = Archivo.find(params[:id])
-    @hojas = @archivo.hojas.all(:select => "id, nombre")
-    @importar = Importar.new(:hoja_id => params[:hoja_id].to_i)
-    @hoja = Hoja.new
-    @hoja = Hoja.find(params[:hoja_id]) if params[:hoja_id]
-    hash = {:importar => @importar, :archivo => @archivo, :hojas => @hojas}
 
     respond_to do |format|
       format.html

@@ -9,6 +9,21 @@ Factory.define :usuario do |u|
   u.grupo_ids 
 end
 
+def crear_archivo_test(archivo)
+  area_archivo = archivo.gsub( File.extname(archivo), ".yml")
+  archivo_tmp = ActionController::TestUploadedFile.new( File.join(RAILS_ROOT, "ejemplos", archivo) , 'application/vnd.ms-excel')
+  # Creacion del Archivo
+  Archivo.create(:nombre => "Prueba1", :descripcion => "Comentarios", :archivo_excel => archivo_tmp)
+  # Creacion de las hojas
+  crear_archivo_hojas(archivo)
+  hoja = Hoja.find_by_numero(0)
+  # Crear Area
+  data = YAML::parse(File.open( File.join(RAILS_ROOT, "ejemplos", "areas", area_archivo  ) ) ).transform
+  data['area']['hoja_id'] = hoja.id
+  Area.create(data['area'])
+end
+
+# Crea todos los datos necesarios para poder testear un archivo
 def crear_archivos
   Dir.glob( File.join(RAILS_ROOT, "ejemplos/*.xls") ).each_with_index do |a, i|
     params = {
@@ -25,6 +40,10 @@ def crear_archivo_hojas(archivo_excel)
   (Excel.new(archivo.archivo_excel.path) ).sheets.each_with_index do |h, i|
     archivo.hojas << Hoja.new(:numero => i, :nombre => h)
   end
+end
+
+def crear_area()
+
 end
 
 def crear_areas(hoja)
