@@ -51,7 +51,7 @@ AreaGeneral = Area.extend({
      */
     'destruirAreas': function() {
           var area = this;
-          $(['encabezado', 'titular', 'descartar']).each(function(i, el) {
+          $(['encabezado', 'titular', 'descartar', 'fin']).each(function(i, el) {
               area[el].destruir();
           });
     },
@@ -68,16 +68,16 @@ AreaGeneral = Area.extend({
     'destruir': function() {
         this._super();
         this.formulario.destruir();
-        delete(this.formulario);
+        //delete(this.formulario);
         this.encabezado.destruir();
         this.titular.destruir();
         this.descartar.destruir();
         this.fin.destruir();
         // Borrado de variables
-        delete(this.encabezado);
-        delete(this.titular);
-        delete(this.descartar);
-        delete(this.fin);
+        //delete(this.encabezado);
+        //delete(this.titular);
+        //delete(this.descartar);
+        //delete(this.fin);
     },
     /**
      * Revisa si dos clases CSS se intersectan en algún elemento

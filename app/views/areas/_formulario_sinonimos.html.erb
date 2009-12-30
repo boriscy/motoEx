@@ -1,28 +1,37 @@
 <!--areas/_sinonimos.html.erb-->
 <div id="formulario-sinonimos" style="overflow: auto;" class="formtastic">
   Mapeo
-  <a href="#" class="crear-sinonimos">Crear sinónimo</a>
+  <!--<a href="#" class="crear-sinonimos">Crear sinónimo</a>-->
   <p class="inline-hints">
     Los sinónimos son grupos de campos de los cuales se busca su valor y se retorna un código definido por el usuario
   </p>
   <div id="importar-sinonimos">
-    <!--Se llama via AJAX al formulario "/sinonimos/new" -->
-    <a id="crear-sinonimos">Crear</a>
-    &nbsp;&nbsp;&nbsp;
+    <!--<a id="crear-sinonimos">Crear</a>
+    &nbsp;&nbsp;&nbsp;-->
     <a id="a-lista-sinonimos" class="listar-up">Sinonimos</a>
-
     <div id="lista-sinonimos">
       <h4>Sinonimos</h4>
       <div class="ajax">
         <img src="/images/preloader.gif" alt="Cargando" title="Cargando" />
       </div>
     </div>
-
+    
+    <!--Se llama via AJAX al formulario "/sinonimos/new" -->
+    <!--Formulario de importacion de sinonimos-->
     <div id="formulario-sinonimos-new"></div>
+    
+    <!--Listado de campos mapeados-->
+    <div id="sinonimos-mapeo">
+      <!--Select de los sinonimos creados-->
+      <label>Lista sinónimos</label>
+      <select id="select-sinonimos-mapeo"></select>
+      <input class="input-crear-sinonimo" type="button" value="Crear Sinónimo" />
+      <!--Tabla de listado de sinonimos-->
+      <div id="lista-sinonimos-mapeo">
+      </div>
+    </div>
+    
 
-    &nbsp;&nbsp;&nbsp;
-    <a class="disabled">Exportar CSV</a>
-
-  </fieldset>
-  <div id="sinonimos" style="height:270px; overflow:auto"></div>
+  </div>
+  <!--div id="sinonimos" style="height:270px; overflow:auto"></div-->
 </div>

@@ -21,7 +21,7 @@ class SinonimosController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @sinonimo }
-      format.json  { render :xml => @sinonimo }
+      format.json  { render :json => @sinonimo }
     end
   end
 
