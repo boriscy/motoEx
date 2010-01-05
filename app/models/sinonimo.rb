@@ -7,7 +7,9 @@ class Sinonimo < ActiveRecord::Base
   attr_protected :mapeado
 
   validates_presence_of :nombre
-
+  
+  validates_uniqueness_of :nombre
+  
   validate :validar_archivo
 
   # No es necesaario crear attr_accessor para campos que existen el la Base de datos

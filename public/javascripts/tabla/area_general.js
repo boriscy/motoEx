@@ -10,6 +10,7 @@ AreaGeneral = Area.extend({
     'titular': false,
     'fin': false,
     'iterarFilas': true,
+    'sinonimos': false,
     
     'init': function(ini, fin) {
         this.cssMarcar = "bg-light-green";
@@ -23,7 +24,9 @@ AreaGeneral = Area.extend({
         this.encabezado = new Encabezado(false, false, this);
         this.fin = new Fin(false, false, this);
         this.descartar = new Descartar([], this);
-
+        
+        this.sinonimos = new Sinonimos();
+        
         this.cambiarIterarFilas();
     },
     /**
@@ -68,16 +71,12 @@ AreaGeneral = Area.extend({
     'destruir': function() {
         this._super();
         this.formulario.destruir();
-        //delete(this.formulario);
         this.encabezado.destruir();
         this.titular.destruir();
         this.descartar.destruir();
         this.fin.destruir();
-        // Borrado de variables
-        //delete(this.encabezado);
-        //delete(this.titular);
-        //delete(this.descartar);
-        //delete(this.fin);
+        
+        this.sinonimos.destruir();
     },
     /**
      * Revisa si dos clases CSS se intersectan en algún elemento

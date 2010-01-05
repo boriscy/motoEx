@@ -103,7 +103,7 @@ var Area = Class.extend({
     'listaCeldas': function() {
         var lista = [];
         $('.' + this.cssMarcar).each(function(i, el) {
-            lista[i] = {'texto': $(el).text().trim(), 'pos': $(el).attr("id").replace(/^\d+_(\d_\d+)$/, "$1") };
+            lista[i] = {'texto': $(el).text().trim(), 'pos': $(el).attr("id").replace(/^\d+_(\d+_\d+)$/, "$1") };
         });
         return lista;
     },
