@@ -1,0 +1,11 @@
+formato
+
+sinonimos = {
+    '16': { //id del sinonimo en bd utilizado
+        'id': /*nombre del campo del Sinonimo*/['codigo', 'nombre'], /*nombres de los campos del encabezado*/
+        'nombre': ['total']
+    },
+    '24': {
+        'mes': ['nombre']
+    }
+}

@@ -40,7 +40,7 @@ $(document).ready(function() {
     }
 
     Iniciar.prototype = {
-        'cssSeleccionado': 'sel',
+        //'cssSeleccionado': 'sel',
         //'area': false,
         /**
          * Constructor
@@ -66,6 +66,9 @@ $(document).ready(function() {
                         $('#area_iterar_fila_false')[0].checked = !estado.area['iterar_fila'];
                         $('#area_fija')[0].checked = estado.area['fija'];
                     });
+                    $('.forma_areas label.area_id span').html($(this).val());
+                }else{
+                    $('.forma_areas label.area_id span').html('');
                 }
             });
             // Evento cuando se cambia de hoja
@@ -141,7 +144,8 @@ $(document).ready(function() {
          * Crea el areaGeneral para su marcado
          */
         'crearArea': function(){
-            if (this['area']) {
+            //if (this['area']) {
+            if (typeof(this.area) != 'undefined') {
                 this.destruir();
             }
             this['area'] = new AreaGeneral();
@@ -158,12 +162,16 @@ $(document).ready(function() {
          */
         'eliminarArea': function() {
             if (typeof(this.area) != 'undefined') {
+                this.area.destruir();
                 delete(this.area);
-                estado = {};
             }
+            //elimina el estado.area
+            estado = {};
             
-            if ($('select#area').val() != "disabled")
+            if ($('select#area').val() != "disabled"){
                 $('select#area').val("disabled"); //no llama al evento change
+                $('.forma_areas label.area_id span').html('');
+            }
         }
     }
 

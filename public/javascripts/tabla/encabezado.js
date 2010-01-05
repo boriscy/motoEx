@@ -3,7 +3,6 @@ Encabezado = Area.extend({
     'areaMinima': 1,
     'serialize': 'encabezado',
     'cssMarcar': 'bg-light-blue',
-    'sinonimos': false,
     /**
      * Constructor
      * @param String ini
@@ -13,22 +12,12 @@ Encabezado = Area.extend({
     'init': function(ini, fin, area) {
         this._super(ini, fin);
         this.area = area;
-        if (this.serialize == 'encabezado') {
-            this.sinonimos = new Sinonimos();
-        }
         
-        if (!estado.area[this.serialize]['campos']) {
-            //estado.area[this.serialize]['campos'] = [];
-        }else{
+        if (estado.area[this.serialize]['campos']) {
             this.destruirTablasCeldas();
             this.crearTablaCeldas();
         }
         
-        if (this.serialize == 'encabezado') {
-            if (!estado.area[this.serialize]['sinonimos']) {
-                estado.area[this.serialize]['sinonimos'] = {};
-            }
-        }
         this.crearEventos();
     },
     /**
@@ -57,10 +46,6 @@ Encabezado = Area.extend({
     'marcarArea': function(css, cssSel) {
         this._super(css, cssSel);
         estado.area[this.serialize]['campos'] = {};
-        if (this.serialize == 'encabezado') {
-            estado.area[this.serialize]['sinonimos'] = {};
-        }
-        //this.destruirTablasCeldas();
     },
     /**
      * Desmarca el area de encabezado y destruye los eventos de marcado
@@ -152,8 +137,5 @@ Encabezado = Area.extend({
     'destruir': function() {
         this._super();
         $('#tabla-' + this.serialize + ' tr:not(.th-head)').remove();
-        if (this.serialize == 'encabezado') {
-            this.sinonimos.destruir();
-        }
     }
 });

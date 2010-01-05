@@ -58,26 +58,16 @@ $(document).ready(function() {
     $("div#formulario-descartar").dialog({'width': 600, 'height': 400, 'resizable': false, 'modal': true, 'title': 'Patrones de columnas a descartar', 'autoOpen': false});
     $("div#formulario-descartar-excepciones").dialog({'width': 300, 'height': 250, 'resizable': false, 'modal': false, 'title': 'Excepciones', 'autoOpen': false});
     
-    /**
-     * Manejo de IFRAMES
-     */
     /*
-    $('#iframe-submit').live("click", function() {
-      $('#iframe-mapeo').ready( function() {
-        alert(1);
-      });
-    });
-    */
-
     // Indicar que area ID esta
     $('#area').change(function() {
         if($(this).val() != 'disabled')
-            $('.forma_areas h3 span').html($(this).val());
+            $('.forma_areas label.area_id span').html($(this).val());
         else{
-            $('.forma_areas h3 span').html('');
+            $('.forma_areas label.area_id span').html('');
         }
     });
-
+    */
 });
   //]]>
 </script>

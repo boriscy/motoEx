@@ -81,7 +81,7 @@ var Area = Class.extend({
         $('.' + css).removeClass(css);
         this.borrarAreaEstado();
         // Elimina el evento de menu contextual
-        $('.context-' + this.cssMarcar).expire("click");
+        $('.context-' + this.cssMarcar).die("click");
     },
     /**
      * Cambia la variable global estado
@@ -103,7 +103,7 @@ var Area = Class.extend({
     'listaCeldas': function() {
         var lista = [];
         $('.' + this.cssMarcar).each(function(i, el) {
-            lista[i] = {'texto': $(el).text().trim(), 'pos': $(el).attr("id").replace(/^\d+_(\d_\d+)$/, "$1") };
+            lista[i] = {'texto': $(el).text().trim(), 'pos': $(el).attr("id").replace(/^\d+_(\d+_\d+)$/, "$1") };
         });
         return lista;
     },
@@ -218,15 +218,6 @@ var Area = Class.extend({
     'destruir': function() {
         this.destruirEventos();
         this.desmarcarArea(this.cssMarcar);
-    },
-    /**
-     * Obtiene el borde del area
-     * return Object
-     */
-    'obtenerBordes': function() {
-        var ini = this.celdaInicial.split("_");
-        var fin = this.celdaFinal.split("_");
-        return {'filaInicial': ini[0], 'filaFinal': fin[0], 'columnaInicial': ini[1], 'columnaFinal': fin[1] }
     }
 });
 
