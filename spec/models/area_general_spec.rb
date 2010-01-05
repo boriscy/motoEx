@@ -28,7 +28,7 @@ describe AreaGeneral do
       'fija' => false
     }
     @ret = Object.new
-    @ret.stub!(:buscar_inicio).and_return(0)
+    @ret.stub!(:buscar).and_return(0)
     Encabezado.stub!(:new).and_return(@ret)
     #Encabezado.stub!(:new).and_return(true)
     DescartarPatron.stub!(:new).and_return("DescartarPatron")
@@ -54,6 +54,12 @@ describe AreaGeneral do
     @area_gen = AreaGeneral.new(@params, @@hoja_electronica, true)
     @area_gen.descartadas_posicion.size.should == 1
     @area_gen.descartadas_posicion[19].should == true
+  end
+
+  it "debe actualizar la posicion de areas descartadas pos posicion" do
+    @area_gen = AreaGeneral.new(@params, @@hoja_electronica, true)
+    @area_gen.actualizar_descartadas_posicion(2)
+    @area_gen.descartadas_posicion[21].should == true
   end
 
   it "debe asignar las areas de descarta patron" do

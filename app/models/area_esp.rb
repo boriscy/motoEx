@@ -4,10 +4,14 @@ class AreaEsp < AreaImp
   attr_reader :celdas, :campos
 
   # Solo almacena en celdass aquellas que tienen un valor
-  def initialize(area, hoja_electronica, iterar_fila=true)
-    super(area, hoja_electronica, iterar_fila)
+  def initialize(area, hoja_electronica, iterar_fila_tmp=true)
+    super(area, hoja_electronica, iterar_fila_tmp)
     # Almacenar solo las celdas que tienen texto 
-    @celdas = area['celdas'].inject([]){|h, v| h << v unless v['texto'].strip.blank?; h }
+    if area['celdas']
+      @celdas = area['celdas'].inject([]){|h, v|  h << v unless v['texto'].strip.blank?; h }
+    else
+      @celdas = []
+    end
     # campos seleccionados
     @campos = area['campos']
   end

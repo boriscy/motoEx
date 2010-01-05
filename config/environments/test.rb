@@ -30,7 +30,7 @@ config.gem "rspec", :lib => false, :version => ">=1.2.4"
 config.gem "rspec-rails", :lib => false, :version => ">=1.2.4"
 config.gem "webrat", :lib => false, :version => ">=0.5.3"
 #config.gem "selenium-client", :lib => "selenium/client"
-config.gem "cucumber", :lib => false, :version => ">=0.3.1"
+config.gem "cucumber", :lib => false, :version => ">=0.4.3"
 config.gem 'ruby-debug'
 config.gem "factory_girl"
 # Se llama directamente desde Rspec usando require "shoulda"

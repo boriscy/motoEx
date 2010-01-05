@@ -11,7 +11,7 @@ describe DescartarPatron do
 
   it "debe borrar espacion en blanco al final y principio excepciones" do
     @descartar = DescartarPatron.new(@@descartar['desc1'], @@hoja_electronica)
-    @descartar.excepciones.should == [{'pos' => '1', 'texto' => 'MAYO'}]
+    @descartar.excepciones.should == [ [ { 'pos' => '1', 'texto' => 'MAYO' } ] ]
   end
 
   it "debe indicar patron es valido" do

@@ -2,12 +2,12 @@
 class AreaGeneral < AreaImp
 
   attr_reader :titular, :encabezado, :fin, :descartadas_posicion, :descartadas_patron
-  attr_accessor :rango, :nombre, :iterar_fila
+  attr_accessor :rango, :nombre
 
   # Constructor
   # @param area
-  def initialize(area, hoja_electronica, iterar_fila = true)
-    super(area, hoja_electronica, iterar_fila)
+  def initialize(area, hoja_electronica, iterar_fila_tmp = true)
+    super(area, hoja_electronica, iterar_fila_tmp)
 
     # Parametros
     @rango = area['rango'].to_i
@@ -18,9 +18,8 @@ class AreaGeneral < AreaImp
     # Componentes
     @titular = Titular.new(area['titular'], hoja_electronica)
     @encabezado = Encabezado.new(area['encabezado'], hoja_electronica)
-  
-    @fin = Fin.new() unless area['fija']
-    #@fin = area['fin']
+    # Asignar en caso de que no sea area['fija']
+    @fin = Fin.new(area['fin'], @hoja_electronica) unless area['fija']
     # Asigna las areas descartadas
     @descartadas_patron = {}
     @descartadas_posicion = {}
@@ -28,36 +27,24 @@ class AreaGeneral < AreaImp
     asignar_areas_descartadas_posicion(area['descartar'])
 
     # busca el inicio del documento y desplaza la posición
-    desplazar = @encabezado.buscar_inicio(@hoja_electronica)
+    desplazar = @encabezado.buscar(@hoja_electronica)
 
     if desplazar > 0
-      [@titular, @areas].each{|v| v.send(:actualizar_posicion, desplazar)}
+      [titular, fin, areas].each{|v| v.send(:actualizar_posicion, desplazar)}
     end
   end
 
-private
-
-  # Se asignan las areas descartadas de acuerdo a su posicion
-  # o de acuerdo a su patron
-  # @param Hash areas
-  def asignar_areas_descartadas_patron(areas)
-    areas.each do |k, v|
-      @descartadas_patron[k] = DescartarPatron.new(v, @hoja_electronica, true) if v['patron'].size > 0
-    end
-  end
-
-  # Asigna las areas descartables por posicion, estas deben ser creadas
-  # debido a que pueden ocupar mas de una fila si se itera filas
-  def asignar_areas_descartadas_posicion(areas)
-    areas.each do |k, v|
-      @descartadas_posicion.merge!(descartadas_posicion_rango(v['celda_inicial'], v['celda_final']) ) if v['patron'].size <= 0
-    end
+  # Actualiza la posicion del area descartada
+  # @param Integer desplazar
+  def actualizar_descartadas_posicion(desplazar)
+    tmp = descartadas_patron
+    @descartadas_posicion = descartadas_posicion.keys.inject({}){ |h, k| h[k + desplazar] = descartadas_posicion[k]; h }
   end
 
   # Crea un hash de posiciones dependiendo si se itera fila o columna
-  # retornando un array hash con las posiciones en las que hay descartados por posicion
+  # retornando un hash con las posiciones en las que hay descartados por posicion
   # @param String incio
-  # @param String f # No se usa fin debido a que ya existe una funcion con ese nombre
+  # @param String f # No se usa fin debido a que ya existe una metodo con ese nombre
   # @return Hash
   def descartadas_posicion_rango(inicio, fin_pos)
     inicio = inicio.split("_").map(&:to_i)
@@ -71,17 +58,21 @@ private
     (i..j).inject({}){|s, v| s[v] = true; s}
   end
 
-  # Actualiza la posicion del area descartada
-  # @param 
-  def actualizar_descartadas_posicion(desplazar)
-    tmp = descartadas_patron
-    descartadas_patron.each do |k, v|
-      tmppos = k.split("_")
-      if iterar_fila?
-        
-      else
-      end
+private
+  # Se asignan las areas descartadas de acuerdo a su posicion
+  # o de acuerdo a su patron
+  # @param Hash areas
+  def asignar_areas_descartadas_patron(areas)
+    areas.each do |k, v|
+      @descartadas_patron[k] = DescartarPatron.new(v, @hoja_electronica, true) if v['patron'].size > 0
     end
   end
-
+ 
+  # Asigna las areas descartables por posicion, estas deben ser creadas
+  # debido a que pueden ocupar mas de una fila si se itera filas
+  def asignar_areas_descartadas_posicion(areas)
+    areas.each do |k, v|
+      @descartadas_posicion.merge!(descartadas_posicion_rango(v['celda_inicial'], v['celda_final']) ) if v['patron'].size <= 0
+    end
+  end
 end

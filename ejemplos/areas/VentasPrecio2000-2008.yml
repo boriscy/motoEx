@@ -17,7 +17,7 @@ area:
     - texto: "114,933,573.21"
       pos: 0_19_7
     campos: 
-      0_19_1: 
+      19_1: 
         campo: TOTAL 2000
         texto: TOTAL 2000
     celda_final: 19_7

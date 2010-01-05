@@ -10,9 +10,9 @@ class AreaImp
   # @param Hash area
   # @param Excel || Excelx || OpenOffice hoja_electronica
   # @param Boolean iterar_fila
-  def initialize(area, hoja_electronica, iterar_fila = true)
+  def initialize(area, hoja_electronica, iterar_fila_tmp = true)
     @celda_inicial, @celda_final = area['celda_inicial'], area['celda_final']
-    @iterar_fila = iterar_fila
+    @iterar_fila = iterar_fila_tmp
 
     asignar_hoja_electronica(hoja_electronica)
 
