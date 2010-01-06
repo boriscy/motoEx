@@ -97,6 +97,29 @@ class Sinonimo < ActiveRecord::Base
       end
     end
   end
+  
+  def export_to_csv()
+    cabecera = mapeado.first.keys
+    csv_primera_fila = mapeado.first.keys
+    
+    csv = ""
+    
+    mapeado.to_a.each do |fila|
+      csv_fila = []
+      cabecera.each_with_index do |campo, k|
+        if campo =~ /^sinonimos_.+/
+          fila[campo].each_with_index do |sinonimo_nombre, i|
+            csv_fila << sinonimo_nombre
+            csv_primera_fila.insert(k, campo) if (k + i) > csv_primera_fila.size - 1
+          end
+        else
+          csv_fila << fila[campo]
+        end
+      end
+      csv << csv_fila.to_csv
+    end
+    csv_primera_fila.to_csv + csv
+  end
 
   # Para poder importar los datos
 #  def self.yamel(param='nombre')

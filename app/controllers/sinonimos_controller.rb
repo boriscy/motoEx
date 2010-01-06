@@ -22,6 +22,7 @@ class SinonimosController < ApplicationController
       format.html # show.html.erb
       format.xml  { render :xml => @sinonimo }
       format.json  { render :json => @sinonimo }
+      format.csv {render :text => @sinonimo.export_to_csv}
     end
   end
 
@@ -70,16 +71,18 @@ class SinonimosController < ApplicationController
   def update
     @sinonimo = Sinonimo.find(params[:id])
 
-    respond_to do |format|
+    #respond_to do |format|
       if @sinonimo.update_attributes(params[:sinonimo])
-        flash[:notice] = 'Sinonimo was successfully updated.'
-        format.html { redirect_to(@sinonimo) }
-        format.xml  { head :ok }
+        render :text => @sinonimo.to_json
+        #flash[:notice] = 'Sinonimo was successfully updated.'
+        #format.html { redirect_to(@sinonimo) }
+        #format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @sinonimo.errors, :status => :unprocessable_entity }
+        render :text => @sinonimo.errors.to_json, :status => :unprocessable_entity
+        #format.html { render :action => "edit" }
+        #format.xml  { render :xml => @sinonimo.errors, :status => :unprocessable_entity }
       end
-    end
+    #end
   end
 
   # DELETE /sinonimos/1
