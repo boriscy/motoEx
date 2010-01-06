@@ -1,6 +1,20 @@
 # Clase que maneja los encabezados
 class Encabezado <  AreaEsp
 
+  def initialize(area, hoja_electronica, iterar_fila_tmp=true)
+    super(area, hoja_electronica, iterar_fila_tmp)    
+    # Asignacion de posicion, para determinar si es columna fija o 
+    @campos = campos.inject({}){|h, v|
+      fila, columna = v[0].split("_").map(&:to_i)
+      if iterar_fila?
+        h[ v[0] ] = v[1].merge({'posicion' => columna})
+      else
+        h[ v[0] ] = v[1].merge({'posicion' => fila})
+      end
+      h
+    }
+  end
+
   # Busca el encabezado de acuerdo al rango, en caso de que encuentra el patron
   # en el cual se encuentra el encabezado retorna un numero de lo contrario retorna false
   # @param Fixnum rango
@@ -9,16 +23,15 @@ class Encabezado <  AreaEsp
     desplazar = 0
 
     # Retorna el desplazar si encontro todos los valores de la cabecera
-    return desplazar if verificar_campos(desplazar)
+    return desplazar if verificar_campos?(desplazar)
     # Iteración en el rango
     #desplazar = false
 
     arr = crear_rango(rango)
 
     arr.each do |v|
-      next if (fila_inicial + v) < 0
 
-      if verificar_campos(v)
+      if verificar_campos?(v)
         desplazar = v
         actualizar_posicion(desplazar)
         break
@@ -28,11 +41,31 @@ class Encabezado <  AreaEsp
     desplazar
   end
 
+  # Extrae los datos indicados dependiendo la fila o columna
+  # @param Integer pos
+  # @return Hash
+  def extraer_datos(pos)
+    if iterar_fila?
+      
+    else
+
+    end
+    campos.inject({}) do |hash, v|
+      v['posicion']
+      hoja_electronica.cell(fila, columna).to_s.strip
+      hash
+    end
+  end
+
+###############################################
 private
+
   # Verifica de que todas las celdas, comparando las posiciones de los campos en la
-  # clase Encabezado con los valores de la hoja_electronica
+  # clase Encabezado con los valores de la hoja_electronica. Permitiendo reconocer 
+  # si se encontro el encabezado en la hoja_electronica
   # @param Fixnum pos # Indica cuanto se ha movido en filas o columnas el encabezado
-  def verificar_campos(pos)
+  # @return Boolean
+  def verificar_campos?(pos)
     valido = true
   
     @campos.each do |k ,v|

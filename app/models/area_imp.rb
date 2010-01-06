@@ -5,6 +5,8 @@ class AreaImp
   attr_reader :celda_inicial, :celda_final, :hoja_electronica
   attr_reader :fila_inicial, :fila_final, :columna_inicial, :columna_final, :iterar_fila
 
+  attr_reader :proc_pos, :proc_desp
+
   # Constructor
   # En caso de que itererar_filas = false # => Se itera las columnas
   # @param Hash area
@@ -17,6 +19,8 @@ class AreaImp
     asignar_hoja_electronica(hoja_electronica)
 
     asignar_filas_columnas()
+    # asigna un procedimiento para poder leer
+    proc_posicion()
   end
 
   # Alias del iterar_fila
@@ -43,7 +47,8 @@ class AreaImp
   # @param String posicion
   # @param Fixnum desplazar
   def crear_posicion_desplazada(posicion, desplazar = 0)
-    self.class.crear_posicion_desplazada(posicion, desplazar, iterar_fila? )
+    fila, columna = posicion.split("_").map(&:to_i)
+    proc_desp.call(fila, columna, desplazar).join("_")
   end
 
   # crear una posicion en base a la fila y la columna
@@ -80,5 +85,26 @@ protected
     @fila_final = fin[0]
     @columna_final = fin[1]
   end
-  
+
+  # Asigna la posicion de acuerdo a si se itera filas o columnas
+  # @param String posicion
+  # @param Integer pos # fila o columna en la cual se encuentra
+  # @return Array # Array de enteros con [fila, columna]
+  def asignar_posicion(posicion, pos)
+    fila, columna = posicion.split("_").map(&:to_i)
+    @proc_pos.call(fila, columna, pos)
+  end
+
+  # Asigna procedimientos que sirven para poder obtner la posicion
+  # para no tener que realizar "if iterar_fila?" cuando se itera
+  def proc_posicion()
+    if iterar_fila?
+      @proc_pos = lambda{|fila, columna, pos| [pos, columna] }
+      @proc_desp = lambda{|fila, columna, desp| [(fila + desp), columna] }
+    else
+      @proc_pos = lambda{|fila, columna, pos| [fila, pos] }
+      @proc_desp = lambda{|fila, columna, desp| [fila, (columna + desp)] }
+    end
+  end
+
 end
