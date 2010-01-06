@@ -10,6 +10,7 @@ class Area < ActiveRecord::Base
   serialize :fin
   serialize :descartar
   serialize :titular
+  serialize :sinonimos
 
 #  [:celda_inicial, :celda_final, :celdas].each do |m|
 #    attr_accessor "encabezado_#{m}".to_sym

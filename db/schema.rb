@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091223152013) do
+ActiveRecord::Schema.define(:version => 20100106133154) do
 
   create_table "archivos", :force => true do |t|
     t.integer  "usuario_id"
@@ -39,6 +39,12 @@ ActiveRecord::Schema.define(:version => 20091223152013) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "titular"
+    t.text     "sinonimos"
+  end
+
+  create_table "fines", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "hojas", :force => true do |t|
@@ -50,9 +56,9 @@ ActiveRecord::Schema.define(:version => 20091223152013) do
 
   create_table "importares", :force => true do |t|
     t.integer  "usuario_id"
-    t.string   "areas"
+    t.integer  "area_id"
     t.integer  "archivo_size"
-    t.string   "archivo_nombre"
+    t.string   "hoja_electronica"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
