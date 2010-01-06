@@ -45,6 +45,11 @@ class Encabezado <  AreaEsp
   # @param Integer pos
   # @return Hash
   def extraer_datos(pos)
+    if iterar_fila?
+      
+    else
+
+    end
     campos.inject({}) do |hash, v|
       v['posicion']
       hoja_electronica.cell(fila, columna).to_s.strip

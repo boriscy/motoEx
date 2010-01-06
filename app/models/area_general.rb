@@ -43,8 +43,9 @@ class AreaGeneral < AreaImp
 
     i = iterar_fila? ? fila : columna
     begin
-      i += 1
       fila, columna = asignar_posicion(i)
+      
+      i += 1
     end while !condicion.call(fila, columna)
   end
 
