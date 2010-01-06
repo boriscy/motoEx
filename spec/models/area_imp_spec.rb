@@ -11,6 +11,12 @@ describe AreaImp do
     @hoja_electronica.stub!(:class).and_return(Excel)
   end
 
+  it 'debe crear procs para iterar_fila' do
+    @area_imp = AreaImp.new(@params, @hoja_electronica )
+    @area_imp.proc_pos.class.to_s.should == "Proc"
+    @area_imp.proc_desp.class.to_s.should == "Proc"
+  end
+
   it "debe crear un area inicial con datos válidos" do
     @area_imp = AreaImp.new(@params, @hoja_electronica )
 

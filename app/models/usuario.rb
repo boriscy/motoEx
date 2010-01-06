@@ -6,7 +6,6 @@ class Usuario < ActiveRecord::Base
   # Relaciones
   has_many :archivos
 
-
   # Se utiliza authlogic como metodo de autenticacion
   # Configuraciones de authogic
   acts_as_authentic do |config|
@@ -28,6 +27,7 @@ class Usuario < ActiveRecord::Base
   def nombre_completo
     "#{nombre} #{paterno} #{materno}"
   end
+
 
   # Limpia los espacion en blaco de los campos :nombre, :paterno y :materno
   def squish_params

@@ -21,4 +21,11 @@ describe Fin do
     @fin = Fin.new(@params, @hoja_electronica)
     @fin.campos['19_1']['texto'].should == "TOTAL 2000"
   end
+
+  it 'debe encontrar el final' do
+    @fin = Fin.new(@params, @hoja_electronica)
+    @fin.fin?(4).should == false
+    @fin.fin?(19).should == true
+  end
+
 end

@@ -1,7 +1,7 @@
 # Area pricnipal encargada de manejar todas las subareas
 class AreaGeneral < AreaImp
 
-  attr_reader :titular, :encabezado, :fin, :descartadas_posicion, :descartadas_patron
+  attr_reader :titular, :encabezado, :fin, :descartadas_posicion, :descartadas_patron, :area_fija
   attr_accessor :rango, :nombre
 
   # Constructor
@@ -14,12 +14,13 @@ class AreaGeneral < AreaImp
     @nombre = area['nombre']
     @iterar_fila = iterar_fila
     @hoja_electronica = hoja_electronica
+    @area_fija = area['fija']
 
     # Componentes
     @titular = Titular.new(area['titular'], hoja_electronica)
     @encabezado = Encabezado.new(area['encabezado'], hoja_electronica)
     # Asignar en caso de que no sea area['fija']
-    @fin = Fin.new(area['fin'], @hoja_electronica) unless area['fija']
+    @fin = Fin.new(area['fin'], @hoja_electronica) unless area_fija
     # Asigna las areas descartadas
     @descartadas_patron = {}
     @descartadas_posicion = {}
@@ -30,9 +31,24 @@ class AreaGeneral < AreaImp
     desplazar = @encabezado.buscar(@hoja_electronica)
 
     if desplazar > 0
-      [titular, fin, areas].each{|v| v.send(:actualizar_posicion, desplazar)}
+      [self, @titular, @fin].each{|v| v.send(:actualizar_posicion, desplazar) }
     end
   end
+
+  # Realiza la lectura de un archivo excel una ves que se ha instanciado
+  # @return arr
+  def leer()
+    arr = []
+    condicion = crear_condicion_iterar()
+
+    i = iterar_fila? ? fila : columna
+    begin
+      i += 1
+      fila, columna = asignar_posicion(i)
+    end while !condicion.call(fila, columna)
+  end
+
+
 
   # Actualiza la posicion del area descartada
   # @param Integer desplazar
@@ -59,6 +75,22 @@ class AreaGeneral < AreaImp
   end
 
 private
+  # Crea la condicion que permite iterar
+  # @reutrn Proc
+  def crear_condicion_iterar()
+    if area_fija
+      cond = lambda{ |fila, columna| celda_final == "#{fila}_#{columna}" }
+    else
+      cond = lambda{ |fila, columna| 
+        if iterar_fila
+          @fin.fin?(fila)
+        else
+          @fin.fin(columna)
+        end
+      }
+    end
+  end
+
   # Se asignan las areas descartadas de acuerdo a su posicion
   # o de acuerdo a su patron
   # @param Hash areas
@@ -75,4 +107,5 @@ private
       @descartadas_posicion.merge!(descartadas_posicion_rango(v['celda_inicial'], v['celda_final']) ) if v['patron'].size <= 0
     end
   end
+  
 end

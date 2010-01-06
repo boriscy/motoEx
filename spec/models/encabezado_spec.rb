@@ -21,6 +21,24 @@ describe Encabezado do
     @hoja_electronica.stub!(:class).and_return(Excel)
   end
 
+  it 'debe aumentar las posiciones de acuerdo a si itera filas' do
+    @encabezado = Encabezado.new(@params, @hoja_electronica, true)
+    @encabezado.campos['2_1']['posicion'].should == 1
+    @encabezado.campos['2_7']['posicion'].should == 7
+  end
+
+  # En este caso la prueba funciona pero el dato esta mapeado para filas y no columnas
+  it 'debe aumentar las posiciones de acuerdo a si itera columnas' do
+    @encabezado = Encabezado.new(@params, @hoja_electronica, false)
+    @encabezado.campos['2_1']['posicion'].should == 2
+    @encabezado.campos['2_3']['posicion'].should == 2
+  end
+
+  it 'debe retornar hash con los campos' do
+    @encabezado = Encabezado.new(@params, @hoja_electronica)
+    @ecanbezado.extraer_datos(10).should == {'destino' => 'ABRIL', 'bg_comgas' => '', 'total_gn' => '7914534.0'}
+  end
+
 
   describe "buscar y actualizar posiciones" do
 

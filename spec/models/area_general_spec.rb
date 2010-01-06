@@ -3,6 +3,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/../testdata/test1')
 
 describe AreaGeneral do
+
+  def crear_metodos(*args)
+    
+  end
+
   before(:each) do
 
     @titular = {}
@@ -17,8 +22,8 @@ describe AreaGeneral do
     @fin = {}
 
     @params = {
-      'celda_inicial' => '1_2',
-      'celda_final' => '3_4',
+      'celda_inicial' => '3_1',
+      'celda_final' => '19_7',
       'titular' => @titular,
       'encabezado' => @encabezado,
       'descartar' => @@descartar,
@@ -27,14 +32,16 @@ describe AreaGeneral do
       'rango' => 5,
       'fija' => false
     }
-    @ret = Object.new
-    @ret.stub!(:buscar).and_return(0)
-    Encabezado.stub!(:new).and_return(@ret)
-    #Encabezado.stub!(:new).and_return(true)
-    DescartarPatron.stub!(:new).and_return("DescartarPatron")
-    Titular.stub!(:new).and_return(true)
-    Fin.stub!(:new).and_return(true)
+    @enc = Object.new
+    @enc.stub!(:buscar).and_return(0)
+    @enc.stub!(:actulizar_posicion)
+    Encabezado.stub!(:new).and_return(@enc)
 
+    DescartarPatron.stub!(:new).and_return("DescartarPatron")
+    @methods = Object.new
+    @methods.stub!(:actualizar_posicion)
+    Titular.stub!(:new).and_return(@methods)
+    Fin.stub!(:new).and_return(@methods)
   end
 
   it "debe crear area valida" do
@@ -66,5 +73,27 @@ describe AreaGeneral do
     @area_gen = AreaGeneral.new(@params, @@hoja_electronica, true)
     @area_gen.descartadas_patron.size.should == 1
     @area_gen.descartadas_patron['desc1'].should == "DescartarPatron"
+  end
+
+  it 'debe desplazar la posicion' do
+    @enc.stub!(:buscar).and_return(2)
+    # Stubs necesarios para que pase
+    Fin.stub!(:actualizar_posicion)
+    Titular.stub!(:actualizar_posicion)
+
+    @area_gen = AreaGeneral.new(@params, @@hoja_electronica, true)
+    @area_gen.celda_inicial == "3_2" #orig  "1_2"
+    @area_gen.celda_final == "5_4" #orig  "3_4"
+  end
+
+  describe "lectura de archivo" do
+
+    before(:each) do
+      @area_gen = AreaGeneral.new(@params, @@hoja_electronica, true)
+    end
+
+#    it 'debe leer los datos' do
+#      @area_gen
+#    end
   end
 end
