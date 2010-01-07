@@ -329,9 +329,9 @@ var Descartar = Area.extend({
         fin = estado.area.descartar[area].celda_final.split("_");
         
         if( estado.area['iterar_fila'] ) {
-            return [inicio[1], fin[1]];
+            return [parseInt(inicio[1]), parseInt(fin[1])];
         }else{
-            return [inicio[0], fin[0]];
+            return [parseInt(inicio[0]), parseInt(fin[0])];
         }
     },
     /**

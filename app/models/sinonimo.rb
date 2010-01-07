@@ -102,7 +102,7 @@ class Sinonimo < ActiveRecord::Base
     cabecera = mapeado.first.keys
     csv_primera_fila = mapeado.first.keys
     
-    csv = ""
+    csv = ''
     
     mapeado.to_a.each do |fila|
       csv_fila = []

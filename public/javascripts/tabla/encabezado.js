@@ -77,7 +77,7 @@ Encabezado = Area.extend({
         if (celdas){
             var $tabla = $('#tabla-' + this.serialize);
             for(i = 0, l = celdas.length; i < l; i++) {
-                var html = '<tr><td><input type="hidden" name="area[' + this.serialize + '][' + i + '][hidden]" value="' + celdas[i].pos + '"/>';
+                var html = '<tr class="' + celdas[i].pos + '"><td><input type="hidden" name="area[' + this.serialize + '][' + i + '][hidden]" value="' + celdas[i].pos + '"/>';
                 html += '<span>' + celdaExcel(celdas[i].pos) + '</span>';
                 html += '<label id="label-' + this.serialize + '-campo' + i + '">';
                 html += '<input type="checkbox" name="area[' + this.serialize + '][' + i + '][sel]" class="' + this.serialize + '-check"';

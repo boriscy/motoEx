@@ -33,9 +33,12 @@ var Area = Class.extend({
                     this.celdaInicial = estado.area[this.serialize].celda_inicial;
                     this.celdaFinal = estado.area[this.serialize].celda_final;
                     this.marcarCeldas(this.celdaInicial, this.celdaFinal, this.cssMarcar);
+                }else {
+                    this.crearEventosDesmarcar();
                 }
             }else {
                 estado.area[this.serialize] = {};
+                this.crearEventosDesmarcar();
             }
         }else{
             if(estado['area'] ) {
@@ -47,7 +50,8 @@ var Area = Class.extend({
                 this.marcarArea(this.cssMarcar);
             }
         }
-
+    },
+    'crearEventosDesmarcar': function() {
         var area = this;
         // Evento para menu contextual
         $('.context-' + this.cssMarcar).live("click", function(e) {
@@ -59,6 +63,11 @@ var Area = Class.extend({
             }
         });
     },
+    'destruirEventosDesmarcar': function() {
+        // Elimina el evento de menu contextual
+        $('.context-' + this.cssMarcar).die("click");
+    },
+    
     /**
      * Aciciona una clase css a un area
      */
@@ -70,6 +79,8 @@ var Area = Class.extend({
         $('.' + cssSel).addClass(css);
         $('.' + cssSel).removeClass(cssSel);
         this.cambiarEstado();
+        
+        this.crearEventosDesmarcar();
     },
     /**
      * Elimina la clase css de un area 
@@ -80,8 +91,7 @@ var Area = Class.extend({
         css = css || this.cssSeleccionado;
         $('.' + css).removeClass(css);
         this.borrarAreaEstado();
-        // Elimina el evento de menu contextual
-        $('.context-' + this.cssMarcar).die("click");
+        this.destruirEventosDesmarcar();
     },
     /**
      * Cambia la variable global estado
@@ -139,6 +149,7 @@ var Area = Class.extend({
                 $('#' + hoja_numero + '_' + i + '_' + j).addClass(css);
             }
         }
+        this.crearEventosDesmarcar();
     },
     /**
      * Valida la inclusion de un area en otra

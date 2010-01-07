@@ -55,10 +55,17 @@ FormularioArea.prototype = {
         // para que abra el formulario de sinonimos en click del formulario
         $('#formulario-areas a.encabezado-sinonimos').live("click", function() {
             //solo muestra el formulario cuando hay una columna de encabezado seleccionado
+            var mostrar = false, val = true;
             for (var k in estado.area.encabezado['campos']) {
-                $('#formulario-sinonimos').trigger("mostrar");
-                break;
+                mostrar = true;
+                $('#tabla-encabezado tr.' + k + ' span.error').remove();
+                if (!form.validarEncabezadoCampoId(k)) {
+                    form.adicionarError('#tabla-encabezado tr.' + k + ' td:last',"El nombre del campo no es válido");
+                    val = false;
+                }
             }
+            if (mostrar && val)
+                $('#formulario-sinonimos').trigger("mostrar");
         });
     },
     /**
@@ -109,6 +116,8 @@ FormularioArea.prototype = {
                     if(area_id == 'disabled') {
                         area_id = resp['area']['id'];
                         $('select#area').append("<option value='" + area_id + "'>" + resp["area"]["nombre"] + "</option>");
+                        $('.forma_areas label.area_id span').html(area_id);
+                        
                         $('select#area option[value=' + area_id + ']').attr("selected", "selected");
                         $('input:hidden[name=_method]').val("put");
                         $('div#formulario-areas').append('<input type="hidden" name="_method" value="put" />');
@@ -150,10 +159,10 @@ FormularioArea.prototype = {
         var nombre = $('#area_nombre').val();//.trim();
         var val = true;
         if(nombre == "") {
-            this.adicionarError('#area_nombre', 'No debe estar el nombre en blanco');
+            this.adicionarError('#area_nombre', 'El nombre no debe estar en blanco');
             val = false;
         }else if( $('select#aera option:contains(' + nombre + ')').length > 0 ) {
-            this.adicionarError('#area_nombre', "El nombre ya esta en uso");
+            this.adicionarError('#area_nombre', "El nombre ya está en uso");
             val = false;
         }
         if (! /^\d+$/.test($('#area_rango').val())){
@@ -164,6 +173,10 @@ FormularioArea.prototype = {
         var encabezados = 0;
         for (var k in estado.area.encabezado.campos){
             encabezados++;
+            if (!this.validarEncabezadoCampoId(k)) {
+                this.adicionarError('#tabla-encabezado tr.' + k + ' td:last',"El nombre del campo no es válido");
+                val = false;
+            }
         }
         if (encabezados < 3){
             this.adicionarError('#encabezado p:first',"Debe seleccionar al menos tres campos");
@@ -174,6 +187,10 @@ FormularioArea.prototype = {
             var fin = 0;
             for (var k in estado.area.fin.campos){
                 fin++;
+                if (!this.validarFinCampoId(k)){
+                    this.adicionarError('#tabla-fin tr.' + k + ' td:last',"El nombre del campo no es válido");
+                    val = false;
+                }
             }
             if (fin < 1){
                 this.adicionarError('#fin p:first',"Debe seleccionar al menos un campo");
@@ -201,7 +218,47 @@ FormularioArea.prototype = {
         }
         
         return val;
-
+    },
+    /**
+     * Validación de nombres de campos del area encabezado
+     * @param String pos #id de la celda a revisar (que tambien funciona como identificador del campo en estado.area)
+     */
+    'validarEncabezadoCampoId': function(pos) {
+        estado.area.encabezado.campos[pos].campo = estado.area.encabezado.campos[pos].campo.trim();
+        return this.validarNombreFormato(estado.area.encabezado.campos[pos].campo) && this.validarNombreUnico(estado.area.encabezado.campos, estado.area.encabezado.campos[pos].campo);
+    },
+    /**
+     * Validación de nombres de campos del area fin
+     * @param String pos #id de la celda a revisar (que tambien funciona como identificador del campo en estado.area)
+     */
+    'validarFinCampoId': function(pos) {
+        estado.area.fin.campos[pos].campo = estado.area.fin.campos[pos].campo.trim();
+        return this.validarNombreFormato(estado.area.fin.campos[pos].campo) && this.validarNombreUnico(estado.area.fin.campos, estado.area.fin.campos[pos].campo);
+    },
+    /**
+     * Valida el formato del nombre del campo
+     * @param String campoId #nombre del campo usado
+     */
+    'validarNombreFormato': function(campoId) {
+        return (/^[a-z]\w*$/i.test(campoId));
+    },
+    /**
+     * Valida que el nombre del campo sea unico dentro de su area
+     * @param Object campos #objeto que tiene los campos seleccionados
+     * @param String campoId #nombre del campo usado
+     */
+    'validarNombreUnico': function(campos, campoId) {
+        // cuenta la cantidad de veces que aparece ese campo
+        // si aparece mas de una vez quiere decir que se repite el nombre
+        var cuenta = 0;
+        for (var k in campos) {
+            if (campos[k].campo.trim() == campoId) {
+                cuenta++;
+                if (cuenta > 1)
+                    return false;
+            }
+        }
+        return true;
     },
     /**
      * Adiciona mensajes de error
