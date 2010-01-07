@@ -1,0 +1,61 @@
+---
+area: 
+  fin: {}
+
+  created_at: 2010-01-07 21:05:03
+  nombre: Area fija
+  updated_at: 2010-01-07 21:05:03
+  id: "7"
+  iterar_fila: t
+  descartar: 
+    desc0: 
+      excepciones: []
+
+      patron: 
+        "2": 
+          texto: "0.00"
+      celda_final: 56_7
+      celda_inicial: 56_1
+  fija: t
+  rango: "5"
+  hoja_id: "10"
+  celda_final: 65_7
+  encabezado: 
+    celdas: 
+    - texto: DESTINO
+      pos: 51_1
+    - texto: ARGENTINA
+      pos: 51_2
+    - texto: BG COMGAS
+      pos: 51_3
+    - texto: CUIABA
+      pos: 51_4
+    - texto: GSA
+      pos: 51_5
+    - texto: MERCADO  INTERNO
+      pos: 51_6
+    - texto: TOTAL
+      pos: 51_7
+    - texto: (EN $US)
+      pos: 52_2
+    campos: 
+      51_7: 
+        campo: total
+        texto: TOTAL
+      51_1: 
+        campo: destino
+        texto: DESTINO
+      52_2: 
+        campo: total_sus
+        texto: (EN $US)
+      51_4: 
+        campo: cuiba
+        texto: CUIABA
+      51_5: 
+        campo: gsa
+        texto: GSA
+    celda_final: 52_7
+    celda_inicial: 51_1
+  celda_inicial: 49_1
+  titular: {}
+
