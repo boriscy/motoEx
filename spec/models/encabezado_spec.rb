@@ -34,9 +34,14 @@ describe Encabezado do
     @encabezado.campos['2_3']['posicion'].should == 2
   end
 
-  it 'debe retornar hash con los campos' do
+  it 'debe ' do
     @encabezado = Encabezado.new(@params, @hoja_electronica)
-    @ecanbezado.extraer_datos(10).should == {'destino' => 'ABRIL', 'bg_comgas' => '', 'total_gn' => '7914534.0'}
+    @encabezado.proc_pos_enc.call(5, @encabezado.campos['2_1']).should == [5, 1]
+  end
+
+  it 'debe retornar hash con los campos' do
+    @encabezado = Encabezado.new(@params, @hoja_electronica, true)
+    @encabezado.extraer_datos(10).should == {'destino' => 'ABRIL', 'bg_comgas' => '', 'total_gn' => '7914534.0'}
   end
 
 

@@ -17,6 +17,7 @@ Y /^que tengo el archivo "([^\"]*)"$/ do |archivo|
 end
 
 Entonces /^debo poder leer los datos seleccionados de este archivo$/ do
-  @area_general
+  @resp = @area_general.leer()
+  @resp.size.should == 8
 end
 

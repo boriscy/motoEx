@@ -8,12 +8,17 @@
 #     "celda_inicial" => "10_7", "" => "celda_final" => "10_1"
 #   }
 class DescartarPatron < AreaEsp
-  attr_reader :patron, :excepciones
+  attr_reader :patron, :excepciones, :proc_desc_pos
 
   def initialize(area, hoja_electronica, iterar_fila_tmp = true)
     super(area, hoja_electronica, iterar_fila_tmp)
     @patron = strip_texto_patron(area['patron'])
     @excepciones = area['excepciones'].map!{|v| strip_texto_excepciones(v) }
+    if iterar_fila?
+      @proc_desc_pos = lambda{|pos, pat| [pos, pat] }
+    else
+      @proc_desc_pos = lambda{|pos, pat| [pat, pos] }
+    end
   end
 
   # Indica si el patron debe aplicarse para descartar la fila o columna
@@ -29,11 +34,8 @@ private
   # @return Boolean
   def verificar_patron?(pos)
     patron.each do |k, v|
-      if iterar_fila?
-        return false unless hoja_electronica.cell(pos, k.to_i).to_s.strip == v['texto']
-      else
-        return false unless hoja_electronica.cell(k.to_i, pos).to_s.strip == v['texto']
-      end
+      fila, columna = proc_desc_pos.call(pos, k.to_i)
+      return false unless hoja_electronica.cell(pos, k.to_i).to_s.strip == v['texto']
     end
 
     true
@@ -44,37 +46,22 @@ private
   # @return Boolean
   def verificar_excepciones?(pos)
     excepciones.each do |v|
-      if iterar_fila?
-        return false unless verificar_grupo_excepciones_fila?(v, pos)
-      else
-        return false unless verificar_grupo_excepciones_columna?(v, pos)
-      end
+      return false unless verificar_grupo_excepciones?(v, pos)
     end
 
     true
   end
 
   # Verifica que todo un grupo de excepciones cumpla los valores
-  # Realizado de una forma no DRY
   # @param Array grupo # Array con las excepciones de un grupo
   # @param Integer pos
   # @return Boolean
-  def verificar_grupo_excepciones_fila?(grupo, pos)
+  def verificar_grupo_excepciones?(grupo, pos)
     grupo.each do |v|
+      fila, columna = proc_desc_pos.call(pos, v['pos'].to_i)
       return false unless hoja_electronica.cell(pos, v['pos'].to_i).to_s.strip == v['texto']
     end
-    true
-  end
 
-  # Verifica que todo un grupo de excepciones cumpla los valores
-  # Realizado de una forma no DRY
-  # @param Array grupo # Array con las excepciones de un grupo
-  # @param Integer pos
-  # @return Boolean
-  def verificar_grupo_excepciones_columna?(grupo, pos)
-    grupo.each do |v|
-      return false unless hoja_electronica.cell(v['pos'].to_i, pos).to_s.strip == v['texto']
-    end
     true
   end
 
