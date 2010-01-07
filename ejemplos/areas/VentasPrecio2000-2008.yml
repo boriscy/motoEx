@@ -35,6 +35,11 @@ area:
           texto: ""
       celda_final: 10_7
       celda_inicial: 10_1
+    desc1:
+      excepciones: []
+      patron: {}
+      celda_final: 16_7
+      celda_inicial: 16_1
 
   fija: f
   rango: "5"

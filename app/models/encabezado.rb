@@ -1,18 +1,25 @@
 # Clase que maneja los encabezados
 class Encabezado <  AreaEsp
+  attr_reader :proc_pos_enc, :proc_pos_fin
 
   def initialize(area, hoja_electronica, iterar_fila_tmp=true)
     super(area, hoja_electronica, iterar_fila_tmp)    
     # Asignacion de posicion, para determinar si es columna fija o 
-    @campos = campos.inject({}){|h, v|
+    @campos = campos.inject({}) do |hash, v|
       fila, columna = v[0].split("_").map(&:to_i)
       if iterar_fila?
-        h[ v[0] ] = v[1].merge({'posicion' => columna})
+        hash[ v[0] ] = v[1].merge({'posicion' => columna})
+        # Se define el proc para poder acceder a la posicion del encabezado
+        @proc_pos_enc = lambda{|pos, campo| [pos, campo['posicion'] ]}
+        @proc_pos_fin = lambda{ fila_final }
       else
-        h[ v[0] ] = v[1].merge({'posicion' => fila})
+        hash[ v[0] ] = v[1].merge({'posicion' => fila})
+        # Se define el proc para poder acceder a la posicion del encabezado
+        @proc_pos_enc = lambda{|pos, campo| [campo['posicion'], pos ]}
+        @proc_pos_fin = lambda{ columna_final }
       end
-      h
-    }
+      hash
+    end
   end
 
   # Busca el encabezado de acuerdo al rango, en caso de que encuentra el patron
@@ -45,40 +52,29 @@ class Encabezado <  AreaEsp
   # @param Integer pos
   # @return Hash
   def extraer_datos(pos)
-    if iterar_fila?
-      
-    else
-
-    end
     campos.inject({}) do |hash, v|
-      v['posicion']
-      hoja_electronica.cell(fila, columna).to_s.strip
+      fila, columna = proc_pos_enc.call(pos, v[1])
+      hash[v[1]['campo']] = hoja_electronica.cell(fila, columna).to_s.strip
       hash
     end
   end
 
-###############################################
+########################################
 private
 
   # Verifica de que todas las celdas, comparando las posiciones de los campos en la
   # clase Encabezado con los valores de la hoja_electronica. Permitiendo reconocer 
   # si se encontro el encabezado en la hoja_electronica
-  # @param Fixnum pos # Indica cuanto se ha movido en filas o columnas el encabezado
+  # @param Fixnum desp # Indica cuanto se ha movido en filas o columnas el encabezado
   # @return Boolean
-  def verificar_campos?(pos)
-    valido = true
-  
+  def verificar_campos?(desp)
     @campos.each do |k ,v|
       fila, columna = k.split("_").map(&:to_i)
-      if iterar_fila
-        valido = false unless v['texto'] == hoja_electronica.cell(fila + pos, columna)
-        break
-      else
-        valido = false unless v['texto'] == hoja_electronica.cell(fila, columna + pos)
-        break
-      end
+      fila, columna = proc_desp.call(fila, columna, desp)
+      return false unless v['texto'] == hoja_electronica.cell(fila, columna)
     end
-    valido
+
+    true
   end
 
   # Crea un rango válido para poder verificar los valores
@@ -86,7 +82,7 @@ private
   # @return Array
   def crear_rango(rango)
     fila, columna = celda_inicial.split("_").map(&:to_i)
-    if iterar_fila
+    if iterar_fila?
       ini = (rango >= fila) ? 1 : fila - rango
     else
       ini = (rango >= columna) ? 1 : fila - rango

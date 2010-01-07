@@ -86,14 +86,16 @@ describe AreaGeneral do
     @area_gen.celda_final == "5_4" #orig  "3_4"
   end
 
-  describe "lectura de archivo" do
-
-    before(:each) do
-      @area_gen = AreaGeneral.new(@params, @@hoja_electronica, true)
-    end
-
-#    it 'debe leer los datos' do
-#      @area_gen
+#  describe "lectura de archivo" do
+#
+#    before(:each) do
+#      @area_gen = AreaGeneral.new(@params, @@hoja_electronica, true)
 #    end
-  end
+#
+#    it 'debe leer los datos' do
+#      res = @area_gen.leer
+#      debugger
+#      s=0
+#    end
+#  end
 end

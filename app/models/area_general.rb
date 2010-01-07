@@ -3,6 +3,7 @@ class AreaGeneral < AreaImp
 
   attr_reader :titular, :encabezado, :fin, :descartadas_posicion, :descartadas_patron, :area_fija
   attr_accessor :rango, :nombre
+  attr_accessor :proc_condicion_iterar
 
   # Constructor
   # @param area
@@ -40,16 +41,26 @@ class AreaGeneral < AreaImp
   def leer()
     arr = []
     condicion = crear_condicion_iterar()
+    
+    i = @encabezado.proc_pos_fin.call() + 1
 
-    i = iterar_fila? ? fila : columna
     begin
-      fila, columna = asignar_posicion(i)
-      
+      if descartadas_posicion[i]
+        i += 1
+        next
+      end
+
+      if descartar_posicion_patron?(i)
+        i += 1
+        next
+      end
+
+      arr << @encabezado.extraer_datos(i)
       i += 1
-    end while !condicion.call(fila, columna)
+    end while !condicion.call(i)
+
+    arr
   end
-
-
 
   # Actualiza la posicion del area descartada
   # @param Integer desplazar
@@ -76,19 +87,29 @@ class AreaGeneral < AreaImp
   end
 
 private
+
+  # Valida si es que hay algun patron "descartadas_patron"
+  # @param Integer pos
+  # @return Boolean
+  def descartar_posicion_patron?(pos)
+    descartadas_patron.each do |k, pat|
+      return true if pat.valido?(pos)
+    end
+
+    false
+  end
+
   # Crea la condicion que permite iterar
   # @reutrn Proc
   def crear_condicion_iterar()
     if area_fija
-      cond = lambda{ |fila, columna| celda_final == "#{fila}_#{columna}" }
+      if iterar_fila?
+        return lambda{ |pos| fila_final == pos }
+      else
+        return lambda{ |pos| columna_final == pos }
+      end
     else
-      cond = lambda{ |fila, columna| 
-        if iterar_fila
-          @fin.fin?(fila)
-        else
-          @fin.fin(columna)
-        end
-      }
+      return lambda{ |pos| @fin.fin?(pos) }
     end
   end
 
