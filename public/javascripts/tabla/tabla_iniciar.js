@@ -66,9 +66,9 @@ $(document).ready(function() {
                         $('#area_iterar_fila_false')[0].checked = !estado.area['iterar_fila'];
                         $('#area_fija')[0].checked = estado.area['fija'];
                     });
-                    $('.forma_areas label.area_id span').html($(this).val());
+                    $('.forma_areas span.area_id').html($(this).val());
                 }else{
-                    $('.forma_areas label.area_id span').html('');
+                    $('.forma_areas span.area_id').html('');
                 }
             });
             // Evento cuando se cambia de hoja
@@ -118,8 +118,21 @@ $(document).ready(function() {
                 });
             });
             //Evento para destruccion de area
-            $("body").bind("eliminar:area", function() {
+            $('body').bind("eliminar:area", function() {
                 ini.eliminarArea();
+            });
+            // para que cargue las areas de una hoja
+            $('body').bind("cargar:areas", function(e, num) {
+                $.ajax({
+                    type: "POST",
+                    url: "/hojas/areas",
+                    data: {'archivo_id': archivo_id, 'numero': num},
+                    success: function(html) {
+                        $('select#area').html(html);
+                    },
+                    failure: function() {
+                    }
+                });
             });
             
             this.eventosMenu();
@@ -170,7 +183,7 @@ $(document).ready(function() {
             
             if ($('select#area').val() != "disabled"){
                 $('select#area').val("disabled"); //no llama al evento change
-                $('.forma_areas label.area_id span').html('');
+                $('.forma_areas span.area_id').html('');
             }
         }
     }
@@ -197,6 +210,8 @@ $(document).ready(function() {
         var num = $newtab.attr('href').split('-')[1];
         var $newhoja = $('#sheet-' + num);
         
+        hoja_numero = num;
+        
         if ( !$newtab.parent().hasClass('active') ) {
             // deselecciona las celdas que estuvieran seleccionadas
             $('.sel').removeClass("sel");
@@ -218,12 +233,17 @@ $(document).ready(function() {
                         //ejecuta el codigo para muestra de hojas
                         $newhoja.spreadsheet({numero: num});
                         $('body').trigger("right:click");
+                        // cargar listado de areas
+                        $('body').trigger("cargar:areas", num);
                     },
                     failure: function() {
                         alert("Error al cargar la hoja");
-                        $newhoja.html(""); 
+                        $newhoja.html("");
+                        // elimina el listado de areas
                     }
                 });
+            }else {
+                $('body').trigger("cargar:areas", num);
             }
         }
     });
