@@ -227,7 +227,7 @@ FormularioSinonimos.prototype = {
         var listado = '';
         var enc = estado.area.encabezado.campos;
         for (var k in enc) {
-            listado += '<option value="' + enc[k].campo + '">' + enc[k].campo + '</option>'
+            listado += '<option value="' + k + '">' + enc[k].campo + '</option>'
         }
         
         var html = '<tr><td>';

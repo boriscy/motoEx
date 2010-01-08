@@ -45,18 +45,18 @@ AreaGeneral = Area.extend({
         $("#sheet-" + hoja_numero).bind("destruir:area", function() {
             area.destruir();
         });
-       $('#formulario-areas input:radio[name="area[iterar_fila]"]').click(function() {
-           area.cambiarIterarFilas();
-       });
+        $('#formulario-areas input:radio[name="area[iterar_fila]"]').live("click", function() {
+            area.cambiarIterarFilas();
+        });
     },
     /**
      * Llama a las funciones de destruccion de la areas dependientes
      */
     'destruirAreas': function() {
-          var area = this;
-          $(['encabezado', 'titular', 'descartar', 'fin']).each(function(i, el) {
-              area[el].destruir();
-          });
+        var area = this;
+        $(['encabezado', 'titular', 'descartar', 'fin']).each(function(i, el) {
+            area[el].destruir();
+        });
     },
     /**
      * Elimina los ventos creados en la clase
@@ -64,6 +64,7 @@ AreaGeneral = Area.extend({
     'destruirEventos': function() {
         $("#sheet-" + hoja_numero).unbind("destruir:area");
         $("#sheet-" + hoja_numero).unbind("marcar:area");
+        $('#formulario-areas input:radio[name="area[iterar_fila]"]').die("click");
     },
     /**
      * Elimina todas las variables y desmarca
