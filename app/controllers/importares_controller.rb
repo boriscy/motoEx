@@ -1,4 +1,6 @@
 class ImportaresController < ApplicationController
+  skip_before_filter :verify_authenticity_token
+  before_filter :validar_usuario
 
   def index
     @archivos = Archivo.paginate(:page => @page)
@@ -34,10 +36,12 @@ class ImportaresController < ApplicationController
   end
 
   def create
-    @importar = Importar.new()
-
+    #@importar = Importar.new()
     respond_to do |format|
-
+      format.html
+      format.xml { render :xml => params }
+      format.json { render :json => params }
+      format.yaml { render :text => params.to_yaml }
     end
   end
 
@@ -47,6 +51,15 @@ private
   # @return Array
   def crear_array(hoja)
     hoja.areas.all(:select => "id, nombre")
+  end
+  
+  # Verifica de que sea correcto el login y el password
+  # @param String login
+  # @param String password
+  # @return Boolean
+  def validar_usuario()
+    u = UsuarioSession.new(:login => params[:login], :password => params[:password])
+    redirect_to "/login" unless current_user unless u.save
   end
   
 end
