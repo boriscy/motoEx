@@ -48,26 +48,19 @@ class Sinonimo < ActiveRecord::Base
     separador ||= ","
     csv = FasterCSV.read(archivo_tmp.path, :col_sep => separador)
 
-    cols = {}; cols_sinonimos = {}
     columnas = csv.shift
-    # Indices de columnas
-    columnas.each_with_index do |v, k| 
-      v = v.to_s
-      if v =~ /^sinonimos_.+/
-        cols_sinonimos[k] = v
-      else
-        cols[k] = v
-      end
-    end
-
+    columnas = columnas.inject({}){ |hash, k| hash[k] = columnas.index(k); hash }
+    
     csv.inject([]) do |arr, valor| 
-      arr <<  cols.inject({}){ |hash, val|
-        hash[val[1]] = valor[val[0]]
+      arr <<  columnas.inject({}){ |hash, val|
+        if val[0] =~ /^sinonimos_.*$/
+          hash[val[0]] = []
+          hash[val[0]] = valor[val[1]].split(",") unless valor[val[1]].nil?
+        else
+          hash[val[0]] = valor[val[1]]
+        end
         hash
-      }.merge(cols_sinonimos.inject({}){ |hash, val| 
-        hash[val[1]] = cols_sinonimos.map{ |v| valor[v[0]] }.compact
-        hash
-      })
+      }
     end
 
   end
@@ -98,27 +91,19 @@ class Sinonimo < ActiveRecord::Base
     end
   end
   
-  def export_to_csv()
+  def exportar_a_csv()
     cabecera = mapeado.first.keys
-    csv_primera_fila = mapeado.first.keys
+    csv = cabecera.join(",") + "\n"
     
-    csv = ''
-    
-    mapeado.to_a.each do |fila|
-      csv_fila = []
-      cabecera.each_with_index do |campo, k|
-        if campo =~ /^sinonimos_.+/
-          fila[campo].each_with_index do |sinonimo_nombre, i|
-            csv_fila << sinonimo_nombre
-            csv_primera_fila.insert(k, campo) if (k + i) > csv_primera_fila.size - 1
-          end
-        else
-          csv_fila << fila[campo]
+    csv << mapeado.inject([]) do |arr, fila|
+      arr << cabecera.inject([]) do |a, k|
+        if k =~ /^sinonimos_.+/
+          fila[k] = '"' + fila[k].join(",") + '"'
         end
-      end
-      csv << csv_fila.to_csv
-    end
-    csv_primera_fila.to_csv + csv
+        a << fila[k]
+      end.join(",")
+    end.join("\n")
+    
   end
 
   # Para poder importar los datos

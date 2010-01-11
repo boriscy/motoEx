@@ -74,4 +74,19 @@ describe Sinonimo do
       @sinonimo.mapeado.first['sinonimos_nombre'].first.should == 'Casca'
     end
   end
+  
+  it "Debe exportar csv" do
+    set_archivo_tmp('yml')
+    @sinonimo = Sinonimo.create(@params)
+    exportado = @sinonimo.exportar_a_csv().split("\n")
+    campos = @sinonimo.mapeado.first.keys
+    
+    exportado.shift.should == campos.join(",")
+    
+    exportado.each_with_index do |v, k|
+      v.should == campos.inject([]){ |arr, i| arr << @sinonimo.mapeado[k][i]; arr }.join(",")
+    end
+    
+  end
+  
 end

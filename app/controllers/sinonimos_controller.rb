@@ -22,7 +22,7 @@ class SinonimosController < ApplicationController
       format.html # show.html.erb
       format.xml  { render :xml => @sinonimo }
       format.json  { render :json => @sinonimo }
-      format.csv {render :text => @sinonimo.export_to_csv}
+      format.csv {render :text => @sinonimo.exportar_a_csv}
     end
   end
 

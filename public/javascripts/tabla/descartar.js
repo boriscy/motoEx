@@ -241,14 +241,26 @@ var Descartar = Area.extend({
         
         var campos = estado.area[this.serialize][id];
         var limites = this.crearLimitesCelda(id);
-        var min, max;
+        var min, max, temp;
         
+        min = this.obtenerIteracion(estado.area.celda_inicial);
+        // min es la celda desde donde se empieza la busqueda de patrones
         if (estado.area.encabezado.celda_inicial){
-            min = this.obtenerIteracion(estado.area.encabezado.celda_inicial);
-        }else{
-            min = this.obtenerIteracion(estado.area.celda_inicial);
+            temp = this.obtenerIteracion(estado.area.encabezado.celda_final) + 1;
+            if (temp > min)
+                min = temp;
         }
-        max = this.obtenerIteracion(estado.area.celda_final);
+        if (estado.area.titular.celda_inicial){
+            temp = this.obtenerIteracion(estado.area.titular.celda_final) + 1;
+            if (temp > min)
+                min = temp;
+        }
+        // max es la celda desde donde se termina la busqueda de patrones
+        if (estado.area.fin.celda_inicial){
+            max = this.obtenerIteracion(estado.area.fin.celda_inicial) - 1;
+        }else{
+            max = this.obtenerIteracion(estado.area.celda_final);
+        }
         //marca las celdas de inicial a final (solo una fila/columna)
         var iteracion = this.obtenerIteracion(campos.celda_inicial);
         
@@ -257,7 +269,7 @@ var Descartar = Area.extend({
             $('#' + pos).addClass(id).addClass(this.cssMarcar).addClass(this.cssMarcarOpts);
         }
         if( campos ) {
-            for(var i = min; i < max; i++) {
+            for(var i = min; i <= max; i++) {
                 var pass = true;
                 for(var k in campos.patron) {
                     var pos = this.construirPosicion(k, i);
@@ -273,11 +285,11 @@ var Descartar = Area.extend({
                     pass = this.actualizarTablaExcepciones(campos.excepciones, i);
                 // Marcar fila
                 if(pass) {
-                    try{
-                        // TODO: solo marca filas
+                    // TODO: solo marca por filas (no funciona si se itera columnas)
+                    if ($td){
                         $td.siblings('.' + this.area.cssMarcar).andSelf().addClass(id);
                         this.marcarAreaSinID(id);
-                    }catch(e){}
+                    }
                 }
             }
         }
