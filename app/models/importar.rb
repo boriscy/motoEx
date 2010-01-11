@@ -32,8 +32,7 @@ class Importar < ActiveRecord::Base
     ret = []
 
     areas.each do |v|
-      area = Area.find(v)
-
+      Area.find()
     end
     ret
   end
