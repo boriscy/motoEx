@@ -24,7 +24,7 @@ Rails::Initializer.run do |config|
   config.gem "authlogic"#, :version => '2.1.0'
   config.gem "paperclip"
   config.gem "will_paginate"
-  config.gem "roo", :version => '1.3.11'# La version 1.9.1 da problemas con authlogic
+  config.gem "roo", :version => '1.3.11'# La version 1.9.1 da problemas con authlogic, solucionado "lib/roo_extra.rb"
   config.gem "hpricot"
   config.gem "formtastic"
   config.gem "nokogiri"

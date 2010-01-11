@@ -20,9 +20,10 @@ ActiveRecord::Schema.define(:version => 20100106133154) do
     t.datetime "updated_at"
     t.string   "archivo_excel_file_name"
     t.integer  "archivo_excel_file_size"
-    t.datetime "archivo_excel_updated_at"
     t.boolean  "prelectura",               :default => false
+    t.datetime "archivo_excel_updated_at"
     t.datetime "fecha_modificacion"
+    t.datetime "fecha_archivo"
   end
 
   create_table "areas", :force => true do |t|
@@ -42,11 +43,6 @@ ActiveRecord::Schema.define(:version => 20100106133154) do
     t.text     "sinonimos"
   end
 
-  create_table "fines", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "hojas", :force => true do |t|
     t.integer  "archivo_id"
     t.string   "nombre"
@@ -56,9 +52,9 @@ ActiveRecord::Schema.define(:version => 20100106133154) do
 
   create_table "importares", :force => true do |t|
     t.integer  "usuario_id"
-    t.integer  "area_id"
+    t.string   "areas"
     t.integer  "archivo_size"
-    t.string   "hoja_electronica"
+    t.string   "archivo_nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

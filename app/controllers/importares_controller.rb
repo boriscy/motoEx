@@ -26,6 +26,7 @@ class ImportaresController < ApplicationController
 
   # Crea una nueva importacion
   def new
+    @importar = Importar.new()
 
     respond_to do |format|
       format.html
@@ -36,12 +37,15 @@ class ImportaresController < ApplicationController
   end
 
   def create
-    #@importar = Importar.new()
-    respond_to do |format|
-      format.html
-      format.xml { render :xml => params }
-      format.json { render :json => params }
-      format.yaml { render :text => params.to_yaml }
+    @importar = Importar.new(params[:importar])
+
+    if @importar.save
+      respond_to do |format|
+        format.html
+        format.xml { render :xml => params }
+        format.json { render :json => params }
+        format.yaml { render :text => params.to_yaml }
+      end
     end
   end
 

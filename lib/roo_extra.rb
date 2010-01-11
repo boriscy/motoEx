@@ -16,3 +16,8 @@ module Spreadsheet
     end
   end
 end
+
+# Permite funcionar correctamente a roo 1.9.1 con Authlogic
+#class String
+#  remove_method :force_encoding if method_defined? :force_encoding
+#end
