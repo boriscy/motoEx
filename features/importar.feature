@@ -6,4 +6,3 @@ Caracteristica: debo poder loguearmne e importar los datos de una hoja electroni
     Escenario: Importar un area
     Dado que me logueo
     Y que tengo el archivo "ParteDiario.xls"
-    Entonces debo poder leer los datos seleccionados de este archivo
