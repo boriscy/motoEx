@@ -33,5 +33,6 @@ config.gem "webrat", :lib => false, :version => ">=0.5.3"
 config.gem "cucumber", :lib => false, :version => ">=0.4.3"
 config.gem 'ruby-debug'
 config.gem "factory_girl"
+config.gem "mocha"
 # Se llama directamente desde Rspec usando require "shoulda"
 #config.gem "shoulda", :lib=> false # :lib => "shoulda" Para Rspec

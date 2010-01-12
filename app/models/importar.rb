@@ -2,6 +2,7 @@
 class Importar < ActiveRecord::Base
 
   before_create :adicionar_usuario
+  after_save :borrar_archivo_tmp
 
   attr_accessor :archivo_tmp
   serialize :areas
@@ -24,16 +25,24 @@ class Importar < ActiveRecord::Base
   # Transforma a un array el campo areas si es un Hash
   def after_initialize()
     self.areas = self.areas.map(&:last) if self.areas.class == Hash
+    self.archivo_nombre.gsub!(/\\/, '/') if self.archivo_nombre =~ /^[a-z]:.*/i
     self.archivo_nombre = File.basename(self.archivo_nombre)
+    # Almacenamiento temporal del archivo
+    tmp = File.join(RAILS_ROOT, "tmp/archivos/#{Time.now.to_i}#{self.archivo_nombre}")
+    File.copy(self.archivo_tmp.path, tmp)
+    self.archivo_tmp = tmp
   end
 
-  # Realiza la importacion de los datos
+  # Realiza la importacion de los datos, es posible realizar este metodo sin salvar esta clase
   def importar()
-    ret = []
+    ret = {}
 
     areas.each do |v|
-      Area.find()
+      area = Area.find(v)
+      area_general = AreaGeneral.new(area, archivo_tmp, area.iterar_filas)
+      ret[v] = area_genral.leer()
     end
+
     ret
   end
  
@@ -42,11 +51,16 @@ private
   # ademas de el nombre
   def tipo_de_contenido()
     errors.add(:archivo_tmp, "Debe seleccionar un archivo con extensión #{EXTENCIONES.join(",")}") unless EXTENCIONES.include?(File.extname(archivo_nombre).downcase)
-    #errors.add(:archivo_tmp, "Debe seleccionar archivos Excel o OpenOffice") unless CONTENT_TYPS.include?(archivo_tmp.content_type)
+    # errors.add(:archivo_tmp, "Debe seleccionar un archivo válido") unless self.archivo_tmp.methods.include? "path"
   end
 
   # Asigna el id del usuario que esta logueado
   def adicionar_usuario
     self.usuario_id = UsuarioSession.find.record.id
+  end
+
+  # Elimina el archivo temporal una ves que ya fue usado
+  def borrar_archivo_tmp
+    File.delete(self.archivo_tmp)
   end
 end
