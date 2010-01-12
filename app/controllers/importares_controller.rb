@@ -38,14 +38,17 @@ class ImportaresController < ApplicationController
 
   def create
     @importar = Importar.new(params[:importar])
+    params[:importar].delete(:archivo_tmp) # Problemas al transformar a json
 
     if @importar.save
       respond_to do |format|
-        format.html
+        format.html {render :text => 'JEJEJE'} #
         format.xml { render :xml => params }
         format.json { render :json => params }
         format.yaml { render :text => params.to_yaml }
       end
+    else
+      render :text => 'Error'
     end
   end
 

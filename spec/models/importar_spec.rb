@@ -54,6 +54,11 @@ describe Importar do
       File.exists?(@importar.archivo_tmp).should_not == true
     end
 
+    it 'debe almacenar la dimension del archivo' do
+      @importar = Importar.create(@params)
+      @importar.archivo_size.class.to_s.should == "Fixnum"
+    end
+
   end
 
   describe "importacion de datos" do

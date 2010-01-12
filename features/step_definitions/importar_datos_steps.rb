@@ -1,10 +1,5 @@
-def crear_usuario
-  @usuario = Usuario.create(:nombre => 'admin', :paterno => 'admin', :materno => 'admin', :login => 'admin', :email => 'admin@example.com', :password => 'demo123', :password_confirmation => 'demo123')
-end
-
 Dado /^que me logueo y tengo los datos$/ do
-  crear_usuario()
-  #
+  Soporte::crear_usuario()
   visit "/"
   fill_in "usuario_session[login]", :with => "admin"
   fill_in "Contraseña", :with => "demo123"

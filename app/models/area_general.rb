@@ -18,7 +18,7 @@ class AreaGeneral < AreaImp
     @area_fija = area['fija']
 
     # Componentes
-    @titular = Titular.new(area['titular'], hoja_electronica)
+    @titular = Titular.new(area['titular'], hoja_electronica) if area['titular'].keys.size > 0
     @encabezado = Encabezado.new(area['encabezado'], hoja_electronica)
     # Asignar en caso de que no sea area['fija']
     @fin = Fin.new(area['fin'], @hoja_electronica) unless area_fija
@@ -29,10 +29,10 @@ class AreaGeneral < AreaImp
     asignar_areas_descartadas_posicion(area['descartar'])
 
     # busca el inicio del documento y desplaza la posición
-    desplazar = @encabezado.buscar(@hoja_electronica)
+    desplazar = @encabezado.buscar(self.rango)
 
     if desplazar > 0
-      [self, @titular, @fin].each{|v| v.send(:actualizar_posicion, desplazar) }
+      [self, @titular, @fin].select{|v| v unless v.nil? }.each{|v| v.send(:actualizar_posicion, desplazar) }
     end
   end
 

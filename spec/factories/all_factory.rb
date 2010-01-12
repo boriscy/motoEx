@@ -17,6 +17,12 @@ module Soporte
       File.join(RAILS_ROOT, "ejemplos", args)
     end
 
+    def crear_usuario
+      @usuario = Usuario.create(:nombre => 'admin', :paterno => 'admin', :materno => 'admin', :login => 'admin', :email => 'admin@example.com', :password => 'demo123', :password_confirmation => 'demo123')
+    end
+
+
+
     # Crea una instancia a leer para la hoja electronica
     def hoja_electronica(hoja)
       case File.extname(hoja).downcase

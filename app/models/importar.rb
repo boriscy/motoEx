@@ -31,6 +31,7 @@ class Importar < ActiveRecord::Base
     tmp = File.join(RAILS_ROOT, "tmp/archivos/#{Time.now.to_i}#{self.archivo_nombre}")
     File.copy(self.archivo_tmp.path, tmp)
     self.archivo_tmp = tmp
+    self.archivo_size = File.size(tmp)
   end
 
   # Realiza la importacion de los datos, es posible realizar este metodo sin salvar esta clase
