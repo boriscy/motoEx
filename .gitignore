@@ -9,6 +9,7 @@ archivos/*
 nbproject
 ejemplos/*.html
 !ejemplos/example.html
+tmp/archivos
 !pub.txt
 .~lock*
 doc/app/*

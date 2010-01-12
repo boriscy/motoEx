@@ -16,7 +16,7 @@ describe Archivo do
       :nombre => 'Excel', 
       :archivo_excel => ActionController::TestUploadedFile.new(archivo, 'application/vnd.ms-excel')
     }
-    @usuario_mock = mock_model(Usuario, :id => 1, :nombre => 'Juan', :valid? => true)
+    @usuario_mock = mock_model(Usuario, :id => 1, :nombre => 'Juan', :valid? => true, :destroyed? => true)
     Usuario.stub!(:find).with(kind_of(Fixnum)).and_return(@usuario_mock)
     @us = Object
     @us.stub!(:record).and_return( @usuario_mock)
