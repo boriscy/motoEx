@@ -84,7 +84,9 @@ describe Sinonimo do
     exportado.shift.should == campos.join(",")
     
     exportado.each_with_index do |v, k|
-      v.should == campos.inject([]){ |arr, i| arr << @sinonimo.mapeado[k][i]; arr }.join(",")
+      (v + "\n").should == campos.inject([]) do |arr, i| 
+        arr << ( i =~ /^sinonimos_.*$/ ? @sinonimo.mapeado[k][i].join(',').unpack('U*').pack('C*') : @sinonimo.mapeado[k][i].unpack('U*').pack('C*') )
+      end.to_csv
     end
     
   end

@@ -187,10 +187,7 @@ FormularioArea.prototype = {
             var fin = 0;
             for (var k in estado.area.fin.campos){
                 fin++;
-                if (!this.validarFinCampoId(k)){
-                    this.adicionarError('#tabla-fin tr.' + k + ' td:last',"El nombre del campo no es válido");
-                    val = false;
-                }
+                break
             }
             if (fin < 1){
                 this.adicionarError('#fin p:first',"Debe seleccionar al menos un campo");

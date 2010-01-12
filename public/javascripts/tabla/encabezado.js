@@ -84,16 +84,20 @@ Encabezado = Area.extend({
                 if (estado.area[this.serialize].campos[celdas[i].pos])
                     html += ' checked="checked"';
                 html +='/>' + celdas[i].texto + '</label></td>';
-                html += '<td><input type="text" name="area[' + this.serialize + '][' + i + '][text]" value="';
-                if (!estado.area[this.serialize].campos[celdas[i].pos]){
-                    html += celdas[i].texto;
-                }else{
-                    html += estado.area[this.serialize].campos[celdas[i].pos].campo;
+                if (this.serialize == 'encabezado'){
+                    var input_campo_id = '<td><input type="text" name="area[' + this.serialize + '][' + i + '][text]" value="';
+                    if (!estado.area[this.serialize].campos[celdas[i].pos]){
+                        input_campo_id += celdas[i].texto;
+                    }else{
+                        input_campo_id += estado.area[this.serialize].campos[celdas[i].pos].campo;
+                    }
+                    input_campo_id += '" class="' + this.serialize + '-text"';
+                    if (!estado.area[this.serialize].campos[celdas[i].pos])
+                        input_campo_id += ' disabled="disabled"';
+                    input_campo_id += '/></td>';
+                    html += input_campo_id;
                 }
-                html += '" class="' + this.serialize + '-text"';
-                if (!estado.area[this.serialize].campos[celdas[i].pos])
-                    html += ' disabled="disabled"';
-                html += '/></td></tr>';
+                html += '</tr>';
                 $tabla.append(html);
             }
         }
@@ -119,7 +123,10 @@ Encabezado = Area.extend({
 
         var pos = $inputHidden.val();
         if(val) {
-            estado.area[this.serialize].campos[pos] = {'texto': texto, 'campo': texto};
+            if (this.serialize == 'encabezado')
+                estado.area[this.serialize].campos[pos] = {'texto': texto, 'campo': texto};
+            else
+                estado.area[this.serialize].campos[pos] = {'texto': texto};
         } else{
             delete(estado.area[this.serialize].campos[pos]);
         }

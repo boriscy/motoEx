@@ -170,6 +170,7 @@ FormularioSinonimos.prototype = {
         this.limpiar();
         var sinonimos = estado.area.sinonimos;
         var $select = $('#select-sinonimos-mapeo');
+        $select.find('option').attr("disabled", false);
         for (var i in sinonimos) {
             var $option = $select.find('option[value="' + i + '"]')
             $option.attr("disabled", true);
@@ -250,7 +251,8 @@ FormularioSinonimos.prototype = {
                 var datos = data.sinonimo.mapeado[0];
                 var campos = '';
                 for (var k in datos) {
-                    campos += '<option value="' + k + '">' + k + '</option>';
+                    if (!/^sinonimos_.*$/.test(k) )
+                        campos += '<option value="' + k + '">' + k + '</option>';
                 }
                 $selectBuscado.append(campos);
                 $selectBuscado.val(selectBuscadoValor);
@@ -381,9 +383,19 @@ FormularioSinonimos.prototype = {
             if ($sinonimo.length > 0) {
                 // actualiza el sinonimo
                 $sinonimo.html(data.nombre);
+                var $option = $('#select-sinonimos-mapeo option[value="' + data.id + '"]"');
+                $option.text(data.nombre);
+                if ($option.attr('disabled')){
+                    // actualiza la leyenda de los sinonimos seleccionados
+                    $('#lista-sinonimos-mapeo fieldset input[value="' + data.id + '"]')
+                        .parents('fieldset')
+                        .find('legend:first')
+                        .html(data.nombre);
+                }
             }else {
                 // agrega un sinonimo
                 $('#lista-sinonimos ul').append('<li><a class="ajax-sinonimo" rel="' + data.id + '">' + data.nombre + '</a></li>');
+                $('#select-sinonimos-mapeo').append('<option value="' + data.id + '">' + data.nombre + '</option>');
             }
         }else {
             var text = "Error";

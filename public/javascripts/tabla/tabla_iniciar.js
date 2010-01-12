@@ -46,12 +46,12 @@ $(document).ready(function() {
          * Constructor
          */
         init: function() {
-            var ini = this;
+            base = this;
             // Evento cuando se cambia area (select#area)
             $('select#area').change(function() {
                 var temp = $(this).val();
                 
-                ini.destruir();
+                base.destruir();
                 
                 $(this).val(temp); //no hay problemas con esta linea ya que no llama al evento on change => no crea recursividad
                 
@@ -59,7 +59,7 @@ $(document).ready(function() {
                     // AJAX
                     $.getJSON("/areas/" + temp, function(resp) {
                         estado = resp;
-                        ini['area'] = new AreaGeneral();
+                        base['area'] = new AreaGeneral();
                         $('#area_nombre').val(estado.area['nombre']);
                         $('#area_rango').val(estado.area['rango']);
                         $('#area_iterar_fila_true')[0].checked = estado.area['iterar_fila'];
@@ -73,12 +73,12 @@ $(document).ready(function() {
             });
             // Evento cuando se cambia de hoja
             $("div#lista_hojas a").click(function() {
-                ini.destruir();
+                base.destruir();
             });
             // Evento para mostrar el formulario con propiedades
             $("#propiedades").click(function() {
                 //solo si hay un area_general seleccionada
-                if (typeof(ini.area) != 'undefined') {
+                if (typeof(base.area) != 'undefined') {
                     $("#propiedades").trigger('cargar:datos');
                     $('#formulario-areas').trigger("limpiar:errores");
                     $("#formulario-areas").dialog("open");
@@ -87,14 +87,14 @@ $(document).ready(function() {
             //Evento para guardar con Salvar
             $('#salvar').click(function(){
                 //solo si hay un area_general seleccionada
-                if (typeof(ini.area) != 'undefined') {
+                if (typeof(base.area) != 'undefined') {
                     $("#formulario-areas form").trigger('guardar');
                 }
             });
             //Evento para guardar un area nueva con Guardar como
             $('#guardar-como').click(function(){
                 //solo si hay un area_general seleccionada
-                if (typeof(ini.area) != 'undefined') {
+                if (typeof(base.area) != 'undefined') {
                     //muestra un formulario con un campo de texto y con un boton de guardar
                     $('#guardar_como_area_nombre').val($("#area_nombre").val());
                     $("#formulario-guardar-como").dialog("open");
@@ -135,16 +135,15 @@ $(document).ready(function() {
                 });
             });
             
-            this.eventosMenu();
+            base.eventosMenu();
         },
         /**
          * Eventos realacionados la menu
          */
         'eventosMenu': function() {
-            var ini = this;
             // Evento para el vinculo a#area-importar
             //cambiando el click con un binding para que se pueda llamar desde otros metodos
-            $("#area-importar").bind('marcar:area', function(){ ini.crearArea(); });
+            $("#area-importar").bind('marcar:area', function(){ base.crearArea(); });
             $("#area-importar").click( function() { $("#area-importar").trigger("marcar:area"); });
             
             $('#area-titular').click(function() { $('#area-titular').trigger("marcar:titular") } );
@@ -158,25 +157,25 @@ $(document).ready(function() {
          */
         'crearArea': function(){
             //if (this['area']) {
-            if (typeof(this.area) != 'undefined') {
-                this.destruir();
+            if (typeof(base.area) != 'undefined') {
+                base.destruir();
             }
-            this['area'] = new AreaGeneral();
+            base['area'] = new AreaGeneral();
         },
         /**
          * Elimina el area e inicializa la variable global "estado"
          */
         'destruir': function() {
             $('#sheet-' + hoja_numero).trigger("destruir:area");
-            this.eliminarArea();
+            base.eliminarArea();
         },
         /**
          * Elimina la variable area
          */
         'eliminarArea': function() {
-            if (typeof(this.area) != 'undefined') {
-                this.area.destruir();
-                delete(this.area);
+            if (typeof(base.area) != 'undefined') {
+                base.area.destruir();
+                delete(base.area);
             }
             //elimina el estado.area
             estado = {};

@@ -92,17 +92,21 @@ class Sinonimo < ActiveRecord::Base
   end
   
   def exportar_a_csv()
-    cabecera = mapeado.first.keys
-    csv = cabecera.join(",") + "\n"
     
-    csv << mapeado.inject([]) do |arr, fila|
+    cabecera = mapeado.first.keys
+    csv = cabecera.to_csv
+    
+    # unpack('U*').pack('C*') => utiliza la codificacion windows-ansi, para que se abra facilmente en excel (codificaciones Windows-1252 / WinLatin 1)
+    
+    csv << mapeado.inject('') do |arr, fila|
       arr << cabecera.inject([]) do |a, k|
-        if k =~ /^sinonimos_.+/
-          fila[k] = '"' + fila[k].join(",") + '"'
+        if k =~ /^sinonimos_.*$/
+          a << fila[k].join(',').unpack('U*').pack('C*')
+        else
+          a << fila[k].unpack('U*').pack('C*')
         end
-        a << fila[k]
-      end.join(",")
-    end.join("\n")
+      end.to_csv
+    end
     
   end
 
