@@ -4,20 +4,20 @@ Fin = Encabezado.extend({
     /**
      * Creación de eventos relacionados
      */
-    'crearEventos': function(){
-        var fin = this;
+    'crearEventos': function() {
+        var base = this;
         $('#area-fin').bind('marcar:fin', function(){
             // Validar que este dentro del AreaGeneral
-            if (fin.validarInclusion(fin.area.cssMarcar) && 
-                fin.validarSolapamiento([fin.area.titular.cssMarcar, fin.area.encabezado.cssMarcar, fin.area.descartar.cssMarcar]) ) {
+            if (base.validarInclusion(base.area.cssMarcar) && 
+                base.validarSolapamiento([base.area.titular.cssMarcar, base.area.encabezado.cssMarcar, base.area.descartar.cssMarcar]) ) {
                 
-                fin.desmarcarArea(fin.cssMarcar);
-                fin.marcarArea(fin.cssMarcar);
-                fin.crearTablaCeldas();
+                base.desmarcarArea(base.cssMarcar);
+                base.marcarArea(base.cssMarcar);
+                base.crearTablaCeldas();
             }
         });
-        $('.' + fin.serialize + '-check').live("click", function() { fin.adicionarBorrarCampo(this);});
-        $('.' + fin.serialize + '-text').livequery("blur", function() { fin.mapearCampo(this);});
+        $('.' + this.serialize + '-check').live("click", function() { base.adicionarBorrarCampo(this);});
+        $('.' + this.serialize + '-text').livequery("blur", function() { base.mapearCampo(this);});
     },
     /**
      * Funcion para que pueda realizar opciones adicionales

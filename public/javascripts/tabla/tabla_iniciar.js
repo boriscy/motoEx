@@ -13,6 +13,8 @@ $(document).ready(function() {
     // posicionamiento dinamico de las hojas dependiendo del contenido del div spreadsheet
     $('.sheet').css('top', $('#areas-importacion').position().top + 31);
     $('#sheet-0').spreadsheet({numero: 0});
+    
+    var hojas = {0: hoja_id};
 
     // Funciones para scroll de hojas
     $('#scroll_start').click(function() {
@@ -46,7 +48,7 @@ $(document).ready(function() {
          * Constructor
          */
         init: function() {
-            base = this;
+            var base = this;
             // Evento cuando se cambia area (select#area)
             $('select#area').change(function() {
                 var temp = $(this).val();
@@ -119,7 +121,7 @@ $(document).ready(function() {
             });
             //Evento para destruccion de area
             $('body').bind("eliminar:area", function() {
-                ini.eliminarArea();
+                base.eliminarArea();
             });
             // para que cargue las areas de una hoja
             $('body').bind("cargar:areas", function(e, num) {
@@ -131,11 +133,12 @@ $(document).ready(function() {
                         $('select#area').html(html);
                     },
                     failure: function() {
+                        $('select#area').html("");
                     }
                 });
             });
             
-            base.eventosMenu();
+            this.eventosMenu();
         },
         /**
          * Eventos realacionados la menu
@@ -143,6 +146,7 @@ $(document).ready(function() {
         'eventosMenu': function() {
             // Evento para el vinculo a#area-importar
             //cambiando el click con un binding para que se pueda llamar desde otros metodos
+            var base = this;
             $("#area-importar").bind('marcar:area', function(){ base.crearArea(); });
             $("#area-importar").click( function() { $("#area-importar").trigger("marcar:area"); });
             
@@ -157,25 +161,25 @@ $(document).ready(function() {
          */
         'crearArea': function(){
             //if (this['area']) {
-            if (typeof(base.area) != 'undefined') {
-                base.destruir();
+            if (typeof(this.area) != 'undefined') {
+                this.destruir();
             }
-            base['area'] = new AreaGeneral();
+            this['area'] = new AreaGeneral();
         },
         /**
          * Elimina el area e inicializa la variable global "estado"
          */
         'destruir': function() {
             $('#sheet-' + hoja_numero).trigger("destruir:area");
-            base.eliminarArea();
+            this.eliminarArea();
         },
         /**
          * Elimina la variable area
          */
         'eliminarArea': function() {
-            if (typeof(base.area) != 'undefined') {
-                base.area.destruir();
-                delete(base.area);
+            if (typeof(this.area) != 'undefined') {
+                this.area.destruir();
+                delete(this.area);
             }
             //elimina el estado.area
             estado = {};
@@ -230,7 +234,10 @@ $(document).ready(function() {
                     success: function(html) {
                         $newhoja.html(html);
                         //ejecuta el codigo para muestra de hojas
-                        $newhoja.spreadsheet({numero: num});
+                        $newhoja.spreadsheet({'numero': num});
+                        
+                        hojas[num] = hoja_id;
+                        
                         $('body').trigger("right:click");
                         // cargar listado de areas
                         $('body').trigger("cargar:areas", num);
@@ -239,9 +246,11 @@ $(document).ready(function() {
                         alert("Error al cargar la hoja");
                         $newhoja.html("");
                         // elimina el listado de areas
+                        $('select#area').html("");
                     }
                 });
             }else {
+                hoja_id = hojas[num];
                 $('body').trigger("cargar:areas", num);
             }
         }

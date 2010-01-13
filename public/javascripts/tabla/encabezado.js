@@ -10,6 +10,8 @@ Encabezado = Area.extend({
      * @param AreaGeneral area
      */
     'init': function(ini, fin, area) {
+        base = this;
+        
         this._super(ini, fin);
         this.area = area;
         
@@ -24,21 +26,20 @@ Encabezado = Area.extend({
      * Creación de eventos relacionados
      */
     'crearEventos': function() {
-        var enc = this;
         $('#area-encabezado').bind('marcar:encabezado', function(){
             // Validar que este dentro del AreaGeneral
-            if (enc.validarInclusion(enc.area.cssMarcar) && 
-                enc.validarSolapamiento([enc.area.titular.cssMarcar, enc.area.descartar.cssMarcar, enc.area.fin.cssMarcar]) ) {
+            if (base.validarInclusion(base.area.cssMarcar) && 
+                base.validarSolapamiento([base.area.titular.cssMarcar, base.area.descartar.cssMarcar, base.area.fin.cssMarcar]) ) {
                 
-                enc.desmarcarArea(enc.cssMarcar);
-                enc.marcarArea(enc.cssMarcar);
-                enc.crearTablaCeldas();
+                base.desmarcarArea(base.cssMarcar);
+                base.marcarArea(base.cssMarcar);
+                base.crearTablaCeldas();
             }
             // Eventos para crear campos en la BD
             // TODO: revisar y/o refactorizar creacion de eventos para cuando se modifica un area cargada por el select:areas
         });
-        $('.' + enc.serialize + '-check').live("click", function() { enc.adicionarBorrarCampo(this);});
-        $('.' + enc.serialize + '-text').livequery("blur", function() { enc.mapearCampo(this);});
+        $('.' + this.serialize + '-check').live("click", function() { base.adicionarBorrarCampo(this);});
+        $('.' + this.serialize + '-text').livequery("blur", function() { base.mapearCampo(this);});
     },
     /**
      * Funcion para que pueda realizar opciones adicionales

@@ -27,6 +27,8 @@ var Descartar = Area.extend({
      * @param Array areas
      */
     'init': function(areas, area) {
+        base = this;
+        
         this.area = area;
         this.cssMarcarOpts = 'opciones-' + this.cssMarcar;
         this.serialize = 'descartar';
@@ -58,29 +60,28 @@ var Descartar = Area.extend({
      * Creación de eventos
      */
     'crearEventos': function() {
-        var desc = this;
         $('#area-descartar').bind('marcar:descartar', function() {
-            if (desc.validarInclusion(desc.area.cssMarcar) && 
-                desc.validarSolapamiento([desc.area.titular.cssMarcar, desc.area.encabezado.cssMarcar, desc.cssMarcar, desc.area.fin.cssMarcar]) ) {
+            if (base.validarInclusion(base.area.cssMarcar) && 
+                base.validarSolapamiento([base.area.titular.cssMarcar, base.area.encabezado.cssMarcar, base.cssMarcar, base.area.fin.cssMarcar]) ) {
                 
-                desc.marcarArea();
+                base.marcarArea();
             }
         });
         // estado
         $('#area-descartar').bind("actualizar:estado", function(){ 
-            desc.actualizarEstado();
+            base.actualizarEstado();
         });
         // patron en el grid
         $('#area-descartar').bind("actualizar:tabla:patrones", function(){ 
-            desc.actualizarTablaPatrones();
+            base.actualizarTablaPatrones();
         });
         // patrones
         $('#area-descartar').bind("actualizar:patron", function(){ 
-            desc.actualizarEstadoPatron();
+            base.actualizarEstadoPatron();
         });
         // creacion de excepciones
         $('#area-descartar').bind("descartar:crear:excepcion", function() {
-            desc.crearExcepcion();
+            base.crearExcepcion();
         });
     },
     /**
@@ -103,7 +104,6 @@ var Descartar = Area.extend({
      * @param String cssSel
      */
     'marcarArea': function(cssSel) {
-        desc = this;
         var cssID = 'desc' + this.contador;
         cssSel = cssSel || this.cssSeleccionado;
         // Iterar
@@ -111,7 +111,7 @@ var Descartar = Area.extend({
         var filas = $('tr td.' + cssID + ':nth-child(3)').parents("tr").length;
 
         this.marcarAreaSinID(cssID, filas);
-        desc.contador++;
+        this.contador++;
         this.cambiarEstado(cssID);
         // Quitar css seleccionado
         $('.' + this.cssSeleccionado).removeClass(this.cssSeleccionado);
@@ -157,10 +157,6 @@ var Descartar = Area.extend({
             var puntos = this.obtenerPuntos(cssEsp);
             estado.area[this.serialize][cssEsp] = {'celda_inicial': puntos[0], 'celda_final': puntos[1], 'patron': {}, 'excepciones' : [] };
         }
-        /*else {
-            puntos[0] = estado.area[this.serialize][cssEsp]['celda_inicial'];
-            puntos[1] = estado.area[this.serialize][cssEsp]['celda_final'];
-        }*/
     },
     /**
      * Actualiza la variable estado para el area de descarte 'area'
@@ -176,7 +172,6 @@ var Descartar = Area.extend({
      */
     'actualizarEstadoPatron': function() {
         var area = $("#id-descartar").val();
-        var desc = this;
         
         //primero elimina todos los patrones
         for (var k in estado.area.descartar[area]['patron']) {
@@ -194,16 +189,16 @@ var Descartar = Area.extend({
 
             estado.area.descartar[area]['patron'][pos] = {'texto': texto};
             
-            estado.area[desc.serialize][area].excepciones = [];
+            estado.area[this.serialize][area].excepciones = [];
             // Excepciones del patron
             $('ul.grupo-excepcion').each(function(i, el) {
-                estado.area[desc.serialize][area].excepciones[i] = [];
+                estado.area[this.serialize][area].excepciones[i] = [];
                 $(el).find('li.excepcion').each(function(ii, elem) {
                     // Campo oculto
                     var col = $(elem).find("span.col").text().trim();
                     var texto = $(elem).find("span.texto").text().trim();
                     // en la excepcion "pos" puede ser fila o columna
-                    estado.area[desc.serialize][area].excepciones[i].push({'pos': col, 'texto': texto});
+                    estado.area[this.serialize][area].excepciones[i].push({'pos': col, 'texto': texto});
                 });
             });
         });
