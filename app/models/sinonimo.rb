@@ -93,6 +93,8 @@ class Sinonimo < ActiveRecord::Base
   
   def exportar_a_csv()
     
+    mapeado.to_csv_hash(",","Windows-1252")
+=begin
     cabecera = mapeado.first.keys
     csv = cabecera.to_csv
     
@@ -107,6 +109,7 @@ class Sinonimo < ActiveRecord::Base
         end
       end.to_csv
     end
+=end
     
   end
 

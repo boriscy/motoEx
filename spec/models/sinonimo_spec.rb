@@ -75,7 +75,7 @@ describe Sinonimo do
     end
   end
   
-  it "Debe exportar csv" do
+  it "Debe exportar csv con codificacion windows1252" do
     set_archivo_tmp('yml')
     @sinonimo = Sinonimo.create(@params)
     exportado = @sinonimo.exportar_a_csv().split("\n")
@@ -84,10 +84,10 @@ describe Sinonimo do
     exportado.shift.should == campos.join(",")
     
     exportado.each_with_index do |v, k|
-      (v + "\n").should == campos.inject([]) do |arr, i| 
-        arr << ( i =~ /^sinonimos_.*$/ ? @sinonimo.mapeado[k][i].join(',').unpack('U*').pack('C*') : @sinonimo.mapeado[k][i].unpack('U*').pack('C*') )
-      end.to_csv
-    end
+      v.should == campos.inject([]) do |arr, i| 
+        arr << ( @sinonimo.mapeado[k][i].is_a?(Array) ? "\"#{@sinonimo.mapeado[k][i].join(',').unpack('U*').pack('C*')}\"" : @sinonimo.mapeado[k][i].unpack('U*').pack('C*') )
+      end.join(",")
+    end.join("\n")
     
   end
   

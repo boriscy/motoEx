@@ -69,7 +69,7 @@ Array.class_eval do
   # @param String separator
   # @param String encodind
   # @return String
-  def to_csv_hash(separator=',',encoding='utf-8')
+  def to_csv_hash(separator=',', encoding='utf-8')
     header = self.first.keys
     csv = header.join(separator) + "\n"
 
@@ -77,13 +77,14 @@ Array.class_eval do
     when 'utf-8'
       @proc_encoding = lambda{|v| v }
     when 'Windows-1252'
-      @proc_encoding = lambda{|v| v.unpack('U*').pach('C*') }
+      @proc_encoding = lambda{|v| v.unpack('U*').pack('C*') }
     end
 
     csv << self.inject([]) do |arr, row|
       arr << header.inject([]) do |pos, k|
-        row[k] = "\"#{row[k].join(",")}\"" if row[k].is_a? Array
-        pos << @proc_encoding.call(row[k])
+        cell = row[k]
+        cell = "\"#{row[k].join(",")}\"" if row[k].is_a? Array
+        pos << @proc_encoding.call(cell)
       end.join(separator)
     end.join("\n")
 
