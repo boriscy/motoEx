@@ -1,0 +1,221 @@
+--- 
+area: 
+  fin: 
+    celdas: 
+    - texto: TOTAL NACIONAL
+      pos: 90_1
+    - texto: "36,127"
+      pos: 90_3
+    - texto: "6,142"
+      pos: 90_4
+    - texto: "23,406"
+      pos: 90_5
+    - texto: ""
+      pos: 90_6
+    - texto: "6,580"
+      pos: 90_7
+    - texto: "16,053"
+      pos: 90_8
+    - texto: "27,376"
+      pos: 90_9
+    - texto: "1,098,611"
+      pos: 90_10
+    - texto: "100,328"
+      pos: 90_11
+    - texto: "943,659"
+      pos: 90_12
+    - texto: ""
+      pos: 90_13
+    - texto: "15,702"
+      pos: 90_14
+    - texto: "1,364.1"
+      pos: 90_15
+    - texto: "27,578"
+      pos: 90_16
+    - texto: ""
+      pos: 90_17
+    - texto: "6,261"
+      pos: 90_18
+    - texto: "5,083"
+      pos: 90_19
+    - texto: "100,455"
+      pos: 90_20
+    - texto: "5,059.5"
+      pos: 90_21
+    campos: 
+      90_1: 
+        campo: total_nacional
+        texto: TOTAL NACIONAL
+    celda_final: 90_21
+    celda_inicial: 90_1
+  created_at: 2010-01-11 14:32:47
+  nombre: Parte Diario
+  updated_at: 2010-01-11 14:32:47
+  id: "8"
+  iterar_fila: t
+  descartar: 
+    desc1: 
+      excepciones: []
+
+      patron: 
+        "1": 
+          texto: TOTAL
+      celda_final: 27_21
+      celda_inicial: 27_1
+    desc6: 
+      excepciones: []
+
+      patron: 
+        "2": 
+          texto: ""
+      celda_final: 25_21
+      celda_inicial: 25_1
+    desc7: 
+      excepciones: []
+
+      patron: 
+        "3": 
+          texto: ""
+      celda_final: 9_21
+      celda_inicial: 9_1
+    desc0: 
+      excepciones: []
+
+      patron: 
+        "2": 
+          texto: PLANTA
+      celda_final: 18_21
+      celda_inicial: 18_1
+  fija: f
+  rango: "5"
+  hoja_id: "34"
+  celda_final: 90_21
+  encabezado: 
+    celdas: 
+    - texto: ""
+      pos: 6_1
+    - texto: ""
+      pos: 6_2
+    - texto: L I Q U I D O S  EN BBLS
+      pos: 6_3
+    - texto: G A S    EN    MPC
+      pos: 6_10
+    - texto: ""
+      pos: 6_18
+    - texto: ""
+      pos: 6_19
+    - texto: SALDOS
+      pos: 6_20
+    - texto: ""
+      pos: 7_1
+    - texto: ""
+      pos: 7_2
+    - texto: PRO-
+      pos: 7_3
+    - texto: PETRO
+      pos: 7_4
+    - texto: CONDEN
+      pos: 7_5
+    - texto: DENS.
+      pos: 7_6
+    - texto: GASO-
+      pos: 7_7
+    - texto: AGUA
+      pos: 7_8
+    - texto: PET.
+      pos: 7_9
+    - texto: PRO-
+      pos: 7_10
+    - texto: INYEC-
+      pos: 7_11
+    - texto: ENT.
+      pos: 7_12
+    - texto: ENT.
+      pos: 7_13
+    - texto: LICUA-
+      pos: 7_14
+    - texto: GLP
+      pos: 7_15
+    - texto: COM-
+      pos: 7_16
+    - texto: RESI-
+      pos: 7_17
+    - texto: QUEMA-
+      pos: 7_18
+    - texto: CO2
+      pos: 7_19
+    - texto: ""
+      pos: 8_1
+    - texto: ""
+      pos: 8_2
+    - texto: DUC.
+      pos: 8_3
+    - texto: LEO
+      pos: 8_4
+    - texto: SADO
+      pos: 8_5
+    - texto: "(\xC2\xBA API)"
+      pos: 8_6
+    - texto: LINA
+      pos: 8_7
+    - texto: ""
+      pos: 8_8
+    - texto: ENT.
+      pos: 8_9
+    - texto: DUC.
+      pos: 8_10
+    - texto: CION
+      pos: 8_11
+    - texto: GASOD.
+      pos: 8_12
+    - texto: PROC.
+      pos: 8_13
+    - texto: BLES
+      pos: 8_14
+    - texto: MC
+      pos: 8_15
+    - texto: BUST.
+      pos: 8_16
+    - texto: DUAL
+      pos: 8_17
+    - texto: DO
+      pos: 8_18
+    - texto: ""
+      pos: 8_19
+    - texto: PET
+      pos: 8_20
+    - texto: GLP
+      pos: 8_21
+    campos: 
+      7_3: 
+        campo: produccion
+        texto: PRO-
+      7_4: 
+        campo: petroleo
+        texto: PETRO
+      7_5: 
+        campo: condensado
+        texto: CONDEN
+      7_7: 
+        campo: gasollina
+        texto: GASO-
+      7_18: 
+        campo: quemado
+        texto: QUEMA-
+      7_8: 
+        campo: agua
+        texto: AGUA
+      7_19: 
+        campo: co2
+        texto: CO2
+      6_1: 
+        campo: campo_codigo
+        texto: ""
+      6_2: 
+        campo: campo_nombre
+        texto: ""
+    celda_final: 8_21
+    celda_inicial: 6_1
+  celda_inicial: 6_1
+  titular: {}
+

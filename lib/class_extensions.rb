@@ -57,8 +57,37 @@ Integer.class_eval do
 
   # Convierte un mumero a una columna de una hoja electronica
   # @param Integer num
-  def excel_col(num)
-    ( ( ( (num-1)/26>=1) ? ( (num-1)/26+64).chr: '') + ((num-1)%26+65).chr)
+  def excel_col()
+    ( ( ( (self - 1)/26>=1) ? ( (self - 1)/26+64).chr: '') + ((self - 1)%26+65).chr)
   end
+end
+
+
+Array.class_eval do
+
+  # Method to convert to CSV data in an array with hash values
+  # @param String separator
+  # @param String encodind
+  # @return String
+  def to_csv_hash(separator=',',encoding='utf-8')
+    header = self.first.keys
+    csv = header.join(separator) + "\n"
+
+    case encoding
+    when 'utf-8'
+      @proc_encoding = lambda{|v| v }
+    when 'Windows-1252'
+      @proc_encoding = lambda{|v| v.unpack('U*').pach('C*') }
+    end
+
+    csv << self.inject([]) do |arr, row|
+      arr << header.inject([]) do |pos, k|
+        row[k] = "\"#{row[k].join(",")}\"" if row[k].is_a? Array
+        pos << @proc_encoding.call(row[k])
+      end.join(separator)
+    end.join("\n")
+
+  end
+
 end
 

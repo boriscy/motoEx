@@ -32,20 +32,23 @@ class ImportaresController < ApplicationController
       format.html
       format.xml { render :xml => hash }
       format.json { render :json => @importar }
-      format.yaml { render :yaml => @importar }
+      format.yaml { render :text => @importar.to_yaml }
     end
   end
 
   def create
     @importar = Importar.new(params[:importar])
+    #params[:importar].delete(:archivo_tmp) # Problemas al transformar a json
 
     if @importar.save
       respond_to do |format|
-        format.html
-        format.xml { render :xml => params }
-        format.json { render :json => params }
-        format.yaml { render :text => params.to_yaml }
+        format.html {render :text => 'JEJEJE'} #
+        format.xml { render :xml => @importar.importado }
+        format.json { render :json => @importar.importado }
+        format.yaml { render :text => @importar.importado.to_yaml }
       end
+    else
+      render :text => 'Error'
     end
   end
 
