@@ -45,6 +45,8 @@ private
   # @param Integer pos
   # @return Boolean
   def verificar_excepciones?(pos)
+    return false if excepciones.size <= 0
+
     excepciones.each do |v|
       return false unless verificar_grupo_excepciones?(v, pos)
     end

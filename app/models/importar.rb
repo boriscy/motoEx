@@ -47,7 +47,7 @@ private
     case File.extname(archivo_tmp).downcase
     when ".xls" then Excel.new(archivo_tmp)
     when ".xlsx" then Excelx.new(archivo_tmp)
-    when ".ods" then OpenOffice.new(archivo_tmp)
+    when ".ods" then Openoffice.new(archivo_tmp)
     end
   end
 
