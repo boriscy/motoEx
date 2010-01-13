@@ -32,4 +32,18 @@ describe DescartarPatron do
     @descartar.valido?(7).should == false
     @descartar.valido?(14).should == false
   end
+
+  describe "Parte Diario" do
+    before(:each) do
+      area = YAML::parse(File.open(RAILS_ROOT + "/ejemplos/areas/ParteDiario.yml")).transform
+      @areas = area['area']['descartar']
+      @hoja_electronica = Excel.new(RAILS_ROOT + '/ejemplos/ParteDiario.xls')
+    end
+
+    it 'debe descartar con patron TOTAL' do
+      # Texto TOTAL
+      @descartar = DescartarPatron.new(@areas['desc1'], @hoja_electronica, true)
+      @descartar.valido?(27).should == true
+    end
+  end
 end

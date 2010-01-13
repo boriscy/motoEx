@@ -72,20 +72,20 @@ Array.class_eval do
   def to_csv_hash(separator=',',encoding='utf-8')
     header = self.first.keys
     csv = header.join(separator) + "\n"
-
-    case encoding
-    when 'utf-8'
-      @proc_encoding = lambda{|v| v }
-    when 'Windows-1252'
-      @proc_encoding = lambda{|v| v.unpack('U*').pach('C*') }
-    end
-
+    
     csv << self.inject([]) do |arr, row|
       arr << header.inject([]) do |pos, k|
         row[k] = "\"#{row[k].join(",")}\"" if row[k].is_a? Array
-        pos << @proc_encoding.call(row[k])
+        pos << row[k]
       end.join(separator)
     end.join("\n")
+    
+    case encoding
+    when 'utf-8'
+      then csv
+    when 'Windows-1252'
+      then csv.unpack('U*').pack('C*') 
+    end
 
   end
 
