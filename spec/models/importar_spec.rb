@@ -42,17 +42,16 @@ describe Importar do
       @tmp = "#{RAILS_ROOT}/tmp/archivos/#{Time.now.to_i}"
     end
 
-    it 'debe almacenar en tmp/archivos el archivo creado' do
-      @importar = Importar.new(@params)
-      @importar.archivo_tmp.should == "#{@tmp}#{@importar.archivo_nombre}"
-      File.exists?(@importar.archivo_tmp).should == true
-      @importar.save
-    end
-
-    it 'debe borrar el archivo temporal' do
+    it 'debe almacenar en tmp/archivos el archivo creado y borrarlo' do
       @importar = Importar.create(@params)
+      #@importar.archivo_tmp.should == "#{@tmp}#{@importar.archivo_nombre}"
       File.exists?(@importar.archivo_tmp).should_not == true
     end
+
+#    it 'debe borrar el archivo temporal' do
+#      @importar = Importar.create(@params)
+#      File.exists?(@importar.archivo_tmp).should_not == true
+#    end
 
     it 'debe almacenar la dimension del archivo' do
       @importar = Importar.create(@params)

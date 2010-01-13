@@ -1,5 +1,5 @@
 Dado /^que me logueo$/ do
-  crear_usuario()
+  Soporte::crear_usuario()
   visit "/"
   fill_in "usuario_session[login]", :with => "admin"
   fill_in "Contraseña", :with => "demo123"
