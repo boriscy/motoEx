@@ -78,7 +78,7 @@ describe Sinonimo do
   it "Debe exportar csv con codificacion windows1252" do
     set_archivo_tmp('yml')
     @sinonimo = Sinonimo.create(@params)
-    exportado = @sinonimo.exportar_a_csv().split("\n")
+    exportado = @sinonimo.exportar_a_csv("windows").split("\n")
     campos = @sinonimo.mapeado.first.keys
     
     exportado.shift.should == campos.join(",")
@@ -86,6 +86,22 @@ describe Sinonimo do
     exportado.each_with_index do |v, k|
       v.should == campos.inject([]) do |arr, i| 
         arr << ( @sinonimo.mapeado[k][i].is_a?(Array) ? "\"#{@sinonimo.mapeado[k][i].join(',').unpack('U*').pack('C*')}\"" : @sinonimo.mapeado[k][i].unpack('U*').pack('C*') )
+      end.join(",")
+    end.join("\n")
+    
+  end
+  
+  it "Debe exportar csv con codificacion utf8" do
+    set_archivo_tmp('yml')
+    @sinonimo = Sinonimo.create(@params)
+    exportado = @sinonimo.exportar_a_csv("linux").split("\n")
+    campos = @sinonimo.mapeado.first.keys
+    
+    exportado.shift.should == campos.join(",")
+    
+    exportado.each_with_index do |v, k|
+      v.should == campos.inject([]) do |arr, i| 
+        arr << ( @sinonimo.mapeado[k][i].is_a?(Array) ? "\"#{@sinonimo.mapeado[k][i].join(',')}\"" : @sinonimo.mapeado[k][i] )
       end.join(",")
     end.join("\n")
     
