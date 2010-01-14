@@ -116,7 +116,7 @@ FormularioArea.prototype = {
                     if(area_id == 'disabled') {
                         area_id = resp['area']['id'];
                         $('select#area').append("<option value='" + area_id + "'>" + resp["area"]["nombre"] + "</option>");
-                        $('.forma_areas label.area_id span').html(area_id);
+                        $('.forma_areas span.area_id').html(area_id);
                         
                         $('select#area option[value=' + area_id + ']').attr("selected", "selected");
                         $('input:hidden[name=_method]').val("put");
