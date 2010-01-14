@@ -66,5 +66,18 @@ describe Encabezado do
 
   end
 
+  describe "Importar otra hoja" do
+    before(:each) do
+      enc = YAML::parse(File.open(RAILS_ROOT + "/ejemplos/areas/VentasPrecio2003.yml")).transform
+      @area = enc['area']['encabezado']
+      @hoja_electronica = Excel.new(RAILS_ROOT + "/ejemplos/VentasPrecio2003.xls")
+    end
+
+    it 'debe encontrar el area correcta' do
+      @encabezado = Encabezado.new(@area, @hoja_electronica, true)
+      desp = @encabezado.buscar(15)
+    end
+    
+  end
 
 end

@@ -65,11 +65,11 @@ if($_POST['login']) {
   <form method="post" enctype="multipart/form-data" action="testMotoEx.php">
 <ul>
   <li>
-    <label>login</label><input type="text" name="login" id="login">
+    <label>login</label><input type="text" name="login" id="login" value="admin">
   </li>
 
   <li>
-    <label>Password</label><input type="text" name="password" id="password">
+    <label>Password</label><input type="text" name="password" id="password" value="demo123">
   </li>
 
   <li>
@@ -87,6 +87,7 @@ if($_POST['login']) {
       <option value="2">Area 2</option>
       <option value="3">Area 3</option>
       <option value="8">Area 8</option>
+      <option value="9">Area 9</option>
     </select>
   </li>
 </ul>

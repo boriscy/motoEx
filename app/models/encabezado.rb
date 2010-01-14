@@ -32,7 +32,6 @@ class Encabezado <  AreaEsp
     # Retorna el desplazar si encontro todos los valores de la cabecera
     return desplazar if verificar_campos?(desplazar)
     # Iteración en el rango
-    #desplazar = false
 
     arr = crear_rango(rango)
 
@@ -83,13 +82,12 @@ private
   def crear_rango(rango)
     fila, columna = celda_inicial.split("_").map(&:to_i)
     if iterar_fila?
-      ini = (rango >= fila) ? 1 : fila - rango
+      ini = (rango >= fila) ? 1 : rango
     else
-      ini = (rango >= columna) ? 1 : fila - rango
+      ini = (rango >= columna) ? 1 : rango
     end
-    fin = fila + rango
 
-    r = (ini..fin).to_a.select{|v| v != 0}
+    r = (-ini..rango).to_a.select{|v| v != 0}
   end
 
 end
