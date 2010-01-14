@@ -75,7 +75,7 @@ describe Encabezado do
 
     it 'debe encontrar el area correcta' do
       @encabezado = Encabezado.new(@area, @hoja_electronica, true)
-      desp = @encabezado.buscar(15)
+      @encabezado.buscar(15).should == 10
     end
     
   end
