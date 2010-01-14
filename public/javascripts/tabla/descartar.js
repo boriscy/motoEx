@@ -171,6 +171,7 @@ var Descartar = Area.extend({
      * en base a la lista en el  #formulario-descartar
      */
     'actualizarEstadoPatron': function() {
+        var base = this;
         var area = $("#id-descartar").val();
         
         //primero elimina todos los patrones
@@ -189,16 +190,16 @@ var Descartar = Area.extend({
 
             estado.area.descartar[area]['patron'][pos] = {'texto': texto};
             
-            estado.area[this.serialize][area].excepciones = [];
+            estado.area[base.serialize][area].excepciones = [];
             // Excepciones del patron
             $('ul.grupo-excepcion').each(function(i, el) {
-                estado.area[this.serialize][area].excepciones[i] = [];
+                estado.area[base.serialize][area].excepciones[i] = [];
                 $(el).find('li.excepcion').each(function(ii, elem) {
                     // Campo oculto
                     var col = $(elem).find("span.col").text().trim();
                     var texto = $(elem).find("span.texto").text().trim();
                     // en la excepcion "pos" puede ser fila o columna
-                    estado.area[this.serialize][area].excepciones[i].push({'pos': col, 'texto': texto});
+                    estado.area[base.serialize][area].excepciones[i].push({'pos': col, 'texto': texto});
                 });
             });
         });
