@@ -10,7 +10,7 @@ class Importar < ActiveRecord::Base
   attr_reader :importado # Variable en la cual se almance todos los datos de la imoprtacion
   serialize :areas
 
-  EXTENCIONES = [".xls", ".xlsx", "ods"]
+  EXTENCIONES = [".xls", ".xlsx", ".ods"]
   CONTENT_TYPS = ["application/vnd.ms-excel", # Excel 97-2003
     "application/octet-stream", # Excel 2007
     "application/vnd.oasis.opendocument.spreadsheet" # Open Officce

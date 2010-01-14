@@ -4,10 +4,50 @@
 <head profile="http://purl.org/NET/erdf/profile"> 
   <meta http-equiv="content-type" content="text/html;charset=utf-8" /> 
   <title>Prueba MotoEx</title>
+  <style>
+  table{
+    border-collapse: collapse;
+  }
+  td, th{ padding: 4px;}
+  a{
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  </style>
 </head>
 <body>
 
 <?php
+
+function presentar($resp, $areas) {
+  $first = true;
+
+  echo '<a onClick="toggleTabla()" id="aTablas">Ocultar Tablas</a>';
+  echo '<div id="tablas">';
+  foreach($areas as $pos => $area) {
+    echo '<table border="1">';
+    foreach($resp->{$area} as $k => $row) {
+      if($first == true) {
+        echo '<tr>';
+        foreach($row as $head => $val)
+          echo "<th>$head</th>";
+        echo '</tr>';
+        $first = false;
+      }
+      echo "<tr>";
+      foreach($row as $kk => $value) {
+        echo "<td>$value</td>";
+      }
+      echo "</tr>";
+    }
+
+    echo '</table>';
+  }
+  echo '</div>';
+}
+
+
 if($_POST['login']) {
   //echo $_FILES['archivo']['tmp_name'];
   //print_r($_POST);
@@ -18,28 +58,8 @@ if($_POST['login']) {
     $resp = $rest->postDatos($_POST, realpath($target));
     $resp = json_decode($resp);
     
-    $first = true;
-    
-    foreach($_POST['areas'] as $pos => $area) {
-      echo '<table>';
-      foreach($resp->{$area} as $k => $row) {
-        if($first == true) {
-          echo '<tr>';
-          foreach($row as $head => $val)
-            echo "<th>$head</th>";
-          echo '</tr>';
-          $first = false;
-        }
-        echo "<tr>";
-        foreach($row as $kk => $value) {
-          echo "<td>$value</td>";
-        }
-        echo "</tr>";
-      }
-
-      echo '</table>';
-      }
-    }
+    presentar($resp, $_POST['areas']);
+  } 
 }
 ?>
   <form method="post" enctype="multipart/form-data" action="testMotoEx.php">
@@ -55,6 +75,10 @@ if($_POST['login']) {
   <li>
     <label>Archivo</label><input type="file" name="archivo" id="archivo">
   </li>
+  <li>
+    <label>Formato</label>
+    
+  </li>
 
   <li>
     <label>Areas</label>
@@ -68,6 +92,19 @@ if($_POST['login']) {
 </ul>
 <input type="submit" value="Ingresar" />
 </form>
+<script type="text/javascript">
+function toggleTabla() {
+  var div = document.getElementById('tablas');
+  var a = document.getElementById('aTablas');
 
+  if(a.innerHTML == 'Mostrar Tablas') {
+    div.style.display = 'block';
+    a.innerHTML = 'Ocultar Tablas';
+  }else{
+    div.style.display = 'none';
+    a.innerHTML = 'Mostrar Tablas';
+  }
+}
+</script>
 </body>
 </html>
