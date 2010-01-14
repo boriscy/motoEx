@@ -103,7 +103,6 @@ FormularioArea.prototype = {
         estado.area['fija'] = $('#area_fija')[0].checked;
         estado.area['hoja_id'] = hoja_id;
         if (this.validarDatos(area_id, es_guardar_como)){
-            var formulario = this;
             
             var post = area_id == 'disabled' ? '/areas' : '/areas/' + area_id;
             
@@ -269,7 +268,6 @@ FormularioArea.prototype = {
      * Cierra el formulario y deselecciona
      */
     'cerrar': function() {
-        var formulario = this;
         $('div#formulario-areas').dialog("close");
     }
 };

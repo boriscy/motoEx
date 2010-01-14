@@ -67,10 +67,12 @@ private
   # @param Fixnum desp # Indica cuanto se ha movido en filas o columnas el encabezado
   # @return Boolean
   def verificar_campos?(desp)
+    
     @campos.each do |k ,v|
       fila, columna = k.split("_").map(&:to_i)
       fila, columna = proc_desp.call(fila, columna, desp)
-      return false unless v['texto'] == hoja_electronica.cell(fila, columna)
+      
+      return false unless v['texto'] == hoja_electronica.cell(fila, columna).to_s.gsub(/\n/," ")
     end
 
     true

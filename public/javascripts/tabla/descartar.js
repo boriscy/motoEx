@@ -27,7 +27,6 @@ var Descartar = Area.extend({
      * @param Array areas
      */
     'init': function(areas, area) {
-        base = this;
         
         this.area = area;
         this.cssMarcarOpts = 'opciones-' + this.cssMarcar;
@@ -60,6 +59,7 @@ var Descartar = Area.extend({
      * Creación de eventos
      */
     'crearEventos': function() {
+        var base = this;
         $('#area-descartar').bind('marcar:descartar', function() {
             if (base.validarInclusion(base.area.cssMarcar) && 
                 base.validarSolapamiento([base.area.titular.cssMarcar, base.area.encabezado.cssMarcar, base.cssMarcar, base.area.fin.cssMarcar]) ) {

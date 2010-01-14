@@ -21,12 +21,12 @@
 <?php
 
 function presentar($resp, $areas) {
-  $first = true;
 
   echo '<a onClick="toggleTabla()" id="aTablas">Ocultar Tablas</a>';
   echo '<div id="tablas">';
   foreach($areas as $pos => $area) {
     echo '<table border="1">';
+    $first = true;
     foreach($resp->{$area} as $k => $row) {
       if($first == true) {
         echo '<tr>';
