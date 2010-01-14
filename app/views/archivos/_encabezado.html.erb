@@ -1,44 +1,47 @@
 <div id="doc-info" class="sheet-doc-info" style="top:0px;">
-  <h2 class="dark-blue"><%= @archivo.nombre %></h2>
-  <strong class="dark-grey">
-    <%= @archivo.archivo_excel_file_name %> 
-    <span class="green" style="font-size: 1.1em"><%= @archivo.archivo_excel_file_size.to_byte_size %></span>
-  </strong>
-  <div style="clear:both"></div>
-</div>
-<div id="toolbar" class="sheet-toolbar">
-  <div id="areas-importacion">
-    <ul>
-      <li><a href="#" id="area-importar">Area</a></li>
-      <li><a href="#" id="area-titular">Titular</a></li>
-      <li><a href="#" id="area-encabezado">Encabezado</a></li>
-      <li><a href="#" id="area-descartar">Descartar</a></li>
-      <li><a href="#" id="area-fin">Fin</a></li>
-    </ul>
-
-    <button id="propiedades">Propiedades</button>
-    <button id="salvar">Salvar</button>
-    <button id="guardar-como">Guardar como</button>
-
-    <div class="forma_areas">
-      <table style="border: 0px;">
-        <tr style="border: 0px;">
-          <td>
-            <label style="font-weight: bold;">ID:</label>
-          </td>
-          <td>
-            <span class="area_id" style="font-size: 1.5em; width: 50px; float: left; font-weight: bold;"></span>
-          </td>
-          <td>
-            <label>Areas:</label>
-          </td>
-          <td>
-            <%= select_tag("area", %(<option value="disabled" class="disabled">Deseleccionar</option>#{options_from_collection_for_select(@hoja.areas, 'id', 'nombre')} ) )  %>
-          </td>
-      </table>
-    </div>
+  <div class="forma_areas"> <!--style="float:left;"-->
+    <table style="border: 0px; width:100%">
+      <tr style="border: 0px;">
+        <td>
+          <h2 class="dark-blue"><%= @archivo.nombre %></h2>
+          <strong class="dark-grey">
+            <%= @archivo.archivo_excel_file_name %> 
+            <span class="green" style="font-size: 1.1em"><%= @archivo.archivo_excel_file_size.to_byte_size %></span>
+          </strong>
+        </td>
+        <td>
+          <table style="border: 0px;">
+            <tr style="border: 0px;">
+              <td><label style="font-weight: bold;">ID:</label></td>
+              <td><span class="area_id green" style="font-size: 1.5em; width: 30px; float: left; font-weight: bold;"></span></td>
+              <td><label>Areas:</label></td>
+              <td><%= select_tag("area", %(<option value="disabled" class="disabled">Deseleccionar</option>#{options_from_collection_for_select(@hoja.areas, 'id', 'nombre')} ) )  %></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
   </div>
-
-
 </div>
-
+<div id="areas-importacion">
+  <table style="border: 0px;">
+    <tr style="border: 0px;">
+      <td>
+        <ul>
+          <li><a href="#" class="bg-light-green" id="area-importar">Area</a></li>
+          <li><a href="#" class="bg-light-grey" id="area-titular">Titular</a></li>
+          <li><a href="#" class="bg-light-blue" id="area-encabezado">Encabezado</a></li>
+          <li><a href="#" class="bg-red-color" id="area-descartar">Descartar</a></li>
+          <li><a href="#" class="bg-light-yellow" id="area-fin">Fin</a></li>
+        </ul>
+      </td>
+      <td>
+        <button id="propiedades">Propiedades</button>
+        <button id="salvar">Salvar</button>
+        <button id="guardar-como">Guardar como</button>
+      </td>
+    </tr>
+  </table>
+</div>
+<!--div id="toolbar" class="sheet-toolbar"-->
+<!--/div-->

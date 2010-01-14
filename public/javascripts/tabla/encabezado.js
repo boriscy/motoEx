@@ -10,8 +10,6 @@ Encabezado = Area.extend({
      * @param AreaGeneral area
      */
     'init': function(ini, fin, area) {
-        base = this;
-        
         this._super(ini, fin);
         this.area = area;
         
@@ -26,6 +24,7 @@ Encabezado = Area.extend({
      * Creación de eventos relacionados
      */
     'crearEventos': function() {
+        var base = this;
         $('#area-encabezado').bind('marcar:encabezado', function(){
             // Validar que este dentro del AreaGeneral
             if (base.validarInclusion(base.area.cssMarcar) && 
