@@ -38,7 +38,6 @@ class ImportaresController < ApplicationController
 
   def create
     @importar = Importar.new(params[:importar])
-    #params[:importar].delete(:archivo_tmp) # Problemas al transformar a json
 
     if @importar.save
       respond_to do |format|

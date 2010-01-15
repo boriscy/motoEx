@@ -17,5 +17,5 @@ Entonces /^debo importar los datos$/ do
   archivo = @archivo.gsub(File.extname(@archivo), "") + "Resp.csv"
   f = File.open(File.join(RAILS_ROOT, 'ejemplos', 'areas', archivo))
   resp = ActiveSupport::JSON.decode(response.body)
-  resp[resp.keys.first].to_csv_hash.should == f.inject(""){|t, v| t << v }
+  resp[resp.keys.first]['datos'].to_csv_hash.should == f.inject(""){|t, v| t << v }
 end

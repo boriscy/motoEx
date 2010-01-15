@@ -59,7 +59,10 @@ class AreaGeneral < AreaImp
       i += 1
     end while !condicion.call(i)
 
-    arr
+    hash = {'datos' => arr}
+    hash['titular'] = titular.obtener_titular if titular
+
+    hash
   end
 
   # Actualiza la posicion del area descartada
@@ -104,12 +107,16 @@ private
   def crear_condicion_iterar()
     if area_fija
       if iterar_fila?
-        return lambda{ |pos| fila_final == pos }
+        return lambda{ |pos| fila_final == pos or hoja_electronica.last_row < pos }
       else
-        return lambda{ |pos| columna_final == pos }
+        return lambda{ |pos| columna_final == pos or hoja_electronica.last_column < pos }
       end
     else
-      return lambda{ |pos| @fin.fin?(pos) }
+      if iterar_fila?
+        return lambda{ |pos| @fin.fin?(pos) or hoja_electronica.last_row < pos }
+      else
+        return lambda{ |pos| @fin.fin?(pos) or hoja_electronica.last_column < pos }
+      end
     end
   end
 

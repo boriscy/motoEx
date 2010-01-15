@@ -24,10 +24,15 @@ function presentar($resp, $areas) {
 
   echo '<a onClick="toggleTabla()" id="aTablas">Ocultar Tablas</a>';
   echo '<div id="tablas">';
+
   foreach($areas as $pos => $area) {
+    try{
+      echo "<h3>{$resp->{$area}->titular}</h3>";
+    }catch(Exception $e){}
+
     echo '<table border="1">';
     $first = true;
-    foreach($resp->{$area} as $k => $row) {
+    foreach($resp->{$area}->datos as $k => $row) {
       if($first == true) {
         echo '<tr>';
         foreach($row as $head => $val)
@@ -57,7 +62,6 @@ if($_POST['login']) {
     $rest = new RestMotoEx("http://localhost:3000/importares", "json");
     $resp = $rest->postDatos($_POST, realpath($target));
     $resp = json_decode($resp);
-    
     presentar($resp, $_POST['areas']);
   } 
 }
@@ -87,7 +91,9 @@ if($_POST['login']) {
       <option value="2">Area 2</option>
       <option value="3">Area 3</option>
       <option value="8">Area 8</option>
+      <option value="7">Area 7</option>
       <option value="9">Area 9</option>
+      <option value="10">Area 10</option>
     </select>
   </li>
 </ul>

@@ -33,7 +33,7 @@ class Importar < ActiveRecord::Base
     hoja_electronica = asignar_hoja_electronica()
     areas.each do |v|
       area = Area.find(v)
-      hoja_electronica.default_sheet = area.hoja.numero
+      hoja_electronica.default_sheet = area.hoja.numero + 1
       area_general = AreaGeneral.new(area, hoja_electronica, area.iterar_fila)
       ret[v] = area_general.leer()
     end
