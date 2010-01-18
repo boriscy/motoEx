@@ -103,14 +103,6 @@ class Sinonimo < ActiveRecord::Base
     
   end
 
-  # Para poder importar los datos
-#  def self.yamel(param='nombre')
-#    yaml = YAML::parse( File.open( File.join( File.expand_path("~"), "campos.yml") ))
-#    columns = yaml.transform['campos']['columns']
-#    records =  yaml.transform['campos']['records']
-#    lcol = lambda{|v, p| v[columns.find_index{|v| v==p}] }
-#    records.inject([]){|s, v| s << { :id => lcol.call(v, 'id'), param.to_sym => lcol.call(v, param) }; s  }
-#  end
 private
   # Valida el archivo temporal
   def validar_archivo()
@@ -121,6 +113,7 @@ private
     end
   end
 
+  # Añade un error en caso de que el archivo tembporal Presente errores
   def add_archivo_tmp_error
     tipos = ["csv", "json", "xml", "yml", "yaml"]
     begin

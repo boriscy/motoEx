@@ -22,7 +22,7 @@ class DescartarPatron < AreaEsp
   end
 
   # Indica si el patron debe aplicarse para descartar la fila o columna
-  # @param Fixnum pos # Fila o columna a iterar
+  #   @param Fixnum pos # Fila o columna a iterar
   def valido?(pos)
     verificar_patron?(pos) and !verificar_excepciones?(pos)
   end
@@ -30,8 +30,8 @@ class DescartarPatron < AreaEsp
 
 private
   # Verifica si se cumple el patron
-  # @param Integer pos
-  # @return Boolean
+  #   @param Integer pos
+  #   @return Boolean
   def verificar_patron?(pos)
     patron.each do |k, v|
       fila, columna = proc_desc_pos.call(pos, k.to_i)
@@ -42,8 +42,8 @@ private
   end
 
   # Verifica si cumple una excepcion
-  # @param Integer pos
-  # @return Boolean
+  #   @param Integer pos
+  #   @return Boolean
   def verificar_excepciones?(pos)
     return false if excepciones.size <= 0
 
@@ -55,9 +55,9 @@ private
   end
 
   # Verifica que todo un grupo de excepciones cumpla los valores
-  # @param Array grupo # Array con las excepciones de un grupo
-  # @param Integer pos
-  # @return Boolean
+  #   @param Array grupo # Array con las excepciones de un grupo
+  #   @param Integer pos
+  #   @return Boolean
   def verificar_grupo_excepciones?(grupo, pos)
     grupo.each do |v|
       fila, columna = proc_desc_pos.call(pos, v['pos'].to_i)
@@ -69,13 +69,13 @@ private
 
   # Elimina los espacion en blanco del inicio y fin del texto en el patron
   # Muecho cuidado con los &nbsp; que pueden parecer espacio, son otro caracter
-  # @param Hash hash
+  #   @param Hash hash
   def strip_texto_patron(hash)
     hash.each{|k, v| v['texto'].strip! }
   end
 
   # Elimina los espacios al principio y al final del texto
-  # @param Array array
+  #   @param Array array
   def strip_texto_excepciones(array)
     array.each{|v| v['texto'].strip!}
   end

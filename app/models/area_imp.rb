@@ -9,9 +9,9 @@ class AreaImp
 
   # Constructor
   # En caso de que itererar_filas = false # => Se itera las columnas
-  # @param Hash area
-  # @param Excel || Excelx || OpenOffice hoja_electronica
-  # @param Boolean iterar_fila
+  #   @param Hash area
+  #   @param Excel || Excelx || OpenOffice hoja_electronica
+  #   @param Boolean iterar_fila
   def initialize(area, hoja_electronica, iterar_fila_tmp = true)
     @celda_inicial, @celda_final = area['celda_inicial'], area['celda_final']
     @iterar_fila = iterar_fila_tmp
@@ -29,7 +29,7 @@ class AreaImp
   end
 
   # Actualiza la posicion del area desplazandola dependiento si itera filas o columnas
-  # @param Fixnum desplazar
+  #   @param Fixnum desplazar
   def actualizar_posicion(desplazar)
     if @iterar_fila
       @fila_inicial += desplazar
@@ -44,17 +44,17 @@ class AreaImp
   end
 
   # LLama directamente sin necesidad de indicar si itera filas o columnas
-  # @param String posicion
-  # @param Fixnum desplazar
+  #   @param String posicion
+  #   @param Fixnum desplazar
   def crear_posicion_desplazada(posicion, desplazar = 0)
     fila, columna = posicion.split("_").map(&:to_i)
     proc_desp.call(fila, columna, desplazar).join("_")
   end
 
   # crear una posicion en base a la fila y la columna
-  # @param String posicion
-  # @param Fixnum desplazar
-  # @param Bool self_iterar_fila
+  #   @param String posicion
+  #   @param Fixnum desplazar
+  #   @param Bool self_iterar_fila
   def self.crear_posicion_desplazada( posicion, desplazar, self_iterar_fila )
     return posicion if desplazar == 0
 
@@ -77,6 +77,7 @@ protected
     @hoja_electronica = hoja_electronica
   end
 
+  # Asigna las filas y columnas finales e iniciales
   def asignar_filas_columnas
     inicio = celda_inicial.split("_").map(&:to_i)
     fin = celda_final.split("_").map(&:to_i)
@@ -87,9 +88,9 @@ protected
   end
 
   # Asigna la posicion de acuerdo a si se itera filas o columnas
-  # @param String posicion
-  # @param Integer pos # fila o columna en la cual se encuentra
-  # @return Array # Array de enteros con [fila, columna]
+  #   @param String posicion
+  #   @param Integer pos # fila o columna en la cual se encuentra
+  #   @return Array # Array de enteros con [fila, columna]
   def asignar_posicion(posicion, pos)
     fila, columna = posicion.split("_").map(&:to_i)
     @proc_pos.call(fila, columna, pos)

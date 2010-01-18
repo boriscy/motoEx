@@ -1,5 +1,6 @@
 require 'lib/roo_extra'
 
+# Clase que almacena hojas de un archivo y esta a su ves tiene varias areas
 class Hoja < ActiveRecord::Base
   before_create :crear_hoja_html
   after_save :realizar_prelectura, :if => :prelectura?
@@ -11,7 +12,7 @@ class Hoja < ActiveRecord::Base
   attr_accessor :numero_hoja
 
   # Retorna la ruta en el que esta almacenado el archivo html
-  #   Hoja.first.ruta # => /home/mydir/myrailsapp/files/1/1.html
+  #   Ejemplo: Hoja.first.ruta # => /home/mydir/myrailsapp/files/1/1.html
   def ruta
     File.join(RAILS_ROOT, File.dirname(self.archivo.archivo_excel.path), "#{self.numero}.html")
   end
@@ -92,9 +93,9 @@ private
   end
   # Crea un áreas para poder identificar en caso de colspan
   # y rowspan cuando se asignan los ids a las celdas "td"
-  # @param Hpricot::Elem cell
-  # @param Fixnum fila
-  # @param Fixnum col
+  #   @param Hpricot::Elem cell
+  #   @param Fixnum fila
+  #   @param Fixnum col
   def crear_merged(cell, fila, col)
     @areas ||= {}
     rowspan, colspan = 1, 1
@@ -132,8 +133,8 @@ private
   class << self
     # Realiza la busqueda de una hoja de lo contrario la crea
     # y de ser necesario actualiza el HTML de la hoja
-    # @param Fixnum archivo_id # Archivo
-    # @param Fixnum numero # Número de hoja
+    #   @param Fixnum archivo_id # Archivo
+    #   @param Fixnum numero # Número de hoja
     def buscar_o_crear(archivo_id, numero=0)
       hoja = self.find_by_archivo_id_and_numero(archivo_id, numero)
       if hoja.nil?

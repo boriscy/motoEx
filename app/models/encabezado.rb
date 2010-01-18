@@ -24,8 +24,8 @@ class Encabezado <  AreaEsp
 
   # Busca el encabezado de acuerdo al rango, en caso de que encuentra el patron
   # en el cual se encuentra el encabezado retorna un numero de lo contrario retorna false
-  # @param Fixnum rango
-  # @return Fixnum || False
+  #   @param Fixnum rango
+  #   @return Fixnum || False
   def buscar(rango)
     desplazar = 0
 
@@ -48,8 +48,8 @@ class Encabezado <  AreaEsp
   end
 
   # Extrae los datos indicados dependiendo la fila o columna
-  # @param Integer pos
-  # @return Hash
+  #   @param Integer pos
+  #   @return Hash
   def extraer_datos(pos)
     campos.inject({}) do |hash, v|
       fila, columna = proc_pos_enc.call(pos, v[1])
@@ -64,8 +64,8 @@ private
   # Verifica de que todas las celdas, comparando las posiciones de los campos en la
   # clase Encabezado con los valores de la hoja_electronica. Permitiendo reconocer 
   # si se encontro el encabezado en la hoja_electronica
-  # @param Fixnum desp # Indica cuanto se ha movido en filas o columnas el encabezado
-  # @return Boolean
+  #   @param Fixnum desp # Indica cuanto se ha movido en filas o columnas el encabezado
+  #   @return Boolean
   def verificar_campos?(desp)
     
     @campos.each do |k ,v|
@@ -79,8 +79,8 @@ private
   end
 
   # Crea un rango válido para poder verificar los valores
-  # @param Integer rango
-  # @return Array
+  #   @param Integer rango
+  #   @return Array
   def crear_rango(rango)
     fila, columna = celda_inicial.split("_").map(&:to_i)
     if iterar_fila?

@@ -1,3 +1,5 @@
+# Clase que almacena el archivo, hoja electronica
+# este a su ves tiene varias hojas
 class Archivo < ActiveRecord::Base
 
   before_create :adicionar_usuario
@@ -25,6 +27,7 @@ class Archivo < ActiveRecord::Base
 
   # Metodod para poder buscar una hoja determinada, en caso de que no haya la hoja
   # crea la hoja que se busca en caso de que no exista
+  #   @param Integer num # Por defecto la primera hoja es 0, pero cuando se usa Roo hay que usar 1
   def hoja(num=0)
     h = self.hojas.find_by_numero(num)
     self.hojas << (h = Hoja.new(:numero => num)) unless h

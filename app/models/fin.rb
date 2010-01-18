@@ -1,8 +1,8 @@
 class Fin < AreaEsp
 
   # Indica si es el fin de la iteracion
-  # @param Integer pos
-  # @return Boolean
+  #   @param Integer pos
+  #   @return Boolean
   def fin?(pos)
     campos.each do |k, v|
       fila, columna = asignar_posicion(k, pos)

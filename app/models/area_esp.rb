@@ -25,7 +25,7 @@ class AreaEsp < AreaImp
 
   # Actualiza la posicion para los campos o celdas
   # no es recomendable usar class << self para la creacion de este metodo
-  # @param string tipo # Parametros a que indica si se actualiza el campo o celda
+  #   @param string tipo # Parametros a que indica si se actualiza el campo o celda
   def actualizar_posicion_campos(desplazar)
     temp = {}
 
@@ -34,7 +34,9 @@ class AreaEsp < AreaImp
     end
     @campos = temp
   end
-
+  
+  # Actualiza la posicion de las celdas acuerdo al desplazamiento que se pasa
+  #   @param Integer desplazar
   def actualizar_posicion_celdas(desplazar)
     @celdas = celdas.map do |v|
       if v['pos']
