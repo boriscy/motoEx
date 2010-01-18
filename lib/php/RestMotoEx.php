@@ -16,7 +16,11 @@ class RestMotoEx {
     if(!function_exists('curl_version')) {
       die("Debe instalar php5-curl y CURL <pre>apt-get install curl<br/>apt-get install php5-culr</pre>");
     }
-    $this->url = $url.'.'.$format;
+    if(format == 'html') {
+       $url;
+    }else {
+      $this->url = $url.'.'.$format;
+    }
     $this->format = $format;
   }
 

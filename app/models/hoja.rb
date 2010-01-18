@@ -29,7 +29,9 @@ class Hoja < ActiveRecord::Base
     #num = self.numero_hoja if self.numero_hoja
     self.numero ||= 0
     begin
-      texto = `php #{path} '#{File.expand_path(self.archivo.archivo_excel.path)}' #{self.numero} '#{PATRON_SEPARACION}'`
+      texto = %x[php #{path} '#{File.expand_path(self.archivo.archivo_excel.path)}' #{self.numero} '#{PATRON_SEPARACION}']
+      raise "Existio un error al convertir el archivo Excel con PHP" unless $?.success?
+
       hojas, html = texto.split(PATRON_SEPARACION)
       hojas = ActiveSupport::JSON.decode(hojas)
       archivo = File.dirname(self.archivo.archivo_excel.path) + "/#{self.numero}.html"

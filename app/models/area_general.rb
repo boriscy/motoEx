@@ -1,4 +1,4 @@
-# Area pricnipal encargada de manejar todas las subareas
+# Area principal encargada de manejar todas las subareas como Titular, DescartarPatron, Encabezado
 class AreaGeneral < AreaImp
 
   attr_reader :titular, :encabezado, :fin, :descartadas_posicion, :descartadas_patron, :area_fija

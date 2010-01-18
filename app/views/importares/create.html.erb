@@ -1,0 +1,24 @@
+<h1>Areas</h1>
+
+
+<% @importar.importado.each do |k, v| %>
+  
+  <%= "<h3>#{v['titular']}</h3>" if v['titular'] %>
+
+  <table>
+    <tr>
+    <% v['datos'].first.each do |kk, vv| %>
+      <th><%= kk %></th>
+      <% end %>
+    </tr>
+
+    <% v['datos'].each do |fila| %>
+      <tr>
+        <% fila.each do |pos, valor| %>
+          <td><%= valor %></td>
+        <% end %>
+      </tr>
+    <% end %>
+
+  </table>
+<% end %>

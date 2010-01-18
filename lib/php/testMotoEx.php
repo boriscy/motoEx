@@ -59,10 +59,15 @@ if($_POST['login']) {
   include_once('RestMotoEx.php');
   $target = 'archivos/'.basename($_FILES['archivo']['name']);
   if(move_uploaded_file($_FILES['archivo']['tmp_name'], $target)) {
-    $rest = new RestMotoEx("http://localhost:3000/importares", "json");
+    $rest = new RestMotoEx("http://localhost:3000/importares", $_POST['formato']);
     $resp = $rest->postDatos($_POST, realpath($target));
-    $resp = json_decode($resp);
-    presentar($resp, $_POST['areas']);
+    if($_POST['format'] == 'json') {
+      $resp = json_decode($resp);
+      presentar($resp, $_POST['areas']);
+    }else {
+      echo $resp;
+    }
+
   } 
 }
 ?>
@@ -81,7 +86,12 @@ if($_POST['login']) {
   </li>
   <li>
     <label>Formato</label>
-    
+    <select name="formato">
+      <option value="json">JSON</option>
+      <option value="xml">XML</option>
+      <option value="yaml">YAML</option>
+      <option value="html">HTML</option>
+    </select>
   </li>
 
   <li>

@@ -1,5 +1,5 @@
-# Clase principal de la cial heredan todas las demas clases sus atributos
-# aqui se defina las filas y columnas
+# Clase principal de la cual heredan todas las demas clases sus atributos y funciones,
+# aqui se define las filas y columnas
 class AreaImp
 
   attr_reader :celda_inicial, :celda_final, :hoja_electronica

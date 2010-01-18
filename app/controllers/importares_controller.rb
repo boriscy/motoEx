@@ -41,7 +41,7 @@ class ImportaresController < ApplicationController
 
     if @importar.save
       respond_to do |format|
-        format.html {render :text => 'JEJEJE'} # Solo un demo chuto
+        format.html { render :html => @importar, :template => false }
         format.xml { render :xml => @importar.importado }
         format.json { render :json => @importar.importado }
         format.yaml { render :text => @importar.importado.to_yaml }
