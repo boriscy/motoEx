@@ -46,9 +46,9 @@ var Descartar = Area.extend({
                     max = this.contador;
                 // marca cada area
                 // selecciona la primera celda (para ejecutar el mismo algoritmo)
-                $('.' + this.cssSeleccionado).removeClass(this.cssSeleccionado);
-                $('#' + hoja_numero + '_' + estado.area[this.serialize][k]['celda_inicial']).addClass(this.cssSeleccionado);
-                this.marcarArea();
+                //$('.' + this.cssSeleccionado).removeClass(this.cssSeleccionado);
+                //$('#' + hoja_numero + '_' + estado.area[this.serialize][k]['celda_inicial']).addClass(this.cssSeleccionado);
+                //this.marcarArea();
                 //actualiza el contador
                 this.contador = max + 1;
             }
