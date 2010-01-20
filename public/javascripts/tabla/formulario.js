@@ -233,6 +233,7 @@ FormularioArea.prototype = {
     },
     /**
      * Valida el formato del nombre del campo
+     * que comienze con una letra y que luego tenga cualquier caracter entre [a-z_0-9]
      * @param String campoId #nombre del campo usado
      */
     'validarNombreFormato': function(campoId) {

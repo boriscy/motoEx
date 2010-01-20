@@ -260,10 +260,13 @@ var Descartar = Area.extend({
         //marca las celdas de inicial a final (solo una fila/columna)
         var iteracion = this.obtenerIteracion(campos.celda_inicial);
         
-        for (var k = limites[0]; k <= limites[1]; k++){
+        /*
+        // para que marque la fila inicialmente seleccionada como descarta
+        for (var k = limites[0]; k <= limites[1]; k++) {
             var pos = this.construirPosicion(k, iteracion);
             $('#' + pos).addClass(id).addClass(this.cssMarcar).addClass(this.cssMarcarOpts);
         }
+        */
         if( campos ) {
             for(var i = min; i <= max; i++) {
                 var pass = true;

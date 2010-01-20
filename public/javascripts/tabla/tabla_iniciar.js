@@ -11,7 +11,7 @@ $(document).ready(function() {
     });
 
     // posicionamiento dinamico de las hojas dependiendo del contenido del div spreadsheet
-    $('.sheet').css('top', $('#areas-importacion').position().top + 31);
+    $('.sheet').css('top', $('#areas-importacion').position().top + 34);
     $('#sheet-0').spreadsheet({numero: 0});
     
     var hojas = {0: hoja_id};
