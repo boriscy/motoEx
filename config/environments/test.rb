@@ -28,11 +28,11 @@ config.action_mailer.delivery_method = :test
 # config.active_record.schema_format = :sql
 config.gem "rspec", :lib => false, :version => ">=1.2.4"
 config.gem "rspec-rails", :lib => false, :version => ">=1.2.4"
-#config.gem "webrat", :lib => false, :version => ">=0.5.3"
+config.gem "webrat", :lib => false, :version => ">=0.5.3"
 #config.gem "selenium-client", :lib => "selenium/client"
 config.gem "cucumber", :lib => false, :version => ">=0.4.3"
 config.gem 'ruby-debug'
-#config.gem "factory_girl"
-#config.gem "mocha"
+config.gem "factory_girl"
+config.gem "mocha"
 # Se llama directamente desde Rspec usando require "shoulda"
 #config.gem "shoulda", :lib=> false # :lib => "shoulda" Para Rspec
