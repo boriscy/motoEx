@@ -9,7 +9,8 @@ describe Area do
       :nombre => "value for nombre",
       :celda_inicial => "value for celda_inicial",
       :celda_final => "value for celda_final",
-      :rango => 1,
+      :rango_filas => 1,
+      :rango_columnas => 1,
       :fija => false,
       :iterar_fila => false,
       :encabezado => {},
@@ -20,7 +21,7 @@ describe Area do
     }
   end
 
-  it{should belong_to(:hoja)}
+  #it{should belong_to(:hoja)}
 
   it "should create a new instance given valid attributes" do
     @a = Area.create!(@valid_attributes)

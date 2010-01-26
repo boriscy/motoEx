@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100106133154) do
+ActiveRecord::Schema.define(:version => 20100126010318) do
 
   create_table "archivos", :force => true do |t|
     t.integer  "usuario_id"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20100106133154) do
     t.string   "nombre"
     t.string   "celda_inicial"
     t.string   "celda_final"
-    t.integer  "rango"
+    t.integer  "rango_filas"
     t.boolean  "fija"
     t.boolean  "iterar_fila"
     t.text     "encabezado"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20100106133154) do
     t.datetime "updated_at"
     t.string   "titular"
     t.text     "sinonimos"
+    t.integer  "rango_columnas", :default => 0
   end
 
   create_table "hojas", :force => true do |t|

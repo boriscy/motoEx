@@ -22,7 +22,7 @@ class Area < ActiveRecord::Base
 #    :mapping => [[:encabezado_celda_inicial, :celda_inicial], [:encabezado_celda_final, :celda_final]]
 
   validates_presence_of :nombre, :celda_inicial, :celda_final, :hoja
-  validates_numericality_of :rango
+  validates_numericality_of :rango_filas, :rango_columnas
 
   # Presenta la celda en formato excel
   def formato_excel(celda)

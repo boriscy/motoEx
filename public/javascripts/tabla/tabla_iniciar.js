@@ -63,7 +63,8 @@ $(document).ready(function() {
                         estado = resp;
                         base['area'] = new AreaGeneral();
                         $('#area_nombre').val(estado.area['nombre']);
-                        $('#area_rango').val(estado.area['rango']);
+                        $('#area_rango_filas').val(estado.area['rango_filas']);
+                        $('#area_rango_columnas').val(estado.area['rango_columnas']);
                         $('#area_iterar_fila_true')[0].checked = estado.area['iterar_fila'];
                         $('#area_iterar_fila_false')[0].checked = !estado.area['iterar_fila'];
                         $('#area_fija')[0].checked = estado.area['fija'];

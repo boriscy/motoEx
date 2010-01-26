@@ -54,22 +54,13 @@ describe AreaImp do
 
   describe "creacion de posicion" do
 
-    it "filas" do
+    it "desplazamiento" do
       # Positivo
       @area_imp = AreaImp.new(@params, @hoja_electronica, true)
-      @area_imp.crear_posicion_desplazada('3_5', 2).should == '5_5'
+      @area_imp.crear_posicion_desplazada('3_5', 2, 1).should == '5_6'
       # Negativo
       @area_imp = AreaImp.new(@params, @hoja_electronica, true)
-      @area_imp.crear_posicion_desplazada('3_5', -2).should == '1_5'
-    end
-
-    it "columnas" do
-      # Positivo
-      @area_imp = AreaImp.new(@params, @hoja_electronica, false)
-      @area_imp.crear_posicion_desplazada('3_5', 2).should == '3_7'
-      # Negativo
-      @area_imp = AreaImp.new(@params, @hoja_electronica, false)
-      @area_imp.crear_posicion_desplazada('3_5', -2).should == '3_3'
+      @area_imp.crear_posicion_desplazada('3_5', -2, -1).should == '1_4'
     end
 
   end

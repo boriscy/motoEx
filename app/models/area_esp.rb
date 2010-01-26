@@ -17,32 +17,34 @@ class AreaEsp < AreaImp
   end
 
   # Actualiza la posicion de todos los elementos
-  def actualizar_posicion(desplazar)
-    super(desplazar)
-    actualizar_posicion_campos(desplazar)
-    actualizar_posicion_celdas(desplazar)
+  def actualizar_posicion(desplazamiento_filas, desplazamiento_columnas)
+    super(desplazamiento_filas, desplazamiento_columnas)
+    actualizar_posicion_campos(desplazamiento_filas, desplazamiento_columnas)
+    actualizar_posicion_celdas(desplazamiento_filas, desplazamiento_columnas)
   end
 
   # Actualiza la posicion para los campos o celdas
   # no es recomendable usar class << self para la creacion de este metodo
-  #   @param string tipo # Parametros a que indica si se actualiza el campo o celda
-  def actualizar_posicion_campos(desplazar)
+  #   @param Integer desp_filas
+  #   @param Integer desp_columnas
+  def actualizar_posicion_campos(desp_filas, desp_columnas)
     temp = {}
 
     campos.each do |k, v|
-      temp[crear_posicion_desplazada(k, desplazar)] = v
+      temp[crear_posicion_desplazada(k, desp_filas, desp_columnas)] = v
     end
     @campos = temp
   end
   
   # Actualiza la posicion de las celdas acuerdo al desplazamiento que se pasa
-  #   @param Integer desplazar
-  def actualizar_posicion_celdas(desplazar)
+  #   @param Integer desp_filas
+  #   @param Integer desp_columnas
+  def actualizar_posicion_celdas(desp_filas, desp_columnas)
     @celdas = celdas.map do |v|
       if v['pos']
-        v['pos'] = crear_posicion_desplazada(v['pos'], desplazar)
+        v['pos'] = crear_posicion_desplazada(v['pos'], desp_filas, desp_columnas)
       elsif v['posicion']
-        v['posicion'] = crear_posicion_desplazada(v['posicion'], desplazar)
+        v['posicion'] = crear_posicion_desplazada(v['posicion'], desp_filas, desp_columnas)
       end
       v
     end

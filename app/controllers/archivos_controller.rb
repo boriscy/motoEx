@@ -19,7 +19,7 @@ class ArchivosController < ApplicationController
   def show
     @hoja = Hoja.buscar_o_crear(params[:id].to_i, 0)
     @archivo = @hoja.archivo
-    @area = Area.new(:iterar_fila => true, :rango => 5)
+    @area = Area.new(:iterar_fila => true, :rango_filas => 5, :rango_columnas => 3)
 
     respond_to do |format|
       format.html # show.html.erb

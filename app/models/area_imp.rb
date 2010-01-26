@@ -29,15 +29,13 @@ class AreaImp
   end
 
   # Actualiza la posicion del area desplazandola dependiento si itera filas o columnas
-  #   @param Fixnum desplazar
-  def actualizar_posicion(desplazar)
-    if @iterar_fila
-      @fila_inicial += desplazar
-      @fila_final += desplazar
-    else
-      @columna_inicial += desplazar
-      @columna_final += desplazar
-    end
+  #   @param Integer desp_filas
+  #   @param Integer desp_columnas
+  def actualizar_posicion(desp_filas, desp_columnas)
+    @fila_inicial += desp_filas
+    @fila_final +=desp_filas
+    @columna_inicial += desp_columnas
+    @columna_final += desp_columnas
 
     @celda_inicial = "#{@fila_inicial}_#{@columna_inicial}"
     @celda_final = "#{@fila_final}_#{@columna_final}"
@@ -46,9 +44,9 @@ class AreaImp
   # LLama directamente sin necesidad de indicar si itera filas o columnas
   #   @param String posicion
   #   @param Fixnum desplazar
-  def crear_posicion_desplazada(posicion, desplazar = 0)
+  def crear_posicion_desplazada(posicion, desplazamiento_filas = 0, desplazamiento_columnas = 0)
     fila, columna = posicion.split("_").map(&:to_i)
-    proc_desp.call(fila, columna, desplazar).join("_")
+    proc_desp.call(fila, columna, desplazamiento_filas, desplazamiento_columnas).join("_")
   end
 
   # crear una posicion en base a la fila y la columna
@@ -101,11 +99,10 @@ protected
   def proc_posicion()
     if iterar_fila?
       @proc_pos = lambda{|fila, columna, pos| [pos, columna] }
-      @proc_desp = lambda{|fila, columna, desp| [(fila + desp), columna] }
     else
       @proc_pos = lambda{|fila, columna, pos| [fila, pos] }
-      @proc_desp = lambda{|fila, columna, desp| [fila, (columna + desp)] }
     end
+    @proc_desp = lambda{|fila, columna, desp_filas, desp_columnas| [(fila + desp_filas), (columna + desp_columnas)] }
   end
 
 end

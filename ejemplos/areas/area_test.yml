@@ -1,0 +1,88 @@
+---
+area: 
+  fin: 
+    celdas: 
+    - texto: TOTAL 2000
+      pos: 19_1
+    - texto: "693,590.00"
+      pos: 19_2
+    - texto: "0.00"
+      pos: 19_3
+    - texto: "0.00"
+      pos: 19_4
+    - texto: "75,197,776.90"
+      pos: 19_5
+    - texto: "39,042,206.31"
+      pos: 19_6
+    - texto: "114,933,573.21"
+      pos: 19_7
+    campos: 
+      19_1: 
+        texto: TOTAL 2000
+    celda_final: 19_7
+    celda_inicial: 19_1
+  created_at: 2010-01-20 13:39:07
+  nombre: Prueba Ventas
+  sinonimos: 
+  updated_at: 2010-01-26 01:23:33
+  rango_columnas: "2"
+  id: "1"
+  rango_filas: "5"
+  iterar_fila: t
+  descartar: 
+    desc0: 
+      excepciones: 
+      - - texto: ABRIL
+          pos: "1"
+      patron: 
+        "2": 
+          texto: ""
+      celda_final: 10_7
+      celda_inicial: 10_1
+  fija: f
+  hoja_id: "1"
+  celda_final: 19_7
+  encabezado: 
+    celdas: 
+    - texto: DESTINO
+      pos: 5_1
+    - texto: ARGENTINA
+      pos: 5_2
+    - texto: BG COMGAS
+      pos: 5_3
+    - texto: CUIABA
+      pos: 5_4
+    - texto: GSA
+      pos: 5_5
+    - texto: MERCADO  INTERNO
+      pos: 5_6
+    - texto: TOTAL GN
+      pos: 5_7
+    - texto: (EN MMBTU)
+      pos: 6_2
+    campos: 
+      5_5: 
+        campo: gsa
+        texto: GSA
+      5_1: 
+        campo: destino
+        texto: DESTINO
+      5_2: 
+        campo: argentina
+        texto: ARGENTINA
+      5_3: 
+        campo: bg_comgas
+        texto: BG COMGAS
+      5_4: 
+        campo: cuiba
+        texto: CUIABA
+    celda_final: 6_7
+    celda_inicial: 5_1
+  celda_inicial: 3_1
+  titular: 
+    celdas: 
+    - texto: "VENTAS DE GAS NATURAL GESTI\xC3\x93N 2000"
+      pos: 3_1
+    celda_final: 3_7
+    celda_inicial: 3_1
+

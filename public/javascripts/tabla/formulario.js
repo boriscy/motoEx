@@ -85,7 +85,8 @@ FormularioArea.prototype = {
     'destruir': function() {
         //limpia los datos => y pone los datos por defecto
         $('#formulario-areas input#area_nombre').val("");
-        $('#formulario-areas input#area_rango').val("5");
+        $('#formulario-areas input#area_rango_filas').val("5");
+        $('#formulario-areas input#area_rango_columnas').val("3");
         $('#formulario-areas input#area_fija').attr("checked", "");
         $('#formulario-areas input#area_iterar_fila_true').attr("checked", true);
         $('#formulario-areas input#area_iterar_fila_false').attr("checked", false);
@@ -98,7 +99,8 @@ FormularioArea.prototype = {
 
         //llena los datos restantes del formulario
         estado.area['nombre'] = $('#area_nombre').val();
-        estado.area['rango'] = $('#area_rango').val();
+        estado.area['rango_filas'] = $('#area_rango_filas').val();
+        estado.area['rango_columnas'] = $('#area_rango_columnas').val();
         estado.area['iterar_fila'] = $('#area_iterar_fila_true')[0].checked;
         estado.area['fija'] = $('#area_fija')[0].checked;
         estado.area['hoja_id'] = hoja_id;
@@ -164,8 +166,13 @@ FormularioArea.prototype = {
             this.adicionarError('#area_nombre', "El nombre ya está en uso");
             val = false;
         }
-        if (! /^\d+$/.test($('#area_rango').val())){
-            this.adicionarError('#area_rango',"El rango debe ser un valor numérico"); 
+        if (! /^\d+$/.test($('#area_rango_filas').val())){
+            this.adicionarError('#area_rango_filas',"El rango debe ser un valor numérico"); 
+            val = false;
+        }
+
+        if (! /^\d+$/.test($('#area_rango_columnas').val())){
+            this.adicionarError('#area_rango_columnas',"El rango debe ser un valor numérico"); 
             val = false;
         }
         //que al menos tres campos este seleccionado
