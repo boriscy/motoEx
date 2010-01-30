@@ -24,27 +24,35 @@ class Encabezado <  AreaEsp
 
   # Busca el encabezado de acuerdo al rango, en caso de que encuentra el patron
   # en el cual se encuentra el encabezado retorna un numero de lo contrario retorna false
-  #   @param Fixnum rango
-  #   @return Fixnum || False
-  def buscar(rango)
-    desplazar = 0
+  #   @param Fixnum rango_filas
+  #   @param Fixnum rango_columnas
+  #   @return Array || FalseClass
+  def buscar(rango_filas, rango_columnas)
+    desp_filas, desp_columnas = [0, 0]
 
     # Retorna el desplazar si encontro todos los valores de la cabecera
-    return desplazar if verificar_campos?(desplazar)
+    return [desp_filas, desp_columnas] if verificar_campos?(desp_filas, desp_columnas)
     # Iteración en el rango
 
-    arr = crear_rango(rango)
+    rango_filas, rango_columnas = crear_rango(rango_filas, rango_columnas)
 
-    arr.each do |v|
-
-      if verificar_campos?(v)
-        desplazar = v
-        actualizar_posicion(desplazar)
-        break
+    encontrado = false
+    rango_filas.each do |i|
+      rango_columnas.each do |j|
+        if verificar_campos?(i, j)
+          encontrado = true
+          desp_filas, desp_columnas = i, j
+          actualizar_posicion(desp_filas, desp_columnas)
+          break
+        end
       end
     end
 
-    desplazar
+    if encontrado
+      [desp_filas, desp_columnas]
+    else
+      false
+    end
   end
 
   # Extrae los datos indicados dependiendo la fila o columna
@@ -64,14 +72,15 @@ private
   # Verifica de que todas las celdas, comparando las posiciones de los campos en la
   # clase Encabezado con los valores de la hoja_electronica. Permitiendo reconocer 
   # si se encontro el encabezado en la hoja_electronica
-  #   @param Fixnum desp # Indica cuanto se ha movido en filas o columnas el encabezado
+  #   @param Fixnum desp_filas # Indica cuanto se ha movido en filas
+  #   @param Fixnum desp_columnas # Indica cuanto se ha movido en columnas
   #   @return Boolean
-  def verificar_campos?(desp)
+  def verificar_campos?(desp_filas, desp_columnas)
     
     @campos.each do |k ,v|
       fila, columna = k.split("_").map(&:to_i)
-      fila, columna = proc_desp.call(fila, columna, desp)
-      
+      fila, columna = [fila + desp_filas, columna + desp_columnas]
+#    debugger if fila == 61 and columna == 7
       return false unless v['texto'] == hoja_electronica.cell(fila, columna).to_s.gsub(/\n/," ")
     end
 
@@ -80,16 +89,24 @@ private
 
   # Crea un rango válido para poder verificar los valores
   #   @param Integer rango
-  #   @return Array
-  def crear_rango(rango)
+  #   @return Array # Retorna un array con rangos Range
+  def crear_rango(rango_filas, rango_columnas)
     fila, columna = celda_inicial.split("_").map(&:to_i)
-    if iterar_fila?
-      ini = (rango >= fila) ? 1 : rango
+
+    if rango_filas > fila
+      ini_fila = 0
     else
-      ini = (rango >= columna) ? 1 : rango
+      ini_fila = -rango_filas
     end
 
-    r = (-ini..rango).to_a.select{|v| v != 0}
+    if rango_columnas > columna
+      ini_columna = 0
+    else
+      ini_columna = -rango_columnas
+    end
+
+    [ini_fila..rango_filas, ini_columna..rango_columnas]
+
   end
 
 end

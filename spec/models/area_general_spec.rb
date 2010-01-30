@@ -10,7 +10,9 @@ describe AreaGeneral do
 
   before(:each) do
 
-    @titular = {}
+    @titular = {'celdas' => [{'texto' => 'Prueba', 'pos' => '3_1'}],
+      'celda_inicial' => '3_1', 'celda_final' => '3_5'
+    }
     @encabezado = {"celdas"=>[{"texto"=>"DESTINO", "pos"=>"5_1"}, {"texto"=>"ARGENTINA", "pos"=>"5_2"}, 
       {"texto"=>"BG COMGAS", "pos"=>"5_3"}, {"texto"=>"CUIABA", "pos"=>"5_4"}, 
       {"texto"=>"GSA", "pos"=>"5_5"}, {"texto"=>"MERCADO  INTERNO", "pos"=>"5_6"},
@@ -29,7 +31,8 @@ describe AreaGeneral do
       'descartar' => @@descartar,
       'fin' => @fin,
       'nombre' => 'Prueba',
-      'rango' => 5,
+      'rango_filas' => 5,
+      'rango_columnas' => 3,
       'fija' => false
     }
     @enc = Object.new
@@ -53,7 +56,8 @@ describe AreaGeneral do
     @area_gen.descartadas_patron.should_not == nil
     @area_gen.fin.should_not == nil
 
-    @area_gen.rango.class.should == Fixnum
+    @area_gen.rango_filas.class.should == Fixnum
+    @area_gen.rango_columnas.class.should == Fixnum
     @area_gen.nombre.class.should == String
   end
 
@@ -76,7 +80,7 @@ describe AreaGeneral do
   end
 
   it 'debe desplazar la posicion' do
-    @enc.stub!(:buscar).and_return(2)
+    @enc.stub!(:buscar).and_return(2, 3)
     # Stubs necesarios para que pase
     Fin.stub!(:actualizar_posicion)
     Titular.stub!(:actualizar_posicion)

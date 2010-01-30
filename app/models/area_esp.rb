@@ -17,10 +17,10 @@ class AreaEsp < AreaImp
   end
 
   # Actualiza la posicion de todos los elementos
-  def actualizar_posicion(desplazamiento_filas, desplazamiento_columnas)
-    super(desplazamiento_filas, desplazamiento_columnas)
-    actualizar_posicion_campos(desplazamiento_filas, desplazamiento_columnas)
-    actualizar_posicion_celdas(desplazamiento_filas, desplazamiento_columnas)
+  def actualizar_posicion(desp_filas, desp_columnas)
+    super(desp_filas, desp_columnas)
+    actualizar_posicion_campos(desp_filas, desp_columnas)
+    actualizar_posicion_celdas(desp_filas, desp_columnas)
   end
 
   # Actualiza la posicion para los campos o celdas

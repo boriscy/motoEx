@@ -46,8 +46,7 @@ area:
     - texto: GSA
       pos: 51_5
     - texto: |-
-        MERCADO 
-        INTERNO
+        MERCADO  INTERNO
       pos: 51_6
     - texto: TOTAL
       pos: 51_7
@@ -66,8 +65,7 @@ area:
       51_6: 
         campo: mercado_interno
         texto: |-
-          MERCADO 
-          INTERNO
+          MERCADO  INTERNO
     celda_final: 52_7
     celda_inicial: 51_1
   celda_inicial: 49_1

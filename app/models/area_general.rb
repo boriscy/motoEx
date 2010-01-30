@@ -2,7 +2,7 @@
 class AreaGeneral < AreaImp
 
   attr_reader :titular, :encabezado, :fin, :descartadas_posicion, :descartadas_patron, :area_fija
-  attr_accessor :rango, :nombre
+  attr_accessor :rango_filas, :rango_columnas, :nombre
   attr_accessor :proc_condicion_iterar
 
   # Constructor
@@ -13,7 +13,8 @@ class AreaGeneral < AreaImp
     super(area, hoja_electronica, iterar_fila_tmp)
 
     # Parametros
-    @rango = area['rango'].to_i
+    @rango_filas = area['rango_filas'].to_i
+    @rango_columnas = area['rango_columnas'].to_i
     @nombre = area['nombre']
     @iterar_fila = iterar_fila
     @hoja_electronica = hoja_electronica
@@ -31,10 +32,10 @@ class AreaGeneral < AreaImp
     asignar_areas_descartadas_posicion(area['descartar'])
 
     # busca el inicio del documento y desplaza la posición
-    desplazar = @encabezado.buscar(self.rango)
+    desplazar = @encabezado.buscar(self.rango_filas, self.rango_columnas)
 
-    if desplazar > 0
-      [self, @titular, @fin].select{|v| v unless v.nil? }.each{|v| v.send(:actualizar_posicion, desplazar) }
+    if desplazar[0] > 0 and desplazar[1] > 0
+      [self, @titular, @fin].select{|v| v unless v.nil? }.each{|v| v.send(:actualizar_posicion, desplazar[0], desplazar[1]) }
     end
   end
 
