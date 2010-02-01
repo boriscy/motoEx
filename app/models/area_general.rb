@@ -35,7 +35,13 @@ class AreaGeneral < AreaImp
     desplazar = @encabezado.buscar(self.rango_filas, self.rango_columnas)
 
     if desplazar[0] > 0 and desplazar[1] > 0
-      [self, @titular, @fin].select{|v| v unless v.nil? }.each{|v| v.send(:actualizar_posicion, desplazar[0], desplazar[1]) }
+      [self, @titular, @fin].select{|v| v unless v.nil? }.each do |v|
+        v.send(:actualizar_posicion, desplazar[0], desplazar[1])
+      end
+
+      # Actualizacion de posiciones de areas de descarte
+      actualizar_posiciones_patron if @descartadas_patron.keys > 0
+      actualizar_posiciones_posicion if @descartadas_posicion.keys > 0
     end
   end
 

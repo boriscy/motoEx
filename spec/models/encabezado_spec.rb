@@ -79,6 +79,17 @@ describe Encabezado do
       @encabezado.buscar(12, 2).should == [10, 1]
     end
     
+    it 'debe actualizar las celdas y campos' do
+      @encabezado = Encabezado.new(@area, @hoja_electronica, true)
+      @encabezado.buscar(12, 2)
+
+      @encabezado.campos["61_7"]['campo'].should == 'mercado_interno'
+      @encabezado.campos["61_7"]['posicion'].should == 7
+      @encabezado.campos["61_2"]['campo'].should == 'destino'
+      @encabezado.campos["61_2"]['posicion'].should == 2
+      @encabezado.campos["61_3"]['texto'].should == 'ARGENTINA'
+      @encabezado.campos["61_3"]['posicion'].should == 3
+    end
   end
 
 end

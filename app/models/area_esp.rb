@@ -19,8 +19,8 @@ class AreaEsp < AreaImp
   # Actualiza la posicion de todos los elementos
   def actualizar_posicion(desp_filas, desp_columnas)
     super(desp_filas, desp_columnas)
-    actualizar_posicion_campos(desp_filas, desp_columnas)
     actualizar_posicion_celdas(desp_filas, desp_columnas)
+    actualizar_posicion_campos(desp_filas, desp_columnas) unless campos.nil?
   end
 
   # Actualiza la posicion para los campos o celdas

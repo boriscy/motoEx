@@ -35,6 +35,7 @@ describe AreaEsp do
     end
   end
 
+
   describe "Actualizacion de posiciones" do
 
     before(:each) do
@@ -49,10 +50,11 @@ describe AreaEsp do
       @params['campos'] = @campos
       @params['celdas'] = @celdas
 
-      @area_esp = AreaEsp.new(@params, @hoja_electronica, false)
     end
 
     it "cuando el rango es negativo" do
+      @area_esp = AreaEsp.new(@params, @hoja_electronica, false)
+
       @area_esp.actualizar_posicion(-2, -1)
       @area_esp.campos['1_1']['campo'].should == 'uno'
       @area_esp.campos['1_2']['texto'].should == 'DOS'
@@ -60,6 +62,8 @@ describe AreaEsp do
     end
 
     it "cuando el rango es positivo" do
+      @area_esp = AreaEsp.new(@params, @hoja_electronica, false)
+
       @area_esp.actualizar_posicion(2, 1)
       @area_esp.campos['5_3']['campo'].should == 'uno'
       @area_esp.campos['5_4']['texto'].should == 'DOS'
@@ -67,6 +71,8 @@ describe AreaEsp do
     end
 
     it "celdas positivo" do
+      @area_esp = AreaEsp.new(@params, @hoja_electronica, false)
+
       @area_esp.actualizar_posicion(2, 3)
       @area_esp.celdas[0]['pos'].should == '5_6'
       @area_esp.celdas[0]['texto'].should == 'Si'
@@ -79,6 +85,8 @@ describe AreaEsp do
     end
 
     it "celdas negativo" do
+      @area_esp = AreaEsp.new(@params, @hoja_electronica, false)
+
       @area_esp.actualizar_posicion(-2, -1)
       @area_esp.celdas[0]['pos'].should == '1_2'
       @area_esp.celdas[0]['texto'].should == 'Si'
@@ -89,6 +97,20 @@ describe AreaEsp do
       @area_esp.celdas[2]['pos'].should == '1_5'
       @area_esp.celdas[2]['texto'].should == 's'
     end
+
+    it 'debe actualizar solo celdas si no hay campos' do
+      @params = {'celdas' => @celdas, 'celda_inicial' => '3_1', 'celda_final' => '4_6'}
+      @area_esp = AreaEsp.new(@params, @hoja_electronica, false)
+      @area_esp.actualizar_posicion(1, 2)
+
+      @area_esp.celdas[0]['pos'].should == '4_5'
+      @area_esp.celdas[0]['texto'].should == 'Si'
+      @area_esp.celdas[1]['pos'].should == '4_7'
+      @area_esp.celdas[1]['texto'].should == 'Eco'
+      @area_esp.celdas[2]['pos'].should == '4_8'
+      @area_esp.celdas[2]['texto'].should == 's'
+    end
+
   end
 
 end

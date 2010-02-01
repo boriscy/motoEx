@@ -35,20 +35,23 @@ describe AreaImp do
 
   end
 
-  it "debe actualizar la posicion con filas" do
+  it "debe actualizar la posicion con positivos" do
+    @params = {'celda_inicial' => "5_6", "celda_final" => "7_19"}
     @area_imp = AreaImp.new(@params, @hoja_electronica)
 
-    @area_imp.actualizar_posicion(2)
-    @area_imp.celda_inicial.should == "3_2"
-    @area_imp.celda_final.should == "5_4"
+    @area_imp.actualizar_posicion(2, 3)
+    @area_imp.celda_inicial.should == "7_9"
+    @area_imp.celda_final.should == "9_22"
 
   end
 
-  it "debe actualizar la posicion con columnas" do
+  it "debe actualizar la posicion con negativos" do
+    @params = {'celda_inicial' => "5_6", "celda_final" => "7_19"}
     @area_imp = AreaImp.new(@params, @hoja_electronica, false)
-    @area_imp.actualizar_posicion(-1)
-    @area_imp.celda_inicial.should == "1_1"
-    @area_imp.celda_final.should == "3_3"
+
+    @area_imp.actualizar_posicion(-4, -3)
+    @area_imp.celda_inicial.should == "1_3"
+    @area_imp.celda_final.should == "3_16"
 
   end
 

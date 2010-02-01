@@ -2,9 +2,9 @@
 # El patron debe tener las siguiente forma
 # == Ejemplo:
 #   # Se define la fila o columna dependiendo si se itera filas o columnas
-#   @patron = {"2" => {}, 
+#   @patron = {"1" => {'texto' => 'TOTAL'}, "5" => {'texto' => 'SUBTOTAL'}, 
 #   # Se define la lista de excepciones
-#     {"excepciones" => [{'pos' => '1', 'texto' => 'MAYO '}]},
+#     {"excepciones" => [[{'pos' => '1', 'texto' => 'MAYO '}]},
 #     "celda_inicial" => "10_7", "" => "celda_final" => "10_1"
 #   }
 class DescartarPatron < AreaEsp
@@ -78,6 +78,28 @@ private
   #   @param Array array
   def strip_texto_excepciones(array)
     array.each{|v| v['texto'].strip!}
+  end
+
+  # Desplaza el patrón dependiendo si itera filas o columnas
+  #   @param Integer desp_fila
+  #   @param Integer desp_columna
+  def desplazar_patron(desp_fila, desp_columna)
+    if iterar_fila?
+      proc_desp_patron = lambda{|pos, fila, columna| pos + columna}
+    else
+      proc_desp_patron = lambda{|pos, fila, columna| pos + fila}
+    end
+
+    tmp_pat = {}
+    patron.each do |k, v|
+      pat_pos = proc_desp_patron.call(k.to_i, desp_fila, desp_columna)
+      tmp[pat_pos.to_s] = 
+    end
+
+    tmp_excp = []
+    excepciones.each do |v|
+      tmp_excp << {}
+    end
   end
 
 end

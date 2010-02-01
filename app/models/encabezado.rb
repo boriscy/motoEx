@@ -43,6 +43,7 @@ class Encabezado <  AreaEsp
           encontrado = true
           desp_filas, desp_columnas = i, j
           actualizar_posicion(desp_filas, desp_columnas)
+          actualizar_posicion_encabezado()
           break
         end
       end
@@ -92,7 +93,9 @@ private
   #   @return Array # Retorna un array con rangos Range
   def crear_rango(rango_filas, rango_columnas)
     fila, columna = celda_inicial.split("_").map(&:to_i)
+    fila_fin, columna_fin = celda_final.split("_").map(&:to_i)
 
+    # Para definir inicios de fila y columna
     if rango_filas > fila
       ini_fila = 0
     else
@@ -105,8 +108,27 @@ private
       ini_columna = -rango_columnas
     end
 
+    # Para que itere máximo hasta la ultima fila de la hoja electronica
+    if (fila_fin + rango_filas) > hoja_electronica.last_row
+      rango_filas = hoja_electronica.last_row - fila_fin
+    end
+
+    if (columna_fin + rango_columnas) > hoja_electronica.last_column
+      rango_columnas = hoja_electronica.last_column - columna_fin
+    end
+
     [ini_fila..rango_filas, ini_columna..rango_columnas]
 
+  end
+
+  # Actualiza las posiciones de los campos
+  def actualizar_posicion_encabezado
+    fila_col = 1
+    fila_col = 0 unless iterar_fila?
+    @campos.each do |k, v|
+      pos = k.split("_").map(&:to_i)
+      v['posicion'] = pos[fila_col]
+    end
   end
 
 end

@@ -87,7 +87,8 @@ area:
       celda_final: 18_21
       celda_inicial: 18_1
   fija: f
-  rango: "5"
+  rango_filas: "5"
+  rango_columnas: "2"
   hoja_id: "34"
   celda_final: 90_21
   encabezado: 
