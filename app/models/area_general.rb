@@ -40,8 +40,8 @@ class AreaGeneral < AreaImp
       end
 
       # Actualizacion de posiciones de areas de descarte
-      actualizar_posiciones_patron if @descartadas_patron.keys > 0
-      actualizar_posiciones_posicion if @descartadas_posicion.keys > 0
+      actualizar_posiciones_descartar_patron(desplazar[0], desplazar[1]) if @descartadas_patron.size > 0
+      actualizar_posiciones_descartar_posicion if @descartadas_posicion.keys > 0
     end
   end
 
@@ -59,7 +59,7 @@ class AreaGeneral < AreaImp
         next
       end
 
-      if descartar_posicion_patron?(i)
+      if descartar_por_patron?(i)
         i += 1
         next
       end
@@ -103,7 +103,7 @@ private
   # Valida si es que hay algun patron "descartadas_patron"
   #   @param Integer pos
   #   @return Boolean
-  def descartar_posicion_patron?(pos)
+  def descartar_por_patron?(pos)
     descartadas_patron.each do |k, pat|
       return true if pat.valido?(pos)
     end
@@ -144,6 +144,30 @@ private
   def asignar_areas_descartadas_posicion(areas)
     areas.each do |k, v|
       @descartadas_posicion.merge!(descartadas_posicion_rango(v['celda_inicial'], v['celda_final']) ) if v['patron'].size <= 0
+    end
+  end
+
+  # Actualiza todas las posiciones de patron según se haya desplazado la fila o columna
+  #   @param Integer desp_fila
+  #   @param Integer desp_columna
+  def actualizar_posiciones_descartar_patron(desp_fila, desp_columna)
+    descartadas_patron.each do |k, v|
+      v.desplazar_patron(desp_fila, desp_columna)
+    end
+  end
+
+  # Actualiza todas las posiciones de descarte por posicion
+  #   @param Integer desp_fila
+  #   @param Integer desp_columna
+  def actualizar_posiciones_descartar_posicion(desp_fila, desp_columna)
+    if iterar_fila?
+      proc_descartadas_pos = lambda{|pos| pos + desp_fila}
+    else
+      proc_descartadas_pos = lambda{|pos| pos + desp_columna}
+    end
+
+    descartadas_posicion.each do |k, v|
+      @descartadas_posicion[proc_descartadas_pos.call(k)] = true
     end
   end
   

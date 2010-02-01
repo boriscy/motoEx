@@ -167,7 +167,7 @@ var Descartar = Area.extend({
         this.actualizarEstadoPatron();
     },
     /**
-     * actualiza los patron de una area de descarte
+     * actualiza los patrones de una area de descarte
      * en base a la lista en el  #formulario-descartar
      */
     'actualizarEstadoPatron': function() {

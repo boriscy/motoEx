@@ -27,6 +27,32 @@ class DescartarPatron < AreaEsp
     verificar_patron?(pos) and !verificar_excepciones?(pos)
   end
 
+  # Desplaza el patrón dependiendo si itera filas o columnas
+  #   @param Integer desp_fila
+  #   @param Integer desp_columna
+  def desplazar_patron(desp_fila, desp_columna)
+    if iterar_fila?
+      proc_desp_patron = lambda{|pos, fila, columna| pos + columna}
+    else
+      proc_desp_patron = lambda{|pos, fila, columna| pos + fila}
+    end
+
+    @patron = patron.inject({}) do |hash, v|
+      pat_pos = proc_desp_patron.call(v[0].to_i, desp_fila, desp_columna)
+      hash[pat_pos.to_s] = {'texto' => v[1]['texto']}
+      hash
+    end
+
+    #################
+    # NOTA es necesario cambiar las excepciones por que existe un array inecesario
+    @excepciones = excepciones.inject([]) do |arr, v|
+      arr << v.map do |val|
+        nueva_pos = proc_desp_patron.call(val['pos'].to_i, desp_fila, desp_columna)
+        {'pos' => nueva_pos, 'texto' => val['texto']}
+      end
+    end
+
+  end
 
 private
   # Verifica si se cumple el patron
@@ -80,26 +106,5 @@ private
     array.each{|v| v['texto'].strip!}
   end
 
-  # Desplaza el patrón dependiendo si itera filas o columnas
-  #   @param Integer desp_fila
-  #   @param Integer desp_columna
-  def desplazar_patron(desp_fila, desp_columna)
-    if iterar_fila?
-      proc_desp_patron = lambda{|pos, fila, columna| pos + columna}
-    else
-      proc_desp_patron = lambda{|pos, fila, columna| pos + fila}
-    end
-
-    tmp_pat = {}
-    patron.each do |k, v|
-      pat_pos = proc_desp_patron.call(k.to_i, desp_fila, desp_columna)
-      tmp[pat_pos.to_s] = 
-    end
-
-    tmp_excp = []
-    excepciones.each do |v|
-      tmp_excp << {}
-    end
-  end
 
 end

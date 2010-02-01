@@ -33,6 +33,20 @@ describe DescartarPatron do
     @descartar.valido?(14).should == false
   end
 
+  it 'debe actualizar la posicion del patron' do
+    @params = {"excepciones"=>[[{"texto"=>"UNO", "pos"=>"3"}], [{"texto"=>"DOS", "pos"=>"4"}], [{"texto"=>"JEWJE", "pos"=>"3"}]], 
+      "patron"=>{"1"=>{"texto"=>"BJO"}, "2"=>{"texto"=>"X 44"}},
+      "celda_final"=>"85_21", "celda_inicial"=>"85_1"
+    }
+
+    @descartar = DescartarPatron.new(@params, @@hoja_electronica)
+    @descartar.desplazar_patron(2, 3)
+
+    @descartar.patron['4']['texto'].should == 'BJO'
+    @descartar.patron['5']['texto'].should == 'X 44'
+    
+  end
+
   describe "Parte Diario" do
     before(:each) do
       area = YAML::parse(File.open(RAILS_ROOT + "/ejemplos/areas/ParteDiario.yml")).transform
