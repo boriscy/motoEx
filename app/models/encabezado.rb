@@ -97,13 +97,13 @@ private
 
     # Para definir inicios de fila y columna
     if rango_filas > fila
-      ini_fila = 0
+      ini_fila = 1 - fila
     else
       ini_fila = -rango_filas
     end
 
     if rango_columnas > columna
-      ini_columna = 0
+      ini_columna = 1 - columna
     else
       ini_columna = -rango_columnas
     end

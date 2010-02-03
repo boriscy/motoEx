@@ -20,8 +20,8 @@ Dado /que quiero importar el (\w+\.\w+), (\w+\.\w+)/ do |archivo, yaml|
 end
 
 Entonces /debo obtener la (\w+\.\w+)/ do |respuesta|
-  f = File.open( File.join(RAILS_ROOT, "ejemplos", "respuestas", respuesta) )
-  # NOTA: Buscar una mejor forma de comparar los contenidos
-  response.body.gsub(/^.*\n.*\n/, "").should ==  f.inject(""){|t, v| t << v }.gsub(/^.*\n.*\n/, "")
+  y = YAML::parse(File.open( File.join(RAILS_ROOT, "ejemplos", "respuestas", respuesta) )).transform
+  resp = YAML::parse(response.body).transform
+  y[y.keys.first].should == resp[resp.keys.first]
 end
 

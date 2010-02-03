@@ -34,14 +34,14 @@ class AreaGeneral < AreaImp
     # busca el inicio del documento y desplaza la posición
     desplazar = @encabezado.buscar(self.rango_filas, self.rango_columnas)
 
-    if desplazar[0] > 0 and desplazar[1] > 0
+    unless desplazar[0] == 0 and desplazar[1] == 0
       [self, @titular, @fin].select{|v| v unless v.nil? }.each do |v|
         v.send(:actualizar_posicion, desplazar[0], desplazar[1])
       end
 
       # Actualizacion de posiciones de areas de descarte
       actualizar_posiciones_descartar_patron(desplazar[0], desplazar[1]) if @descartadas_patron.size > 0
-      actualizar_posiciones_descartar_posicion if @descartadas_posicion.keys > 0
+      actualizar_posiciones_descartar_posicion(desplazar[0], desplazar[1]) if @descartadas_posicion.size > 0
     end
   end
 
@@ -76,10 +76,10 @@ class AreaGeneral < AreaImp
 
   # Actualiza la posicion del area descartada
   #   @param Integer desplazar
-  def actualizar_descartadas_posicion(desplazar)
-    tmp = descartadas_patron
-    @descartadas_posicion = descartadas_posicion.keys.inject({}){ |h, k| h[k + desplazar] = descartadas_posicion[k]; h }
-  end
+#  def actualizar_descartadas_posicion(desplazar)
+#    tmp = descartadas_patron
+#    @descartadas_posicion = descartadas_posicion.keys.inject({}){ |h, k| h[k + desplazar] = descartadas_posicion[k]; h }
+#  end
 
   # Crea un hash de posiciones dependiendo si se itera fila o columna
   # retornando un hash con las posiciones en las que hay descartados por posicion
@@ -159,15 +159,16 @@ private
   # Actualiza todas las posiciones de descarte por posicion
   #   @param Integer desp_fila
   #   @param Integer desp_columna
-  def actualizar_posiciones_descartar_posicion(desp_fila, desp_columna)
+  def actualizar_posiciones_descartar_posicion(desp_filas, desp_columnas)
     if iterar_fila?
-      proc_descartadas_pos = lambda{|pos| pos + desp_fila}
+      proc_descartadas_pos = lambda{|pos| pos + desp_filas }
     else
-      proc_descartadas_pos = lambda{|pos| pos + desp_columna}
+      proc_descartadas_pos = lambda{|pos| pos + desp_columnas }
     end
 
-    descartadas_posicion.each do |k, v|
-      @descartadas_posicion[proc_descartadas_pos.call(k)] = true
+    @descartadas_posicion = descartadas_posicion.inject({}) do |hash, v|
+      hash[proc_descartadas_pos.call(v[0])] = true
+      hash
     end
   end
   

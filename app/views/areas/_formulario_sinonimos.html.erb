@@ -1,10 +1,12 @@
 <!--areas/_sinonimos.html.erb-->
 <div id="formulario-sinonimos" style="overflow: auto;" class="formtastic">
   Mapeo&nbsp;
-  <a href="#" class="crear-sinonimo">Importar nuevo archivo</a>
-  <p class="inline-hints">
+  <a href="#" class="crear-sinonimo icon-nuevo-sinonimo">Importar sinonimos</a>
+
+  <p class="inline-hints" style="margin:8px">
     Los sinónimos son grupos de campos de los cuales se busca su valor y se retorna un código definido por el usuario
   </p>
+
   <div id="importar-sinonimos">
     &nbsp;&nbsp;&nbsp;
     <a id="a-lista-sinonimos" class="listar-up">Sinonimos</a>
@@ -18,6 +20,7 @@
     <!--Se llama via AJAX al formulario "/sinonimos/new" -->
     <!--Formulario de importacion de sinonimos-->
     <div id="formulario-sinonimos-new"></div>
+    <hr />
     
     <!--Listado de campos mapeados-->
     <div id="sinonimos-mapeo">
@@ -25,6 +28,7 @@
       <label>Lista sinónimos</label>
       <select id="select-sinonimos-mapeo"></select>
       <input class="input-crear-sinonimo" type="button" value="Crear Sinónimo" />
+      <h4>Mapeados de sinónimos</h4>
       <!--Tabla de listado de sinonimos-->
       <div id="lista-sinonimos-mapeo">
       </div>
