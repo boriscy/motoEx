@@ -19,8 +19,9 @@ Dado /que quiero importar el (\w+\.\w+), (\w+\.\w+)/ do |archivo, yaml|
   post "/importar.yaml", crear_parametros_para_importar(@usuario, archivo, area.id)
 end
 
-Entonces /debo obtener la (\w+)/ do |respuesta|
-  f = File.open( File.join(RAILS_ROOT, "ejemplos", "respuesta", respuesta) )
-  response.body.should == f
+Entonces /debo obtener la (\w+\.\w+)/ do |respuesta|
+  f = File.open( File.join(RAILS_ROOT, "ejemplos", "respuestas", respuesta) )
+  # NOTA: Buscar una mejor forma de comparar los contenidos
+  response.body.gsub(/^.*\n.*\n/, "").should ==  f.inject(""){|t, v| t << v }.gsub(/^.*\n.*\n/, "")
 end
 

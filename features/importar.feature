@@ -9,4 +9,4 @@ debo revisar que el area corresponda al mismo archivo
 
   Ejemplos:
     | archivo       | archivo_yaml      | respuesta  |
-    |ParteDiario.xls| ParteDiario.yml   | parte_diario.yaml  |
+    |ParteDiario.xls| ParteDiario.yml   | parte_diario.yml  |
