@@ -1,11 +1,15 @@
-Dado /^que me logueo y tengo los datos$/ do
+Dado /^que me logueo para importar$/ do |table|
   Soporte::crear_usuario()
+
+  @tabla = table.hashes
   visit "/"
   fill_in "usuario_session[login]", :with => "admin"
   fill_in "Contraseña", :with => "demo123"
   click_button "Ingresar"
   # Creacion de archivos
-  crear_archivos()
+  @tabla.each do |hash|
+    Soporte::crear_archivo_test(hash['yaml'])
+  end
 end
 
 Y /^visito (.*)$/ do |uri|

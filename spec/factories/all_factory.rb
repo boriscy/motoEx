@@ -1,3 +1,5 @@
+require 'spec/mocks'
+
 Factory.define :usuario do |u|
   u.nombre ""
   u.paterno "" 
@@ -9,42 +11,83 @@ Factory.define :usuario do |u|
   u.grupo_ids 
 end
 
+
+# Modulo principal para poder crear datos para las pruebas
 module Soporte
 
   class << self
 
+    # Metodo necesario para poder acelerar el proceso de creación en caso de que
+    # no se necesite la creacion de hojas html en el modelo Hoja
+    def stub_crear_hoja_html()
+      Hoja.stub!(:crear_hoja_html)
+    end
+
+    # devulve el path por defecto donde se encuentra un archvo
+    #   @param Array args
     def path(*args)
       File.join(RAILS_ROOT, "ejemplos", args)
     end
 
+    # Crea un usuario válido
     def crear_usuario
-      @usuario = Usuario.create(:nombre => 'admin', :paterno => 'admin', :materno => 'admin', :login => 'admin', :email => 'admin@example.com', :password => 'demo123', :password_confirmation => 'demo123')
+      @usuario = Usuario.create(:nombre => 'admin', :paterno => 'test', :materno => 'soporte', :login => 'admin', 
+                                :email => 'admin@example.com', :password => 'demo123', :password_confirmation => 'demo123')
     end
 
-
-
-    # Crea una instancia a leer para la hoja electronica
-    def hoja_electronica(hoja)
-      case File.extname(hoja).downcase
-        when ".xls" then Excel.new(path(hoja))
-        when ".xlsx" then Excelx.new(path(hoja))
-        when ".ods" then OpenOffice.new(path(hoja))
+    # Crea una instancia a leer para la archivo electronica
+    #   @param Tmpfile archivo
+    def hoja_electronica(archivo)
+      case File.extname(archivo).downcase
+        when ".xls" then Excel.new(path(archivo))
+        when ".xlsx" then Excelx.new(path(archivo))
+        when ".ods" then Openoffice.new(path(archivo))
       end
     end
 
-    def crear_archivo_test(archivo)
-      area_archivo = archivo.gsub( File.extname(archivo), ".yml")
-      archivo_tmp = ActionController::TestUploadedFile.new( File.join(RAILS_ROOT, "ejemplos", archivo) , 'application/vnd.ms-excel')
-      # Creacion del Archivo
-      Archivo.create(:nombre => "Prueba1", :descripcion => "Comentarios", :archivo_excel => archivo_tmp)
+    # Stub que permite crear el archivo y simular que obtiene el usuario que creo el archivo
+    def stub_usuario_session
+      unless @usuario.nil?
+        @us = Object
+        @us.stub!(:record).and_return( @usuario)
+        UsuarioSession.stub!(:find).and_return(@us)
+      else
+        raise "Debe crear un usuario"
+      end
+    end
+    
+    def crear_archivo_temporal(archivo)
+      ActionController::TestUploadedFile.new( path(archivo) , 'application/vnd.ms-excel')
+    end
+
+
+    # Crea un archivo con el archivo excel y el archivo yaml que se le indique
+    #   @param String archivo_xls
+    #   @param String archivo yaml # Archivo con el area
+    def crear_archivo_test(archivo_xls, archivo_yaml = "")
+      if archivo_yaml.blank?
+        archivo_yaml = path('areas', archivo.gsub( File.extname(archivo), ".yml") )
+      else
+        archivo_yaml = path('areas', archivo_yaml)
+      end
+
+      archivo_tmp = ActionController::TestUploadedFile.new( path(archivo_xls) , 'application/vnd.ms-excel')
+      # Creacion del Archivo y mock para que pueda almacenar
+      stub_usuario_session()
+      archivo = Archivo.create(:nombre => "Prueba1", :descripcion => "Comentarios", :archivo_excel => archivo_tmp)
       # Creacion de las hojas
       crear_archivo_hojas(archivo)
-      hoja = Hoja.find_by_numero(0)
+
+      # Relacion hoja y area
+      data = YAML::parse(File.open( archivo_yaml ) ).transform
+      raise "Debe definir su archivo YAML de area con el parametro \"hoja_numero\"" if data['area']['hoja_numero'].nil?
+      hoja = Hoja.find_by_numero(data['area']['hoja_numero'])
+      data['area'].delete('hoja_numero')
       # Crear Area
-      data = YAML::parse(File.open( File.join(RAILS_ROOT, "ejemplos", "areas", area_archivo  ) ) ).transform
       data['area']['hoja_id'] = hoja.id
       Area.create(data['area'])
     end
+
 
     # Crea todos los datos necesarios para poder testear un archivo
     def crear_archivos
@@ -58,17 +101,15 @@ module Soporte
       end
     end
 
-    def crear_archivo_hojas(archivo_excel)
-      archivo = Archivo.find_by_archivo_excel_file_name(archivo_excel)
+    # Crea las hojas de una hoja electronica
+    #   @param Archivo archivo
+    def crear_archivo_hojas(archivo)
       (Excel.new(archivo.archivo_excel.path) ).sheets.each_with_index do |h, i|
         archivo.hojas << Hoja.new(:numero => i, :nombre => h)
       end
     end
 
-    def crear_area()
-
-    end
-
+    # Crea harea para una hoja determinada
     def crear_areas(hoja)
       area = { :id => 1, :hoja_id => 10, 
       :nombre => "Mi salvada", :celda_inicial => "3_1", 

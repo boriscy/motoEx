@@ -1,21 +1,26 @@
-# Dado /^que me logueo$/ do # Se encuentar en
-
-Y /^que subo el archivo "([^\"]*)"$/ do |archivo|
-  # Se llma a la funcion en: spec/factories/all_factory.rb
-  Soporte::crear_archivo_test(archivo)
-  #hoja_electronica = Excel.new(File.join(RAILS_ROOT, "ejemplos", archivo))
-  @archivo = archivo
-  area = Area.last
-  archivo_tmp = File.join(RAILS_ROOT, 'ejemplos', archivo)
-  @archivo_tmp = ActionController::TestUploadedFile.new(archivo_tmp, 'application/vnd.ms-excel')
- 
-  post '/importar.json', {'importar' => {'archivo_tmp' => @archivo_tmp, 'archivo_nombre' => archivo,
-  'areas[0]' => area.id}, 'login' => 'admin', 'password' => 'demo123'}
+def condiciones_importar
+  @usuario = Soporte::crear_usuario()
+  Soporte::stub_crear_hoja_html()
 end
 
-Entonces /^debo importar los datos$/ do
-  archivo = @archivo.gsub(File.extname(@archivo), "") + "Resp.csv"
-  f = File.open(File.join(RAILS_ROOT, 'ejemplos', 'areas', archivo))
-  resp = ActiveSupport::JSON.decode(response.body)
-  resp[resp.keys.first]['datos'].to_csv_hash.should == f.inject(""){|t, v| t << v }
+def crear_parametros_para_importar(usuario, archivo, area_id)
+  @params = {'login' => usuario.login,'password' => usuario.password,
+    'importar' => {'archivo_tmp' => Soporte::crear_archivo_temporal(archivo),
+      'archivo_nombre' => Soporte::path(archivo),
+      'areas' => {'0' => area_id}
+    } 
+  }
 end
+
+Dado /que quiero importar el (\w+\.\w+), (\w+\.\w+)/ do |archivo, yaml|
+  condiciones_importar()
+  area = Soporte::crear_archivo_test(archivo, yaml)
+
+  post "/importar.yaml", crear_parametros_para_importar(@usuario, archivo, area.id)
+end
+
+Entonces /debo obtener la (\w+)/ do |respuesta|
+  f = File.open( File.join(RAILS_ROOT, "ejemplos", "respuesta", respuesta) )
+  response.body.should == f
+end
+

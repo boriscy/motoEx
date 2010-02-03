@@ -1,15 +1,13 @@
-def crear_usuario
-  @usuario = Usuario.create(:nombre => 'admin', :paterno => 'admin', :materno => 'admin', :login => 'admin', :email => 'admin@example.com', :password => 'demo123', :password_confirmation => 'demo123')
-end
 
 Dado /^que estoy en (.*)$/ do |uri|
+  Soporte::crear_usuario()
+
   visit uri
   response.should contain("Usuario:")
   response.should contain("Contraseña:")
 end
 
 Cuando /^ingreso mi login y password$/ do
-  crear_usuario()
   fill_in "usuario_session[login]", :with => "admin"
   #fill_in "usuario_session[password]", :with => "demo123"
   fill_in "Contraseña", :with => "demo123"

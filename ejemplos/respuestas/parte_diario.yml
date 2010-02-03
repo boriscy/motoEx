@@ -1,0 +1,466 @@
+--- 
+"8": 
+  datos: 
+  - agua: "0.0"
+    campo_codigo: ARN
+    produccion: "10.0"
+    quemado: "2.0"
+    co2: ""
+    gasollina: ""
+    petroleo: "10.0"
+    campo_nombre: ARROYO NEGRO
+    condensado: ""
+  - agua: "26.0"
+    campo_codigo: CAM
+    produccion: "168.0"
+    quemado: "491.0"
+    co2: ""
+    gasollina: ""
+    petroleo: ""
+    campo_nombre: CAMIRI
+    condensado: "168.0"
+  - agua: ""
+    campo_codigo: CCB
+    produccion: "0.0"
+    quemado: ""
+    co2: ""
+    gasollina: ""
+    petroleo: ""
+    campo_nombre: CASCABEL
+    condensado: ""
+  - agua: "8.0"
+    campo_codigo: GRY
+    produccion: "73.0"
+    quemado: "213.0"
+    co2: ""
+    gasollina: ""
+    petroleo: "73.0"
+    campo_nombre: GUAIRUY
+    condensado: ""
+  - agua: "2338.91"
+    campo_codigo: !binary |
+      TFDDkQ==
+
+    produccion: "292.093"
+    quemado: "34.0"
+    co2: ""
+    gasollina: "0.0"
+    petroleo: "292.093"
+    campo_nombre: "LA PE\xC3\x91A"
+    condensado: ""
+  - agua: ""
+    campo_codigo: LPS
+    produccion: "129.0"
+    quemado: "9.0"
+    co2: ""
+    gasollina: ""
+    petroleo: "129.0"
+    campo_nombre: LOS PENOCOS
+    condensado: ""
+  - agua: "124.0"
+    campo_codigo: LSC
+    produccion: "17.418"
+    quemado: "81.3"
+    co2: ""
+    gasollina: "4.418"
+    petroleo: ""
+    campo_nombre: LOS SAUCES
+    condensado: "13.0"
+  - agua: "1284.0"
+    campo_codigo: RGD
+    produccion: "1066.582"
+    quemado: "99.0"
+    co2: ""
+    gasollina: "208.626"
+    petroleo: ""
+    campo_nombre: RIO GRANDE
+    condensado: "520.0"
+  - agua: "30.0"
+    campo_codigo: SIR
+    produccion: "229.0"
+    quemado: "199.0"
+    co2: ""
+    gasollina: "74.0"
+    petroleo: ""
+    campo_nombre: SIRARI
+    condensado: "155.0"
+  - agua: "355.0"
+    campo_codigo: VBR
+    produccion: "523.0"
+    quemado: "193.0"
+    co2: ""
+    gasollina: "243.0"
+    petroleo: ""
+    campo_nombre: VIBORA
+    condensado: "280.0"
+  - agua: "18.0"
+    campo_codigo: YPC
+    produccion: "416.0"
+    quemado: "546.0"
+    co2: ""
+    gasollina: "83.0"
+    petroleo: ""
+    campo_nombre: YAPACANI
+    condensado: "333.0"
+  - agua: "69.0"
+    campo_codigo: BBL
+    produccion: "1800.0"
+    quemado: "102.0"
+    co2: "200.0"
+    gasollina: "291.0"
+    petroleo: "0.0"
+    campo_nombre: BULO BULO
+    condensado: "1509.0"
+  - agua: "322.0"
+    campo_codigo: CRC
+    produccion: "91.0"
+    quemado: "6.0"
+    co2: "40.0"
+    gasollina: "15.0"
+    petroleo: "0.0"
+    campo_nombre: CARRASCO
+    condensado: "76.0"
+  - agua: "36.0"
+    campo_codigo: CFW
+    produccion: "1187.0"
+    quemado: "22.0"
+    co2: "0.0"
+    gasollina: "115.0"
+    petroleo: "0.0"
+    campo_nombre: CARRASCO  FW
+    condensado: "1072.0"
+  - agua: "760.0"
+    campo_codigo: HSR
+    produccion: "254.0"
+    quemado: "2.0"
+    co2: "0.0"
+    gasollina: "0.0"
+    petroleo: "254.0"
+    campo_nombre: H. SUAREZ R.
+    condensado: "0.0"
+  - agua: "58.0"
+    campo_codigo: KNT
+    produccion: "159.0"
+    quemado: "15.0"
+    co2: "0.0"
+    gasollina: "61.0"
+    petroleo: "0.0"
+    campo_nombre: KANATA
+    condensado: "98.0"
+  - agua: "290.0"
+    campo_codigo: KNN
+    produccion: "404.0"
+    quemado: "20.0"
+    co2: "0.0"
+    gasollina: "68.0"
+    petroleo: "0.0"
+    campo_nombre: KANATA NORTE
+    condensado: "336.0"
+  - agua: ""
+    campo_codigo: KFW
+    produccion: "0.0"
+    quemado: ""
+    co2: ""
+    gasollina: ""
+    petroleo: ""
+    campo_nombre: KANATA FW
+    condensado: ""
+  - agua: "499.0"
+    campo_codigo: LCS
+    produccion: "267.0"
+    quemado: "123.0"
+    co2: "0.0"
+    gasollina: "0.0"
+    petroleo: "267.0"
+    campo_nombre: LOS CUSIS
+    condensado: "0.0"
+  - agua: "0.0"
+    campo_codigo: MCT
+    produccion: "16.0"
+    quemado: "201.0"
+    co2: "0.0"
+    gasollina: "0.0"
+    petroleo: ""
+    campo_nombre: MONTECRISTO
+    condensado: "16.0"
+  - agua: ""
+    campo_codigo: JNN
+    produccion: "0.0"
+    quemado: "0.0"
+    co2: "0.0"
+    gasollina: ""
+    petroleo: "0.0"
+    campo_nombre: JUNIN
+    condensado: ""
+  - agua: "4324.0"
+    campo_codigo: PJS
+    produccion: "427.0"
+    quemado: "34.0"
+    co2: "0.0"
+    gasollina: "0.0"
+    petroleo: "427.0"
+    campo_nombre: PATUJUSAL
+    condensado: "0.0"
+  - agua: "2.0"
+    campo_codigo: PJO
+    produccion: "10.0"
+    quemado: "11.0"
+    co2: "0.0"
+    gasollina: "0.0"
+    petroleo: "10.0"
+    campo_nombre: PATUJUSAL OESTE
+    condensado: "0.0"
+  - agua: "23.0"
+    campo_codigo: SNQ
+    produccion: "136.0"
+    quemado: "0.0"
+    co2: "0.0"
+    gasollina: "88.0"
+    petroleo: "0.0"
+    campo_nombre: SAN ROQUE
+    condensado: "48.0"
+  - agua: "0.0"
+    campo_codigo: SRW
+    produccion: "0.0"
+    quemado: "0.0"
+    co2: "0.0"
+    gasollina: "0.0"
+    petroleo: "0.0"
+    campo_nombre: SANTA ROSA W
+    condensado: "0.0"
+  - agua: "65.0"
+    campo_codigo: VGR
+    produccion: "1225.0"
+    quemado: "177.0"
+    co2: "0.0"
+    gasollina: "710.0"
+    petroleo: "0.0"
+    campo_nombre: VUELTA GRANDE
+    condensado: "515.0"
+  - agua: "40.0"
+    campo_codigo: CHS
+    produccion: "26.0"
+    quemado: "2.0"
+    co2: ""
+    gasollina: "23.0"
+    petroleo: "0.0"
+    campo_nombre: CHACO SUR
+    condensado: "3.0"
+  - agua: "207.0"
+    campo_codigo: NJL
+    produccion: "170.0"
+    quemado: "0.0"
+    co2: ""
+    gasollina: "75.0"
+    petroleo: "0.0"
+    campo_nombre: NARANJILLOS
+    condensado: "95.0"
+  - agua: "536.0"
+    campo_codigo: !binary |
+      w5FQQw==
+
+    produccion: "49.0"
+    quemado: "5.0"
+    co2: ""
+    gasollina: "44.0"
+    petroleo: "0.0"
+    campo_nombre: "\xC3\x91UPUCO"
+    condensado: "5.0"
+  - agua: "0.0"
+    campo_codigo: PVN
+    produccion: "0.0"
+    quemado: "0.0"
+    co2: ""
+    gasollina: "0.0"
+    petroleo: "0.0"
+    campo_nombre: PORVENIR
+    condensado: "0.0"
+  - agua: "2.0"
+    campo_codigo: CBT
+    produccion: "25.0"
+    quemado: "102.0"
+    co2: ""
+    gasollina: "0.0"
+    petroleo: "25.0"
+    campo_nombre: CAMBEITI
+    condensado: "0.0"
+  - agua: "163.0"
+    campo_codigo: MGD
+    produccion: "153.0"
+    quemado: "20.0"
+    co2: ""
+    gasollina: "12.0"
+    petroleo: "141.0"
+    campo_nombre: MONTEAGUDO
+    condensado: "0.0"
+  - agua: "134.0"
+    campo_codigo: MGR
+    produccion: "2006.0"
+    quemado: "0.0"
+    co2: ""
+    gasollina: "122.0"
+    petroleo: "0.0"
+    campo_nombre: MARGARITA
+    condensado: "1884.0"
+  - agua: "602.0"
+    campo_codigo: PLM
+    produccion: "1002.646"
+    quemado: "91.702"
+    co2: ""
+    gasollina: "205.646"
+    petroleo: "0.0"
+    campo_nombre: PALOMA
+    condensado: "797.0"
+  - agua: "366.0"
+    campo_codigo: SRB
+    produccion: "1289.309"
+    quemado: "25.523"
+    co2: ""
+    gasollina: "6.177"
+    petroleo: "1283.132"
+    campo_nombre: SURUBI
+    condensado: "0.0"
+  - agua: "225.0"
+    campo_codigo: SRB
+    produccion: "952.219"
+    quemado: "84.472"
+    co2: ""
+    gasollina: "30.765"
+    petroleo: "921.454"
+    campo_nombre: BLOQUE BAJO
+    condensado: "0.0"
+  - agua: "234.0"
+    campo_codigo: SRB
+    produccion: "2168.087"
+    quemado: "26.303"
+    co2: ""
+    gasollina: "6.412"
+    petroleo: "2161.675"
+    campo_nombre: NOR -  OESTE
+    condensado: "0.0"
+  - agua: "148.0"
+    campo_codigo: CAR
+    produccion: "609.0"
+    quemado: "29.0"
+    co2: ""
+    gasollina: "167.0"
+    petroleo: "0.0"
+    campo_nombre: CARANDA
+    condensado: "442.0"
+  - agua: "647.0"
+    campo_codigo: CLP
+    produccion: "330.0"
+    quemado: "5.0"
+    co2: ""
+    gasollina: "129.0"
+    petroleo: "0.0"
+    campo_nombre: COLPA
+    condensado: "201.0"
+  - agua: "333.0"
+    campo_codigo: TTR
+    produccion: "91.48"
+    quemado: "382.85"
+    co2: ""
+    gasollina: "0.0"
+    petroleo: "91.48"
+    campo_nombre: TATARENDA
+    condensado: "0.0"
+  - agua: "6.06"
+    campo_codigo: EDD
+    produccion: "411.29"
+    quemado: "1.54"
+    co2: ""
+    gasollina: "136.8"
+    petroleo: ""
+    campo_nombre: ESCONDIDO
+    condensado: "274.49"
+  - agua: "197.49"
+    campo_codigo: LVT
+    produccion: "349.23"
+    quemado: "1.39"
+    co2: ""
+    gasollina: "118.14"
+    petroleo: ""
+    campo_nombre: LA VERTIENTE
+    condensado: "231.09"
+  - agua: "83.17"
+    campo_codigo: LSR
+    produccion: "67.46"
+    quemado: "0.146"
+    co2: ""
+    gasollina: "8.44"
+    petroleo: ""
+    campo_nombre: LOS SURIS
+    condensado: "59.02"
+  - agua: "186.48"
+    campo_codigo: TGT
+    produccion: "41.95"
+    quemado: "0.116"
+    co2: ""
+    gasollina: "10.03"
+    petroleo: ""
+    campo_nombre: TAIGUATI
+    condensado: "31.92"
+  - agua: "212.66"
+    campo_codigo: SAL
+    produccion: "5637.48"
+    quemado: "2813.006"
+    co2: "1558.787"
+    gasollina: "1087.74"
+    petroleo: "0.0"
+    campo_nombre: SAN ALBERTO
+    condensado: "4549.74"
+  - agua: "399.72"
+    campo_codigo: SBL
+    produccion: "11570.88"
+    quemado: "79.832"
+    co2: "1907.397"
+    gasollina: "2050.2"
+    petroleo: "0.0"
+    campo_nombre: SABALO
+    condensado: "9520.68"
+  - agua: "374.2"
+    campo_codigo: BJO
+    produccion: "56.0"
+    quemado: ""
+    co2: ""
+    gasollina: ""
+    petroleo: "56.0"
+    campo_nombre: BERMEJO
+    condensado: "0.0"
+  - agua: "239.0"
+    campo_codigo: BJO
+    produccion: "19.5"
+    quemado: "0.0"
+    co2: "0.0"
+    gasollina: "0.0"
+    petroleo: "0.0"
+    campo_nombre: X 44
+    condensado: "19.5"
+  - agua: "0.0"
+    campo_codigo: TOR
+    produccion: "0.0"
+    quemado: ""
+    co2: ""
+    gasollina: ""
+    petroleo: "0.0"
+    campo_nombre: TORO
+    condensado: "0.0"
+  - agua: "79.3"
+    campo_codigo: TCB
+    produccion: "120.2"
+    quemado: "9.142"
+    co2: "1376.704"
+    gasollina: "24.9"
+    petroleo: "0.0"
+    campo_nombre: TACOBO
+    condensado: "95.3"
+  - agua: "5.6"
+    campo_codigo: TJB
+    produccion: "81.1"
+    quemado: "2.058"
+    co2: ""
+    gasollina: "23.3"
+    petroleo: ""
+    campo_nombre: TAJIBO
+    condensado: "57.8"
