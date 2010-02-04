@@ -8,6 +8,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :importares
   map.resources :importar, :controller => :importares, :as => :importar#, :only => [:index, :new, :create, :show]
 
+  map.resources :usuarios, :member => {:password => :get, :password_update => :put }
+
+  map.resources :usuario_sessiones
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
@@ -20,8 +23,6 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   map.resources :products
-  map.resources :usuarios
-  map.resources :usuario_sessiones
   
   map.login '/login', :controller => "usuario_sessiones", :action => "new"
   map.logout '/logout', :controller => "usuario_sessiones", :action => "destroy"

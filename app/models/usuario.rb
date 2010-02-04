@@ -1,10 +1,14 @@
+# Clase para almacenar los usuarios
 class Usuario < ActiveRecord::Base
 
   # Callbacks
   before_save :squish_params
 
+
   # Relaciones
   has_many :archivos
+
+  attr_accessor :old_password
 
   # Se utiliza authlogic como metodo de autenticacion
   # Configuraciones de authogic
@@ -37,6 +41,11 @@ class Usuario < ActiveRecord::Base
   # metodo por defecto
   def to_s
     nombre_completo
+  end
+
+  # Realiza la actualizacion del password
+  def actualizar_password(params)
+    usuario = UsuarioSession.find().record
   end
 
 end

@@ -1,11 +1,13 @@
 # Area principal encargada de manejar todas las subareas como Titular, DescartarPatron, Encabezado
+# y que permite interactuar a las mismas con el archivo y areas que se desea importar del archivo
 class AreaGeneral < AreaImp
 
   attr_reader :titular, :encabezado, :fin, :descartadas_posicion, :descartadas_patron, :area_fija
   attr_accessor :rango_filas, :rango_columnas, :nombre
   attr_accessor :proc_condicion_iterar
 
-  # Constructor
+  # Constructor que inicializa todas las areas y de en caso de que el archivo que se importa
+  # tenga el area utiliada desplazada <strong>desplaza</strong> todas las areas relacionadas
   #   @param Hash area
   #   @param Excel, Excelx, Openoffice hoja_electronica # Hoja instanciada por Roo
   #   @param Boolean iterar_fila_tmp
@@ -25,6 +27,7 @@ class AreaGeneral < AreaImp
     @encabezado = Encabezado.new(area['encabezado'], hoja_electronica)
     # Asignar en caso de que no sea area['fija']
     @fin = Fin.new(area['fin'], @hoja_electronica) unless area_fija
+
     # Asigna las areas descartadas
     @descartadas_patron = {}
     @descartadas_posicion = {}
@@ -45,8 +48,8 @@ class AreaGeneral < AreaImp
     end
   end
 
-  # Realiza la lectura de un archivo excel una ves que se ha instanciado
-  #   @return arr
+  # Realiza la lectura de un archivo excel una ves que se ha instanciado, devolviendo un Hash
+  #   @return [Hash]
   def leer()
     arr = []
     condicion = crear_condicion_iterar()
@@ -74,18 +77,12 @@ class AreaGeneral < AreaImp
     hash
   end
 
-  # Actualiza la posicion del area descartada
-  #   @param Integer desplazar
-#  def actualizar_descartadas_posicion(desplazar)
-#    tmp = descartadas_patron
-#    @descartadas_posicion = descartadas_posicion.keys.inject({}){ |h, k| h[k + desplazar] = descartadas_posicion[k]; h }
-#  end
 
   # Crea un hash de posiciones dependiendo si se itera fila o columna
-  # retornando un hash con las posiciones en las que hay descartados por posicion
-  #   @param String incio
-  #   @param String f # No se usa fin debido a que ya existe una metodo con ese nombre
-  #   @return Hash
+  # retornando un hash con las posiciones en las que hay descartados
+  #   @param [String] incio
+  #   @param [String] f # No se usa fin debido a que ya existe una metodo con ese nombre
+  #   @return [Hash] # {12 => true, 20 => true}
   def descartadas_posicion_rango(inicio, fin_pos)
     inicio = inicio.split("_").map(&:to_i)
     fin_pos = fin_pos.split("_").map(&:to_i)
@@ -100,9 +97,9 @@ class AreaGeneral < AreaImp
 
 private
 
-  # Valida si es que hay algun patron "descartadas_patron"
-  #   @param Integer pos
-  #   @return Boolean
+  # Indica si es que hay algun patrón "descartadas_patron"
+  #   @param [Integer] pos
+  #   @return [true, false]
   def descartar_por_patron?(pos)
     descartadas_patron.each do |k, pat|
       return true if pat.valido?(pos)
@@ -111,8 +108,8 @@ private
     false
   end
 
-  # Crea la condicion que permite iterar
-  #   @return Proc
+  # Crea la condicion que permite iterar a traves de las filas o columnas dependiendo que se itere
+  #   @return [Proc]
   def crear_condicion_iterar()
     if area_fija
       if iterar_fila?
@@ -131,7 +128,7 @@ private
 
   # Se asignan las areas descartadas de acuerdo a su posicion
   # o de acuerdo a su patron
-  #   @param Hash areas
+  #   @param [Hash] areas
   def asignar_areas_descartadas_patron(areas)
     areas.each do |k, v|
       @descartadas_patron[k] = DescartarPatron.new(v, @hoja_electronica, true) if v['patron'].size > 0
@@ -140,25 +137,26 @@ private
  
   # Asigna las areas descartables por posicion, estas deben ser creadas
   # debido a que pueden ocupar mas de una fila si se itera filas
-  #   @param Hash areas
+  #   @param [Hash] areas
   def asignar_areas_descartadas_posicion(areas)
     areas.each do |k, v|
       @descartadas_posicion.merge!(descartadas_posicion_rango(v['celda_inicial'], v['celda_final']) ) if v['patron'].size <= 0
     end
   end
 
-  # Actualiza todas las posiciones de patron según se haya desplazado la fila o columna
-  #   @param Integer desp_fila
-  #   @param Integer desp_columna
+  # Actualiza todas las posiciones de patrón según se haya desplazado la fila o columna
+  #   @param [Integer] desp_fila
+  #   @param [Integer] desp_columna
   def actualizar_posiciones_descartar_patron(desp_fila, desp_columna)
     descartadas_patron.each do |k, v|
       v.desplazar_patron(desp_fila, desp_columna)
     end
   end
 
-  # Actualiza todas las posiciones de descarte por posicion
-  #   @param Integer desp_fila
-  #   @param Integer desp_columna
+  # Actualiza todas las posiciones de descarte por posicion si es que existen 
+  # desplazamiento de filas o columnas en el archivo que se esta importando
+  #   @param [Integer] desp_fila
+  #   @param [Integer] desp_columna
   def actualizar_posiciones_descartar_posicion(desp_filas, desp_columnas)
     if iterar_fila?
       proc_descartadas_pos = lambda{|pos| pos + desp_filas }

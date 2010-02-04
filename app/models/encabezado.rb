@@ -1,7 +1,24 @@
-# Clase que maneja los encabezados
+# Clase que maneja los encabezados, que támbien retorna el contenido de una fila
+# o columna dependiendo si se itera fila o columna
+# el encabezado puedes estar compuesto de celdas o campos, los campos son en realidad
+# los datos que se extraerá del archivo a importar
+#   Encabezado.new({
+#     'campos' =>
+#       {"5_5"=>{"campo"=>"gsa", "texto"=>"GSA"}, "5_6"=>{"campo"=>"mercado_interno", "texto"=>"MERCADO  INTERNO"}},
+#     'celdas' =>
+#       [{'texto' => 'DESTINO', 'pos' => '5_1'}, {'texto' => 'ARGENTINA', 'pos' => '5_2'}, {'texto' => 'BG COMGAS', 'pos' => '5_3'}]
+#   }
 class Encabezado <  AreaEsp
   attr_reader :proc_pos_enc, :proc_pos_fin
 
+  # Se inicia los campos ademas de crear la posición de filas y columnas de los compos dependiendo si se itera filas o columnas
+  # por <strong>ejemplo</strong> si se itera filas y tenemos
+  #    { 'campos' => {"5_5"=>{"campo"=>"gsa", "texto"=>"GSA"},
+  #    "5_6"=>{"campo"=>"argentina", "texto" => "ARGENTINA"} } }
+  # Entonces una ves inicializado tendriamos
+  #    { 'campos' => {"5_5"=>{"campo"=>"gsa", "texto"=>"GSA", "posicion" => 5}, 
+  #    "5_6"=>{"campo"=>"argentina", "texto" => "ARGENTINA", "posicion" => 6} } }
+  # Se almacena las columnas debido a que iteramos filas en caso de que se itere columnas se almacena la fila
   def initialize(area, hoja_electronica, iterar_fila_tmp=true)
     super(area, hoja_electronica, iterar_fila_tmp)    
     # Asignacion de posicion, para determinar si es columna fija o 
@@ -22,11 +39,12 @@ class Encabezado <  AreaEsp
     end
   end
 
-  # Busca el encabezado de acuerdo al rango, en caso de que encuentra el patron
-  # en el cual se encuentra el encabezado retorna un numero de lo contrario retorna false
-  #   @param Fixnum rango_filas
-  #   @param Fixnum rango_columnas
-  #   @return Array || FalseClass
+  # Busca el encabezado de acuerdo al rango, en caso de que encuentra el patrón
+  # retornado un array que indica cuanto se ha desplazado el encabezado en el archivo [desp_filas, desp_columnas]
+  # sino encuentra el encabezado en los rangos retorna false
+  #   @param [Fixnum] rango_filas
+  #   @param [Fixnum] rango_columnas
+  #   @return [Array, false]
   def buscar(rango_filas, rango_columnas)
     desp_filas, desp_columnas = [0, 0]
 
@@ -70,18 +88,16 @@ class Encabezado <  AreaEsp
 ########################################
 private
 
-  # Verifica de que todas las celdas, comparando las posiciones de los campos en la
-  # clase Encabezado con los valores de la hoja_electronica. Permitiendo reconocer 
-  # si se encontro el encabezado en la hoja_electronica
-  #   @param Fixnum desp_filas # Indica cuanto se ha movido en filas
-  #   @param Fixnum desp_columnas # Indica cuanto se ha movido en columnas
-  #   @return Boolean
+  # Verifica de que todas los campos en la fila o columna en que se encuentra el archivo
+  # para comprobar si es que el patrón que marca el encabezado <strong>@campos</strong> es igual al del archivo
+  #   @param [Fixnum] desp_filas # Indica cuanto se ha movido en filas
+  #   @param [Fixnum] desp_columnas # Indica cuanto se ha movido en columnas
+  #   @return [Boolean]
   def verificar_campos?(desp_filas, desp_columnas)
     
     @campos.each do |k ,v|
       fila, columna = k.split("_").map(&:to_i)
       fila, columna = [fila + desp_filas, columna + desp_columnas]
-#    debugger if fila == 61 and columna == 7
       return false unless v['texto'] == hoja_electronica.cell(fila, columna).to_s.gsub(/\n/," ")
     end
 
@@ -89,8 +105,9 @@ private
   end
 
   # Crea un rango válido para poder verificar los valores
-  #   @param Integer rango
-  #   @return Array # Retorna un array con rangos Range
+  #   @param [Integer] rango_filas
+  #   @param [Integer] rango_columnas
+  #   @return [Array] # Retorna un array con rangos Range [-2..3, -1..2]
   def crear_rango(rango_filas, rango_columnas)
     fila, columna = celda_inicial.split("_").map(&:to_i)
     fila_fin, columna_fin = celda_final.split("_").map(&:to_i)
@@ -121,7 +138,15 @@ private
 
   end
 
-  # Actualiza las posiciones de los campos
+  # Actualiza las posiciones de los campos, estas posiciones son datos extra que 
+  # se genera para cuando se crea el campo para saber la columna o fila en la cual se encuentra
+  # por <strong>ejemplo</strong> si tenemos despues de haber actualizado los encabezados "actualizar_posición"
+  #    { 'campos' => {"5_7"=>{"campo"=>"gsa", "texto"=>"GSA", "posicion" => 5}, 
+  #    "5_8"=>{"campo"=>"argentina", "texto" => "ARGENTINA", "posicion" => 6} } }
+  # despues de pasar por esta función tendriamos
+  #    { 'campos' => {"5_7"=>{"campo"=>"gsa", "texto"=>"GSA", "posicion" => 7}, 
+  #    "5_8"=>{"campo"=>"argentina", "texto" => "ARGENTINA", "posicion" => 8} } }
+  #
   def actualizar_posicion_encabezado
     fila_col = 1
     fila_col = 0 unless iterar_fila?

@@ -80,5 +80,22 @@ describe Usuario do
     end
 
   end
+
+  describe "actualizar password" do
+    before(:each) do
+#      @usuario = Usuario.create!(@valid_attributes)
+#      @u = Object.new
+#      @u.stub!(:record).and_return(@usuario)
+#      UsuarioSession.stub!(:find).and_return(@u)
+       require "authlogic/test_case"
+       Authlogic::TestCase.activate_authlogic()  
+    end
+
+    it 'debe actualizar con los parametros' do
+      debugger
+ s=0     
+    end
+    
+  end
 end
 

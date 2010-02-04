@@ -9,9 +9,9 @@ class AreaImp
 
   # Constructor
   # En caso de que itererar_filas = false # => Se itera las columnas
-  #   @param Hash area
-  #   @param Excel || Excelx || OpenOffice hoja_electronica
-  #   @param Boolean iterar_fila
+  #   @param [Hash] area
+  #   @param [Excel, Excelx. Openoffice] hoja_electronica
+  #   @param [true, false] iterar_fila_tmp
   def initialize(area, hoja_electronica, iterar_fila_tmp = true)
     @celda_inicial, @celda_final = area['celda_inicial'], area['celda_final']
     @iterar_fila = iterar_fila_tmp
@@ -29,8 +29,8 @@ class AreaImp
   end
 
   # Actualiza la posicion del area desplazandola dependiento si itera filas o columnas
-  #   @param Integer desp_filas
-  #   @param Integer desp_columnas
+  #   @param [Integer] desp_filas
+  #   @param [Integer] desp_columnas
   def actualizar_posicion(desp_filas, desp_columnas)
     @fila_inicial += desp_filas
     @fila_final += desp_filas
@@ -41,19 +41,19 @@ class AreaImp
     @celda_final = "#{@fila_final}_#{@columna_final}"
   end
 
-  # LLama directamente sin necesidad de indicar si itera filas o columnas
-  #   @param String posicion
-  #   @param Fixnum desp_filas
-  #   @param Fixnum desp_columnas
+  # Genera la posición desplazada
+  #   @param [String] posicion
+  #   @param [Fixnum] desp_filas
+  #   @param [Fixnum] desp_columnas
   def crear_posicion_desplazada(posicion, desp_filas = 0, desp_columnas = 0)
     fila, columna = posicion.split("_").map(&:to_i)
     proc_desp.call(fila, columna, desp_filas, desp_columnas).join("_")
   end
 
   # crear una posicion en base a la fila y la columna
-  #   @param String posicion
-  #   @param Fixnum desplazar
-  #   @param Bool self_iterar_fila
+  #   @param [String] posicion
+  #   @param [Fixnum] desplazar
+  #   @param [true, false] self_iterar_fila
   def self.crear_posicion_desplazada( posicion, desplazar, self_iterar_fila )
     return posicion if desplazar == 0
 
@@ -70,6 +70,7 @@ class AreaImp
 
 protected
   # Asigna la hoja electronica correcta
+  #   @param [Excel, Excelx, Openoffice] hoja_electronica
   def asignar_hoja_electronica(hoja_electronica)
     clases = [Excel, Excelx, Openoffice]
     raise "Error: AreaGeneral linea: #{__LINE__}, debe seleccionar un documento xls, xlsx o ods" unless clases.include?(hoja_electronica.class)
@@ -87,9 +88,9 @@ protected
   end
 
   # Asigna la posicion de acuerdo a si se itera filas o columnas
-  #   @param String posicion
-  #   @param Integer pos # fila o columna en la cual se encuentra
-  #   @return Array # Array de enteros con [fila, columna]
+  #   @param [String] posicion
+  #   @param [Integer] pos # fila o columna en la cual se encuentra
+  #   @return [Array] # Array de enteros con [fila, columna]
   def asignar_posicion(posicion, pos)
     fila, columna = posicion.split("_").map(&:to_i)
     @proc_pos.call(fila, columna, pos)

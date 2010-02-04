@@ -83,4 +83,13 @@ class UsuariosController < ApplicationController
       format.json { render :json => {:success => true}}
     end
   end
+
+  # GET /usuarios/password
+  def password
+    @usuario = UsuarioSession.find
+  end
+
+  # PUT /usuarios/password
+  def password_update
+  end
 end

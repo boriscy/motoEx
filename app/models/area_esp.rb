@@ -1,9 +1,9 @@
-# Clase especial para pdoer inicializar con campos extra especiales
+# Clase especial para poder inicializar con campos extra especiales
 class AreaEsp < AreaImp
 
   attr_reader :celdas, :campos
 
-  # Solo almacena en celdass aquellas que tienen un valor
+  # Solo se crean celdas o campos que tienen un valor
   def initialize(area, hoja_electronica, iterar_fila_tmp=true)
     super(area, hoja_electronica, iterar_fila_tmp)
     # Almacenar solo las celdas que tienen texto 
@@ -17,6 +17,8 @@ class AreaEsp < AreaImp
   end
 
   # Actualiza la posicion de todos los elementos
+  #   @param [Integer] desp_filas
+  #   @param [Integer] desp_columnas
   def actualizar_posicion(desp_filas, desp_columnas)
     super(desp_filas, desp_columnas)
     actualizar_posicion_celdas(desp_filas, desp_columnas)

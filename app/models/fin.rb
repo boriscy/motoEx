@@ -1,8 +1,9 @@
+# Clase en la cual se guarda el patrón que debe buscar para determinar si es el fín de la iteración
 class Fin < AreaEsp
 
-  # Indica si es el fin de la iteracion
-  #   @param Integer pos
-  #   @return Boolean
+  # Indica si es el fin de la iteracion, verificando de que se cumpla el patrón en la posición indicada
+  #   @param [Integer] pos
+  #   @return [true, false]
   def fin?(pos)
     campos.each do |k, v|
       fila, columna = asignar_posicion(k, pos)
