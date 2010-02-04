@@ -3,6 +3,12 @@
  */
 $(document).ready(function() {
 
+    // para que abra un popup al hacer click en un enlace de la clase .ventana-ayuda
+    $('.ventana-ayuda').click(function(){
+        window.open(this.href, this.target, 'width=' + 400 + ',height=' + 300);
+        //openWindow(, , 400, 300);
+        return false;
+    });
     // Variable global para sabe cuando shift es presionada
     shift = false;
     $(window).keydown( function(e) {
