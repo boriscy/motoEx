@@ -1,0 +1,22 @@
+<style>
+  fieldset.inputs>ol>li>label{width: 12em;}
+  fieldset{width: 50em;}
+</style>
+<h1>Editar usuario</h1>
+
+<% semantic_form_for @usuario do |f| %>
+  <% f.inputs do "Usuario" %>
+    <%= f.input :nombre %>
+    <%= f.input :paterno, :label => 'Apellido paterno' %>
+    <%= f.input :materno, :label => 'Apellido materno' %>
+    <%= f.input :email %>
+    <% if admin? %>
+      <% f.input :rol, :as => :radio, :collection => Usuario::ROLES %>
+    <% end %>
+  <% end %>
+  <%= f.submit "Editar" %>
+<% end %>
+
+<% if admin? %>
+  <%= link_to "lista", usuarios_path %>
+<% end %>

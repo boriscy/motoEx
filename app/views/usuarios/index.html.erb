@@ -1,0 +1,30 @@
+<h1>Usuarios</h1>
+
+<% if admin? %>
+  <%= link_to "Nuevo usuario", new_usuario_path, :class => 'new' %>
+  <br />
+  <br />
+<% end %>
+
+<table>
+  <tr>
+    <th class="ui-state-active">Nombre</th>
+    <th class="ui-state-active">Login</th>
+    <th class="ui-state-active">Email</th>
+    <th class="ui-state-active">Rol</th>
+    <th class="ui-state-active"></th>
+  </tr>
+
+<% @usuarios.each do |u| %>
+  <tr>
+    <td><%= u.nombre_completo %></td>
+    <td><%= u.login %></td>
+    <td><%= u.email %></td>
+    <td><%= u.ver_rol %></td>
+    <td>
+      <%= link_to "Ver", u %>
+      <%= link_to "Editar", edit_usuario_path(u) %>
+      <%= link_to "Borrar", u, :class => 'delete' %>
+    </td>
+  </tr>
+<% end %>

@@ -1,3 +1,21 @@
 <h1>Usuario</h1>
 
+<ul>
+  <li>
+<strong>Nombre completo</strong><br>
 <%= @usuario.nombre_completo %>
+</li>
+<li>
+<strong>Login</strong><br>
+<%= @usuario.login %>
+</li>
+<li>
+<strong>Email</strong><br>
+<%= @usuario.email %>
+</li>
+</ul>
+
+<% if admin? %>
+  <%= link_to "Lista", usuarios_path %> | 
+<% end %>
+<%= link_to "Editar", edit_usuario_path(@usuario) %>

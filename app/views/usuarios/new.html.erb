@@ -1,0 +1,23 @@
+<style>
+  fieldset.inputs>ol>li>label{width: 12em;}
+  fieldset{width: 50em;}
+</style>
+<h1>Nuevo usuario</h1>
+
+<% semantic_form_for @usuario do |f| %>
+  <% f.inputs do "Usuario" %>
+    <%= f.input :nombre %>
+    <%= f.input :paterno, :label => 'Apellido paterno' %>
+    <%= f.input :materno, :label => 'Apellido materno' %>
+    <%= f.input :email %>
+    <%= f.input :login %>
+    <% f.input :rol, :as => :radio, :collection => Usuario::ROLES %>
+    <%= f.input :password, :label => 'Contraseña' %>
+    <%= f.input :password_confirmation, :label => 'Confirmación contraseña' %>
+  <% end %>
+  <%= f.submit "Crear" %>
+<% end %>
+
+<% if admin? %>
+  <%= link_to "lista", usuarios_path %>
+<% end %>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100126010318) do
+ActiveRecord::Schema.define(:version => 20100205193338) do
 
   create_table "archivos", :force => true do |t|
     t.integer  "usuario_id"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20100126010318) do
     t.string   "persistence_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "rol",               :limit => 20, :default => "usuario"
   end
 
 end

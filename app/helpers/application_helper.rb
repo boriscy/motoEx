@@ -1,3 +1,5 @@
+# coding: utf-8
+
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
@@ -37,10 +39,22 @@ module ApplicationHelper
       file = ActiveSupport::JSON.decode( File.read(File.join(path, "extjsb2") ) )
 
       file['pkgs'].find{|v| v['file'] == 'ext-all.js'}['pkgDeps'].inject(""){|js , v|
-        js << "<script type=\"text/javascript\" src=\"/javascripts/ext/#{v}\"></script>"
+        js << %(<script type="text/javascript" src="/javascripts/ext/#{v}"></script>)
       }
     else
-      "<script type=\"text/javascript\" src=\"/javascripts/ext/ext-all.js\"></script>"
+      %(<script type="text/javascript" src="/javascripts/ext/ext-all.js"></script>)
+    end
+  end
+
+  # Presenta el menu en caso de que el usuario se haya loguado
+  def mostrar_menu
+    if session['usuario_credentials']
+      %Q(<ul id="navigation">
+        <li><a href="/usuarios" class="ui-state-default">Usuarios</a></li>
+        <li><a href="/archivos" class="ui-state-default">Archivos</a></li>
+        <li><a href="#{password_usuario_path(1)}" class="ui-state-default">Cambiar contraseña</a></li>
+        <li><a href="/logout" class="ui-state-default">Salir</a></li>
+      </ul>)
     end
   end
 

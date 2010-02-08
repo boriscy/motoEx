@@ -1,3 +1,5 @@
+# coding: utf-8
+
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Usuario do
@@ -13,9 +15,10 @@ describe Usuario do
         :paterno => "Perez ",
         :materno => " Lopez",
         :email => "juan@example.com",
+        :rol => "admin",
         :login => "juan",
         :password => "juanito16",
-        :password_confirmation => "juanito16",
+        :password_confirmation => "juanito16"
       }
 
       do_create
@@ -23,6 +26,8 @@ describe Usuario do
 
     def do_create
       @usuario = Usuario.create(@valid_attributes)
+      debugger
+      s=0
     end
 
     it "debe tener nombre_completo()" do
@@ -39,63 +44,61 @@ describe Usuario do
         @usuario.send(v).should == @valid_attributes[v].squish
       end
     end
-  end
-  
-  describe "Invalido" do
-    before do
-      @invalid_attributes = {
-        :nombre => "Juan 1",
-        :paterno => "Perez -_",
-        :materno => " Lopez -_",
-        :email => "juan@example.com",
-        :login => "juan s",
-        :password => "ju",
-        :password_confirmation => "ju",
-        :rol_id => 1
-      }
 
+    it 'debe actualizar password' do
+      @usuario.actualizar_password('prueba1', 'prueba1').should == true
     end
 
-    def do_create
-      @usuario = Usuario.create(@invalid_attributes)
+    it 'no debe actualizar password con parametros errados' do
+      @usuario.actualizar_password('prueba1', 'prueba2').should == false
     end
 
-    it "debe mostrar login invalido" do
+    it "debe presentar tipo correctamente" do
       do_create
-      @usuario.errors[:login].should == I18n.t("authlogic.error_messages.login_invalid")
-    end
-
-    it "login debe ser entre 4..20 caracteres" do
-      @invalid_attributes[:login] = "jua"
-      do_create
-      @usuario.errors[:login].should == I18n.t('activerecord.errors.messages.too_short', :count => 4)
-      @usuario.login = "s" * 21
-      @usuario.valid?
-      @usuario.errors[:login].should == I18n.t('activerecord.errors.messages.too_long', :count => 20)
-    end
-
-    it "debe ser mas largo el password" do
-      do_create
-      @usuario.errors[:password].should_not == nil
+      @usuario.ver_tipo.should == "Administrador"
     end
 
   end
+  
+ # describe "Invalido" do
+ #   before do
+ #     @invalid_attributes = {
+ #       :nombre => "Juan 1",
+ #       :paterno => "Perez -_",
+ #       :materno => " Lopez -_",
+ #       :email => "juan@example.com",
+ #       :login => "juan s",
+ #       :password => "ju",
+ #       :password_confirmation => "ju",
+ #       :tipo => 'admin'
+ #     }
 
-  describe "actualizar password" do
-    before(:each) do
-#      @usuario = Usuario.create!(@valid_attributes)
-#      @u = Object.new
-#      @u.stub!(:record).and_return(@usuario)
-#      UsuarioSession.stub!(:find).and_return(@u)
-       require "authlogic/test_case"
-       Authlogic::TestCase.activate_authlogic()  
-    end
+ #   end
 
-    it 'debe actualizar con los parametros' do
-      debugger
- s=0     
-    end
-    
-  end
+ #   def do_create
+ #     @usuario = Usuario.create(@invalid_attributes)
+ #   end
+
+ #   it "debe mostrar login invalido" do
+ #     do_create
+ #     @usuario.errors[:login].should == I18n.t("authlogic.error_messages.login_invalid")
+ #   end
+
+ #   it "login debe ser entre 4..20 caracteres" do
+ #     @invalid_attributes[:login] = "jua"
+ #     do_create
+ #     @usuario.errors[:login].should == I18n.t('activerecord.errors.messages.too_short', :count => 4)
+ #     @usuario.login = "s" * 21
+ #     @usuario.valid?
+ #     @usuario.errors[:login].should == I18n.t('activerecord.errors.messages.too_long', :count => 20)
+ #   end
+
+ #   it "debe ser mas largo el password" do
+ #     do_create
+ #     @usuario.errors[:password].should_not == nil
+ #   end
+ # 
+ # end
+
 end
 

@@ -1,5 +1,10 @@
+# coding: utf-8
+
 class UsuariosController < ApplicationController
   before_filter :revisar_permiso
+  before_filter :revisar_admin, :only => [:index, :destroy]
+
+
   # GET /usuarios
   # GET /usuarios.xml
   def index
@@ -25,7 +30,7 @@ class UsuariosController < ApplicationController
   # GET /usuarios/new
   # GET /usuarios/new.xml
   def new
-    @usuario = Usuario.new
+    @usuario = Usuario.new()
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,7 +46,9 @@ class UsuariosController < ApplicationController
   # POST /usuarios
   # POST /usuarios.xml
   def create
+    params[:usuario].delete(:rol)
     @usuario = Usuario.new(params[:usuario])
+
     respond_to do |format|
       if @usuario.save
         flash[:notice] = 'El usuario fue creado correctamente.'
@@ -57,6 +64,7 @@ class UsuariosController < ApplicationController
   # PUT /usuarios/1
   # PUT /usuarios/1.xml
   def update
+    params[:usuario].delete(:rol)
     @usuario = Usuario.find(params[:id])
 
     respond_to do |format|
@@ -75,21 +83,49 @@ class UsuariosController < ApplicationController
   # DELETE /usuarios/1.xml
   def destroy
     @usuario = Usuario.find(params[:id])
-    @usuario.destroy
+    # Para no borrar el administrador
+    if @usuario.rol == 'admin'
+      raise "El usuario administrador no puede ser borrado"
+    else
+      @usuario.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(usuarios_url) }
-      format.xml  { head :ok }
-      format.json { render :json => {:success => true}}
+      respond_to do |format|
+        format.html { redirect_to(usuarios_url) }
+        format.xml  { head :ok }
+        format.json { render :json => {:success => true}}
+      end
     end
   end
 
-  # GET /usuarios/password
+
+  # GET /usuarios/1/password
   def password
-    @usuario = UsuarioSession.find
+    @usuario = Usuario.find(current_user.id)
   end
 
-  # PUT /usuarios/password
+  # PUT /usuarios/1/password
   def password_update
+    @usuario = Usuario.find(current_user.id)
+    usuario = params[:usuario]
+    valido = UsuarioSession.new(:login => current_user.login, :password => usuario[:password_old]).valid?
+    @usuario.errors.add(:password_old, "Contraseña incorrecta") unless valido
+
+    respond_to do |format|
+      if valido and @usuario.actualizar_password(usuario[:password], usuario[:password_confirmation])
+        flash[:notice] = 'Su contraseña fue correctamente actualizada.'
+        format.html { redirect_to(@usuario) }
+        format.xml  { head :ok }
+      else
+        flash[:error] = 'No se pudo actualizar su contraseña.'
+        format.html { render :action => "password" }
+        format.xml  { render :xml => @usuario.errors, :status => :unprocessable_entity }
+      end
+    end
+
+  end
+
+private
+  def revisar_admin
+    redirect_to(usuario_url(current_user.id) ) unless admin?
   end
 end
