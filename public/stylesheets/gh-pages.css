@@ -1,0 +1,150 @@
+
+/* Elements
+----------------------------------------*/
+body
+{
+	background-color:#EFEFEF;
+}
+
+body, p, td, th, li
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1em;
+	line-height:1.5em;
+	color:#000000;
+}
+
+#mainContainer
+{
+	width:750px;
+	margin: 15px auto;
+  background-color: #FFF;
+  border: 8px solid #9F9F9F;
+}
+#content{padding: 5px 10px;}
+
+p
+{
+	margin: 0 0 1em 0;
+}
+
+/*--- Link Styles ---*/
+a:link, a:visited
+{
+	color:#5C8127;
+}
+
+a:hover, a:active
+{
+	color:#5C8127;
+	text-decoration:none;
+}
+
+h1
+{
+	color:#5C8127;
+	margin:.825em 0 .5em 0;
+	font-size:2.4em;
+}
+
+h2
+{
+	color:#5C8127;
+	margin:.825em 0 .5em 0;
+	font-size:1.75em;
+}
+
+h3
+{
+	color:#5C8127;
+	margin:.825em 0 .5em 0;
+	font-size:1.5em;
+}
+
+h4
+{
+	color:#5C8127;
+	margin:.825em 0 .5em 0;
+	font-size:1.25em;
+}
+
+h5
+{
+	color:#5C8127;
+	margin:.825em 0 .5em 0;
+	font-size:1.125em;
+}
+
+h6
+{
+	color:#5C8127;
+	margin:.825em 0 .5em 0;
+	font-size:1em;
+}
+
+ul
+{
+	margin-left:25px;
+	list-style-type:none;
+}
+
+ol
+{
+	margin-left:25px;
+	
+}
+
+blockquote	{margin: 0 0 18px 18px; color:#666666; font-style: italic;}
+strong		{font-weight:bold;}
+em		{font-style:italic;}
+
+/* Standard Definitions
+----------------------------------------*/
+.left 		{float:left;}
+.right 		{float:right;}
+.clearThis 	{clear:both;}
+.small		{font-size:.625em;}
+.large		{font-size:1em;}
+.soft		{color:#D3D3D3;}
+.hide		{display:none;}
+p.last		{margin-bottom:0px;}
+
+/* Header
+----------------------------------------*/
+#header
+{
+	width:900px;
+	height:100px;
+	
+	
+}
+
+	/* Nav
+	----------------------------------------*/
+	ul#nav
+	{
+		clear:both;
+    background-color:#3F3F3F;
+    margin: 0px;
+    padding: 0px;
+    height: 24px;
+    font-size: 0.95em;		
+	}
+	
+	ul#nav li {float:left; list-style-type:none; }
+
+	ul#nav li a {
+    height:20px; 
+    display:block;
+    padding: 2px 10px;
+    border-right: 1px solid #EFEFEF;
+    clear:bottom;
+    text-decoration: none;
+	  color:#B1DA67;
+  }
+
+  ul#nav li a:hover{
+    background-color: #6F6F6F;
+    color: #A4FF7F;
+  }
+
