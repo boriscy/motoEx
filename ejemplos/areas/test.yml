@@ -26,45 +26,51 @@ area:
         texto: TOTAL
     celda_final: 26_11
     celda_inicial: 26_4
-  created_at: 2010-02-09 14:35:08
-  nombre: Prueba general
+  created_at: 2010-02-09 23:04:38
+  nombre: test de areas
   sinonimos: 
-  updated_at: 2010-02-09 16:05:39
+  updated_at: 2010-02-09 23:23:50
   rango_columnas: "3"
-  id: "8"
+  id: "11"
   rango_filas: "15"
   iterar_fila: t
   descartar: 
     desc1: 
-      excepciones: 
-      - - texto: jul
-          pos: "4"
-        - texto: JULIO
-          pos: "5"
-      - - texto: ago
-          pos: "4"
-      patron: 
-        "7": 
-          texto: "0.00"
-      celda_final: 14_11
-      celda_inicial: 14_4
-    desc2: 
-      excepciones: []
-
-      patron: 
-        "4": 
-          texto: mar
-      celda_final: 10_11
-      celda_inicial: 10_4
-    desc3: 
       excepciones: []
 
       patron: {}
 
       celda_final: 25_11
       celda_inicial: 25_4
+    desc2: 
+      excepciones: []
+
+      patron: {}
+
+      celda_final: 25_11
+      celda_inicial: 25_4
+    desc3: 
+      excepciones: []
+
+      patron: {}
+
+      celda_final: 24_11
+      celda_inicial: 24_4
+    desc0: 
+      excepciones: 
+      - - texto: jul
+          pos: "4"
+        - texto: JULIO
+          pos: "5"
+      - - texto: sep
+          pos: "4"
+      patron: 
+        "7": 
+          texto: "0.00"
+      celda_final: 14_11
+      celda_inicial: 14_4
   fija: f
-  hoja_id: "11"
+  hoja_id: "14"
   celda_final: 26_11
   encabezado: 
     celdas: 
@@ -88,16 +94,19 @@ area:
       pos: 8_6
     campos: 
       7_4: 
-        campo: abreviacion
+        campo: ABREBIACION
         texto: ABREBIACION
       7_5: 
-        campo: destino
+        campo: DESTINO
         texto: DESTINO
-      7_6: 
-        campo: argentina
-        texto: ARGENTINA
+      7_7: 
+        campo: bg_comgas
+        texto: BG COMGAS
+      7_9: 
+        campo: gsa
+        texto: GSA
       7_11: 
-        campo: total
+        campo: TOTAL
         texto: TOTAL
     celda_final: 8_11
     celda_inicial: 7_4
@@ -108,4 +117,5 @@ area:
       pos: 4_4
     celda_final: 4_11
     celda_inicial: 4_4
+attributes_cache: {}
 

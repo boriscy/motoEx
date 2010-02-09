@@ -74,16 +74,16 @@ private
     return false if excepciones.size <= 0
 
     excepciones.each do |v|
-      return false unless verificar_grupo_excepciones?(v, pos)
+      return true if verificar_grupo_excepciones?(v, pos)
     end
 
-    true
+    false
   end
 
   # Verifica que todo un grupo de excepciones cumpla los valores
   #   @param Array grupo # Array con las excepciones de un grupo
   #   @param Integer pos
-  #   @return Boolean
+  #   @return [true, false]
   def verificar_grupo_excepciones?(grupo, pos)
     grupo.each do |v|
       fila, columna = proc_desc_pos.call(pos, v['pos'].to_i)
@@ -97,7 +97,14 @@ private
   # Muecho cuidado con los &nbsp; que pueden parecer espacio, son otro caracter
   #   @param Hash hash
   def strip_texto_patron(hash)
-    hash.each{|k, v| v['texto'].strip! }
+    hash.each do |k, v|
+      # Experiemental
+      v['texto'].strip! 
+      # En caso de que sea un número decimal, 0.00 o 0.0000, Ruby reconocera 0.0
+      if v['texto'] =~ /^\d+\.\d+$/
+        v['texto'] = v['texto'].to_f.to_s
+      end
+    end
   end
 
   # Elimina los espacios al principio y al final del texto

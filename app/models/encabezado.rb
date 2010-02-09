@@ -70,11 +70,6 @@ class Encabezado <  AreaEsp
 
     false
 
-#    if encontrado
-#      [desp_filas, desp_columnas]
-#    else
-#      false
-#    end
   end
 
   # Extrae los datos indicados dependiendo la fila o columna

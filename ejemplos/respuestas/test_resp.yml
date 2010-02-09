@@ -1,39 +1,75 @@
 --- 
-"8": 
+"11": 
   datos: 
-  - argentina: "12.0"
-    abreviacion: ene
-    total: "93.0"
-    destino: ENERO
-  - argentina: "358874.0"
-    abreviacion: abri
-    total: "18497108.89"
-    destino: ABRIL
-  - argentina: "366188.0"
-    abreviacion: may
-    total: "20173123.93"
-    destino: MAYO
-  - argentina: "346680.0"
-    abreviacion: jun
-    total: "22288544.257"
-    destino: JUNIO
-  - argentina: "311506.0"
-    abreviacion: jul
-    total: "23120104.009"
-    destino: JULIO
-  - argentina: "286025.0"
-    abreviacion: ago
-    total: "22522186.204"
-    destino: AGOSTO
-  - argentina: "255861.0"
-    abreviacion: sep
-    total: "21404858.476"
-    destino: SEPTIEMBRE
-  - argentina: "191153.0"
-    abreviacion: oct
-    total: "25256789.308"
-    destino: OCTUBRE
-  - argentina: "136804.0"
+  - bg_comgas: "15.0"
+    ABREBIACION: ene
+    TOTAL: "93.0"
+    gsa: "20.0"
+    DESTINO: ENERO
+  - bg_comgas: "178471.7"
+    ABREBIACION: mar
+    TOTAL: "17844017.91"
+    gsa: "14399740.6"
+    DESTINO: MARZO
+  - bg_comgas: "9174.0"
+    ABREBIACION: abri
+    TOTAL: "18497108.89"
+    gsa: "14713285.7"
+    DESTINO: ABRIL
+  - bg_comgas: "2063.9"
+    ABREBIACION: may
+    TOTAL: "20173123.93"
+    gsa: "15078263.4"
+    DESTINO: MAYO
+  - bg_comgas: "168333.0"
+    ABREBIACION: jun
+    TOTAL: "22288544.257"
+    gsa: "16076552.7"
+    DESTINO: JUNIO
+  - bg_comgas: "0.0"
+    ABREBIACION: jul
+    TOTAL: "23120104.009"
+    gsa: "16318899.9"
+    DESTINO: JULIO
+  - bg_comgas: "0.0"
+    ABREBIACION: sep
+    TOTAL: "21404858.476"
+    gsa: "15557257.7"
+    DESTINO: SEPTIEMBRE
+  - bg_comgas: "729884.7"
+    ABREBIACION: oct
+    TOTAL: "25256789.308"
+    gsa: "17985686.4"
+    DESTINO: OCTUBRE
+  - bg_comgas: "394162.1"
+    ABREBIACION: nov
+    TOTAL: "26441404.931"
+    gsa: "18821569.4"
+    DESTINO: NOVIEMBRE
+  - bg_comgas: "9174.0"
+    ABREBIACION: abr
+    TOTAL: "18497108.89"
+    gsa: "14713285.7"
+    DESTINO: ABRIL
+  - bg_comgas: "2063.9"
+    ABREBIACION: may
+    TOTAL: "20173123.93"
+    gsa: "15078263.4"
+    DESTINO: MAYO
+  - bg_comgas: "168333.0"
+    ABREBIACION: jun
+    TOTAL: "22288544.257"
+    gsa: "16076552.7"
+    DESTINO: JUNIO
+  - bg_comgas: "9174.0"
+    ABREBIACION: abr
+    TOTAL: "18497105.89"
+    gsa: "14713285.7"
+    DESTINO: ABRIL
+  titular: |-
+    INGRESOS BRUTOS DE GAS NATURAL
+    GESTION 2003
+
     abreviacion: nov
     total: "26441404.931"
     destino: NOVIEMBRE
