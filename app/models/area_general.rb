@@ -36,12 +36,12 @@ class AreaGeneral < AreaImp
 
     # busca el inicio del documento y desplaza la posición
     desplazar = @encabezado.buscar(self.rango_filas, self.rango_columnas)
-
+    # Mostrar excepción en caso de que no haya encontrado el encabezado
+    raise "Error: no se encontro el encabezado, verifique el archivo o que los rangos sean correctos" if desplazar.is_a? FalseClass
     unless desplazar[0] == 0 and desplazar[1] == 0
       [self, @titular, @fin].select{|v| v unless v.nil? }.each do |v|
         v.send(:actualizar_posicion, desplazar[0], desplazar[1])
       end
-
       # Actualizacion de posiciones de areas de descarte
       actualizar_posiciones_descartar_patron(desplazar[0], desplazar[1]) if @descartadas_patron.size > 0
       actualizar_posiciones_descartar_posicion(desplazar[0], desplazar[1]) if @descartadas_posicion.size > 0

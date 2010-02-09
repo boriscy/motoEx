@@ -53,25 +53,28 @@ class Encabezado <  AreaEsp
     # Iteración en el rango
 
     rango_filas, rango_columnas = crear_rango(rango_filas, rango_columnas)
-
     encontrado = false
+
     rango_filas.each do |i|
+
       rango_columnas.each do |j|
         if verificar_campos?(i, j)
           encontrado = true
           desp_filas, desp_columnas = i, j
           actualizar_posicion(desp_filas, desp_columnas)
           actualizar_posicion_encabezado()
-          break
+          return [i, j]
         end
       end
     end
 
-    if encontrado
-      [desp_filas, desp_columnas]
-    else
-      false
-    end
+    false
+
+#    if encontrado
+#      [desp_filas, desp_columnas]
+#    else
+#      false
+#    end
   end
 
   # Extrae los datos indicados dependiendo la fila o columna
@@ -94,7 +97,6 @@ private
   #   @param [Fixnum] desp_columnas # Indica cuanto se ha movido en columnas
   #   @return [Boolean]
   def verificar_campos?(desp_filas, desp_columnas)
-    
     @campos.each do |k ,v|
       fila, columna = k.split("_").map(&:to_i)
       fila, columna = [fila + desp_filas, columna + desp_columnas]

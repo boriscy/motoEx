@@ -1,0 +1,65 @@
+--- 
+"8": 
+  datos: 
+  - argentina: "12.0"
+    abreviacion: ene
+    total: "93.0"
+    destino: ENERO
+  - argentina: "358874.0"
+    abreviacion: abri
+    total: "18497108.89"
+    destino: ABRIL
+  - argentina: "366188.0"
+    abreviacion: may
+    total: "20173123.93"
+    destino: MAYO
+  - argentina: "346680.0"
+    abreviacion: jun
+    total: "22288544.257"
+    destino: JUNIO
+  - argentina: "311506.0"
+    abreviacion: jul
+    total: "23120104.009"
+    destino: JULIO
+  - argentina: "286025.0"
+    abreviacion: ago
+    total: "22522186.204"
+    destino: AGOSTO
+  - argentina: "255861.0"
+    abreviacion: sep
+    total: "21404858.476"
+    destino: SEPTIEMBRE
+  - argentina: "191153.0"
+    abreviacion: oct
+    total: "25256789.308"
+    destino: OCTUBRE
+  - argentina: "136804.0"
+    abreviacion: nov
+    total: "26441404.931"
+    destino: NOVIEMBRE
+  - argentina: "311506.0"
+    abreviacion: ""
+    total: "23120104.009"
+    destino: JULIO
+  - argentina: "358874.0"
+    abreviacion: abr
+    total: "18497108.89"
+    destino: ABRIL
+  - argentina: "366188.0"
+    abreviacion: may
+    total: "20173123.93"
+    destino: MAYO
+  - argentina: "346680.0"
+    abreviacion: jun
+    total: "22288544.257"
+    destino: JUNIO
+  - argentina: "358871.0"
+    abreviacion: abr
+    total: "18497105.89"
+    destino: ABRIL
+  - argentina: "366118.0"
+    abreviacion: may
+    total: "20173053.93"
+    destino: MAYO
+  titular: INGRESOS BRUTOS DE GAS NATURAL GESTION 2003
+

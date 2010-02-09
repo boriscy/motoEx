@@ -1,0 +1,73 @@
+---
+area: 
+  fin: 
+    celdas: 
+    - texto: TOTAL
+      pos: 65_3
+    - texto: "693,590.00"
+      pos: 65_4
+    - texto: "0.00"
+      pos: 65_5
+    - texto: "0.00"
+      pos: 65_6
+    - texto: "116,108,195.44"
+      pos: 65_7
+    - texto: "32,382,378.16"
+      pos: 65_8
+    - texto: "149,184,163.60"
+      pos: 65_9
+    campos: 
+      65_1: 
+        texto: TOTAL
+    celda_final: 65_9
+    celda_inicial: 65_3
+  created_at: 2010-01-14 19:02:56
+  nombre: Prueba desplazar
+  sinonimos: 
+  updated_at: 2010-01-14 19:02:56
+  id: "9"
+  iterar_fila: t
+  descartar: {}
+
+  fija: f
+  rango: "5"
+  hoja_id: "10"
+  celda_final: 65_9
+  encabezado: 
+    celdas: 
+    - texto: DESTINO
+      pos: 51_3
+    - texto: ARGENTINA
+      pos: 51_4
+    - texto: BG COMGAS
+      pos: 51_5
+    - texto: CUIABA
+      pos: 51_6
+    - texto: GSA
+      pos: 51_7
+    - texto: |-
+        MERCADO  INTERNO
+      pos: 51_8
+    - texto: TOTAL
+      pos: 51_8
+    - texto: (EN $US)
+      pos: 52_4
+    campos: 
+      51_3: 
+        campo: destino
+        texto: DESTINO
+      51_4: 
+        campo: argentina
+        texto: ARGENTINA
+      51_6: 
+        campo: cuiba
+        texto: CUIABA
+      51_8: 
+        campo: mercado_interno
+        texto: |-
+          MERCADO  INTERNO
+    celda_final: 52_9
+    celda_inicial: 51_3
+  celda_inicial: 49_3
+  titular: {}
+

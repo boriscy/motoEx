@@ -12,16 +12,16 @@ def crear_parametros_para_importar(usuario, archivo, area_id)
   }
 end
 
-Dado /que quiero importar el (\w+\.\w+), (\w+\.\w+)/ do |archivo, yaml|
+Dado /que quiero importar (\w+\.\w+), (\w+\.\w+), (\w+\.\w+)/ do |archivo, archivo_imp, yaml|
   condiciones_importar()
   area = Soporte::crear_archivo_test(archivo, yaml)
 
-  post "/importar.yaml", crear_parametros_para_importar(@usuario, archivo, area.id)
+  post "/importar.yaml", crear_parametros_para_importar(@usuario, archivo_imp, area.id)
 end
 
 Entonces /debo obtener la (\w+\.\w+)/ do |respuesta|
   y = YAML::parse(File.open( File.join(RAILS_ROOT, "ejemplos", "respuestas", respuesta) )).transform
   resp = YAML::parse(response.body).transform
-  y[y.keys.first].should == resp[resp.keys.first]
+  y[y.keys.first]['datos'].should == resp[resp.keys.first]['datos']
 end
 

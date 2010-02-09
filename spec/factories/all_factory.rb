@@ -7,7 +7,7 @@ Factory.define :usuario do |u|
   u.login
   u.password
   u.password_confirmation
-  u.rol_id
+  u.rol
   u.grupo_ids 
 end
 
@@ -32,7 +32,7 @@ module Soporte
     # Crea un usuario válido
     def crear_usuario
       @usuario = Usuario.create(:nombre => 'admin', :paterno => 'test', :materno => 'soporte', :login => 'admin', 
-                                :email => 'admin@example.com', :password => 'demo123', :password_confirmation => 'demo123')
+                                :email => 'admin@example.com', :password => 'demo123', :password_confirmation => 'demo123', :rol => 'admin')
     end
 
     # Crea una instancia a leer para la archivo electronica

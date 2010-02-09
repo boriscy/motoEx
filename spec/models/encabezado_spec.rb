@@ -52,18 +52,6 @@ describe Encabezado do
       @encabezado = Encabezado.new(@params, @hoja_electronica)
     end
 
-#    it "debe buscar el encabezado" do
-#      @encabezado.buscar(@rango).should == 3
-#    end
-
-#    it "debe actualizar campos" do
-#      @encabezado.buscar(@rango_filas, @rango_columnas)
-#
-#      @encabezado.campos['5_1']['texto'].should == 'DESTINO'
-#      @encabezado.campos['5_3']['texto'].should == 'BG COMGAS'
-#      @encabezado.campos['5_7']['texto'].should == 'TOTAL GN'
-#      @encabezado.campos['5_7']['campo'].should == 'total_gn'
-#    end
 
   end
 
@@ -89,6 +77,21 @@ describe Encabezado do
       @encabezado.campos["61_2"]['posicion'].should == 2
       @encabezado.campos["61_3"]['texto'].should == 'ARGENTINA'
       @encabezado.campos["61_3"]['posicion'].should == 3
+    end
+
+    it 'Debe desplazar correctamente hacia arriba' do
+      @hoja_electronica = Openoffice.new(RAILS_ROOT + "/ejemplos/VentasPrecio2003Arriba.ods")
+      @encabezado = Encabezado.new(@area, @hoja_electronica, true)
+      @encabezado.buscar(12,2).should == [-6, 1]
+    end
+
+    it 'Debe desplazar arriba izquierda' do
+      @hoja_electronica = Openoffice.new(RAILS_ROOT + "/ejemplos/VentasPrecio2003ArribaIz.ods")
+      enc = YAML::parse(File.open(RAILS_ROOT + "/ejemplos/areas/VentasPrecio2003-desp.yml")).transform
+
+      @area = enc['area']['encabezado']
+      @encabezado = Encabezado.new(@area, @hoja_electronica, true)
+      @encabezado.buscar(12, 3).should == [-6, -2]
     end
   end
 
