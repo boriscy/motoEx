@@ -185,3 +185,5 @@ Object.prototype.countVals = function() {
 function isArray(value){
   return Object.prototype.toString.apply(value) === '[object Array]';
 }
+
+

@@ -40,6 +40,8 @@ var Descartar = Area.extend({
                 // si es que tuviera patrones actualiza las celdas correspondientes
                 $('#id-descartar').val(k);
                 this.actualizarTablaPatrones();
+                // Actualiza todas las tablas con descarte por posicion
+                this.actualizarTablaPosiciones(); //////////////// TEST
                 // aumenta el contador
                 this.contador = parseInt(k.replace(/.*desc(\d+).*/, "$1"));
                 if (this.contador > max)
@@ -356,6 +358,18 @@ var Descartar = Area.extend({
             return parseInt(c[0]);
         }else{
             return parseInt(c[1]);
+        }
+    },
+    /**
+     * Actualiza todas las posiciones si que exites areas de descarte por posicion
+     */
+    'actualizarTablaPosiciones': function() {
+        var desc = estado.area[this.serialize];
+        for(var k in desc) {
+            if($.isEmptyObject(desc[k].patron) ) {
+                this.marcarCeldas(desc[k].celda_inicial, desc[k].celda_final, this.cssMarcar);
+                this.marcarCeldas(desc[k].celda_inicial, desc[k].celda_final, k);
+            }
         }
     }
 });
