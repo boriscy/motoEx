@@ -13,3 +13,6 @@ motoEx requiere Ruby on rails y PHP-cli
 Copyright (c) <year>, <copyright holder>
 All rights reserved.
 
+Para poder probar el demo es necesario PHP5 y algun servidor Web:
+los archivos se encuentran en: "demo/php" copie los archivos y la carpeta
+en un directorio de su servidor Web para hacer la prueba
