@@ -12,36 +12,61 @@
   <div id="mainContainer">
     <ul id="nav">
       <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#caracteristicas">Características</a></li>
       <li><a href="#instalacion">Instalación</a></li>
+      <li><a href="#probar">Ejemplos</a></li>
     </ul>
     <div id="content">
     <h1 id="inicio">motoEx</h1>
     <p>
     <strong>MotoEx</strong> es una herramienta fácil de usar que permite la importación de datos desde hojas electrónicas.
     </p>
+    <blockquote>
+    MotoEx fue desarrollado con el equipo que trabajó en la creación de la política de hidrocarburos el 2009-2010
+    <blockquote>
+
     <h3>Problema</h3>
     <p>
-    Uno de los mayores problemas que encontre durante el desarrollo de várias aplicaciones fue la resistencia que los usuarios tenian
-    al usarlas, debido a que trabajaban con hojas electrónicas "casi siempre Excel", consideraban doble trabajo tener que llenar
-    un formulario en el cual copiaran su información y les doy la razón en este punto, pero el principal problema reside en la cantidad de formatos
-    que puede existir de las misma información. Los usuarios no son ordenados para crear su información, generalmente no existe un formato
-    pre definido en el cual deben trabajar la misma y según sean sus necesidades van creando formatos. En varias ocaciones realize importaciones
-    desde excel tomando en cuenta el formato del usuario, pero los usuarios tambien cambian su formato con el tiempo lo cual hace que el 
-    código creado para la importación se vuelva obsoleto y necesite modificaciones y en algunos casos reescribirlo.
+    Uno de los mayores problemas que encontré durante el desarrollo de varias aplicaciones fue la resistencia de los usuarios 
+    a usar formularios para almacenar información que ya tenían en su archivo "excel", debido a que los usuarios tienen que realizar
+    el doble trabajo de traspasar sus datos de Excel a el formulario, en algunos casos logre implementar módulos de importación de 
+    datos desde excel al sistema, pero se volvían inútiles cuando el usuario cambiaba su formato por alguna razón, haciendo que 
+    el módulo se volviera en muchos casos obsoleto o que se tenga que realizar modificaciones.    
     </p>
     <h3>Respuesta</h3>
     <p>
-    Crear un sistema que permita la importación de datos desde hojas electrónicas en las cuales se pueda definir de forma simple
-    los formatos mas comunes que los usuarios usen. MotoEx ayuda a solucionar este problema, es verdad que no solucionará todos 
-    los problemas, pero en gran medida es una solución rápida. Esta herramienta fue desarrollada dentro del equipo que desarrallaba
-    la política nacional de hidrocarburos de Bolivia en el año 2009.
+    <strong>MotoEx</strong>es una herramienta de fácil uso que permite definir formatos en hojas electrónicas que después 
+    se usan para importar de información de otros archivos <i>Excel, Excel 2007 u OpenOffice</i>. MotoEx es muy flexible ya que 
+    funciona como un servicio Web REST, permitiendo integrarse otros sistemas escritos en otros lenguajes o Frameworks de forma sencilla
     </p>
+
+    <h2 id="caracteristicas">Características</h2>
+    <ul>
+      <li>Permite importar hojas Excel 97-2003, Excel 2007 y Openoffice</li>
+      <li>Se pueden importar varias áreas de una o múltiples hojas de un mismo archivo</li>
+      <li>Sencillo de usar, muy versátil para adaptarse a múltiples formatos</li>
+      <li>Puede definirse titulares</li>
+      <li>Puede definirse encabezados "columnas" que después se pueden relacionar a una base de datos</li>
+      <li>Exporta en formatos JSON, YAML, XML y HTML</li>
+    </ul>
 
     <h2 id="instalacion">Instalación</h2>
     <p>
+    MotoEx tiene las siguientes dependencias
+    </p>
+    <ul>
+      <li>Ruby 1.8.7</li>
+      <li>Ruby on Rails 2.3.5</li>
+      <li>GIT (opcional)</li>
+      <li>php5</li>
+      <li>php5-cli</li>
+    </ul>
+    <p>
     Para poder usar motoEx es necesario tener instalado Ruby y Ruby on Rails además de php5 y php5-cli
-    para instalar Ruby les recomiendo este <a href=http://www.rubyinside.com/how-to-install-a-ruby-18-stack-on-ubuntu-810-from-scratch-1566.html"" class="external">vínculo</a> que muestra paso a paso como instalar un stack de Ruby en Ubuntu. Para poder instalar en Ubuntu o debian php5 y php5-cli solo
-    ejecuten el comando
+    para instalar Ruby les recomiendo este <a href=http://www.rubyinside.com/how-to-install-a-ruby-18-stack-on-ubuntu-810-from-scratch-1566.html"" class="external">vínculo</a> que muestra paso a paso como instalar un stack de Ruby en Ubuntu. 
+    </p>
+    <p>
+    Para poder instalar en Ubuntu o Debian php5 y php5-cli solo ejecuten el comando
     </p>
     <pre>
     sudo apt-get install php5 php5-cli
@@ -61,6 +86,7 @@
     Ahora ingresen a la aplicación y ejecuten
     </p>
     <pre>
+    cd motoEx
     sudo rake gems:install
     rake db:migrate
     rake db:seed
@@ -73,7 +99,16 @@
     <pre>
     ruby script/server
     </pre>
+    <p>
     Y despues vayan a la dirección http://localhost:3000 e ingresen usuario "admin", contraseña "demo123"
+    <p>
+    <h2 id="probar">Ejemplos (Como probar el servicio Web REST)</h2>
+    <p>
+    De la carpeta "demo/php" copie los archivos y la carpeta "archivos"
+    en un directorio de su servidor Web para hacer la prueba, abra el archivo "testMotoEx.php" en su navegador el cual le presentara 
+    un formulario en el cual debe seleccionar el area y el archivo que desea importar sus datos.
+    </p>
+    <blockquote>Nota: es necesario que tenga instalado PHP5 en su servidor Web</blockquote>
 
   </div>
   </div>
