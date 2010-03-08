@@ -261,14 +261,8 @@ var Descartar = Area.extend({
         }
         //marca las celdas de inicial a final (solo una fila/columna)
         var iteracion = this.obtenerIteracion(campos.celda_inicial);
+        var tempCss = 'tempCss'; // CSS temporal usado para poder marcar correctamente los ids
         
-        /*
-        // para que marque la fila inicialmente seleccionada como descarta
-        for (var k = limites[0]; k <= limites[1]; k++) {
-            var pos = this.construirPosicion(k, iteracion);
-            $('#' + pos).addClass(id).addClass(this.cssMarcar).addClass(this.cssMarcarOpts);
-        }
-        */
         if( campos ) {
             for(var i = min; i <= max; i++) {
                 var pass = true;
@@ -281,18 +275,19 @@ var Descartar = Area.extend({
                         break;
                     }
                 }
-                // Acelera el proceso, no es necesario buscar excepciones si no encuentra el patron
-                if(pass)
-                    pass = this.actualizarTablaExcepciones(campos.excepciones, i);
                 // Marcar fila
-                if(pass) {
-                    // TODO: solo marca por filas (no funciona si se itera columnas)
-                    if ($td){
-                        $td.siblings('.' + this.area.cssMarcar).andSelf().addClass(id);
-                        this.marcarAreaSinID(id);
+                if(pass && $td) {
+                    // Marca con el ID si existe una excepcion pero no lo marca con rojo
+                    if(this.actualizarTablaExcepciones(campos.excepciones, i) ) {
+                      $td.siblings('.' + this.area.cssMarcar).andSelf().addClass(id);
+                      this.marcarAreaSinID(id);
+                    } else{
+                      $td.siblings('.' + this.area.cssMarcar).andSelf().addClass(tempCss);
                     }
                 }
             }
+            // Borrar todos los CSS temporales y macarlos con el id
+            $('.' + tempCss).andSelf().removeClass(tempCss).addClass(id);
         }
     },
     /**
