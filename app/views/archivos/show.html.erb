@@ -19,7 +19,7 @@
 "tabla/formulario", "tabla/formulario_descartar", "tabla/formulario_descartar_excepciones", 
 "tabla/sinonimos", "tabla/formulario_sinonimos", "tabla/formulario_sinonimos_crear", :cache => "todo" %>
   
-<%= stylesheet_link_tag "tabla/jquery.asmselect" %>
+<%= stylesheet_link_tag "tabla/jquery.asmselect", "numeros" %>
 
 <%# link_to 'Listado', archivos_path %>
 <%= render :partial => 'test' if params[:test] and RAILS_ENV == "development" %>
