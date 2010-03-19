@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   before_filter :adicionar_paginacion
   helper_method :current_user, :admin?
+  filter_parameter_logging :password, :password_confirmation
 
   # Permite presentar en un layout AJAX automaticamente
   layout lambda{|c| c.request.xhr? ? false : "application" }
