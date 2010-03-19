@@ -21,12 +21,12 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
-  config.gem "authlogic"#, :version => '2.1.0'
-  config.gem "paperclip"
-  config.gem "will_paginate"
-  config.gem "roo", :version => '1.3.11'# La version 1.9.1 da problemas con authlogic, solucionado "lib/roo_extra.rb"
+  config.gem "authlogic", :version => "2.1.3"#, :version => '2.1.0'
+  config.gem "paperclip", :version => "2.3.1.1"
+  config.gem "will_paginate", :version => "2.3.12"
+  config.gem "roo", :version => "1.3.11"# La version 1.9.1 da problemas con authlogic, solucionado "lib/roo_extra.rb"
   config.gem "hpricot"
-  config.gem "formtastic"
+  config.gem "formtastic", :version => "0.9.7"
   config.gem "nokogiri"
   config.gem "fastercsv"
 
