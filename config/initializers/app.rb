@@ -1,2 +1,2 @@
-LiveValidations.use :jquery_validations
+#LiveValidations.use :jquery_validations
 
