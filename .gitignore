@@ -18,3 +18,4 @@ doc/app/*
 public/javascripts/plugins.js
 public/javascripts/scripts.js
 public/javascripts/todo.js
+Gemfile.lock

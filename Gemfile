@@ -8,7 +8,7 @@ gem 'rails', '3.0.1'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'devise'
 gem 'paperclip'
-gem 'will_paginate'
+gem 'will_paginate', '~> 3.0.pre2'
 gem 'zip'
 gem 'spreadsheet'
 gem 'google-spreadsheet-ruby'
@@ -24,7 +24,7 @@ else
 end
 
 group :test do
-  gem 'cucumber'
+  gem 'cucumber-rails'
   gem 'rspec-rails'
   gem 'mocha'
   gem 'capybara'
